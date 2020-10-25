@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "delphi-app"
+    }
+  },
+  "defaultProject": "delphi-app",
+  "cli": {
+    "analytics": "fe386af3-deba-4665-abd2-5bf011975609"
+  }
 }
