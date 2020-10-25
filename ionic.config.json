@@ -1,0 +1,7 @@
+{
+  "name": "delphi",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
