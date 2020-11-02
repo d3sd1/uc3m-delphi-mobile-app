@@ -8,7 +8,6 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import {ChatComponent} from './chat/chat.component';
-import {NbCardModule, NbSpinnerModule} from '@nebular/theme';
 
 @NgModule({
   imports: [
@@ -16,9 +15,7 @@ import {NbCardModule, NbSpinnerModule} from '@nebular/theme';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab2PageRoutingModule,
-    NbCardModule,
-    NbSpinnerModule
+    Tab2PageRoutingModule
   ],
     declarations: [Tab2Page, ChatComponent]
 })
