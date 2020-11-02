@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 
 @NgModule({
   declarations: [AppComponent],

@@ -1,13 +1,13 @@
-import { IonicModule } from '@ionic/angular';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Tab1Page } from './tab1.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+import {IonicModule} from '@ionic/angular';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {Tab1Page} from './tab1.page';
+import {ExploreContainerComponentModule} from '../explore-container/explore-container.module';
 
-import { Tab1PageRoutingModule } from './tab1-routing.module';
+import {Tab1PageRoutingModule} from './tab1-routing.module';
 import {ProccessesComponent} from './proccesses/proccesses.component';
-import {FingerprintAIO} from '@ionic-native/fingerprint-aio';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   imports: [
@@ -17,11 +17,11 @@ import {FingerprintAIO} from '@ionic-native/fingerprint-aio';
     ExploreContainerComponentModule,
     Tab1PageRoutingModule
   ],
-    declarations: [Tab1Page, ProccessesComponent],
-
+  declarations: [Tab1Page, ProccessesComponent],
   providers: [
-
-    FingerprintAIO,
+    Geolocation
   ]
+
 })
-export class Tab1PageModule {}
+export class Tab1PageModule {
+}
