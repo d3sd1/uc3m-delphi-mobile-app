@@ -15,7 +15,9 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, NbThemeModule.forRoot({ name: 'default' }), NbLayoutModule, NbEvaIconsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule,
+    NbThemeModule.forRoot(),
+    NbLayoutModule, NbEvaIconsModule],
   providers: [
     StatusBar,
     SplashScreen,
