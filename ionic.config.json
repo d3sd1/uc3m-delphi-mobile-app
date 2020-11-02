@@ -1,7 +1,7 @@
 {
   "name": "delphi",
   "integrations": {
-    "cordova": {}
+    "capacitor": {}
   },
   "type": "angular"
 }
