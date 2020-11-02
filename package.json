@@ -4,15 +4,17 @@
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
+    "postinstall": "ionic capacitor add ios && ionic capacitor add android",
     "dev": "ionic serve",
-    "ios": "ng build && ionic capacitor add ios && ionic capacitor run ios -l --external --host=0.0.0.0",
-    "android": "ng build && ionic capacitor add android && ionic capacitor run android -l --host=0.0.0.0"
+    "ios": "ng build && ionic capacitor run ios -l --external --public-host",
+    "android": "ng build && ionic capacitor run android -l --external --public-host"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.0.0",
     "@angular/cdk": "^10.2.1",
     "@angular/common": "~10.0.0",
+
     "@angular/core": "~10.0.0",
     "@angular/forms": "~10.0.0",
     "@angular/platform-browser": "~10.0.0",
