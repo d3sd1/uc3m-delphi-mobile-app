@@ -1,0 +1,7 @@
+{
+  "name": "delphi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
