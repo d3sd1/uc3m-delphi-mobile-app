@@ -4,10 +4,10 @@
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "postinstall": "ionic capacitor add ios || true && ionic capacitor add android || true",
+    "setup": "ionic capacitor add ios || true && ionic capacitor add android || true",
     "dev": "ionic serve",
-    "ios": "ng build && ionic capacitor run ios -l --external --public-host",
-    "android": "ng build && ionic capacitor run android -l --external --public-host"
+    "ios": " npx cap sync && ng build && ionic capacitor run ios -l --external --public-host",
+    "android": "npx cap sync && ng build && ionic capacitor run android -l --external --public-host"
   },
   "private": true,
   "dependencies": {
