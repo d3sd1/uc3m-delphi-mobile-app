@@ -15,6 +15,7 @@ import {AuthenticationService} from '../services/authentication-service';
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
+
   ],
   providers: [
     AuthenticationService
