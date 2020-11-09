@@ -38,6 +38,7 @@ export class AuthenticationService {
     await toast.present();
   }
 
+
   login(user): Promise<UserLogin> {
     return new Promise<UserLogin>((resolve, reject) => {
       this.http.post<UserLogin>('http://localhost:8080/v1/session/login', user).subscribe((userLogin: UserLogin) => {

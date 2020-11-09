@@ -11,6 +11,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IonicStorageModule} from '@ionic/storage';
 import {HttpClientModule} from '@angular/common/http';
+import {TouchID} from '@ionic-native/touch-id/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import {HttpClientModule} from '@angular/common/http';
   providers: [
     StatusBar,
     SplashScreen,
+    TouchID,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   bootstrap: [AppComponent]
