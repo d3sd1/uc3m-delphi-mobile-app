@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../services/authentication-service';
 import {Router} from '@angular/router';
+import {LoadingController} from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +15,25 @@ export class LoginPage implements OnInit {
     password: '',
     rememberMe: false
   };
+  loading;
 
-  constructor(private authService: AuthenticationService, private router: Router) {
+  constructor(private authService: AuthenticationService, private router: Router, private loadingController: LoadingController) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
   }
 
-  login() {
+  async doLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Un momento...',
+      duration: 2000
+    });
+    await this.loading.present();
+  }
+
+  async login() {
+    await this.doLoading();
     this.authService.login(this.user).then((resp) => {
       this.router.navigateByUrl('home').then(r => {
         this.user.email = '';
@@ -30,6 +42,8 @@ export class LoginPage implements OnInit {
       });
     }).catch((err) => {
       console.log(err);
+    }).finally(() => {
+      this.loading.dismiss();
     });
   }
 
