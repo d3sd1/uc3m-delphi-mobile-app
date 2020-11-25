@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {InitializerChecker} from '../initializer-checker';
 import {AlertController, Platform} from '@ionic/angular';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class ApiService extends InitializerChecker {
 
   protected internalCheck(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this.httpClient.get('http://192.168.1.111:8080/v1/version/current').subscribe(() => {
+      console.log(environment.apiUrl + '/v1/version/current');
+      this.httpClient.get(environment.apiUrl + '/v1/version/current').subscribe(() => {
         resolve();
       }, (e) => {
         console.error(e);

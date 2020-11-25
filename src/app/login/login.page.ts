@@ -21,6 +21,17 @@ export class LoginPage implements OnInit {
   }
 
   async ngOnInit() {
+    this.authService.isAuthenticated().then((authenticated) => {
+      if (authenticated) {
+        this.router.navigateByUrl('home').then(r => {
+          this.user.email = '';
+          this.user.password = '';
+          this.user.rememberMe = false;
+        });
+      }
+    }).catch(e => {
+
+    });
   }
 
   async doLoading() {
@@ -35,13 +46,14 @@ export class LoginPage implements OnInit {
   async login() {
     await this.doLoading();
     this.authService.login(this.user).then((resp) => {
+      console.log('USER LOGIN RES ->  ', resp);
       this.router.navigateByUrl('home').then(r => {
         this.user.email = '';
         this.user.password = '';
         this.user.rememberMe = false;
       });
     }).catch((err) => {
-      console.log(err);
+      console.log('USER LOGIN RESerr ->  ', err);
     }).finally(() => {
       this.loading.dismiss();
     });
