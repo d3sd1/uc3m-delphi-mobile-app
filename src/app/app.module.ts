@@ -14,6 +14,7 @@ import {TouchID} from '@ionic-native/touch-id/ngx';
 import {SplashScreenComponent} from './startup/splash-screen/splash-screen.component';
 import {InitService} from './startup/initializer/init.service';
 import {ApiService} from './startup/initializer/api/api.service';
+import {AuthenticationService} from './services/authentication-service';
 
 @NgModule({
   declarations: [AppComponent, SplashScreenComponent],
@@ -22,14 +23,15 @@ import {ApiService} from './startup/initializer/api/api.service';
     IonicModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,
-    IonicStorageModule.forRoot(),
-    HttpClientModule],
+    HttpClientModule,
+    IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreenComponent,
     TouchID,
     InitService,
     ApiService,
+    AuthenticationService,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   bootstrap: [AppComponent]
