@@ -1,0 +1,31 @@
+<ion-list>
+  <ion-list-header>
+    Conversaciones
+  </ion-list-header>
+  <!-- Searchbar with cancel button shown on focus -->
+  <ion-searchbar (ionInput)="filterList($event)" autocomplete="on" autocorrect="on"
+                 showCancelButton="focus"></ion-searchbar>
+  <ion-item-sliding #slidingItem *ngFor="let chat of currentUserChats">
+    <ion-item [routerLink]="'chat'">
+      <ion-avatar slot="start">
+        <img src="{{chat.profilePicture}}">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{chat.userName}} {{chat.userSurnames}}</h2>
+        <h3>{{chat.currentOpenProjects}}</h3>
+        <p>{{chat.lastMesage}}</p>
+      </ion-label>
+      <ion-icon [class]="'chat-' + chat.status" name="radio-button-on-outline" slot="end"></ion-icon>
+      <ion-badge *ngIf="chat.unreadMessages > 0" color="primary">{{chat.unreadMessages}}</ion-badge>
+    </ion-item>
+
+    <ion-item-options (ionSwipe)="markChatAsRead(chat.id, slidingItem)" *ngIf="chat.unreadMessages > 0" side="start">
+      <ion-item-option (click)="markChatAsRead(chat.id, slidingItem)" color="primary">Leído</ion-item-option>
+    </ion-item-options>
+
+    <ion-item-options (ionSwipe)="deleteChat(chat.id, slidingItem)" side="end">
+      <ion-item-option (click)="deleteChat(chat.id, slidingItem)" color="danger">Borrar</ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+

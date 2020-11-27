@@ -1,13 +1,15 @@
+@import "../../../../../chat";
+
 ::ng-deep.chat-online {
-  color: #2dd36f !important;
+  color: $chat-color-online !important;
 }
 
 ::ng-deep.chat-busy {
-  color: #ffc409 !important;
+  color: $chat-color-busy !important;
 }
 
 ::ng-deep.chat-offline {
-  color: #eb445a !important;
+  color: $chat-color-offline !important;
 }
 
 ion-card {

@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
+  @Output() onDatePicked: EventEmitter<any> = new EventEmitter<any>();
 
   loading = false;
 
@@ -13,6 +14,12 @@ export class Tab2Page {
     this.loading = true;
     setTimeout(() => this.loading = false, 3000);
   }
-  constructor() {}
+
+  constructor() {
+  }
+
+  ngOnInit(): void {
+  }
+
 
 }
