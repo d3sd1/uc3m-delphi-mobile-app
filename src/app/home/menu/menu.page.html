@@ -4,16 +4,19 @@
     <ion-tab-button tab="processes">
       <ion-icon name="list-circle-outline"></ion-icon>
       <ion-label>Procesos</ion-label>
+      <ion-badge *ngIf="notifications.proccess > 0" color="primary">{{notifications.proccess}}</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="tab2">
       <ion-icon name="mail-outline"></ion-icon>
       <ion-label>Mensajes</ion-label>
+      <ion-badge *ngIf="notifications.messages > 0" color="primary">{{notifications.messages}}</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="tab3">
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label>Perfil</ion-label>
+      <ion-badge *ngIf="notifications.profile > 0" color="primary">{{notifications.profile}}</ion-badge>
     </ion-tab-button>
   </ion-tab-bar>
 

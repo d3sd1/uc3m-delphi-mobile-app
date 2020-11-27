@@ -10,5 +10,9 @@
     }
   },
   "cordova": {},
-  "backgroundColor": "#FFFFFF"
+  "backgroundColor": "#FFFFFF",
+  "server": {
+    "url": "http://192.168.1.111:8100",
+    "cleartext": true
+  }
 }
