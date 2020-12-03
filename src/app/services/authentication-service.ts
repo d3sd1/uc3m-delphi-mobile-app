@@ -5,7 +5,7 @@ import {BehaviorSubject} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {UserLogin} from '../login/user-login';
 import {JwtHelperService} from '@auth0/angular-jwt';
-
+import {environment} from '../../environments/environment';
 
 const TOKEN_KEY = 'auth-token';
 
@@ -16,15 +16,18 @@ export class AuthenticationService {
 
   authenticationState = new BehaviorSubject(false);
 
-  constructor(private storage: Storage, private plt: Platform, private http: HttpClient, private toastController: ToastController) {
+  constructor(private  storage: Storage,
+              private plt: Platform,
+              private http: HttpClient,
+              private toastController: ToastController) {
     this.plt.ready().then(() => {
       this.checkToken();
     });
   }
 
   checkToken() {
-    this.storage.get(TOKEN_KEY).then(res => {
-      if (res) {
+    this.storage.get('JWT_TOKEN').then((jwt) => {
+      if (jwt !== '' && jwt !== null) {
         this.authenticationState.next(true);
       }
     });
@@ -38,12 +41,16 @@ export class AuthenticationService {
     await toast.present();
   }
 
+
   login(user): Promise<UserLogin> {
     return new Promise<UserLogin>((resolve, reject) => {
-      this.http.post<UserLogin>('http://localhost:8080/v1/session/login', user).subscribe((userLogin: UserLogin) => {
-        this.storage.set(TOKEN_KEY, userLogin.jwt).then(() => {
+      this.http.post<UserLogin>(environment.apiUrl + '/v1/session/login', user).subscribe((userLogin: UserLogin) => {
+        this.storage.set('JWT_TOKEN', userLogin.jwt).then(() => {
           this.authenticationState.next(true);
           this.sendToast('Conexión satisfactoria').then(r => resolve(userLogin));
+        }).catch((e) => {
+          console.log('ERROR EN LOGIN -> ', e);
+          reject();
         });
 
       }, (err: HttpErrorResponse) => {
@@ -58,30 +65,34 @@ export class AuthenticationService {
         } else {
           this.sendToast('Error desconocido').then(r => reject());
         }
+        reject();
       });
     });
   }
 
-  logout() {
-    return this.storage.remove(TOKEN_KEY).then(() => {
-      this.authenticationState.next(false);
-    });
+  async logout() {
+    await this.storage.set('JWT_TOKEN', null);
+    this.authenticationState.next(false);
   }
 
   isAuthenticated(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.storage.get(TOKEN_KEY).then((jwt) => {
+      console.error('JWT TOKEN PREP ----------->');
+      this.storage.get('JWT_TOKEN').then((jwt) => {
+        console.error('JWT TOKEN IS ----------->' + jwt);
+        if (jwt === null || jwt === '') {
+          resolve(false);
+        }
         const helper = new JwtHelperService();
-        //const decodedToken = helper.decodeToken(jwt);
-        //const expirationDate = helper.getTokenExpirationDate(jwt);
         const isExpired = helper.isTokenExpired(jwt);
         if (!isExpired) {
           resolve(true);
         }
         resolve(false);
+      }).catch(e => {
+        reject(false);
       });
     });
-    // return this.authenticationState.value; // TODO check if this works when opening app as logged or not logged user
   }
 
 }
