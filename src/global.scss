@@ -24,7 +24,7 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-
+/*
 body.dark {
   --ion-color-primary: #428cff;
   --ion-color-primary-rgb: 66, 140, 255;
@@ -95,7 +95,7 @@ body.dark {
 /*
    * iOS Dark Theme
    * -------------------------------------------
-   */
+   *
 
 .ios body.dark {
   --ion-background-color: #000000;
@@ -135,7 +135,7 @@ body.dark {
 /*
    * Material Design Dark Theme
    * -------------------------------------------
-   */
+   *
 
 .md body.dark {
   --ion-background-color: #121212;
@@ -170,3 +170,4 @@ body.dark {
   --color-toolbar-background: black;
   --color-toolbar-text: white;
 }
+*/

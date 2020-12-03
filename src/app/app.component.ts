@@ -3,9 +3,9 @@ import {Component} from '@angular/core';
 import {LoadingController, Platform} from '@ionic/angular';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {Router} from '@angular/router';
-import {AuthenticationService} from './services/authentication-service';
+import {AuthenticationService} from '../services/authentication-service';
 import {TouchID} from '@ionic-native/touch-id/ngx';
-import {InitService} from './startup/initializer/init.service';
+import {InitService} from '../services/init.service';
 
 @Component({
   selector: 'delphi-root',

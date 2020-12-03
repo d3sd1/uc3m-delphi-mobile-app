@@ -3,21 +3,24 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ProcessesPage} from './processes.page';
-import {ExploreContainerComponentModule} from '../../../explore-container/explore-container.module';
 
 import {ProcessesPageRoutingModule} from './processes-routing.module';
-import {ProcessesComponent} from './processes/processes.component';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {EmptyPageModule} from './empty/empty.module';
+import {LoadingPageModule} from './loading/loading.module';
+import {ListPageModule} from './list/list.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
-    ProcessesPageRoutingModule
+    ProcessesPageRoutingModule,
+    EmptyPageModule,
+    LoadingPageModule,
+    ListPageModule
   ],
-  declarations: [ProcessesPage, ProcessesComponent],
+  declarations: [ProcessesPage],
   providers: [
     Geolocation
   ]

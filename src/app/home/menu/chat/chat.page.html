@@ -1,8 +1,12 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Mensajería
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-list-header>
-      Conversaciones
-    </ion-list-header>
     <!-- Searchbar with cancel button shown on focus -->
     <ion-searchbar (ionInput)="filterList($event)" autocomplete="on" autocorrect="on"
                    showCancelButton="focus"></ion-searchbar>
