@@ -1,12 +1,21 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ChatService} from '../../../../mock/chat.service';
+import {ChatService} from '../../../mock/chat.service';
 
 @Component({
-  selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
+  selector: 'delphi-chat',
+  templateUrl: 'chat.page.html',
+  styleUrls: ['chat.page.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatPage implements OnInit {
+  @Output() onDatePicked: EventEmitter<any> = new EventEmitter<any>();
+
+  loading = false;
+
+  toggleLoadingAnimation() {
+    this.loading = true;
+    setTimeout(() => this.loading = false, 3000);
+  }
+
   currentUserChats = [];
   currentUserChatsBackup = [];
 
@@ -60,4 +69,5 @@ export class ChatComponent implements OnInit {
   removeNotificationsFromChat(chatId) {
     // todo remove chat notification count from current chat and bottom
   }
+
 }

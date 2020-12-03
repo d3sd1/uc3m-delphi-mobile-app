@@ -25,6 +25,7 @@
     "component-selector": [
       true,
       "element",
+      "delphi",
       "app",
       "kebab-case"
     ],

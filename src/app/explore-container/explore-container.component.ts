@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-explore-container',
+  selector: 'delphi-explore-container',
   templateUrl: './explore-container.component.html',
   styleUrls: ['./explore-container.component.scss'],
 })

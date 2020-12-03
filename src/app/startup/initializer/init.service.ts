@@ -22,7 +22,6 @@ export class InitService {
   private initializeApi() {
     return new Promise<boolean>((resolve) => {
       this.apiService.doCheck().then(() => {
-        console.error('{INITIALIZE_API_OK}');
         resolve(true);
       }).catch((e) => {
         console.error('{INITIALIZE_API_ERR}', e);
