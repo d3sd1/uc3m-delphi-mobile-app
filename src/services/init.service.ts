@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ApiService} from './api/api.service';
+import {ApiService} from '../app/startup/initializer/api/api.service';
 import {Plugins} from '@capacitor/core';
 import {Platform} from '@ionic/angular';
 

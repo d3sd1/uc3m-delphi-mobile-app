@@ -1,3 +1,10 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Mi perfil
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content [fullscreen]="true">
   <ion-card color="light">
     <div class="img-wrapper">
@@ -29,9 +36,8 @@
       <ion-toggle (ionChange)="updateNotificationPreferences()"></ion-toggle>
     </ion-item>
 
-    <ion-item>
-      <ion-label (click)="triggerStatusChatHandler()">Desconectar</ion-label>
-      <ion-toggle routerLink="/logout"></ion-toggle>
+    <ion-item routerLink="/logout">
+      <ion-label>Desconectar</ion-label>
     </ion-item>
 
     <!--

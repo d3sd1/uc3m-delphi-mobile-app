@@ -6,6 +6,18 @@ const routes: Routes = [
   {
     path: '',
     component: ProcessesPage,
+  },
+  {
+    path: 'empty',
+    loadChildren: () => import('./empty/empty.module').then(m => m.EmptyPageModule)
+  },
+  {
+    path: 'loading',
+    loadChildren: () => import('./loading/loading.module').then(m => m.LoadingPageModule)
+  },
+  {
+    path: 'list',
+    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
   }
 ];
 
