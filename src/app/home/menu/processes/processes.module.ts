@@ -2,11 +2,11 @@ import {IonicModule} from '@ionic/angular';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Tab1Page} from './tab1.page';
+import {ProcessesPage} from './processes.page';
 import {ExploreContainerComponentModule} from '../../../explore-container/explore-container.module';
 
-import {Tab1PageRoutingModule} from './tab1-routing.module';
-import {ProccessesComponent} from './proccesses/proccesses.component';
+import {ProcessesPageRoutingModule} from './processes-routing.module';
+import {ProcessesComponent} from './processes/processes.component';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 
 @NgModule({
@@ -15,13 +15,13 @@ import {Geolocation} from '@ionic-native/geolocation/ngx';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    ProcessesPageRoutingModule
   ],
-  declarations: [Tab1Page, ProccessesComponent],
+  declarations: [ProcessesPage, ProcessesComponent],
   providers: [
     Geolocation
   ]
 
 })
-export class Tab1PageModule {
+export class ProcessesPageModule {
 }

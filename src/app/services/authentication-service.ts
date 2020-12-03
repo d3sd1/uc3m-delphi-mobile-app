@@ -77,9 +77,7 @@ export class AuthenticationService {
 
   isAuthenticated(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      console.error('JWT TOKEN PREP ----------->');
       this.storage.get('JWT_TOKEN').then((jwt) => {
-        console.error('JWT TOKEN IS ----------->' + jwt);
         if (jwt === null || jwt === '') {
           resolve(false);
         }

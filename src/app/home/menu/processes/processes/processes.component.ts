@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 
 @Component({
-  selector: 'app-proccesses',
-  templateUrl: './proccesses.component.html',
-  styleUrls: ['./proccesses.component.scss'],
+  selector: 'delphi-processes',
+  templateUrl: './processes.component.html',
+  styleUrls: ['./processes.component.scss'],
 })
-export class ProccessesComponent implements OnInit {
+export class ProcessesComponent implements OnInit {
 
   coords = 0;
 

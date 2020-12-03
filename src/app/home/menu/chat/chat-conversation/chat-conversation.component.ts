@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-chat-conversation',
+  selector: 'delphi-chat-conversation',
   templateUrl: './chat-conversation.component.html',
   styleUrls: ['./chat-conversation.component.scss'],
 })

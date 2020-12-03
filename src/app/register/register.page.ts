@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-register',
+  selector: 'delphi-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })

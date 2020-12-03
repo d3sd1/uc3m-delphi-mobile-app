@@ -8,7 +8,7 @@ import {TouchID} from '@ionic-native/touch-id/ngx';
 import {InitService} from './startup/initializer/init.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'delphi-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })

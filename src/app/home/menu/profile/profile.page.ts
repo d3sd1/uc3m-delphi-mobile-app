@@ -2,11 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ActionSheetController} from '@ionic/angular';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  selector: 'delphi-profile',
+  templateUrl: 'profile.page.html',
+  styleUrls: ['profile.page.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfilePage implements OnInit {
+
 
   public profileOptions: any[];
   public profileOptionsBackup: any[];
@@ -19,11 +20,12 @@ export class ProfileComponent implements OnInit {
   }
 
   async initializeItems(): Promise<any> {
-    const profileOptions = [
+    /*const profileOptions = [
       {
         name: 'Notificaciones',
         type: 'switcher',
-        disabled: true
+        disabled: true,
+        callback:
       },
       {
         name: 'Estado del chat',
@@ -47,9 +49,7 @@ export class ProfileComponent implements OnInit {
         type: 'link',
         linkRouterUrl: '/profile/profesional',
         disabled: false
-      }];
-    this.profileOptionsBackup = profileOptions;
-    return profileOptions;
+      }];*/
   }
 
   async triggerStatusChatHandler() {
@@ -69,6 +69,10 @@ export class ProfileComponent implements OnInit {
         return (currentFood.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
       }
     });
+  }
+
+  updateNotificationPreferences() {
+
   }
 
   async presentActionSheet() {
