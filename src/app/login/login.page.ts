@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../services/authentication-service';
+import {AuthenticationService} from '../../services/authentication-service';
 import {Router} from '@angular/router';
 import {LoadingController} from '@ionic/angular';
 
 @Component({
-  selector: 'app-login',
+  selector: 'delphi-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })

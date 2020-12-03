@@ -1,0 +1,21 @@
+@import "../../../../chat";
+
+::ng-deep.chat-online {
+  color: $chat-color-online !important;
+}
+
+::ng-deep.chat-busy {
+  color: $chat-color-busy !important;
+}
+
+::ng-deep.chat-offline {
+  color: $chat-color-offline !important;
+}
+
+.chat-deleted {
+  -webkit-transition: opacity 3s ease-in-out;
+  -moz-transition: opacity 3s ease-in-out;
+  -ms-transition: opacity 3s ease-in-out;
+  -o-transition: opacity 3s ease-in-out;
+  opacity: 1;
+}

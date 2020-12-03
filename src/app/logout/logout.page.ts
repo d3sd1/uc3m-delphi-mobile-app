@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../services/authentication-service';
+import {AuthenticationService} from '../../services/authentication-service';
 import {Router} from '@angular/router';
 import {ToastController} from '@ionic/angular';
 
 @Component({
-  selector: 'app-logout',
+  selector: 'delphi-logout',
   templateUrl: './logout.page.html',
   styleUrls: ['./logout.page.scss'],
 })

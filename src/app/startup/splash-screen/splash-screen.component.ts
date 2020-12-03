@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-splash-screen',
+  selector: 'delphi-splash-screen',
   templateUrl: './splash-screen.component.html',
   styleUrls: ['./splash-screen.component.scss'],
 })

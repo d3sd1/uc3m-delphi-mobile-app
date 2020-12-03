@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-tabs',
+  selector: 'delphi-tabs',
   templateUrl: 'menu.page.html',
   styleUrls: ['menu.page.scss']
 })
