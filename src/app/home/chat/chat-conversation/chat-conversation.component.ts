@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
+import {UserChat} from '../../../../model/user-chat';
+import {ChatService} from '../../../../mock/chat.service';
 
 @Component({
   selector: 'delphi-chat-conversation',
@@ -7,15 +9,19 @@ import {NavController} from '@ionic/angular';
   styleUrls: ['./chat-conversation.component.scss'],
 })
 export class ChatConversationComponent implements OnInit {
-  msg = '';
+  // TODO: fetch chat from rest!!! with preloader
+  chat: UserChat;
 
   constructor(
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private chatService: ChatService
     //private keyboard: NativeKeyboard
   ) {
   }
 
   ngOnInit() {
+    /*this.chatService.postReadChat(this.chat.id).then(() => {
+    });*/
   }
 
   showKeyboard() {
@@ -28,7 +34,6 @@ export class ChatConversationComponent implements OnInit {
 
   sendMessage() {
     //TODO: send to rest and show up.
-    this.msg = '';
   }
 
   goBack() {
