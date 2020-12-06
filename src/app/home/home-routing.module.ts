@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MenuPage} from './menu.page';
+import {HomePage} from './home.page';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'menu',
-    component: MenuPage,
+    component: HomePage,
     children: [
       {
         path: '',

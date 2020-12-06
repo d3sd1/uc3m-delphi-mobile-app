@@ -1,0 +1,69 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nombre aquí</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-list>
+    <ion-list-header>Item thumbnails</ion-list-header>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="./thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>Lorem ipsum</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="./thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>
+        <h3>Lorem ipsum</h3>
+        <p>dolor sit amet</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="./thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>
+        <h3>Lorem ipsum</h3>
+        <p>dolor sit amet</p>
+        <p>consectetur adipiscing elit. Duis ut urna neque.</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-thumbnail slot="end">
+        <img src="./thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>Lorem ipsum</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-thumbnail slot="end">
+        <img src="./thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>
+        <h3>Lorem ipsum</h3>
+        <p>dolor sit amet</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-thumbnail slot="end">
+        <img src="./thumbnail.svg">
+      </ion-thumbnail>
+      <ion-label>
+        <h3>Lorem ipsum</h3>
+        <p>dolor sit amet</p>
+        <p>consectetur adipiscing elit. Duis ut urna neque.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-item>
+  <ion-input (click)="showKeyboard()" (select)="hideKeyboard()" [(ngModel)]="msg" inputmode="email"
+             placeholder="Escribe aquí tu mensaje..."></ion-input>
+  <ion-icon (click)="sendMessage()" name="caret-forward-outline" slot="end"></ion-icon>
+</ion-item>

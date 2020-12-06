@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'delphi-tabs',
-  templateUrl: 'menu.page.html',
-  styleUrls: ['menu.page.scss']
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss']
 })
-export class MenuPage implements OnInit {
+export class HomePage implements OnInit {
 
   notifications = {
     proccess: 0,

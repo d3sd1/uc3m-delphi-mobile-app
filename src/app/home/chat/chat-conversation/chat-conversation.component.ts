@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'delphi-chat-conversation',
@@ -9,6 +10,7 @@ export class ChatConversationComponent implements OnInit {
   msg = '';
 
   constructor(
+    private navCtrl: NavController
     //private keyboard: NativeKeyboard
   ) {
   }
@@ -27,6 +29,10 @@ export class ChatConversationComponent implements OnInit {
   sendMessage() {
     //TODO: send to rest and show up.
     this.msg = '';
+  }
+
+  goBack() {
+    this.navCtrl.back();
   }
 
 }

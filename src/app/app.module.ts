@@ -9,12 +9,13 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IonicStorageModule} from '@ionic/storage';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {TouchID} from '@ionic-native/touch-id/ngx';
 import {SplashScreenComponent} from './startup/splash-screen/splash-screen.component';
 import {InitService} from '../services/init.service';
 import {ApiService} from './startup/initializer/api/api.service';
 import {AuthenticationService} from '../services/authentication-service';
+import {AuthInterceptor} from '../interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, SplashScreenComponent],
@@ -32,7 +33,12 @@ import {AuthenticationService} from '../services/authentication-service';
     InitService,
     ApiService,
     AuthenticationService,
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -9,7 +9,7 @@
   <ion-list>
     <!-- Searchbar with cancel button shown on focus -->
     <ion-searchbar (ionInput)="filterList($event)" autocomplete="on" autocorrect="on"
-                   showCancelButton="focus"></ion-searchbar>
+                   cancel-button-text="Cancelar" placeholder="Buscar chat" showCancelButton="focus"></ion-searchbar>
     <ion-item-sliding #slidingItem *ngFor="let chat of currentUserChats">
       <ion-item [routerLink]="'chat'">
         <ion-avatar slot="start">

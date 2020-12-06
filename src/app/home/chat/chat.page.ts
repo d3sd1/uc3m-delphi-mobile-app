@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ChatService} from '../../../../mock/chat.service';
+import {ChatService} from '../../../mock/chat.service';
 
 @Component({
   selector: 'delphi-chat',

@@ -1,4 +1,7 @@
 import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../environments/environment';
+import {AuthenticationService} from '../services/authentication-service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +33,38 @@ export class ChatService {
     }
   ];
 
-  constructor() {
+  constructor(private httpClient: HttpClient, private authenticationService: AuthenticationService) {
+  }
+
+  async fetctCurrentUserchats(): Promise<void> { // todo promise: userchatlist
+    const authHeaders = new HttpHeaders();
+    authHeaders.append('Content-Type', 'application/json');
+    authHeaders.append('Authorization', 'Bearer MISCOJONESSSSSS');
+
+    this.httpClient.get(environment.apiUrl + '/v1/chat/list', {headers: authHeaders})
+      .subscribe(response => {
+        console.log(response);
+      }, error => {
+
+        console.log(error);
+      });
+
+
+    return new Promise<void>(async (resolve, reject) => {
+      /*const jwt = await this.authenticationService.getJwt();
+      this.httpClient.get(environment.apiUrl + '/v1/chat/list').subscribe((userchatList) => {
+        console.log(userchatList);
+        resolve();
+      }, (e) => {
+        console.error(e);
+        reject();
+      });*/
+      resolve();
+    });
   }
 
   getCurrentUserChats() {
+    this.fetctCurrentUserchats();
     return this.userChats; // TODO
   }
 }
