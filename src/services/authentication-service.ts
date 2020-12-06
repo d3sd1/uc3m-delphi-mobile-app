@@ -1,7 +1,7 @@
 import {Platform, ToastController} from '@ionic/angular';
 import {Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, from, Observable} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {UserLogin} from '../model/user-login';
 import {JwtHelperService} from '@auth0/angular-jwt';
@@ -32,6 +32,10 @@ export class AuthenticationService {
         this.authenticationState.next(true);
       }
     });
+  }
+
+  getJwt(): Observable<any> {
+    return from<any>(this.storage.get('JWT_TOKEN'));
   }
 
   async sendToast(msg) {
