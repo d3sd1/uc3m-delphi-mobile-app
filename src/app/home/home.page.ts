@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {ChatService} from '../../mock/chat.service';
+import {getChatsUnreadMessages, UserChat} from '../../model/user-chat';
+import {AuthenticationService} from '../../services/authentication-service';
+import {User} from '../../model/user';
 
 @Component({
   selector: 'delphi-tabs',
@@ -9,19 +13,19 @@ export class HomePage implements OnInit {
 
   notifications = {
     proccess: 0,
-
     messages: 0,
     profile: 0
   };
+  user: User;
 
-  constructor() {
+  constructor(private chatService: ChatService, private authService: AuthenticationService) {
   }
 
-  ngOnInit(): void {
-    document.addEventListener('notificationCountUpdate', (e: CustomEvent) => {
-      this.notifications.messages = e.detail;
-    }, false);
+  async ngOnInit() {
+    this.user = await this.authService.getUser();
+    this.chatService.getCurrentUserChats().subscribe((userChats: UserChat[]) => {
+      console.log('UPDATE HERE!!', userChats);
+      this.notifications.messages = getChatsUnreadMessages(userChats, this.user.id);
+    });
   }
-
-
 }

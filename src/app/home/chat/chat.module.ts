@@ -5,6 +5,8 @@ import {FormsModule} from '@angular/forms';
 import {ChatPage} from './chat.page';
 
 import {ChatPageRoutingModule} from './chat-routing.module';
+import {ChatListComponent} from './chat-list/chat-list.component';
+import {ChatEmptyPage} from './chat-empty/chat-empty.page';
 
 @NgModule({
   imports: [
@@ -12,9 +14,10 @@ import {ChatPageRoutingModule} from './chat-routing.module';
     CommonModule,
     FormsModule,
     ChatPageRoutingModule,
+
   ],
   providers: [],
-  declarations: [ChatPage]
+  declarations: [ChatPage, ChatListComponent, ChatEmptyPage]
 })
 export class ChatPageModule {
 }
