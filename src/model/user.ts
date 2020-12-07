@@ -8,5 +8,6 @@ export class User {
   photo: string;
   enabled: boolean;
   blocked: boolean;
+  chatStatus: string;
   roles: Role[];
 }

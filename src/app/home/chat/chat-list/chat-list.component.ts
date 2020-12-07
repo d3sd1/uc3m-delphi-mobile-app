@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChatService} from '../../../../mock/chat.service';
-import {getChatName, getChatPicture, getChatUnreadMessages, UserChat} from '../../../../model/user-chat';
+import {getChatName, getChatPicture, getChatUnreadMessages, getUserChatStatus, UserChat} from '../../../../model/user-chat';
 import {User} from '../../../../model/user';
 import {AuthenticationService} from '../../../../services/authentication-service';
 
@@ -34,6 +34,10 @@ export class ChatListComponent implements OnInit {
 
   selfChatPicture(chat: UserChat): string {
     return getChatPicture(chat, this.user.id);
+  }
+
+  selfUserChatStatus(chat: UserChat): string {
+    return getUserChatStatus(chat, this.user.id).toLowerCase();
   }
 
   async ngOnInit() {

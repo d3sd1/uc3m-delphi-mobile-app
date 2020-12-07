@@ -3,16 +3,17 @@
   <ion-searchbar (ionInput)="filterList($event)" autocomplete="on" autocorrect="on"
                  cancel-button-text="Cancelar" placeholder="Buscar chat" showCancelButton="focus"></ion-searchbar>
   <ion-item-sliding #slidingItem *ngFor="let chat of userChats">
-    <ion-item [routerLink]="'chat'">
+    <ion-item [routerLink]="'chat/' + chat.id">
       <ion-avatar slot="start">
         <img src="{{selfChatPicture(chat)}}">
       </ion-avatar>
       <ion-label>
         <h2>{{selfChatName(chat)}}</h2>
-        <!--TODO <h3>{{chat.currentOpenProjects}}</h3>-->
+        <h3>{{chat.group ? 'Conversación grupal' : 'Conversación privada'}}</h3>
         <p>{{chat.chatMessages[0]?.message}}</p>
       </ion-label>
-      <!-- TODO  <ion-icon [class]="'chat-' + chat.status" name="radio-button-on-outline" slot="end"></ion-icon>-->
+      <ion-icon *ngIf="!chat.group" [class]="'chat-' + selfUserChatStatus(chat)" name="radio-button-on-outline"
+                slot="end"></ion-icon>
       <ion-badge *ngIf="selfChatUnreadMessages(chat,user.id) > 0"
                  color="primary">{{selfChatUnreadMessages(chat, user.id)}}</ion-badge>
     </ion-item>

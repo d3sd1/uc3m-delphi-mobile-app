@@ -8,6 +8,8 @@ import {ChatPageRoutingModule} from './chat-routing.module';
 import {ChatListComponent} from './chat-list/chat-list.component';
 import {ChatEmptyPage} from './chat-empty/chat-empty.page';
 import {LoadingPageModule} from './chat-loading/chat-loading.module';
+import {ChatConversationLoadingPage} from './chat-conversation/chat-conversation-loading/chat-conversation-loading.page';
+import {ChatConversationComponent} from './chat-conversation/chat-conversation.component';
 
 @NgModule({
   imports: [
@@ -19,7 +21,7 @@ import {LoadingPageModule} from './chat-loading/chat-loading.module';
 
   ],
   providers: [],
-  declarations: [ChatPage, ChatListComponent, ChatEmptyPage]
+  declarations: [ChatPage, ChatListComponent, ChatEmptyPage, ChatConversationLoadingPage, ChatConversationComponent]
 })
 export class ChatPageModule {
 }
