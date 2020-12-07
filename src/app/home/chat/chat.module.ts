@@ -7,6 +7,7 @@ import {ChatPage} from './chat.page';
 import {ChatPageRoutingModule} from './chat-routing.module';
 import {ChatListComponent} from './chat-list/chat-list.component';
 import {ChatEmptyPage} from './chat-empty/chat-empty.page';
+import {LoadingPageModule} from './chat-loading/chat-loading.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import {ChatEmptyPage} from './chat-empty/chat-empty.page';
     CommonModule,
     FormsModule,
     ChatPageRoutingModule,
+    LoadingPageModule,
 
   ],
   providers: [],

@@ -6,6 +6,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <delphi-chat-empty *ngIf="userChats.length == 0"></delphi-chat-empty>
-  <delphi-chat-list [userChats]="userChats" [user]="user"></delphi-chat-list>
+  <chat-loading *ngIf="loading"></chat-loading>
+  <delphi-chat-empty *ngIf="userChats.length == 0 && !loading"></delphi-chat-empty>
+  <delphi-chat-list [loading]="loading" [userChats]="userChats" [user]="user"></delphi-chat-list>
 </ion-content>
