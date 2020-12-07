@@ -5,4 +5,5 @@ export class ChatMessage {
   sentBy: User;
   message: string;
   read: boolean;
+  sentDate: Date;
 }

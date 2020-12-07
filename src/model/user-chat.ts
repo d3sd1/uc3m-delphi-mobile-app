@@ -8,7 +8,6 @@ export class UserChat {
   groupPicture: string;
   id: number;
   users: User[];
-
 }
 
 export function getChatUnreadMessages(userChat: UserChat, currentUserId: number): number {
@@ -54,4 +53,17 @@ export function getChatPicture(chat: UserChat, currentUserId: number): string {
     }
   });
   return photo;
+}
+
+export function getUserChatStatus(chat: UserChat, currentUserId: number): string {
+  if (chat.group) {
+    return 'ONLINE';
+  }
+  let status = null;
+  chat.users.forEach((chatUser: User) => {
+    if (chatUser.id !== currentUserId) {
+      status = chatUser.chatStatus;
+    }
+  });
+  return status;
 }
