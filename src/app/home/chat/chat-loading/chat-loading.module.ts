@@ -4,20 +4,21 @@ import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
-import {LoginPageRoutingModule} from './login-routing.module';
+import {LoadingPageRoutingModule} from './chat-loading-routing.module';
 
-import {LoginPage} from './login.page';
+import {ChatLoadingPage} from './chat-loading.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule,
+    LoadingPageRoutingModule
   ],
-  providers: [
+  exports: [
+    ChatLoadingPage
   ],
-  declarations: [LoginPage]
+  declarations: [ChatLoadingPage]
 })
-export class LoginPageModule {
+export class LoadingPageModule {
 }

@@ -1,39 +1,77 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../environments/environment';
+import {AuthenticationService} from '../services/authentication-service';
+import {UserChat} from '../model/user-chat';
+import {Observable, Subject} from 'rxjs';
+import {ChatMessage} from '../model/chat-message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
 
-  private userChats = [
-    {
-      id: 4545,
-      userId: 1,
-      userName: 'Andrei',
-      userSurnames: 'García Cuadra',
-      currentOpenProjects: ['Delphi', 'UC3M'],
-      lastMesage: 'Me voy de la vida',
-      profilePicture: 'https://scontent-cdt1-1.cdninstagram.com/v/t51.2885-19/s150x150/117404919_133007181832186_8444346173741060339_n.jpg?_nc_ht=scontent-cdt1-1.cdninstagram.com&_nc_ohc=ie93npz7gCoAX8kXJYz&tp=1&oh=b59532115434c1d42a4d3584a36a2d9d&oe=5FEA9B27',
-      status: 'busy',
-      unreadMessages: 3
-    },
-    {
-      id: 545,
-      userId: 2,
-      userName: 'Lisardo',
-      userSurnames: 'Prieto Gonzalez',
-      currentOpenProjects: ['Delphi', 'UC3M', 'Profesor asociado', 'Megacrack'],
-      lastMesage: 'Buenísimos días megacrack!!',
-      profilePicture: 'https://scontent-cdt1-1.cdninstagram.com/v/t51.2885-19/s320x320/69690314_689524754857408_3903499847516291072_n.jpg?_nc_ht=scontent-cdt1-1.cdninstagram.com&_nc_ohc=WGujgq_dLuoAX-as4Yw&tp=1&oh=4c81a6fee12bc84679961be030dba407&oe=5FEA2CFB',
-      status: 'online',
-      unreadMessages: 0
-    }
-  ];
+  callingRest = false;
 
-  constructor() {
+  private subject = new Subject<any>();
+
+  constructor(private httpClient: HttpClient, private authenticationService: AuthenticationService) {
   }
 
-  getCurrentUserChats() {
-    return this.userChats; // TODO
+  public postReadChat(chatId: number) {
+    return new Promise<void>((resolve, reject) => {
+      this.httpClient.post<UserChat[]>(environment.apiUrl + '/v1/chat/read/' + chatId, {}).subscribe((userChats: UserChat[]) => {
+        resolve();
+      }, (e) => {
+        console.error(e);
+        reject();
+      });
+    });
+  }
+
+  public writeToChat(chatId: number, chatMessage: ChatMessage) {
+    return new Promise<void>((resolve, reject) => {
+      this.httpClient.post<UserChat>(environment.apiUrl + '/v1/chat/write/' + chatId, chatMessage).subscribe((userChat: UserChat) => {
+        resolve();
+      }, (e) => {
+        console.error(e);
+        reject();
+      });
+    });
+  }
+
+  public getChatById(chatId: number): Promise<UserChat> {
+    return new Promise<UserChat>((resolve, reject) => {
+      this.httpClient.get<UserChat>(environment.apiUrl + '/v1/chat/get/' + chatId).subscribe((userChat: UserChat) => {
+        userChat.chatMessages.sort((chatMessage1: ChatMessage, chatMessage2: ChatMessage) => {
+          let pos = 0;
+          if (chatMessage1.sentDate < chatMessage2.sentDate) {
+            pos = -1;
+          } else if (chatMessage1.sentDate > chatMessage2.sentDate) {
+            pos = 1;
+          }
+          return pos;
+        });
+        resolve(userChat);
+      });
+    });
+  }
+
+  getCurrentUserChats(): Observable<UserChat[]> {
+    this.updCurrentUserChats();
+    return this.subject.asObservable();
+  }
+
+  private updCurrentUserChats() {
+    if (this.callingRest) {
+      return;
+    }
+    this.callingRest = true;
+    this.httpClient.get<UserChat[]>(environment.apiUrl + '/v1/chat/list').subscribe((userChats: UserChat[]) => {
+      this.subject.next(userChats);
+      this.callingRest = false;
+    }, (e) => {
+      console.error(e);
+    });
   }
 }
