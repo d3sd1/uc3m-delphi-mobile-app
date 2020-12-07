@@ -13,6 +13,10 @@ export class ChatListComponent implements OnInit {
 
   @Input()
   user: User;
+
+  @Input()
+  loading: boolean;
+
   @Input()
   userChats: UserChat[] = [];
   userChatsBackup: UserChat[] = [];
@@ -34,6 +38,7 @@ export class ChatListComponent implements OnInit {
 
   async ngOnInit() {
     this.userChats = this.userChatsBackup;
+    console.log(this.userChats);
   }
 
   async filterList(evt) {

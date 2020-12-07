@@ -10,14 +10,9 @@ import {User} from '../../../model/user';
   styleUrls: ['chat.page.scss']
 })
 export class ChatPage implements OnInit {
-  loading = false;
+  loading = true;
   userChats: UserChat[] = [];
   user: User;
-
-  toggleLoadingAnimation() {
-    this.loading = true;
-    setTimeout(() => this.loading = false, 3000);
-  }
 
 
   constructor(private chatService: ChatService, private authService: AuthenticationService) {
@@ -30,7 +25,9 @@ export class ChatPage implements OnInit {
 
   reloadChats() {
     this.chatService.getCurrentUserChats().subscribe((currentUserChats: UserChat[]) => {
+      console.log(currentUserChats);
       this.userChats = currentUserChats;
+      this.loading = false;
     });
   }
 
