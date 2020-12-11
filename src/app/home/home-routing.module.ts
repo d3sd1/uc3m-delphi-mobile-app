@@ -40,6 +40,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/menu/processes',
     pathMatch: 'full'
+  },
+  {
+    path: 'onboarding',
+    loadChildren: () => import('./onboarding/onboarding.module').then(m => m.OnboardingPageModule)
   }
 ];
 

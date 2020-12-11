@@ -9,5 +9,6 @@ export class User {
   enabled: boolean;
   blocked: boolean;
   chatStatus: string;
+  needsOnboard: boolean;
   roles: Role[];
 }

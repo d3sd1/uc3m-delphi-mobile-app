@@ -98,6 +98,16 @@ export class AuthenticationService {
     });
   }
 
+  needsOnboard(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.getUser().then((user: User) => {
+        resolve(user.needsOnboard);
+      }).catch(() => {
+        reject();
+      });
+    });
+  }
+
   getUser(): Promise<User> {
     return new Promise<User>((resolve, reject) => {
       this.storage.get('JWT_TOKEN').then((jwt) => {
