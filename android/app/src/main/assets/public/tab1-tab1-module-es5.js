@@ -415,6 +415,12 @@
       var _proccesses_proccesses_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! ./proccesses/proccesses.component */
       "./src/app/tab1/proccesses/proccesses.component.ts");
+      /* harmony import */
+
+
+      var _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! @ionic-native/geolocation/ngx */
+      "./node_modules/@ionic-native/geolocation/__ivy_ngcc__/ngx/index.js");
 
       var Tab1PageModule = function Tab1PageModule() {
         _classCallCheck(this, Tab1PageModule);
@@ -423,7 +429,7 @@
       Tab1PageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
         imports: [_ionic_angular__WEBPACK_IMPORTED_MODULE_1__["IonicModule"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormsModule"], _explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_6__["ExploreContainerComponentModule"], _tab1_routing_module__WEBPACK_IMPORTED_MODULE_7__["Tab1PageRoutingModule"]],
         declarations: [_tab1_page__WEBPACK_IMPORTED_MODULE_5__["Tab1Page"], _proccesses_proccesses_component__WEBPACK_IMPORTED_MODULE_8__["ProccessesComponent"]],
-        providers: []
+        providers: [_ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_9__["Geolocation"]]
       })], Tab1PageModule);
       /***/
     },

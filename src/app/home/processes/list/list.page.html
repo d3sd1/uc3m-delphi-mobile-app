@@ -11,7 +11,7 @@
       </ion-segment>
     </ion-toolbar>
   </ion-list-header>
-  <ion-item *ngFor="let process of processesFiltered" [routerLink]="'process/' + process.id">
+  <ion-item *ngFor="let process of processesFiltered" [routerLink]="'single/' + process.id">
     <ion-thumbnail slot="start">
       <img src="{{process.picture}}">
     </ion-thumbnail>

@@ -9,6 +9,7 @@ import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {EmptyPageModule} from './empty/empty.module';
 import {LoadingPageModule} from './loading/loading.module';
 import {ListPageModule} from './list/list.module';
+import {SinglePage} from './single/single.page';
 
 @NgModule({
   imports: [
@@ -18,9 +19,10 @@ import {ListPageModule} from './list/list.module';
     ProcessesPageRoutingModule,
     EmptyPageModule,
     LoadingPageModule,
-    ListPageModule
+    ListPageModule,
+
   ],
-  declarations: [ProcessesPage],
+  declarations: [ProcessesPage, SinglePage],
   providers: [
     Geolocation
   ]

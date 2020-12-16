@@ -1,0 +1,20 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil básico</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Perfil básico</ion-label>
+    <ion-input (ngModelChange)="user.name=$event" [ngModel]="user?.name" placeholder="Nombre"></ion-input>
+    <ion-input (ngModelChange)="user.surnames=$event" [ngModel]="user?.surnames" placeholder="Apellidos"></ion-input>
+    <ion-input (ngModelChange)="user.email=$event" [ngModel]="user?.email" placeholder="Email"></ion-input>
+  </ion-item>
+  <section>
+    <ion-button expand="block">Guardar perfil</ion-button>
+  </section>
+</ion-content>

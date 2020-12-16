@@ -226,6 +226,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../explore-container/explore-container.module */ "./src/app/explore-container/explore-container.module.ts");
 /* harmony import */ var _tab1_routing_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./tab1-routing.module */ "./src/app/tab1/tab1-routing.module.ts");
 /* harmony import */ var _proccesses_proccesses_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./proccesses/proccesses.component */ "./src/app/tab1/proccesses/proccesses.component.ts");
+/* harmony import */ var _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic-native/geolocation/ngx */ "./node_modules/@ionic-native/geolocation/__ivy_ngcc__/ngx/index.js");
+
 
 
 
@@ -247,7 +249,9 @@ Tab1PageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _tab1_routing_module__WEBPACK_IMPORTED_MODULE_7__["Tab1PageRoutingModule"]
         ],
         declarations: [_tab1_page__WEBPACK_IMPORTED_MODULE_5__["Tab1Page"], _proccesses_proccesses_component__WEBPACK_IMPORTED_MODULE_8__["ProccessesComponent"]],
-        providers: []
+        providers: [
+            _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_9__["Geolocation"]
+        ]
     })
 ], Tab1PageModule);
 
