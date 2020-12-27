@@ -27,9 +27,7 @@
   "frameworks": [
     "AssetsLibrary",
     "MobileCoreServices",
-    "CoreLocation",
-    "LocalAuthentication",
-    "Security"
+    "CoreLocation"
   ],
   "swift_version": "5.0"
 }

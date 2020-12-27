@@ -10,11 +10,11 @@
 #endif
 #endif
 
+#import "NativeSettings.h"
 #import "CDVAssetLibraryFilesystem.h"
 #import "CDVFile.h"
 #import "CDVLocalFilesystem.h"
 #import "CDVLocation.h"
-#import "TouchID.h"
 
 FOUNDATION_EXPORT double CordovaPluginsVersionNumber;
 FOUNDATION_EXPORT const unsigned char CordovaPluginsVersionString[];
