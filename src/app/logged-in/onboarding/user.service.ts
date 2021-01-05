@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Subject} from 'rxjs';
-import {AuthenticationService} from '../../logged-out/login/authentication-service';
+import {UserStorage} from '../../core/storage/user.storage';
 import {UserChat} from '../chat/user-chat';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class UserService {
 
   private subject = new Subject<any>();
 
-  constructor(private httpClient: HttpClient, private authenticationService: AuthenticationService) {
+  constructor(private httpClient: HttpClient, private authenticationService: UserStorage) {
   }
 
   public setOnboardingStatus(status: boolean) {

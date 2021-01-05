@@ -7,6 +7,8 @@ import {TabsPageRoutingModule} from './home-routing.module';
 
 import {HomePage} from './home.page';
 import {HttpClientModule} from '@angular/common/http';
+import {ChatService} from './chat/chat.service';
+import {UserStorage} from '../core/storage/user.storage';
 
 @NgModule({
   imports: [
@@ -16,7 +18,10 @@ import {HttpClientModule} from '@angular/common/http';
     TabsPageRoutingModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    ChatService,
+    UserStorage
+  ],
   declarations: [HomePage]
 })
 export class TabsPageModule {

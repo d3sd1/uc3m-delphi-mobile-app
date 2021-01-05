@@ -4,7 +4,7 @@ import {ChatService} from '../chat.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {getChatName, UserChat} from '../user-chat';
 import {User} from '../../user';
-import {AuthenticationService} from '../../../logged-out/login/authentication-service';
+import {UserStorage} from '../../../core/storage/user.storage';
 import {ChatMessage} from './chat-message';
 
 @Component({
@@ -23,7 +23,7 @@ export class ChatConversationComponent implements OnInit {
     private chatService: ChatService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: UserStorage
   ) {
   }
 

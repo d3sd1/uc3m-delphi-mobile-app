@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ChatService} from './chat.service';
 import {UserChat} from './user-chat';
 import {User} from '../user';
-import {AuthenticationService} from '../../logged-out/login/authentication-service';
+import {UserStorage} from '../../core/storage/user.storage';
 
 @Component({
   selector: 'delphi-chat',
@@ -15,7 +15,7 @@ export class ChatPage implements OnInit {
   user: User;
 
 
-  constructor(private chatService: ChatService, private authService: AuthenticationService) {
+  constructor(private chatService: ChatService, private authService: UserStorage) {
   }
 
   async ngOnInit() {

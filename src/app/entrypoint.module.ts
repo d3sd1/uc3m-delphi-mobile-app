@@ -8,6 +8,7 @@ import {EntrypointRoutingModule} from './entrypoint-routing.module';
 import {EntrypointComponent} from './entrypoint.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IonicStorageModule} from '@ionic/storage';
+import {DelphiCoreModule} from './core/delphi-core.module';
 
 @NgModule({
   declarations: [EntrypointComponent],
@@ -18,6 +19,7 @@ import {IonicStorageModule} from '@ionic/storage';
     EntrypointRoutingModule,
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
+    DelphiCoreModule
   ],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}

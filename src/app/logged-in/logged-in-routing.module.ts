@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'menu',
     loadChildren: () => import('./home.module').then(m => m.TabsPageModule)
   },
+  {
+    path: 'logout',
+    loadChildren: () => import('./logout/logout.module').then(m => m.LogoutPageModule)
+  },
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../../../logged-out/login/authentication-service';
+import {UserStorage} from '../../../core/storage/user.storage';
 
 @Component({
   selector: 'chat-loading',
@@ -8,7 +8,7 @@ import {AuthenticationService} from '../../../logged-out/login/authentication-se
 })
 export class ChatLoadingPage implements OnInit {
 
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: UserStorage) {
   }
 
   ngOnInit() {

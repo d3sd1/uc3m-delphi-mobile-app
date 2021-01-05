@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {AuthenticationService} from '../../../logged-out/login/authentication-service';
+import {UserStorage} from '../../../core/storage/user.storage';
 import {User} from '../../user';
 
 @Component({
@@ -14,7 +14,7 @@ export class ProfileBasicPage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private authService: AuthenticationService) {
+    private authService: UserStorage) {
   }
 
   async ngOnInit() {

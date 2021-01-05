@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {User} from '../../user';
-import {AuthenticationService} from '../../../logged-out/login/authentication-service';
+import {UserStorage} from '../../../core/storage/user.storage';
 
 @Component({
   selector: 'delphi-profile-password',
@@ -14,7 +14,7 @@ export class ProfilePasswordPage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private authService: AuthenticationService) {
+    private authService: UserStorage) {
   }
 
   async ngOnInit() {

@@ -17,7 +17,7 @@ export class SplashScreenComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.router.navigateByUrl('/splash-screen/loader/permission');
+      this.router.navigateByUrl('/splash-screen/loader/permissions');
     }, this.loadTime);
   }
 }

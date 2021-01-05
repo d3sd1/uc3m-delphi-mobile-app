@@ -1,6 +1,6 @@
-import {User} from '../../logged-in/user';
+import {User} from '../../../logged-in/user';
 
-export class UserLogin {
+export class LoginResponse {
   id: number;
   user: User;
   creationDate: Date;

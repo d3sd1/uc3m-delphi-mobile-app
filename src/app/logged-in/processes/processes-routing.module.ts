@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'single/:processId',
     component: SinglePage
+  },
+  {
+    path: 'create',
+    loadChildren: () => import('./create/create.module').then(m => m.CreatePageModule)
   }
 ];
 

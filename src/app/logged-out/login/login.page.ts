@@ -1,62 +1,43 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {LoadingController} from '@ionic/angular';
-import {AuthenticationService} from './authentication-service';
+import {LoadingController, ToastController} from '@ionic/angular';
+import {LoginConsumer} from '../../core/consumer/login/login.consumer';
+import {LoginUser} from '../../core/consumer/login/login.user';
 
 @Component({
   selector: 'delphi-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
+  loginUser: LoginUser;
 
-  user = {
-    email: '',
-    password: '',
-    rememberMe: false
-  };
-  loading;
-
-  constructor(private authService: AuthenticationService, private router: Router, private loadingController: LoadingController) {
-  }
-
-  async ngOnInit() {
-    this.authService.isAuthenticated().then((authenticated) => {
-      if (authenticated) {
-        this.router.navigateByUrl('home').then(r => {
-          this.user.email = '';
-          this.user.password = '';
-          this.user.rememberMe = false;
-        });
-      }
-    }).catch(e => {
-
-    });
-  }
-
-  async doLoading() {
-    this.loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Un momento...',
-      duration: 2000
-    });
-    await this.loading.present();
+  constructor(private loginConsumer: LoginConsumer,
+              private router: Router,
+              private loadingController: LoadingController,
+              private toastController: ToastController) {
+    this.loginUser = new LoginUser();
   }
 
   async login() {
-    await this.doLoading();
-    this.authService.login(this.user).then((resp) => {
-      console.log('USER LOGIN RES ->  ', resp);
-      this.router.navigateByUrl('home').then(r => {
-        this.user.email = '';
-        this.user.password = '';
-        this.user.rememberMe = false;
+    const loading = await this.showToast('Un momento...');
+    this.loginConsumer.doLogin(this.loginUser).then(async (sucMessage: string) => {
+      await this.showToast(sucMessage);
+      this.router.navigateByUrl('/logged-in').then(() => {
+        this.loginUser = new LoginUser();
       });
-    }).catch((err) => {
-      console.log('USER LOGIN RESerr ->  ', err);
+    }).catch(async (errMessage: string) => {
+      await this.showToast(errMessage);
     }).finally(() => {
-      this.loading.dismiss();
+      loading.dismiss();
     });
   }
 
+  private async showToast(msg: string) {
+    const toast = await this.toastController.create({
+      message: msg,
+    });
+    await toast.present();
+    return toast;
+  }
 }

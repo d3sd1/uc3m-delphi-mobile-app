@@ -1,9 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {SplashScreenComponent} from './splash-screen.component';
-import {ApiLoaderComponent} from './api-loader/api-loader.component';
-import {PermissionLoaderComponent} from './permission-loader/permission-loader.component';
-import {KafkaLoaderComponent} from './kafka-loader/kafka-loader.component';
+import {ApiLoaderPage} from './api-loader/api-loader.page';
+import {PermissionsLoaderPage} from './permissions-loader/permissions-loader.page';
+import {InitLoaderPage} from './init-loader/init-loader.page';
+import {WsLoaderPage} from './ws-loader/ws-loader.page';
 
 const routes: Routes = [
   {
@@ -16,16 +17,25 @@ const routes: Routes = [
     component: SplashScreenComponent,
     children: [
       {
-        path: 'permission',
-        component: PermissionLoaderComponent
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'init'
+      },
+      {
+        path: 'init',
+        component: InitLoaderPage
       },
       {
         path: 'api',
-        component: ApiLoaderComponent
+        component: ApiLoaderPage
       },
       {
-        path: 'kafka',
-        component: KafkaLoaderComponent
+        path: 'ws',
+        component: WsLoaderPage
+      },
+      {
+        path: 'permissions',
+        component: PermissionsLoaderPage
       },
     ]
   },

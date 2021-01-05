@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AuthenticationService} from '../../../logged-out/login/authentication-service';
+import {UserStorage} from '../../../core/storage/user.storage';
 import {User} from '../../user';
 
 @Component({
@@ -13,7 +13,7 @@ export class ListPage implements OnInit {
   user: User;
   createProcessAvailable = false;
 
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: UserStorage) {
   }
 
   async ngOnInit() {

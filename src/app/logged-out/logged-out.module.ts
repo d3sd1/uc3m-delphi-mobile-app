@@ -2,19 +2,32 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LoggedOutRoutingModule} from './logged-out-routing.module';
 import {HttpClientModule} from '@angular/common/http';
+import {UserStorage} from '../core/storage/user.storage';
+import {FormsModule} from '@angular/forms';
+import {LoginPage} from './login/login.page';
+import {IonicModule} from '@ionic/angular';
+import {InvitationPage} from './invitation/invitation.page';
+import {RegisterPage} from './register/register.page';
+import {LoginConsumer} from '../core/consumer/login/login.consumer';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LoginPage,
+    RegisterPage,
+    InvitationPage
+  ],
   imports: [
     CommonModule,
     LoggedOutRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    IonicModule
   ],
-  providers: [],
-  exports: [
-    HttpClientModule
-  ]
+  providers: [
+    UserStorage,
+    LoginConsumer
+  ],
 })
 export class LoggedOutModule {
 }

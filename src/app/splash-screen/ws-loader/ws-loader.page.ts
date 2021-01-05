@@ -5,46 +5,34 @@ import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'loader',
+  selector: 'api-loader',
   template: ''
 })
-export class KafkaLoaderComponent implements OnInit {
+export class WsLoaderPage implements OnInit {
   constructor(private httpClient: HttpClient, private loadingController: LoadingController,
               private router: Router) {
+
   }
 
   async ngOnInit() {
     const loading = await this.loadingController.create({
-      message: 'Sincronizando...'
+      message: 'Cargando API...'
     });
     await loading.present();
-
     this.doCheck().then(() => {
       loading.dismiss();
-      this.router.navigateByUrl('/logged-out');
+      this.router.navigateByUrl('/splash-screen/loader/permissions');
     }).catch(async () => {
       const error = await this.loadingController.create({
-        message: 'No se ha podido cargar los permisos'
+        message: 'No se ha podido cargar la API'
       });
       await error.present();
     });
   }
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-      duration: 2000
-    });
-    await loading.present();
-
-    const {role, data} = await loading.onDidDismiss();
-    console.log('Loading dismissed!');
-  }
 
   protected doCheck(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      console.log(environment.apiUrl + '/v1/version/current');
       this.httpClient.get(environment.apiUrl + '/v1/version/current').subscribe(() => {
         resolve();
       }, (e) => {

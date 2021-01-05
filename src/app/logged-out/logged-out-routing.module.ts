@@ -1,5 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {LoginPage} from './login/login.page';
+import {RegisterPage} from './register/register.page';
+import {InvitationPage} from './invitation/invitation.page';
 
 const routes: Routes = [
   {
@@ -9,15 +12,15 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+    component: LoginPage
   },
   {
     path: 'register',
-    loadChildren: () => import('./register/register.module').then(m => m.RegisterPageModule)
+    component: RegisterPage
   },
   {
     path: 'invitation',
-    loadChildren: () => import('./invitation/invitation.module').then(m => m.InvitationModule)
+    component: InvitationPage
   },
 ];
 

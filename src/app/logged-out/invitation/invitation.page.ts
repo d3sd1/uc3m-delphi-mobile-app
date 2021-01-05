@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'delphi-invitation',
-  templateUrl: './invitation.component.html',
-  styleUrls: ['./invitation.component.scss'],
+  templateUrl: './invitation.page.html',
+  styleUrls: ['./invitation.page.scss'],
 })
-export class InvitationComponent implements OnInit {
+export class InvitationPage implements OnInit {
 
   constructor() {
   }

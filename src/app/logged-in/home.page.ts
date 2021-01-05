@@ -3,7 +3,7 @@ import {ChatService} from './chat/chat.service';
 import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {User} from './user';
-import {AuthenticationService} from '../logged-out/login/authentication-service';
+import {UserStorage} from '../core/storage/user.storage';
 import {getChatsUnreadMessages, UserChat} from './chat/user-chat';
 
 @Component({
@@ -21,7 +21,7 @@ export class HomePage implements OnInit {
   user: User;
 
   constructor(private chatService: ChatService,
-              private authService: AuthenticationService,
+              private authService: UserStorage,
               private router: Router,
               private storage: Storage) {
   }
