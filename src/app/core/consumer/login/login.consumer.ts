@@ -18,8 +18,9 @@ export class LoginConsumer {
 
   doLogin(user: LoginUser): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.http.post<LoginResponse>(environment.apiUrl + '/v1/session/login', user).subscribe((userLogin: LoginResponse) => {
-        this.userStorage.setJwt(userLogin);
+      this.http.post<LoginResponse>(environment.apiUrl + '/v1/session/login', user).subscribe(async (userLogin: LoginResponse) => {
+        await this.userStorage.setJwt(userLogin.jwt);
+        await this.userStorage.setUser(userLogin.user);
         resolve('Conexión satisfactoria');
       }, (err: HttpErrorResponse) => {
         if (err.status === 400 && err.error.message === 'INVALID_LOGIN') {
