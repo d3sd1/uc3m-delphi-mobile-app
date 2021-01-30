@@ -10,7 +10,10 @@
 #endif
 #endif
 
-#import "Bridging-Header.h"
+#import "NativeSettings.h"
+#import "CDVAssetLibraryFilesystem.h"
+#import "CDVFile.h"
+#import "CDVLocalFilesystem.h"
 #import "CDVLocation.h"
 
 FOUNDATION_EXPORT double CordovaPluginsVersionNumber;

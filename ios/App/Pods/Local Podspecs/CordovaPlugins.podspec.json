@@ -24,6 +24,10 @@
     ]
   },
   "swift_versions": "5.0",
-  "frameworks": "CoreLocation",
+  "frameworks": [
+    "AssetsLibrary",
+    "MobileCoreServices",
+    "CoreLocation"
+  ],
   "swift_version": "5.0"
 }
