@@ -15,7 +15,7 @@ export class SessionStorageService {
     });
   }
 
-  store(user: User, jwt: string): Promise<boolean> {
+  store(user: User): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       try {
         await this.storage.set(this.USER_STORAGE_KEY, JSON.stringify(user));
