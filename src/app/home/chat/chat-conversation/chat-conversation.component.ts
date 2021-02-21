@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {IonContent, NavController} from '@ionic/angular';
-import {getChatName, UserChat} from '../../../../model/user-chat';
-import {ChatService} from '../../../../mock/chat.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {User} from '../../../../model/user';
 import {AuthenticationService} from '../../../../services/authentication-service';
 import {ChatMessage} from '../../../../model/chat-message';
+import {ChatService} from '../../../logged-in/chat/chat.service';
+import {User} from '../../../logged-in/user';
+import {getChatName, UserChat} from '../../../logged-in/chat/user-chat';
 
 @Component({
   selector: 'delphi-chat-conversation',

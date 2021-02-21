@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ChatService} from '../../../mock/chat.service';
-import {UserChat} from '../../../model/user-chat';
 import {AuthenticationService} from '../../../services/authentication-service';
-import {User} from '../../../model/user';
+import {ChatService} from '../../logged-in/chat/chat.service';
+import {User} from '../../logged-in/user';
+import {UserChat} from '../../logged-in/chat/user-chat';
 
 @Component({
   selector: 'delphi-chat',

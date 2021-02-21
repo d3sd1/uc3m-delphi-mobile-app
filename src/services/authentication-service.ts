@@ -6,7 +6,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {UserLogin} from '../model/user-login';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {environment} from '../environments/environment';
-import {User} from '../model/user';
+import {User} from '../app/logged-in/user';
 
 const TOKEN_KEY = 'auth-token';
 

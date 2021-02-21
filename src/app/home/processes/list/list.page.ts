@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../../services/authentication-service';
-import {User} from '../../../../model/user';
+import {User} from '../../../logged-in/user';
 
 @Component({
   selector: 'delphi-list',

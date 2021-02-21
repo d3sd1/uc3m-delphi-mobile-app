@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Storage} from '@ionic/storage';
+import {User} from '../logged-in/user';
 
 @Injectable({
   providedIn: 'root'

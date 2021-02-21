@@ -1,4 +1,5 @@
-import {User} from './user';
+import {User} from '../app/logged-in/user';
+
 
 export class UserLogin {
   id: number;

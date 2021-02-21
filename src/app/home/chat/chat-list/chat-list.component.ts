@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ChatService} from '../../../../mock/chat.service';
-import {getChatName, getChatPicture, getChatUnreadMessages, getUserChatStatus, UserChat} from '../../../../model/user-chat';
-import {User} from '../../../../model/user';
 import {AuthenticationService} from '../../../../services/authentication-service';
+import {ChatService} from '../../../logged-in/chat/chat.service';
+import {User} from '../../../logged-in/user';
+import {getChatName, getChatPicture, getChatUnreadMessages, getUserChatStatus, UserChat} from '../../../logged-in/chat/user-chat';
 
 @Component({
   selector: 'delphi-chat-list',

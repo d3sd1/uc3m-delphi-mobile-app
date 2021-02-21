@@ -10,6 +10,8 @@ import {ChatEmptyPage} from './chat-empty/chat-empty.page';
 import {LoadingPageModule} from './chat-loading/chat-loading.module';
 import {ChatConversationLoadingPage} from './chat-conversation/chat-conversation-loading/chat-conversation-loading.page';
 import {ChatConversationComponent} from './chat-conversation/chat-conversation.component';
+import {ChatService} from './chat.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -18,9 +20,11 @@ import {ChatConversationComponent} from './chat-conversation/chat-conversation.c
     FormsModule,
     ChatPageRoutingModule,
     LoadingPageModule,
+    HttpClientModule
+  ],
+  providers: [
 
   ],
-  providers: [],
   declarations: [ChatPage, ChatListComponent, ChatEmptyPage, ChatConversationLoadingPage, ChatConversationComponent]
 })
 export class ChatPageModule {
