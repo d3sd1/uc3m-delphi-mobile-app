@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastController} from '@ionic/angular';
-import {UserStorage} from '../../core/storage/user.storage';
+import {UserStorage} from '../../../core/storage/user.storage';
 
 @Component({
   selector: 'delphi-logout',
@@ -10,7 +10,7 @@ import {UserStorage} from '../../core/storage/user.storage';
 })
 export class LogoutPage implements OnInit {
 
-  constructor(private authenticationService: UserStorage, private router: Router, private toastController: ToastController) {
+  constructor(private userStorage: UserStorage, private router: Router, private toastController: ToastController) {
   }
 
 
@@ -19,18 +19,21 @@ export class LogoutPage implements OnInit {
       message: msg,
       duration: 2000
     });
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
     await toast.present();
   }
 
   ngOnInit() {
     setTimeout(() => {
-      /*this.authenticationService.logout().then(() => {
-        this.router.navigateByUrl('login').then(() => {
+      this.userStorage.logout().then(() => {
+        this.router.navigateByUrl('/logged-out').then(() => {
           this.sendToast('Desconexión satisfactoria').then();
         });
-      }).catch(() => {
-
-      });*/
+      }).catch((e) => {
+        console.error(e);
+      });
     }, 2000);
   }
 

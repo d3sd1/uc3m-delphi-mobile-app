@@ -11,7 +11,6 @@ import {User} from '../../logged-in/user';
 export class UserStorage {
   private JWT_KEY_NAME = 'JWT_TOKEN_STR';
   private USER_KEY_NAME = 'USER_ENCODED';
-  private jwt: string = null;
   private user: User = null;
 
   constructor(private storage: Storage) {
@@ -19,19 +18,13 @@ export class UserStorage {
 
   async getJwt(): Promise<string> {
     return new Promise<string>(async (resolve, reject) => {
-      if (this.jwt === null) {
-        this.jwt = await this.storage.get(this.JWT_KEY_NAME);
-      }
-      resolve(this.jwt);
+      resolve(await this.storage.get(this.JWT_KEY_NAME));
     });
   }
 
   getUser(): Promise<User> {
     return new Promise<User>(async (resolve, reject) => {
-      if (this.user === null) {
-        this.user = JSON.parse(await this.storage.get(this.USER_KEY_NAME));
-      }
-      resolve(this.user);
+      resolve(JSON.parse(await this.storage.get(this.USER_KEY_NAME)));
     });
   }
 
@@ -41,6 +34,15 @@ export class UserStorage {
 
   async setJwt(jwt) {
     await this.storage.set(this.JWT_KEY_NAME, jwt);
+  }
+
+  async logout() {
+    await this.storage.clear();
+    await this.setUser(null);
+    await this.setJwt(null);
+    await this.storage.remove(this.USER_KEY_NAME);
+    await this.storage.remove(this.JWT_KEY_NAME);
+    console.log("KEYS -> " , await this.storage.keys())
   }
 
   needsOnboard(): Promise<boolean> {
@@ -57,6 +59,7 @@ export class UserStorage {
   isLoggedIn(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.getJwt().then((jwt: string) => {
+        console.log("JEWT -> ", jwt)
         if (jwt === null || jwt === '') {
           resolve(false);
         }
