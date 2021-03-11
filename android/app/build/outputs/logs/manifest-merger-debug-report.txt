@@ -18,7 +18,7 @@ INJECTED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/ma
 MERGED from [:capacitor-android] /Users/andreigarcia/WebstormProjects/delphi-app/node_modules/@capacitor/android/capacitor/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-50:12
 MERGED from [com.google.android.material:material:1.1.0-rc02] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/153ebed283bc1c42f03c8eb62a1084a4/material-1.1.0-rc02/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.1.0] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/02349dd37ff3b838bc51bcb2aaf1f853/appcompat-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-21:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/0ee86f03afa30fbe93aa2f48d6df112d/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/70aefb51edc4a6d2a42715f675b34b28/jetified-viewpager2-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:firebase-messaging:20.1.2] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/4b58001b7cb9fdc7d3a3643988e478e5/jetified-firebase-messaging-20.1.2/AndroidManifest.xml:17:1-44:12
@@ -92,8 +92,8 @@ MERGED from [:capacitor-android] /Users/andreigarcia/WebstormProjects/delphi-app
 MERGED from [:capacitor-android] /Users/andreigarcia/WebstormProjects/delphi-app/node_modules/@capacitor/android/capacitor/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:5-48:19
 MERGED from [com.google.android.material:material:1.1.0-rc02] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/153ebed283bc1c42f03c8eb62a1084a4/material-1.1.0-rc02/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.1.0-rc02] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/153ebed283bc1c42f03c8eb62a1084a4/material-1.1.0-rc02/AndroidManifest.xml:22:5-20
-MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-13:19
-MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-13:19
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:5-19:19
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:5-19:19
 MERGED from [com.google.firebase:firebase-messaging:20.1.2] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/4b58001b7cb9fdc7d3a3643988e478e5/jetified-firebase-messaging-20.1.2/AndroidManifest.xml:22:5-42:19
 MERGED from [com.google.firebase:firebase-messaging:20.1.2] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/4b58001b7cb9fdc7d3a3643988e478e5/jetified-firebase-messaging-20.1.2/AndroidManifest.xml:22:5-42:19
 MERGED from [com.google.android.gms:play-services-location:17.0.0] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/a95acee80dafd3288508baa42c6e17e6/jetified-play-services-location-17.0.0/AndroidManifest.xml:7:5-20
@@ -142,8 +142,6 @@ MERGED from [com.google.android.datatransport:transport-runtime:2.2.0] /Users/an
 		ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:6:9-35
 	android:theme
 		ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:11:9-40
-	android:usesCleartextTraffic
-		ADDED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:18-53
 activity#io.ionic.starter.MainActivity
 ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:13:9-32:20
 	android:label
@@ -200,18 +198,26 @@ ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/
 		ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:49:22-77
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:50:5-81
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-81
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-81
 	android:name
 		ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:50:22-78
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
 ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:52:5-81
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-81
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-81
 	android:name
 		ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:52:22-78
 uses-permission#android.permission.ACCESS_FINE_LOCATION
 ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:53:5-79
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:5-79
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:5-79
 	android:name
 		ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:53:22-76
 uses-feature#android.hardware.location.gps
 ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:54:5-66
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-66
+MERGED from [:capacitor-cordova-android-plugins] /Users/andreigarcia/WebstormProjects/delphi-app/android/capacitor-cordova-android-plugins/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-66
 	android:name
 		ADDED from /Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:54:19-63
 uses-permission#android.permission.ACCESS_NETWORK_STATE

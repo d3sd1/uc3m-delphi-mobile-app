@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LoggedInRoutingModule} from './logged-in-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AuthInterceptor} from './auth.interceptor';
+import {LoggedInInterceptor} from './logged-in.interceptor';
 
 
 @NgModule({
@@ -15,12 +15,9 @@ import {AuthInterceptor} from './auth.interceptor';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: LoggedInInterceptor,
       multi: true
     }
-  ],
-  exports: [
-    HttpClientModule
   ]
 })
 export class LoggedInModule {

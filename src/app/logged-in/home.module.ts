@@ -6,7 +6,6 @@ import {FormsModule} from '@angular/forms';
 import {TabsPageRoutingModule} from './home-routing.module';
 
 import {HomePage} from './home.page';
-import {HttpClientModule} from '@angular/common/http';
 import {ChatService} from './chat/chat.service';
 import {UserStorage} from '../core/storage/user.storage';
 
@@ -16,7 +15,6 @@ import {UserStorage} from '../core/storage/user.storage';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-    HttpClientModule,
   ],
   providers: [
     ChatService,

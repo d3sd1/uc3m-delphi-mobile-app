@@ -1,7 +1,31 @@
 (function () {
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["tab3-tab3-module"], {
+    /***/
+    "./node_modules/raw-loader/dist/cjs.js!./src/app/tab3/profile/profile.component.html":
+    /*!*******************************************************************************************!*\
+      !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/tab3/profile/profile.component.html ***!
+      \*******************************************************************************************/
+
+    /*! exports provided: default */
+
+    /***/
+    function node_modulesRawLoaderDistCjsJsSrcAppTab3ProfileProfileComponentHtml(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "<!-- Toggles in a List -->\n<ion-list>\n  <ion-item>\n    <ion-label>Pepperoni</ion-label>\n    <ion-toggle [(ngModel)]=\"pepperoni\"></ion-toggle>\n  </ion-item>\n\n  <ion-item>\n    <ion-label>Sausage</ion-label>\n    <ion-toggle [(ngModel)]=\"sausage\" disabled=\"true\"></ion-toggle>\n  </ion-item>\n\n  <ion-item>\n    <ion-label>Mushrooms</ion-label>\n    <ion-toggle [(ngModel)]=\"mushrooms\"></ion-toggle>\n  </ion-item>\n</ion-list>\n";
+      /***/
+    },
+
     /***/
     "./node_modules/raw-loader/dist/cjs.js!./src/app/tab3/tab3.page.html":
     /*!***************************************************************************!*\
@@ -18,7 +42,92 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Tab 3\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Tab 3</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <app-explore-container name=\"Tab 3 page\"></app-explore-container>\n</ion-content>\n";
+      __webpack_exports__["default"] = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Tab 3\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Tab 3</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <app-profile></app-profile>\n</ion-content>\n";
+      /***/
+    },
+
+    /***/
+    "./src/app/tab3/profile/profile.component.scss":
+    /*!*****************************************************!*\
+      !*** ./src/app/tab3/profile/profile.component.scss ***!
+      \*****************************************************/
+
+    /*! exports provided: default */
+
+    /***/
+    function srcAppTab3ProfileProfileComponentScss(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony default export */
+
+
+      __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3RhYjMvcHJvZmlsZS9wcm9maWxlLmNvbXBvbmVudC5zY3NzIn0= */";
+      /***/
+    },
+
+    /***/
+    "./src/app/tab3/profile/profile.component.ts":
+    /*!***************************************************!*\
+      !*** ./src/app/tab3/profile/profile.component.ts ***!
+      \***************************************************/
+
+    /*! exports provided: ProfileComponent */
+
+    /***/
+    function srcAppTab3ProfileProfileComponentTs(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "ProfileComponent", function () {
+        return ProfileComponent;
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      "./node_modules/tslib/tslib.es6.js");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/core */
+      "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+
+      var ProfileComponent = /*#__PURE__*/function () {
+        function ProfileComponent() {
+          _classCallCheck(this, ProfileComponent);
+
+          this.pepperoni = false;
+          this.sausage = false;
+          this.mushrooms = false;
+        }
+
+        _createClass(ProfileComponent, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {}
+        }]);
+
+        return ProfileComponent;
+      }();
+
+      ProfileComponent.ctorParameters = function () {
+        return [];
+      };
+
+      ProfileComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-profile',
+        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
+        /*! raw-loader!./profile.component.html */
+        "./node_modules/raw-loader/dist/cjs.js!./src/app/tab3/profile/profile.component.html"))["default"],
+        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
+        /*! ./profile.component.scss */
+        "./src/app/tab3/profile/profile.component.scss"))["default"]]
+      })], ProfileComponent);
       /***/
     },
 
@@ -155,6 +264,12 @@
       var _tab3_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
       /*! ./tab3-routing.module */
       "./src/app/tab3/tab3-routing.module.ts");
+      /* harmony import */
+
+
+      var _profile_profile_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      /*! ./profile/profile.component */
+      "./src/app/tab3/profile/profile.component.ts");
 
       var Tab3PageModule = function Tab3PageModule() {
         _classCallCheck(this, Tab3PageModule);
@@ -165,7 +280,7 @@
           path: '',
           component: _tab3_page__WEBPACK_IMPORTED_MODULE_6__["Tab3Page"]
         }]), _tab3_routing_module__WEBPACK_IMPORTED_MODULE_8__["Tab3PageRoutingModule"]],
-        declarations: [_tab3_page__WEBPACK_IMPORTED_MODULE_6__["Tab3Page"]]
+        declarations: [_tab3_page__WEBPACK_IMPORTED_MODULE_6__["Tab3Page"], _profile_profile_component__WEBPACK_IMPORTED_MODULE_9__["ProfileComponent"]]
       })], Tab3PageModule);
       /***/
     },

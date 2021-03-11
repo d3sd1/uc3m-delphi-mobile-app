@@ -10,8 +10,5 @@
     }
   },
   "cordova": {},
-  "server": {
-    "url": "http://localhost:8100",
-    "cleartext": true
-  }
+  "backgroundColor": "#FFFFFF"
 }

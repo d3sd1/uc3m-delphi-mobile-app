@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginPage} from './login/login.page';
 import {RegisterPage} from './register/register.page';
 import {InvitationPage} from './invitation/invitation.page';
+import {LoggedOutGuard} from './logged-out.guard';
 
 const routes: Routes = [
   {
@@ -12,15 +13,18 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginPage
+    component: LoginPage,
+    canLoad: [LoggedOutGuard]
   },
   {
     path: 'register',
-    component: RegisterPage
+    component: RegisterPage,
+    canLoad: [LoggedOutGuard]
   },
   {
     path: 'invitation',
-    component: InvitationPage
+    component: InvitationPage,
+    canLoad: [LoggedOutGuard]
   },
 ];
 

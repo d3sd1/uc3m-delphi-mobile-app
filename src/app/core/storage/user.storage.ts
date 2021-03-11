@@ -11,39 +11,36 @@ import {User} from '../../logged-in/user';
 export class UserStorage {
   private JWT_KEY_NAME = 'JWT_TOKEN_STR';
   private USER_KEY_NAME = 'USER_ENCODED';
-  private jwt: any;
-  private user: User;
+  private jwt: string = null;
+  private user: User = null;
 
-  constructor(private  storage: Storage,
-              private plt: Platform) {
-    this.readStorageJwt();
-    this.readStorageUser();
+  constructor(private storage: Storage) {
   }
 
-  getJwt(): object {
-    return this.jwt;
+  async getJwt(): Promise<string> {
+    return new Promise<string>(async (resolve, reject) => {
+      if (this.jwt === null) {
+        this.jwt = await this.storage.get(this.JWT_KEY_NAME);
+      }
+      resolve(this.jwt);
+    });
   }
 
-  getUser(): User {
-    return this.user;
+  getUser(): Promise<User> {
+    return new Promise<User>(async (resolve, reject) => {
+      if (this.user === null) {
+        this.user = JSON.parse(await this.storage.get(this.USER_KEY_NAME));
+      }
+      resolve(this.user);
+    });
   }
 
   async setUser(user: User) {
-    console.log('STORE USER: ', user);
     await this.storage.set(this.USER_KEY_NAME, JSON.stringify(user));
   }
 
   async setJwt(jwt) {
-    await this.storage.set(this.JWT_KEY_NAME, JSON.stringify(jwt));
-  }
-
-  private async readStorageJwt() {
-    this.jwt = new JwtHelperService().decodeToken(await this.storage.get(this.JWT_KEY_NAME));
-    console.log(new JwtHelperService().decodeToken(await this.storage.get(this.JWT_KEY_NAME)));
-  }
-
-  private async readStorageUser() {
-    this.user = JSON.parse(await this.storage.get(this.USER_KEY_NAME));
+    await this.storage.set(this.JWT_KEY_NAME, jwt);
   }
 
   needsOnboard(): Promise<boolean> {
@@ -57,22 +54,18 @@ export class UserStorage {
   }
 
 
-  isAuthenticated(): Promise<boolean> {
+  isLoggedIn(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.storage.get('JWT_TOKEN').then((jwt) => {
+      this.getJwt().then((jwt: string) => {
         if (jwt === null || jwt === '') {
           resolve(false);
         }
         const helper = new JwtHelperService();
         const isExpired = helper.isTokenExpired(jwt);
-        if (!isExpired) {
-          resolve(true);
-        }
-        resolve(false);
+        resolve(!isExpired);
       }).catch(e => {
-        reject(false);
+        reject(e);
       });
     });
   }
-
 }

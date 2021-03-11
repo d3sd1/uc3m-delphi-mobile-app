@@ -1,8 +1,4 @@
 (function () {
-  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
@@ -118,43 +114,23 @@
     },
 
     /***/
-    "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html":
-    /*!**************************************************************************!*\
-      !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html ***!
-      \**************************************************************************/
+    "./src/app/entrypoint-routing.module.ts":
+    /*!**********************************************!*\
+      !*** ./src/app/entrypoint-routing.module.ts ***!
+      \**********************************************/
 
-    /*! exports provided: default */
-
-    /***/
-    function node_modulesRawLoaderDistCjsJsSrcAppAppComponentHtml(module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony default export */
-
-
-      __webpack_exports__["default"] = "<nb-layout>\n\n  <nb-layout-header fixed>\n  <!-- Insert header here -->\n  </nb-layout-header>\n\n  <nb-layout-column>\n\n    <ion-app>\n      <ion-router-outlet></ion-router-outlet>\n    </ion-app>\n    \n  </nb-layout-column>\n\n  <nb-layout-footer fixed>\n  <!-- Insert footer here -->\n  </nb-layout-footer>\n\n</nb-layout>\n";
-      /***/
-    },
+    /*! exports provided: EntrypointRoutingModule */
 
     /***/
-    "./src/app/app-routing.module.ts":
-    /*!***************************************!*\
-      !*** ./src/app/app-routing.module.ts ***!
-      \***************************************/
-
-    /*! exports provided: AppRoutingModule */
-
-    /***/
-    function srcAppAppRoutingModuleTs(module, __webpack_exports__, __webpack_require__) {
+    function srcAppEntrypointRoutingModuleTs(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
       /* harmony export (binding) */
 
 
-      __webpack_require__.d(__webpack_exports__, "AppRoutingModule", function () {
-        return AppRoutingModule;
+      __webpack_require__.d(__webpack_exports__, "EntrypointRoutingModule", function () {
+        return EntrypointRoutingModule;
       });
       /* harmony import */
 
@@ -177,68 +153,74 @@
 
       var routes = [{
         path: '',
+        pathMatch: 'full',
+        redirectTo: 'splash-screen'
+      }, {
+        path: 'splash-screen',
         loadChildren: function loadChildren() {
           return __webpack_require__.e(
-          /*! import() | tabs-tabs-module */
-          "tabs-tabs-module").then(__webpack_require__.bind(null,
-          /*! ./tabs/tabs.module */
-          "./src/app/tabs/tabs.module.ts")).then(function (m) {
-            return m.TabsPageModule;
+          /*! import() | loader-splash-screen-module */
+          "loader-splash-screen-module").then(__webpack_require__.bind(null,
+          /*! ./loader/splash-screen.module */
+          "./src/app/loader/splash-screen.module.ts")).then(function (m) {
+            return m.SplashScreenModule;
+          });
+        }
+      }, {
+        path: 'logged-in',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() | logged-in-logged-in-module */
+          [__webpack_require__.e("common"), __webpack_require__.e("logged-in-logged-in-module")]).then(__webpack_require__.bind(null,
+          /*! ./logged-in/logged-in.module */
+          "./src/app/logged-in/logged-in.module.ts")).then(function (m) {
+            return m.LoggedInModule;
+          });
+        }
+      }, {
+        path: 'logged-out',
+        loadChildren: function loadChildren() {
+          return Promise.all(
+          /*! import() | logged-out-logged-out-module */
+          [__webpack_require__.e("common"), __webpack_require__.e("logged-out-logged-out-module")]).then(__webpack_require__.bind(null,
+          /*! ./logged-out/logged-out.module */
+          "./src/app/logged-out/logged-out.module.ts")).then(function (m) {
+            return m.LoggedOutModule;
           });
         }
       }];
 
-      var AppRoutingModule = function AppRoutingModule() {
-        _classCallCheck(this, AppRoutingModule);
+      var EntrypointRoutingModule = function EntrypointRoutingModule() {
+        _classCallCheck(this, EntrypointRoutingModule);
       };
 
-      AppRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+      EntrypointRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         imports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(routes, {
           preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_2__["PreloadAllModules"]
         })],
         exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]]
-      })], AppRoutingModule);
+      })], EntrypointRoutingModule);
       /***/
     },
 
     /***/
-    "./src/app/app.component.scss":
-    /*!************************************!*\
-      !*** ./src/app/app.component.scss ***!
-      \************************************/
+    "./src/app/entrypoint.component.ts":
+    /*!*****************************************!*\
+      !*** ./src/app/entrypoint.component.ts ***!
+      \*****************************************/
 
-    /*! exports provided: default */
-
-    /***/
-    function srcAppAppComponentScss(module, __webpack_exports__, __webpack_require__) {
-      "use strict";
-
-      __webpack_require__.r(__webpack_exports__);
-      /* harmony default export */
-
-
-      __webpack_exports__["default"] = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuc2NzcyJ9 */";
-      /***/
-    },
+    /*! exports provided: EntrypointComponent */
 
     /***/
-    "./src/app/app.component.ts":
-    /*!**********************************!*\
-      !*** ./src/app/app.component.ts ***!
-      \**********************************/
-
-    /*! exports provided: AppComponent */
-
-    /***/
-    function srcAppAppComponentTs(module, __webpack_exports__, __webpack_require__) {
+    function srcAppEntrypointComponentTs(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
       /* harmony export (binding) */
 
 
-      __webpack_require__.d(__webpack_exports__, "AppComponent", function () {
-        return AppComponent;
+      __webpack_require__.d(__webpack_exports__, "EntrypointComponent", function () {
+        return EntrypointComponent;
       });
       /* harmony import */
 
@@ -252,91 +234,36 @@
       var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! @angular/core */
       "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-      /* harmony import */
 
-
-      var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! @ionic/angular */
-      "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
-      /* harmony import */
-
-
-      var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-      /*! @ionic-native/splash-screen/ngx */
-      "./node_modules/@ionic-native/splash-screen/__ivy_ngcc__/ngx/index.js");
-      /* harmony import */
-
-
-      var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-      /*! @ionic-native/status-bar/ngx */
-      "./node_modules/@ionic-native/status-bar/__ivy_ngcc__/ngx/index.js");
-
-      var AppComponent = /*#__PURE__*/function () {
-        function AppComponent(platform, splashScreen, statusBar) {
-          _classCallCheck(this, AppComponent);
-
-          this.platform = platform;
-          this.splashScreen = splashScreen;
-          this.statusBar = statusBar;
-          this.initializeApp();
-        }
-
-        _createClass(AppComponent, [{
-          key: "initializeApp",
-          value: function initializeApp() {
-            var _this = this;
-
-            this.platform.ready().then(function () {
-              _this.statusBar.styleDefault();
-
-              _this.splashScreen.hide();
-            });
-          }
-        }]);
-
-        return AppComponent;
-      }();
-
-      AppComponent.ctorParameters = function () {
-        return [{
-          type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"]
-        }, {
-          type: _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_3__["SplashScreen"]
-        }, {
-          type: _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__["StatusBar"]
-        }];
+      var EntrypointComponent = function EntrypointComponent() {
+        _classCallCheck(this, EntrypointComponent);
       };
 
-      AppComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'app-root',
-        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
-        /*! raw-loader!./app.component.html */
-        "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html"))["default"],
-        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
-        /*! ./app.component.scss */
-        "./src/app/app.component.scss"))["default"]]
-      })], AppComponent);
+      EntrypointComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'delphi-root',
+        template: "\n    <ion-app>\n      <ion-router-outlet></ion-router-outlet>\n    </ion-app>"
+      })], EntrypointComponent);
       /***/
     },
 
     /***/
-    "./src/app/app.module.ts":
-    /*!*******************************!*\
-      !*** ./src/app/app.module.ts ***!
-      \*******************************/
+    "./src/app/entrypoint.module.ts":
+    /*!**************************************!*\
+      !*** ./src/app/entrypoint.module.ts ***!
+      \**************************************/
 
-    /*! exports provided: AppModule */
+    /*! exports provided: EntrypointModule */
 
     /***/
-    function srcAppAppModuleTs(module, __webpack_exports__, __webpack_require__) {
+    function srcAppEntrypointModuleTs(module, __webpack_exports__, __webpack_require__) {
       "use strict";
 
       __webpack_require__.r(__webpack_exports__);
       /* harmony export (binding) */
 
 
-      __webpack_require__.d(__webpack_exports__, "AppModule", function () {
-        return AppModule;
+      __webpack_require__.d(__webpack_exports__, "EntrypointModule", function () {
+        return EntrypointModule;
       });
       /* harmony import */
 
@@ -371,62 +298,42 @@
       /* harmony import */
 
 
-      var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-      /*! @ionic-native/splash-screen/ngx */
-      "./node_modules/@ionic-native/splash-screen/__ivy_ngcc__/ngx/index.js");
+      var _entrypoint_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! ./entrypoint-routing.module */
+      "./src/app/entrypoint-routing.module.ts");
       /* harmony import */
 
 
-      var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
-      /*! @ionic-native/status-bar/ngx */
-      "./node_modules/@ionic-native/status-bar/__ivy_ngcc__/ngx/index.js");
+      var _entrypoint_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ./entrypoint.component */
+      "./src/app/entrypoint.component.ts");
       /* harmony import */
 
 
-      var _app_routing_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-      /*! ./app-routing.module */
-      "./src/app/app-routing.module.ts");
-      /* harmony import */
-
-
-      var _app_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
-      /*! ./app.component */
-      "./src/app/app.component.ts");
-      /* harmony import */
-
-
-      var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+      var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
       /*! @angular/platform-browser/animations */
       "./node_modules/@angular/platform-browser/__ivy_ngcc__/fesm2015/animations.js");
       /* harmony import */
 
 
-      var _nebular_theme__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-      /*! @nebular/theme */
-      "./node_modules/@nebular/theme/__ivy_ngcc__/fesm2015/index.js");
-      /* harmony import */
+      var _ionic_storage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+      /*! @ionic/storage */
+      "./node_modules/@ionic/storage/__ivy_ngcc__/fesm2015/ionic-storage.js");
 
-
-      var _nebular_eva_icons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
-      /*! @nebular/eva-icons */
-      "./node_modules/@nebular/eva-icons/__ivy_ngcc__/fesm2015/index.js");
-
-      var AppModule = function AppModule() {
-        _classCallCheck(this, AppModule);
+      var EntrypointModule = function EntrypointModule() {
+        _classCallCheck(this, EntrypointModule);
       };
 
-      AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]],
+      EntrypointModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        declarations: [_entrypoint_component__WEBPACK_IMPORTED_MODULE_6__["EntrypointComponent"]],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), _app_routing_module__WEBPACK_IMPORTED_MODULE_7__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_9__["BrowserAnimationsModule"], _nebular_theme__WEBPACK_IMPORTED_MODULE_10__["NbThemeModule"].forRoot({
-          name: 'default'
-        }), _nebular_theme__WEBPACK_IMPORTED_MODULE_10__["NbLayoutModule"], _nebular_eva_icons__WEBPACK_IMPORTED_MODULE_11__["NbEvaIconsModule"]],
-        providers: [_ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__["StatusBar"], _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_5__["SplashScreen"], {
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), _entrypoint_routing_module__WEBPACK_IMPORTED_MODULE_5__["EntrypointRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"], _ionic_storage__WEBPACK_IMPORTED_MODULE_8__["IonicStorageModule"].forRoot()],
+        providers: [{
           provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"],
           useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"]
         }],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]]
-      })], AppModule);
+        bootstrap: [_entrypoint_component__WEBPACK_IMPORTED_MODULE_6__["EntrypointComponent"]]
+      })], EntrypointModule);
       /***/
     },
 
@@ -454,7 +361,9 @@
 
 
       var environment = {
-        production: false
+        production: false,
+        apiUrl: 'http://127.0.0.1:8080',
+        debug: true
       };
       /*
        * For easier debugging in development mode, you can import the following file
@@ -496,9 +405,9 @@
       /* harmony import */
 
 
-      var _app_app_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-      /*! ./app/app.module */
-      "./src/app/app.module.ts");
+      var _app_entrypoint_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! ./app/entrypoint.module */
+      "./src/app/entrypoint.module.ts");
       /* harmony import */
 
 
@@ -510,7 +419,7 @@
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["enableProdMode"])();
       }
 
-      Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_2__["AppModule"])["catch"](function (err) {
+      Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformBrowserDynamic"])().bootstrapModule(_app_entrypoint_module__WEBPACK_IMPORTED_MODULE_2__["EntrypointModule"])["catch"](function (err) {
         return console.log(err);
       });
       /***/

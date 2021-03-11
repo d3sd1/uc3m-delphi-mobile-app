@@ -1,5 +1,18 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["tab2-tab2-module"],{
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/tab2/chat/chat.component.html":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/tab2/chat/chat.component.html ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n<nb-card size=\"small\">\n  <nb-list>\n    <nb-list-item *ngFor=\"let user of users\">\n      <nb-user [name]=\"user.name\" [title]=\"user.title\">\n      </nb-user>\n    </nb-list-item>\n  </nb-list>\n</nb-card>\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/tab2/tab2.page.html":
 /*!***************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/tab2/tab2.page.html ***!
@@ -9,7 +22,51 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Tab 2\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Tab 2</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <app-explore-container name=\"Tab 2 page\"></app-explore-container>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Tab 2\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  <ion-header collapse=\"condense\">\n    <ion-toolbar>\n      <ion-title size=\"large\">Tab 2 aa</ion-title>\n    </ion-toolbar>\n  </ion-header>\n  <nb-card [nbSpinner]=\"loading\" nbSpinnerStatus=\"danger\">\n    <nb-card-body>Card Content</nb-card-body>\n  </nb-card>\n  <app-explore-container name=\"Tab 2 aaaaa\"></app-explore-container>\n</ion-content>\n");
+
+/***/ }),
+
+/***/ "./src/app/tab2/chat/chat.component.scss":
+/*!***********************************************!*\
+  !*** ./src/app/tab2/chat/chat.component.scss ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3RhYjIvY2hhdC9jaGF0LmNvbXBvbmVudC5zY3NzIn0= */");
+
+/***/ }),
+
+/***/ "./src/app/tab2/chat/chat.component.ts":
+/*!*********************************************!*\
+  !*** ./src/app/tab2/chat/chat.component.ts ***!
+  \*********************************************/
+/*! exports provided: ChatComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatComponent", function() { return ChatComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+
+
+let ChatComponent = class ChatComponent {
+    constructor() { }
+    ngOnInit() { }
+};
+ChatComponent.ctorParameters = () => [];
+ChatComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-chat',
+        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./chat.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/tab2/chat/chat.component.html")).default,
+        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./chat.component.scss */ "./src/app/tab2/chat/chat.component.scss")).default]
+    })
+], ChatComponent);
+
+
 
 /***/ }),
 
@@ -68,6 +125,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tab2_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tab2.page */ "./src/app/tab2/tab2.page.ts");
 /* harmony import */ var _explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../explore-container/explore-container.module */ "./src/app/explore-container/explore-container.module.ts");
 /* harmony import */ var _tab2_routing_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./tab2-routing.module */ "./src/app/tab2/tab2-routing.module.ts");
+/* harmony import */ var _chat_chat_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./chat/chat.component */ "./src/app/tab2/chat/chat.component.ts");
+
 
 
 
@@ -87,7 +146,7 @@ Tab2PageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _explore_container_explore_container_module__WEBPACK_IMPORTED_MODULE_6__["ExploreContainerComponentModule"],
             _tab2_routing_module__WEBPACK_IMPORTED_MODULE_7__["Tab2PageRoutingModule"]
         ],
-        declarations: [_tab2_page__WEBPACK_IMPORTED_MODULE_5__["Tab2Page"]]
+        declarations: [_tab2_page__WEBPACK_IMPORTED_MODULE_5__["Tab2Page"], _chat_chat_component__WEBPACK_IMPORTED_MODULE_8__["ChatComponent"]]
     })
 ], Tab2PageModule);
 
@@ -123,7 +182,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let Tab2Page = class Tab2Page {
-    constructor() { }
+    constructor() {
+        this.loading = false;
+    }
+    toggleLoadingAnimation() {
+        this.loading = true;
+        setTimeout(() => this.loading = false, 3000);
+    }
 };
 Tab2Page.ctorParameters = () => [];
 Tab2Page = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([

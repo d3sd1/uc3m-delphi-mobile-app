@@ -38,6 +38,9 @@ export class LoginPage {
       message: msg,
     });
     await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
     return toast;
   }
 }
