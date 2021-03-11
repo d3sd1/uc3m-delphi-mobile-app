@@ -18,7 +18,7 @@ export class LoggedInGuard implements CanActivate, CanActivateChild {
     return true;
   }
 
-  canActivateChild(): Promise<boolean> {
+  canActivateChild(): Promise<boolean | UrlTree> {
     return this.canActivate();
   }
 
