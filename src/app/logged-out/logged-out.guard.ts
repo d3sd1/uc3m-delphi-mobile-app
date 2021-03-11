@@ -1,17 +1,22 @@
 import {Injectable} from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanLoad, Route, UrlSegment} from '@angular/router';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanLoad, Route, UrlSegment, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {UserStorage} from '../core/storage/user.storage';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoggedOutGuard implements CanLoad {
-  constructor(private userStorage: UserStorage) {
+export class LoggedOutGuard implements CanActivate {
+  constructor(private userStorage: UserStorage, private router: Router) {
 
   }
 
-  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.userStorage.isLoggedIn().then(result => !result);
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
+    const canActivate = !(await this.userStorage.isLoggedIn());
+    if(!canActivate) {
+      return this.router.parseUrl('/logged-in');
+    }
+    return true;
   }
+
 }

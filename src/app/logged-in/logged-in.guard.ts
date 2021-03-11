@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CanActivate, CanActivateChild} from '@angular/router';
+import {CanActivate, CanActivateChild, Router, UrlTree} from '@angular/router';
 import {UserStorage} from '../core/storage/user.storage';
 
 @Injectable({
@@ -7,11 +7,15 @@ import {UserStorage} from '../core/storage/user.storage';
 })
 export class LoggedInGuard implements CanActivate, CanActivateChild {
 
-  constructor(public auth: UserStorage) {
+  constructor(public userStorage: UserStorage, private router: Router) {
   }
 
-  canActivate(): Promise<boolean> {
-    return this.auth.isLoggedIn();
+  async canActivate(): Promise<boolean | UrlTree> {
+    const canActivate = await this.userStorage.isLoggedIn();
+    if (!canActivate) {
+      return this.router.parseUrl('/logged-out');
+    }
+    return true;
   }
 
   canActivateChild(): Promise<boolean> {

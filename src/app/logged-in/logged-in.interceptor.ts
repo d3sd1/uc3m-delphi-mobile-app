@@ -14,10 +14,7 @@ export class LoggedInInterceptor implements HttpInterceptor {
   }
 
   async handle(req: HttpRequest<any>, next: HttpHandler) {
-
-    console.log('INTERCEPTORRR');
     const jwt = await this.userStorage.getJwt();
-    console.log('jwwttt',jwt);
     const authReq = req.clone({
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

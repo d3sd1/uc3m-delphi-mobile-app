@@ -14,17 +14,17 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginPage,
-    canLoad: [LoggedOutGuard]
+    canActivate: [LoggedOutGuard]
   },
   {
     path: 'register',
     component: RegisterPage,
-    canLoad: [LoggedOutGuard]
+    canActivate: [LoggedOutGuard]
   },
   {
     path: 'invitation',
     component: InvitationPage,
-    canLoad: [LoggedOutGuard]
+    canActivate: [LoggedOutGuard]
   },
 ];
 

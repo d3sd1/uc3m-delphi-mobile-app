@@ -1,5 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {LoggedInGuard} from './logged-in.guard';
+import {LogoutPage} from './logout/logout.page';
 
 const routes: Routes = [
   {
@@ -9,11 +11,13 @@ const routes: Routes = [
   },
   {
     path: 'menu',
-    loadChildren: () => import('./home.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./home.module').then(m => m.TabsPageModule),
+    canActivateChild: [LoggedInGuard]
   },
   {
     path: 'logout',
-    loadChildren: () => import('./logout/logout.module').then(m => m.LogoutPageModule)
+    component: LogoutPage,
+    canActivate: [LoggedInGuard]
   },
 ];
 
