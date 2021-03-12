@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {NavController, ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'delphi-single',
@@ -8,11 +8,31 @@ import {NavController} from '@ionic/angular';
 })
 export class SinglePage implements OnInit {
 
+  showExpertForm = false;
+  invitationEmail = '';
+
   constructor(
+    private toastController: ToastController,
     private navCtrl: NavController) {
   }
 
   ngOnInit() {
+  }
+
+  showExpertInvitation() {
+    this.showExpertForm = true;
+  }
+
+  async sendExpertInvitation() {
+    this.showExpertForm = false;
+    this.invitationEmail = '';
+    const toast = await this.toastController.create({
+      message: 'Invitación enviada',
+    });
+    await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
   }
 
   goBack() {

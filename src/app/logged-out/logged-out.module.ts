@@ -7,14 +7,12 @@ import {FormsModule} from '@angular/forms';
 import {LoginPage} from './login/login.page';
 import {IonicModule} from '@ionic/angular';
 import {InvitationPage} from './invitation/invitation.page';
-import {RegisterPage} from './register/register.page';
 import {LoginConsumer} from '../core/consumer/login/login.consumer';
 
 
 @NgModule({
   declarations: [
     LoginPage,
-    RegisterPage,
     InvitationPage
   ],
   imports: [

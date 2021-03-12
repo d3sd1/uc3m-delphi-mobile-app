@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {User} from '../../user';
+import {ProcessService} from '../process.service';
 
 @Component({
   selector: 'delphi-list',
@@ -13,13 +14,16 @@ export class ListPage implements OnInit {
   user: User;
   createProcessAvailable = false;
 
-  constructor(private authService: UserStorage) {
+  constructor(private authService: UserStorage, private processService: ProcessService) {
   }
 
   async ngOnInit() {
     this.user = await this.authService.getUser();
     this.canCreateProcess();
     this.filterProcesses('active');
+    this.processService.getAllProcesses().subscribe((processes) => {
+      console.log(processes)
+    });
   }
 
   canCreateProcess() {
