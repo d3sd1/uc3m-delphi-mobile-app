@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
+import {UserStorage} from '../../../core/storage/user.storage';
 
 @Component({
   selector: 'delphi-single',
@@ -13,7 +14,8 @@ export class SinglePage implements OnInit {
 
   constructor(
     private toastController: ToastController,
-    private navCtrl: NavController) {
+    private navCtrl: NavController,
+    public userStorage: UserStorage) {
   }
 
   ngOnInit() {

@@ -15,21 +15,58 @@
     <ion-label>Carretilleros</ion-label>
   </ion-item>
   <section>
-    <rating [(ngModel)]="'1'"
+    Accesibilidad
+    <rating [rate]="1"
             readonly="false"
-    size="default" >
+            size="default" >
     </rating>
+  </section>
+  <section>
+    Seguridad
+    <rating [rate]="2.5"
+            readonly="false"
+            size="default" >
+    </rating>
+  </section>
+
+  <section>
+    Calidad trabajo actual
+    <rating [rate]="4.3"
+            readonly="false"
+            size="default" >
+    </rating>
+  </section>
+
+  <section>
+    <b>Comentarios</b>
+    <ion-item-divider>
+      <ion-label>
+        Se deben llevar guantes
+      </ion-label>
+    </ion-item-divider>
+    <ion-item-divider>
+      <ion-label>
+        Debemos tirar de la carretera entre 4
+      </ion-label>
+    </ion-item-divider>
+    <ion-item-divider>
+      <ion-label>
+        Las carretillas deben llevar mangos
+      </ion-label>
+    </ion-item-divider>
   </section>
 
   <section>
     <ion-button expand="block" (click)="showExpertInvitation()" *ngIf="!showExpertForm">Invitar experto</ion-button>
     <ion-input placeholder="Email del experto" [(ngModel)]="invitationEmail" *ngIf="showExpertForm"></ion-input>
     <ion-button color="primary" *ngIf="showExpertForm" (click)="sendExpertInvitation()">Enviar invitación</ion-button>
-
   </section>
   <section>
     <ion-button expand="block">Cerrar ronda y analizar resultados</ion-button>
   </section>
+  <!--<section *ngIf="userStorage.hasRole('EXPERT')">
+    <ion-button expand="block" (click)="showExpertInvitation()" *ngIf="!showExpertForm">Enviar votos</ion-button>
+  </section>-->
 
 
 </ion-content>

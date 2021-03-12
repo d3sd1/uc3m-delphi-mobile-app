@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {User} from '../../logged-in/user';
+import {Role} from '../../../model/role';
 
 
 @Injectable({
@@ -53,6 +54,15 @@ export class UserStorage {
         reject();
       });*/
     });
+  }
+
+  async hasRole(roleName: string) {
+    const user = await this.getUser();
+    /*const roleIdx = user.roles.findIndex((role: Role) => {
+      return role.name === roleName;
+    });
+    return roleIdx !== -1;*/
+    return false;
   }
 
 
