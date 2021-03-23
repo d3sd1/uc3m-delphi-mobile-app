@@ -11,7 +11,7 @@
       </ion-segment>
     </ion-toolbar>
   </ion-list-header>
-  <ion-item *ngFor="let process of processes" [routerLink]="'single/' + process.id">
+  <ion-item *ngFor="let process of filteredProcesses" [routerLink]="'single/' + process.id">
     <ion-thumbnail slot="start">
       <img [src]="process.pictureUrl" alt="Process picture.">
     </ion-thumbnail>
@@ -21,8 +21,8 @@
       </h3>
       <p>
         <span
-          *ngIf="isBeforeToday(process.endTime)"><countdown #cd [config]="getCountdownConfig(parseDate(process.endTime))" end></countdown> horas restantes</span>
-        <a *ngIf="!isBeforeToday(process.endTime)">Ver resultados</a>
+          *ngIf="isBeforeToday(parseDate(process.endTime))"><countdown #cd [config]="getCountdownConfig(parseDate(process.endTime))" end></countdown> horas restantes</span>
+        <a *ngIf="!isBeforeToday(parseDate(process.endTime))">Ver resultados</a>
       </p>
     </ion-label>
   </ion-item>

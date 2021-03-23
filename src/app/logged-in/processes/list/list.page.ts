@@ -12,6 +12,7 @@ import {CountdownConfig} from 'ngx-countdown';
 })
 export class ListPage implements OnInit {
   @Input() processes: Process[];
+  filteredProcesses: Process[];
   user: User;
   currentTime: Date = new Date();
 
@@ -19,18 +20,18 @@ export class ListPage implements OnInit {
   }
 
   async ngOnInit() {
-    console.log(this.currentTime);
-    console.log(this.processes);
+    this.filterProcesses();
     this.user = await this.authService.getUser();
     this.currentTime = new Date();
   }
 
   parseDate(date: Date): Date {
-    if(typeof date !== 'object') {
+    if (typeof date !== 'object') {
       date = new Date(date);
     }
     return date;
   }
+
   isBeforeToday(date: Date) {
     return new Date().getTime() < this.parseDate(date).getTime();
   }
@@ -47,7 +48,7 @@ export class ListPage implements OnInit {
     ];
     let configFormat: CountdownConfig = {
       stopTime: endTime,
-      formatDate: ({ date, formatStr }) => {
+      formatDate: ({date, formatStr}) => {
         let duration = Number(date || 0);
         return CountdownTimeUnits.reduce((current, [name, unit]) => {
           if (current.indexOf(name) !== -1) {
@@ -62,5 +63,17 @@ export class ListPage implements OnInit {
       },
     };
     return configFormat;
+  }
+
+  filterProcesses(ev?: Event) {
+    this.filteredProcesses = [];
+    const wantsFinished = ev?.target['value'] === 'finished';
+    this.processes.forEach((process: Process) => {
+      if (wantsFinished && !this.isBeforeToday(this.parseDate(process.endTime))) {
+        this.filteredProcesses.push(process);
+      } else if (!wantsFinished && this.isBeforeToday(this.parseDate(process.endTime))) {
+        this.filteredProcesses.push(process);
+      }
+    });
   }
 }
