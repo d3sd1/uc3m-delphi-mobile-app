@@ -7,13 +7,15 @@ import {IonicModule} from '@ionic/angular';
 import {ListPageRoutingModule} from './list-routing.module';
 
 import {ListPage} from './list.page';
+import {CountdownModule} from 'ngx-countdown';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ListPageRoutingModule
+    ListPageRoutingModule,
+    CountdownModule
   ],
   exports: [
     ListPage

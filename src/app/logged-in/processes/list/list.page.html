@@ -11,21 +11,23 @@
       </ion-segment>
     </ion-toolbar>
   </ion-list-header>
-  <ion-item *ngFor="let process of processesFiltered" [routerLink]="'single/' + process.id">
+  <ion-item *ngFor="let process of processes" [routerLink]="'single/' + process.id">
     <ion-thumbnail slot="start">
-      <img src="{{process.picture}}">
+      <img [src]="process.pictureUrl" alt="Process picture.">
     </ion-thumbnail>
     <ion-label>
       <h3>
         {{ process.description }}
       </h3>
       <p>
-        {{ process.status === 'finished' ? 'Ver resultados' : process.remainingTime }}
+        <span
+          *ngIf="isBeforeToday(process.endTime)"><countdown #cd [config]="getCountdownConfig(parseDate(process.endTime))" end></countdown> horas restantes</span>
+        <a *ngIf="!isBeforeToday(process.endTime)">Ver resultados</a>
       </p>
     </ion-label>
   </ion-item>
 </ion-list>
-<ion-fab *ngIf="createProcessAvailable" class="process add" horizontal="end" slot="fixed" vertical="bottom">
+<ion-fab class="process add" horizontal="end" slot="fixed" vertical="bottom">
   <ion-fab-button>
     <ion-icon name="add" routerLink="create"></ion-icon>
   </ion-fab-button>

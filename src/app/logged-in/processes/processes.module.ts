@@ -12,6 +12,7 @@ import {ListPageModule} from './list/list.module';
 import {SinglePage} from './single/single.page';
 import {ProcessService} from './process.service';
 import {IonicRatingModule} from 'ionic4-rating';
+import {CountdownModule} from 'ngx-countdown';
 
 @NgModule({
   imports: [
@@ -23,13 +24,13 @@ import {IonicRatingModule} from 'ionic4-rating';
     LoadingPageModule,
     ListPageModule,
     IonicRatingModule,
-
+    CountdownModule
   ],
   declarations: [ProcessesPage, SinglePage],
   providers: [
     Geolocation,
     ProcessService
-  ]
+  ],
 
 })
 export class ProcessesPageModule {
