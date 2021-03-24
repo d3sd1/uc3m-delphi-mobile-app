@@ -23,7 +23,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
     DelphiCoreModule,
-    TranslateModule.forRoot({
+    TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
