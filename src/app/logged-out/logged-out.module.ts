@@ -8,6 +8,7 @@ import {LoginPage} from './login/login.page';
 import {IonicModule} from '@ionic/angular';
 import {InvitationPage} from './invitation/invitation.page';
 import {LoginConsumer} from '../core/consumer/login/login.consumer';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {LoginConsumer} from '../core/consumer/login/login.consumer';
     LoggedOutRoutingModule,
     HttpClientModule,
     FormsModule,
-    IonicModule
+    IonicModule,
+    TranslateModule
   ],
   providers: [
     UserStorage,

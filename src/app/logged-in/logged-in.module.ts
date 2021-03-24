@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {LoggedInRoutingModule} from './logged-in-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoggedInInterceptor} from './logged-in.interceptor';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import {LoggedInInterceptor} from './logged-in.interceptor';
   imports: [
     CommonModule,
     LoggedInRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule
   ],
   providers: [
     {

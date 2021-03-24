@@ -9,6 +9,9 @@ import {EntrypointComponent} from './entrypoint.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IonicStorageModule} from '@ionic/storage';
 import {DelphiCoreModule} from './core/delphi-core.module';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {TranslateLoader, TranslateModule, TranslatePipe, TranslateService, TranslateStore} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [EntrypointComponent],
@@ -19,12 +22,26 @@ import {DelphiCoreModule} from './core/delphi-core.module';
     EntrypointRoutingModule,
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
-    DelphiCoreModule
+    DelphiCoreModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    HttpClientModule
   ],
   providers: [
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    TranslateService,
+    TranslateStore
   ],
   bootstrap: [EntrypointComponent]
 })
 export class EntrypointModule {
+}
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
 }

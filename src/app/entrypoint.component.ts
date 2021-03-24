@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'delphi-root',
@@ -29,6 +30,9 @@ export class EntrypointComponent {
         this.loaderService.initialize();
       });
     }*/
+  constructor(private translate: TranslateService) {
+    translate.setDefaultLang('en');
+  }
 
 
 }
