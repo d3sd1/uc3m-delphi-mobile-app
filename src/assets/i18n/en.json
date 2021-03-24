@@ -1,5 +1,21 @@
 {
+  "chatEmpty_page": {
+    "noConversations": "No conversations!",
+    "participate": "Participate in processes to obtain chat access!"
+  },
+  "chatList_component": {
+    "read": "Read",
+    "delete": "Delete"
+  },
+  "chat_page": {
+    "messaging": "Messaging"
+  },
   "login_page": {
-    "password": "Pass"
+    "password": "Password",
+    "email": "Email",
+    "rememberMe": "Remember me"
+  },
+  "splashScreen_component": {
+    "appName": "Delphi"
   }
 }
