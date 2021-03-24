@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "NativeSettings.h"
 #import "CDVAssetLibraryFilesystem.h"
 #import "CDVFile.h"
 #import "CDVLocalFilesystem.h"

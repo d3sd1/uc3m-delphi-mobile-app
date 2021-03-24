@@ -261,6 +261,37 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
+/***/ "./src/app/core/delphi-core.module.ts":
+/*!********************************************!*\
+  !*** ./src/app/core/delphi-core.module.ts ***!
+  \********************************************/
+/*! exports provided: DelphiCoreModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DelphiCoreModule", function() { return DelphiCoreModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
+
+
+
+let DelphiCoreModule = class DelphiCoreModule {
+};
+DelphiCoreModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        declarations: [],
+        imports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"]
+        ]
+    })
+], DelphiCoreModule);
+
+
+
+/***/ }),
+
 /***/ "./src/app/entrypoint-routing.module.ts":
 /*!**********************************************!*\
   !*** ./src/app/entrypoint-routing.module.ts ***!
@@ -285,15 +316,15 @@ const routes = [
     },
     {
         path: 'splash-screen',
-        loadChildren: () => __webpack_require__.e(/*! import() | loader-splash-screen-module */ "loader-splash-screen-module").then(__webpack_require__.bind(null, /*! ./loader/splash-screen.module */ "./src/app/loader/splash-screen.module.ts")).then(m => m.SplashScreenModule)
+        loadChildren: () => Promise.all(/*! import() | splash-screen-splash-screen-module */[__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module~splash-screen-splash-screen-module"), __webpack_require__.e("default~processes-processes-module~splash-screen-splash-screen-module"), __webpack_require__.e("splash-screen-splash-screen-module")]).then(__webpack_require__.bind(null, /*! ./splash-screen/splash-screen.module */ "./src/app/splash-screen/splash-screen.module.ts")).then(m => m.SplashScreenModule)
     },
     {
         path: 'logged-in',
-        loadChildren: () => Promise.all(/*! import() | logged-in-logged-in-module */[__webpack_require__.e("common"), __webpack_require__.e("logged-in-logged-in-module")]).then(__webpack_require__.bind(null, /*! ./logged-in/logged-in.module */ "./src/app/logged-in/logged-in.module.ts")).then(m => m.LoggedInModule)
+        loadChildren: () => Promise.all(/*! import() | logged-in-logged-in-module */[__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module~splash-screen-splash-screen-module"), __webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-in-logged-in-module")]).then(__webpack_require__.bind(null, /*! ./logged-in/logged-in.module */ "./src/app/logged-in/logged-in.module.ts")).then(m => m.LoggedInModule)
     },
     {
         path: 'logged-out',
-        loadChildren: () => Promise.all(/*! import() | logged-out-logged-out-module */[__webpack_require__.e("common"), __webpack_require__.e("logged-out-logged-out-module")]).then(__webpack_require__.bind(null, /*! ./logged-out/logged-out.module */ "./src/app/logged-out/logged-out.module.ts")).then(m => m.LoggedOutModule)
+        loadChildren: () => Promise.all(/*! import() | logged-out-logged-out-module */[__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module~splash-screen-splash-screen-module"), __webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-out-logged-out-module")]).then(__webpack_require__.bind(null, /*! ./logged-out/logged-out.module */ "./src/app/logged-out/logged-out.module.ts")).then(m => m.LoggedOutModule)
     },
 ];
 let EntrypointRoutingModule = class EntrypointRoutingModule {
@@ -360,6 +391,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _entrypoint_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./entrypoint.component */ "./src/app/entrypoint.component.ts");
 /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/__ivy_ngcc__/fesm2015/animations.js");
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/__ivy_ngcc__/fesm2015/ionic-storage.js");
+/* harmony import */ var _core_delphi_core_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./core/delphi-core.module */ "./src/app/core/delphi-core.module.ts");
+
 
 
 
@@ -381,6 +414,7 @@ EntrypointModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _entrypoint_routing_module__WEBPACK_IMPORTED_MODULE_5__["EntrypointRoutingModule"],
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"],
             _ionic_storage__WEBPACK_IMPORTED_MODULE_8__["IonicStorageModule"].forRoot(),
+            _core_delphi_core_module__WEBPACK_IMPORTED_MODULE_9__["DelphiCoreModule"]
         ],
         providers: [
             { provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] }

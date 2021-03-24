@@ -432,63 +432,6 @@ const openURL = async (url, ev, direction, animation) => {
 
 
 
-/***/ }),
-
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/logged-in/dummy/dummy.component.html":
-/*!********************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/logged-in/dummy/dummy.component.html ***!
-  \********************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<p>\n  dummy works!\n</p>\n");
-
-/***/ }),
-
-/***/ "./src/app/logged-in/dummy/dummy.component.scss":
-/*!******************************************************!*\
-  !*** ./src/app/logged-in/dummy/dummy.component.scss ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2xvZ2dlZC1pbi9kdW1teS9kdW1teS5jb21wb25lbnQuc2NzcyJ9 */");
-
-/***/ }),
-
-/***/ "./src/app/logged-in/dummy/dummy.component.ts":
-/*!****************************************************!*\
-  !*** ./src/app/logged-in/dummy/dummy.component.ts ***!
-  \****************************************************/
-/*! exports provided: DummyComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DummyComponent", function() { return DummyComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-
-
-let DummyComponent = class DummyComponent {
-    constructor() { }
-    ngOnInit() { }
-};
-DummyComponent.ctorParameters = () => [];
-DummyComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'delphi-dummy',
-        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./dummy.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/logged-in/dummy/dummy.component.html")).default,
-        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./dummy.component.scss */ "./src/app/logged-in/dummy/dummy.component.scss")).default]
-    })
-], DummyComponent);
-
-
-
 /***/ })
 
 }]);

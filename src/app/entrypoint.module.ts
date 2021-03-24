@@ -9,7 +9,6 @@ import {EntrypointComponent} from './entrypoint.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IonicStorageModule} from '@ionic/storage';
 import {DelphiCoreModule} from './core/delphi-core.module';
-import { DateAgoPipe } from './core/pipes/date-ago.pipe';
 
 @NgModule({
   declarations: [EntrypointComponent],

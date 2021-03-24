@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.ionic.starter"
+    package="org.uc3m.irsst.idelphi"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -46,7 +46,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="io.ionic.starter.MainActivity"
+            android:name="org.uc3m.irsst.idelphi.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:label="@string/title_activity_main"
             android:launchMode="singleTask"
@@ -68,7 +68,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="io.ionic.starter.fileprovider"
+            android:authorities="org.uc3m.irsst.idelphi.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -145,7 +145,7 @@
 
         <provider
             android:name="com.google.firebase.provider.FirebaseInitProvider"
-            android:authorities="io.ionic.starter.firebaseinitprovider"
+            android:authorities="org.uc3m.irsst.idelphi.firebaseinitprovider"
             android:exported="false"
             android:initOrder="100" />
 

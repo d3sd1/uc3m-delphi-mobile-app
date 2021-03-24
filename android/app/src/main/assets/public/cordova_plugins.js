@@ -2,14 +2,6 @@
   cordova.define('cordova/plugin_list', function(require, exports, module) {
     module.exports = [
       {
-          "id": "cordova-open-native-settings.Settings",
-          "file": "plugins/cordova-open-native-settings/www/settings.js",
-          "pluginId": "cordova-open-native-settings",
-        "clobbers": [
-          "cordova.plugins.settings"
-        ]
-        },
-      {
           "id": "cordova-plugin-geolocation.geolocation",
           "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
           "pluginId": "cordova-plugin-geolocation",
@@ -200,7 +192,6 @@
     module.exports.metadata =
     // TOP OF METADATA
     {
-      "cordova-open-native-settings": "1.5.2",
       "cordova-plugin-file": "6.0.2",
       "cordova-plugin-geolocation": "4.0.2"
     };
