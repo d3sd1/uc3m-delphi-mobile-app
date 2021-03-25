@@ -13,6 +13,7 @@ import {SinglePage} from './single/single.page';
 import {ProcessService} from './process.service';
 import {IonicRatingModule} from 'ionic4-rating';
 import {CountdownModule} from 'ngx-countdown';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import {CountdownModule} from 'ngx-countdown';
     LoadingPageModule,
     ListPageModule,
     IonicRatingModule,
-    CountdownModule
+    CountdownModule,
+    TranslateModule
   ],
   declarations: [ProcessesPage, SinglePage],
   providers: [

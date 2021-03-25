@@ -3,10 +3,10 @@
     <ion-toolbar>
       <ion-segment (ionChange)="filterProcesses($event)" value="active">
         <ion-segment-button value="active">
-          <ion-label>En curso</ion-label>
+          <ion-label>{{ 'list_page.inProgress' | translate }}</ion-label>
         </ion-segment-button>
         <ion-segment-button value="finished">
-          <ion-label>Finalizados</ion-label>
+          <ion-label>{{ 'list_page.finished' | translate }}</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
@@ -21,8 +21,8 @@
       </h3>
       <p>
         <span
-          *ngIf="isBeforeToday(parseDate(process.endTime))"><countdown #cd [config]="getCountdownConfig(parseDate(process.endTime))" end></countdown> horas restantes</span>
-        <a *ngIf="!isBeforeToday(parseDate(process.endTime))">Ver resultados</a>
+          *ngIf="isBeforeToday(parseDate(process.endTime))"><countdown #cd [config]="getCountdownConfig(parseDate(process.endTime))" end></countdown> {{ 'list_page.hoursLeft' | translate }}</span>
+        <a *ngIf="!isBeforeToday(parseDate(process.endTime))">{{ 'list_page.seeResult' | translate }}</a>
       </p>
     </ion-label>
   </ion-item>

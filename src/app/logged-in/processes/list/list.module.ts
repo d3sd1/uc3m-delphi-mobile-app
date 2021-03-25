@@ -8,6 +8,7 @@ import {ListPageRoutingModule} from './list-routing.module';
 
 import {ListPage} from './list.page';
 import {CountdownModule} from 'ngx-countdown';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {CountdownModule} from 'ngx-countdown';
     FormsModule,
     IonicModule,
     ListPageRoutingModule,
-    CountdownModule
+    CountdownModule,
+    TranslateModule
   ],
   exports: [
     ListPage

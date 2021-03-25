@@ -24,19 +24,91 @@
     "goToApp": "Ir a la aplicación"
   },
   "create_page": {
-    "create": "Create",
+    "create": "Crear",
     "selectExperts": "Seleccionar expertos (de la plataforma o invitar) "
   },
   "empty_page": {
     "noProcesses": "¡Sin procesos en curso!",
     "thanks": "Gracias por su participación en la plataforma."
   },
+  "list_page": {
+    "inProgress": "En curso",
+    "finished": "Finalizados,",
+    "hoursLeft": "horas restantes",
+    "seeResult": "Ver resultados"
+  },
+  "single_page": {
+    "title": "Proceso Delphi",
+    "process_1": "Carretilleros",
+    "feature_1": "Accesibilidad",
+    "feature_2": "Seguridad",
+    "feature_3": "Calidad trabajo actual",
+    "commentsTitle": "Comentarios",
+    "comment_1": "Se deben llevar guantes",
+    "comment_2": "Debemos tirar de la carretera entre 4",
+    "comment_3": "Las carretillas deben llevar mangos",
+    "inviteButton": "Invitar experto",
+    "sendInvitationButton": "Enviar invitación",
+    "finishRoundButton": "Cerrar ronda y analizar resultados"
+  },
+  "processes_page": {
+    "title": "Procesos"
+  },
+  "cv_page": {
+    "title": "Perfil básico",
+    "label": "Perfil básico",
+    "saveButton": "Guardar perfil"
+  },
+  "logout_page": {
+    "title": "Desconectando...",
+    "disconecting": "DESCONECTANDO..."
+  },
+  "profileBasic_page": {
+    "title": "Perfil básico",
+    "label": "Perfil básico",
+    "saveButton": "Guardar perfil"
+  },
+  "profilePassword_page": {
+    "title": "Perfil básico",
+    "label": "Perfil básico",
+    "saveButton": "Guardar perfil"
+  },
+  "studies_page": {
+    "title": "Perfil básico",
+    "label": "Perfil básico",
+    "saveButton": "Guardar perfil"
+  },
+  "profile_page": {
+    "title": " Mi perfil ",
+    "name": "Lisardo Prieto",
+    "email": "lisardo_prieto@delphi.com",
+    "notificationLabel": "Notificaciones",
+    "passwordLabel": "Contraseña",
+    "trainingLabel": "Formación",
+    "cvLabel": "CV",
+    "disconnectLabel": "Desconectar"
+  },
+  "home_page": {
+    "processesLabel": "Procesos",
+    "messagesLabel": "Mensajes",
+    "profileLabel": "Perfil"
+  },
+  "invitation_page": {
+    "title": "Invitación",
+    "newPasswordLabel": "Nueva contraseña",
+    "finishInvitationLabel": "Finalizar invitación"
+  },
   "login_page": {
-    "password": "Contraseña",
-    "email": "Email",
-    "rememberMe": "Recordar contraseña"
+    "title": "Login",
+    "passwordLabel": "Contraseña",
+    "emailLabel": "Email",
+    "rememberMeLabel": "Recordar contraseña",
+    "loginButton": "Login"
   },
   "splashScreen_component": {
+    "appName": "Delphi"
+  },
+  "startupSplashScreen_component": {
     "appName": "Delphi"
   }
 }

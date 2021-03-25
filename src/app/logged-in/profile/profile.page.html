@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Mi perfil
+     {{ 'profile_page.title' | translate }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,12 +16,12 @@
       </ion-button>
     </div>
     <ion-card-content class="ion-text-center" routerLink="basic">
-      <h2>Lisardo Prieto</h2>
+      <h2>{{ 'profile_page.name' | translate }}</h2>
       <ion-text color="medium">
         <div class="ion-justify-content-center" style="display: flex;">
           <ion-icon class="user-email" color="medium" name="mail-outline">
           </ion-icon>
-          <p>lisardo_prieto@delphi.com</p>
+          <p>{{ 'profile_page.email' | translate }}</p>
         </div>
       </ion-text>
     </ion-card-content>
@@ -29,24 +29,24 @@
   <!-- Toggles in a List -->
   <ion-list>
     <ion-item>
-      <ion-label (click)="triggerStatusChatHandler()">Notificaciones</ion-label>
+      <ion-label (click)="triggerStatusChatHandler()">{{ 'profile_page.notificationLabel' | translate }}</ion-label>
       <ion-toggle (ionChange)="updateNotificationPreferences()"></ion-toggle>
     </ion-item>
 
     <ion-item routerLink="password">
-      <ion-label>Contraseña</ion-label>
+      <ion-label>{{ 'profile_page.passwordLabel' | translate }}</ion-label>
     </ion-item>
 
     <ion-item routerLink="studies">
-      <ion-label>Formación</ion-label>
+      <ion-label>{{ 'profile_page.trainingLabel' | translate }}</ion-label>
     </ion-item>
 
     <ion-item routerLink="cv">
-      <ion-label>CV</ion-label>
+      <ion-label>{{ 'profile_page.cvLabel' | translate }}</ion-label>
     </ion-item>
 
     <ion-item routerLink="logout">
-      <ion-label>Desconectar</ion-label>
+      <ion-label>{{ 'profile_page.disconnectLabel' | translate }}</ion-label>
     </ion-item>
 
     <!--

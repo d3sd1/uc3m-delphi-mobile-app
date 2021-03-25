@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>{{ 'login_page.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -9,7 +9,7 @@
       <ion-row>
         <ion-col offset-lg="2" offset-md="1" offset-xl="3" size="12" size-lg="8" size-md="10" size-sm="12" size-xl="6">
           <ion-item>
-            <ion-label position="floating">{{ 'login_page.email' | translate }}</ion-label>
+            <ion-label position="floating">{{ 'login_page.emailLabel' | translate }}</ion-label>
             <ion-input [(ngModel)]="loginUser.email" type="email"></ion-input>
           </ion-item>
         </ion-col>
@@ -17,7 +17,7 @@
       <ion-row>
         <ion-col offset-lg="2" offset-md="1" offset-xl="3" size="12" size-lg="8" size-md="10" size-sm="12" size-xl="6">
           <ion-item>
-            <ion-label position="floating">{{ 'login_page.password' | translate }}</ion-label>
+            <ion-label position="floating">{{ 'login_page.passwordLabel' | translate }}</ion-label>
             <ion-input [(ngModel)]="loginUser.password" type="password"></ion-input>
           </ion-item>
         </ion-col>
@@ -25,14 +25,14 @@
       <ion-row>
         <ion-col offset-lg="2" offset-md="1" offset-xl="3" size="12" size-lg="8" size-md="10" size-sm="12" size-xl="6">
           <ion-item>
-            <ion-label>{{ 'login_page.rememberMe' | translate }}</ion-label>
+            <ion-label>{{ 'login_page.rememberMeLabel' | translate }}</ion-label>
             <ion-checkbox [(ngModel)]="loginUser.rememberMe" color="primary"></ion-checkbox>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col offset="0" size="12">
-          <ion-button (click)="login()" expand="block">Login</ion-button>
+          <ion-button (click)="login()" expand="block">{{ 'login_page.loginButton' | translate }}</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

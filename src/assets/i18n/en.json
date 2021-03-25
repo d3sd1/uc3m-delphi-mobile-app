@@ -1,21 +1,115 @@
 {
   "chatEmpty_page": {
     "noConversations": "No conversations!",
-    "participate": "Participate in processes to obtain chat access!"
+    "participate": "Participate in processes to obtain access to chat conversations!"
   },
   "chatList_component": {
     "read": "Read",
-    "delete": "Delete"
+    "delete": "Delete",
+    "group": "Group conversation",
+    "private": "Private conversation"
   },
   "chat_page": {
     "messaging": "Messaging"
   },
+  "onboardin_page": {
+    "welcome_1": "Welcome",
+    "welcome_2": "Welcome to <b>Delphi</b>. Thanks for using our application. We briefly explain you our operation.",
+    "delphi": "What is Delphi?",
+    "explanation": "<b>Automation of occupational risk prevention</b> by Delphi method. We have simplified and optimized the method to make your processes as fast as possible.",
+    "next": "Next.",
+    "whatToDo_1": "What do I have to do?",
+    "whatToDo_2": "Participate or create</b> processes to start guaranteeing the security of employees.",
+    "ready": "Ready to start?",
+    "goToApp": "Go to application."
+  },
+  "create_page": {
+    "create": "Create",
+    "selectExperts": "Select experts (platform experts or invite)"
+  },
+  "empty_page": {
+    "noProcesses": "No processes in progress!",
+    "thanks": "Thanks for your participation in the platform."
+  },
+  "list_page": {
+    "inProgress": "In progress",
+    "finished": "Finished,",
+    "hoursLeft": "hours left",
+    "seeResult": "See results"
+  },
+  "single_page": {
+    "title": "Delphi process",
+    "process_1": "Forklift operators",
+    "feature_1": "Accessibility",
+    "feature_2": "Safety",
+    "feature_3": "Current work quality",
+    "commentsTitle": "Comments",
+    "comment_1": "Globes must be worn",
+    "comment_2": "Fork-lift must be pulled by 4 operators",
+    "comment_3": "Las carretillas deben llevar mangos",
+    "inviteButton": "Invite an expert",
+    "sendInvitationButton": "Send invitation",
+    "finishRoundButton": "Conclude round and analyze results"
+  },
+  "processes_page": {
+    "title": "Processes"
+  },
+  "cv_page": {
+    "title": "Basic profile",
+    "label": "Basic profile",
+    "saveButton": "Save profile"
+  },
+  "logout_page": {
+    "title": "Disconnecting...",
+    "disconecting": "DISCONNECTING..."
+  },
+  "profileBasic_page": {
+    "title": "Basic profile",
+    "label": "Basic profile",
+    "saveButton": "Save profile"
+  },
+  "profilePassword_page": {
+    "title": "Basic profile",
+    "label": "Basic profile",
+    "saveButton": "Save profile"
+  },
+  "studies_page": {
+    "title": "Basic profile",
+    "label": "Basic profile",
+    "saveButton": "Save profile"
+  },
+  "profile_page": {
+    "title": " My profile ",
+    "name": "Lisardo Prieto",
+    "email": "lisardo_prieto@delphi.com",
+    "notificationLabel": "Notifictions",
+    "passwordLabel": "Password",
+    "trainingLabel": "Training",
+    "cvLabel": "CV",
+    "disconnectLabel": "Disconnect"
+  },
+  "home_page": {
+    "processesLabel": "Processes",
+    "messagesLabel": "Messages",
+    "profileLabel": "Profile"
+  },
+  "invitation_page": {
+    "title": "Invitation",
+    "newPasswordLabel": "New password",
+    "finishInvitationLabel": "Finish invitation"
+  },
   "login_page": {
-    "password": "Password",
-    "email": "Email",
-    "rememberMe": "Remember me"
+    "title": "Login",
+    "passwordLabel": "Password",
+    "emailLabel": "Email",
+    "rememberMeLabel": "Remember password",
+    "loginButton": "Login"
   },
   "splashScreen_component": {
     "appName": "Delphi"
+  },
+  "startupSplashScreen_component": {
+    "appName": "Delphi"
   }
 }
+

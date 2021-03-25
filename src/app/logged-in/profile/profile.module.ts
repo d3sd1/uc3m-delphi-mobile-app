@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {ProfilePage} from './profile.page';
 
 import {ProfilePageRoutingModule} from './profile-routing.module';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import {ProfilePageRoutingModule} from './profile-routing.module';
     FormsModule,
     RouterModule.forChild([{path: '', component: ProfilePage}]),
     ProfilePageRoutingModule,
+    TranslateModule
   ],
   declarations: [ProfilePage]
 })
