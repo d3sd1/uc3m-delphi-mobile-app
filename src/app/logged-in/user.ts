@@ -1,4 +1,5 @@
 import {Role} from './role';
+import {Language} from './profile/language';
 
 export class User {
   id: number;
@@ -11,4 +12,5 @@ export class User {
   chatStatus: string;
   needsOnboard: boolean;
   roles: Role[];
+  language: Language;
 }

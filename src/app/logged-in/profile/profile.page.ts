@@ -1,5 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActionSheetController} from '@ionic/angular';
+import {LangService} from './lang.service';
+import {UserService} from '../onboarding/user.service';
+import {UserStorage} from '../../core/storage/user.storage';
+import {User} from '../user';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'delphi-profile',
@@ -11,12 +16,15 @@ export class ProfilePage implements OnInit {
 
   public profileOptions: any[];
   public profileOptionsBackup: any[];
+  private user: User;
 
-  constructor(private actionSheetController: ActionSheetController) {
+  constructor(private actionSheetController: ActionSheetController, private langService: LangService, private userStorage: UserStorage,
+              private translate: TranslateService) {
   }
 
   async ngOnInit() {
     this.profileOptions = await this.initializeItems();
+    this.user = await this.userStorage.getUser();
   }
 
   async initializeItems(): Promise<any> {
@@ -74,6 +82,29 @@ export class ProfilePage implements OnInit {
   updateNotificationPreferences() {
 
   }
+
+  async changeLanguage() {
+    const langs = await this.langService.getAvailableLangs();
+    console.log(langs);
+    const sheets = [];
+    langs.forEach((lang) => {
+      sheets.push({
+        text: lang.keyName,
+        cssClass: this.user.language.id === lang.id ? 'current-lang' : '',
+        //his.userStorage.
+        handler: () => {
+          this.translate.resetLang(lang.keyName.toLowerCase());
+        }
+      });
+    });
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Idioma',
+      buttons: sheets
+    });
+    await actionSheet.present();
+  }
+
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
