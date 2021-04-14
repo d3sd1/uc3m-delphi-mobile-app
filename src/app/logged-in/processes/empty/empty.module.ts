@@ -7,13 +7,15 @@ import {IonicModule} from '@ionic/angular';
 import {EmptyPageRoutingModule} from './empty-routing.module';
 
 import {EmptyPage} from './empty.page';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EmptyPageRoutingModule
+    EmptyPageRoutingModule,
+    TranslateModule
   ],
   exports: [
     EmptyPage

@@ -1,6 +1,114 @@
 {
-  "demo": {
-    "title": "Translation demo",
-    "text": "This is a simple demonstration app for ngx-translate"
+  "chatEmpty_page": {
+    "noConversations": "¡Sin conversaciones!",
+    "participate": "¡Participa en procesos para obtener acceso a las conversaciones del chat!"
+  },
+  "chatList_component": {
+    "read": "Leído",
+    "delete": "Borrar",
+    "group": "Conversación grupal",
+    "private": "Conversación privada"
+  },
+  "chat_page": {
+    "messaging": "Mensajería"
+  },
+  "onboardin_page": {
+    "welcome_1": "Bienvenido",
+    "welcome_2": "Bienvenido a <b>Delphi</b>. Gracias por usar nuestra aplicación. Te explicaremos brevemente nuestro funcionamiento.",
+    "delphi": "¿Qué es Delphi?",
+    "explanation": "<b>Automatización de prevención de riesgos laborales</b> mediante la metodología Delphi. La hemos simplificado y optimizado para que tus procesos sean lo más rápidos posibles.",
+    "next": "Siguiente.",
+    "whatToDo_1": "¿Qué tengo que hacer?",
+    "whatToDo_2": "Participa o crea</b> procesos y comienza a garantizar la seguridad de los empleados.",
+    "ready": "¿Listo para comenzar?",
+    "goToApp": "Ir a la aplicación"
+  },
+  "create_page": {
+    "create": "Crear",
+    "selectExperts": "Seleccionar expertos (de la plataforma o invitar) "
+  },
+  "empty_page": {
+    "noProcesses": "¡Sin procesos en curso!",
+    "thanks": "Gracias por su participación en la plataforma."
+  },
+  "list_page": {
+    "inProgress": "En curso",
+    "finished": "Finalizados,",
+    "hoursLeft": "horas restantes",
+    "seeResult": "Ver resultados"
+  },
+  "single_page": {
+    "title": "Proceso Delphi",
+    "process_1": "Carretilleros",
+    "feature_1": "Accesibilidad",
+    "feature_2": "Seguridad",
+    "feature_3": "Calidad trabajo actual",
+    "commentsTitle": "Comentarios",
+    "comment_1": "Se deben llevar guantes",
+    "comment_2": "Debemos tirar de la carretera entre 4",
+    "comment_3": "Las carretillas deben llevar mangos",
+    "inviteButton": "Invitar experto",
+    "sendInvitationButton": "Enviar invitación",
+    "finishRoundButton": "Cerrar ronda y analizar resultados"
+  },
+  "processes_page": {
+    "title": "Procesos"
+  },
+  "cv_page": {
+    "title": "Perfil básico",
+    "label": "Perfil básico",
+    "saveButton": "Guardar perfil"
+  },
+  "logout_page": {
+    "title": "Desconectando...",
+    "disconecting": "DESCONECTANDO..."
+  },
+  "profileBasic_page": {
+    "title": "Perfil básico",
+    "label": "Perfil básico",
+    "saveButton": "Guardar perfil"
+  },
+  "profilePassword_page": {
+    "title": "Perfil básico",
+    "label": "Perfil básico",
+    "saveButton": "Guardar perfil"
+  },
+  "studies_page": {
+    "title": "Perfil básico",
+    "label": "Perfil básico",
+    "saveButton": "Guardar perfil"
+  },
+  "profile_page": {
+    "title": " Mi perfil ",
+    "name": "Lisardo Prieto",
+    "email": "lisardo_prieto@delphi.com",
+    "notificationLabel": "Notificaciones",
+    "passwordLabel": "Contraseña",
+    "trainingLabel": "Formación",
+    "cvLabel": "CV",
+    "disconnectLabel": "Desconectar"
+  },
+  "home_page": {
+    "processesLabel": "Procesos",
+    "messagesLabel": "Mensajes",
+    "profileLabel": "Perfil"
+  },
+  "invitation_page": {
+    "title": "Invitación",
+    "newPasswordLabel": "Nueva contraseña",
+    "finishInvitationLabel": "Finalizar invitación"
+  },
+  "login_page": {
+    "title": "Login",
+    "passwordLabel": "Contraseña",
+    "emailLabel": "Email",
+    "rememberMeLabel": "Recordar contraseña",
+    "loginButton": "Login"
+  },
+  "splashScreen_component": {
+    "appName": "Delphi"
+  },
+  "startupSplashScreen_component": {
+    "appName": "Delphi"
   }
 }

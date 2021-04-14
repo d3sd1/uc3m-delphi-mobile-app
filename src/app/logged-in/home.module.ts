@@ -8,6 +8,7 @@ import {TabsPageRoutingModule} from './home-routing.module';
 import {HomePage} from './home.page';
 import {ChatService} from './chat/chat.service';
 import {UserStorage} from '../core/storage/user.storage';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import {UserStorage} from '../core/storage/user.storage';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
+    TranslateModule
   ],
   providers: [
     ChatService,

@@ -4,9 +4,8 @@
     <ion-slide>
       <div class="slide">
         <img alt="" src="../../../assets/onboarding/slide-1.png"/>
-        <h2>Bienvenido</h2>
-        <p>Bienvenido a <b>Delphi</b>. Gracias por usar nuestra aplicación. Te explicaremos brevemente nuestro
-          funcionamiento.</p>
+        <h2>{{ 'onboarding_page.welcome_1' | translate }}</h2>
+        <p>{{ 'onboarding_page.welcome_2' | translate }}</p>
         <ion-button (click)="swipeNext()" fill="clear">Siguiente
           <ion-icon name="arrow-forward" slot="end"></ion-icon>
         </ion-button>
@@ -15,27 +14,26 @@
 
     <ion-slide>
       <img alt="" src="../../../assets/onboarding/slide-2.png"/>
-      <h2>¿Qué es Delphi?</h2>
-      <p><b>Automatización de prevención de riesgos laborales</b> mediante la metodología Delphi.
-        La hemos simplificado y optimizado para que tus procesos sean lo más rápidos posibles.</p>
-      <ion-button (click)="swipeNext()" fill="clear">Siguiente
+      <h2>{{ 'onboarding_page.delphi' | translate }}</h2>
+      <p>{{ 'onboarding_page.explanation' | translate }}</p>
+      <ion-button (click)="swipeNext()" fill="clear">{{ 'onboarding_page.next' | translate }}
         <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-button>
     </ion-slide>
 
     <ion-slide>
       <img alt="" src="../../../assets/onboarding/slide-3.png"/>
-      <h2>¿Qué tengo que hacer?</h2>
-      <p><b>Participa o crea</b> procesos y comienza a garantizar la seguridad de los empleados.</p>
-      <ion-button (click)="swipeNext()" fill="clear">Siguiente
+      <h2>{{ 'onboarding_page.whatToDo_1' | translate }}</h2>
+      <p><b>{{ 'onboarding_page.whatToDo_2' | translate }}</p>
+      <ion-button (click)="swipeNext()" fill="clear">{{ 'onboarding_page.next' | translate }}
         <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-button>
     </ion-slide>
 
     <ion-slide>
       <img alt="" src="../../../assets/onboarding/slide-4.png"/>
-      <h2>¿Listo para comenzar?</h2>
-      <ion-button (click)="endSwiper()" fill="clear">Ir a la aplicación
+      <h2>{{ 'onboarding_page.ready' | translate }}</h2>
+      <ion-button (click)="endSwiper()" fill="clear">{{ 'onboarding_page.goToApp' | translate }}
         <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-button>
     </ion-slide>

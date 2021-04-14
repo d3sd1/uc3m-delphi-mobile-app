@@ -11,6 +11,7 @@ import {LoadingPageModule} from './chat-loading/chat-loading.module';
 import {ChatConversationLoadingPage} from './chat-conversation/chat-conversation-loading/chat-conversation-loading.page';
 import {ChatConversationComponent} from './chat-conversation/chat-conversation.component';
 import {ChatService} from './chat.service';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {ChatService} from './chat.service';
     CommonModule,
     FormsModule,
     ChatPageRoutingModule,
-    LoadingPageModule
+    LoadingPageModule,
+    TranslateModule
   ],
   providers: [
 

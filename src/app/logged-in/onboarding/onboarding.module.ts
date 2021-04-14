@@ -7,13 +7,16 @@ import {IonicModule} from '@ionic/angular';
 import {OnboardingPageRoutingModule} from './onboarding-routing.module';
 
 import {OnboardingPage} from './onboarding.page';
+import {TranslateModule} from '@ngx-translate/core';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    OnboardingPageRoutingModule
+    OnboardingPageRoutingModule,
+    TranslateModule
   ],
   declarations: [OnboardingPage]
 })

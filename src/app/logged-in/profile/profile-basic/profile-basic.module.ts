@@ -7,13 +7,15 @@ import {IonicModule} from '@ionic/angular';
 import {ProfileBasicPageRoutingModule} from './profile-basic-routing.module';
 
 import {ProfileBasicPage} from './profile-basic.page';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfileBasicPageRoutingModule
+    ProfileBasicPageRoutingModule,
+    TranslateModule
   ],
   declarations: [ProfileBasicPage]
 })
