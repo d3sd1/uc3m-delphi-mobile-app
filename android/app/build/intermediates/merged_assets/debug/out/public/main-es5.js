@@ -1,4 +1,8 @@
 (function () {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
@@ -209,7 +213,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | splash-screen-splash-screen-module */
-          [__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module~splash-screen-splash-screen-module"), __webpack_require__.e("default~processes-processes-module~splash-screen-splash-screen-module"), __webpack_require__.e("splash-screen-splash-screen-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~processes-processes-module~splash-screen-splash-screen-module"), __webpack_require__.e("splash-screen-splash-screen-module")]).then(__webpack_require__.bind(null,
           /*! ./splash-screen/splash-screen.module */
           "./src/app/splash-screen/splash-screen.module.ts")).then(function (m) {
             return m.SplashScreenModule;
@@ -220,7 +224,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | logged-in-logged-in-module */
-          [__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module~splash-screen-splash-screen-module"), __webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-in-logged-in-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-in-logged-in-module")]).then(__webpack_require__.bind(null,
           /*! ./logged-in/logged-in.module */
           "./src/app/logged-in/logged-in.module.ts")).then(function (m) {
             return m.LoggedInModule;
@@ -231,7 +235,7 @@
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | logged-out-logged-out-module */
-          [__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module~splash-screen-splash-screen-module"), __webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-out-logged-out-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-out-logged-out-module")]).then(__webpack_require__.bind(null,
           /*! ./logged-out/logged-out.module */
           "./src/app/logged-out/logged-out.module.ts")).then(function (m) {
             return m.LoggedOutModule;
@@ -283,9 +287,80 @@
       var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
       /*! @angular/core */
       "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+      /* harmony import */
 
-      var EntrypointComponent = function EntrypointComponent() {
-        _classCallCheck(this, EntrypointComponent);
+
+      var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @ngx-translate/core */
+      "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
+      /* harmony import */
+
+
+      var _capacitor_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @capacitor/core */
+      "./node_modules/@capacitor/core/dist/esm/index.js");
+
+      var PushNotifications = _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Plugins"].PushNotifications;
+
+      var EntrypointComponent = /*#__PURE__*/function () {
+        /*
+          constructor(
+            private platform: Platform,
+            private themeService: ThemeService,
+            private loaderService: SplashScreenService
+          ) {
+            this.themeListenerInit();
+            this.initializeApp();
+          }
+             private themeListenerInit() {
+            this.themeService.addDarkThemeHandler();
+            this.themeService.addLightThemeHandler();
+          }
+         
+          initializeApp() {
+           /* this.platform.ready().then(() => {
+              this.loaderService.initialize();
+            });
+          }*/
+        function EntrypointComponent(translate) {
+          _classCallCheck(this, EntrypointComponent);
+
+          this.translate = translate;
+          translate.setDefaultLang('en');
+        }
+
+        _createClass(EntrypointComponent, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {
+            PushNotifications.requestPermission().then(function (result) {
+              if (result.granted) {
+                // Register with Apple / Google to receive push via APNS/FCM
+                PushNotifications.register();
+              } else {// Show some error
+              }
+            });
+            PushNotifications.addListener('registration', function (token) {
+              alert('Push registration success, token: ' + token.value);
+            });
+            PushNotifications.addListener('registrationError', function (error) {
+              alert('Error on registration: ' + JSON.stringify(error));
+            });
+            PushNotifications.addListener('pushNotificationReceived', function (notification) {
+              alert('Push received: ' + JSON.stringify(notification));
+            });
+            PushNotifications.addListener('pushNotificationActionPerformed', function (notification) {
+              alert('Push action performed: ' + JSON.stringify(notification));
+            });
+          }
+        }]);
+
+        return EntrypointComponent;
+      }();
+
+      EntrypointComponent.ctorParameters = function () {
+        return [{
+          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"]
+        }];
       };
 
       EntrypointComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -301,7 +376,7 @@
       !*** ./src/app/entrypoint.module.ts ***!
       \**************************************/
 
-    /*! exports provided: EntrypointModule */
+    /*! exports provided: EntrypointModule, HttpLoaderFactory */
 
     /***/
     function srcAppEntrypointModuleTs(module, __webpack_exports__, __webpack_require__) {
@@ -313,6 +388,12 @@
 
       __webpack_require__.d(__webpack_exports__, "EntrypointModule", function () {
         return EntrypointModule;
+      });
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "HttpLoaderFactory", function () {
+        return HttpLoaderFactory;
       });
       /* harmony import */
 
@@ -374,6 +455,24 @@
       var _core_delphi_core_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
       /*! ./core/delphi-core.module */
       "./src/app/core/delphi-core.module.ts");
+      /* harmony import */
+
+
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+      /*! @angular/common/http */
+      "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
+      /* harmony import */
+
+
+      var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+      /*! @ngx-translate/core */
+      "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
+      /* harmony import */
+
+
+      var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+      /*! @ngx-translate/http-loader */
+      "./node_modules/@ngx-translate/http-loader/__ivy_ngcc__/fesm2015/ngx-translate-http-loader.js");
 
       var EntrypointModule = function EntrypointModule() {
         _classCallCheck(this, EntrypointModule);
@@ -382,14 +481,25 @@
       EntrypointModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [_entrypoint_component__WEBPACK_IMPORTED_MODULE_6__["EntrypointComponent"]],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), _entrypoint_routing_module__WEBPACK_IMPORTED_MODULE_5__["EntrypointRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"], _ionic_storage__WEBPACK_IMPORTED_MODULE_8__["IonicStorageModule"].forRoot(), _core_delphi_core_module__WEBPACK_IMPORTED_MODULE_9__["DelphiCoreModule"]],
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), _entrypoint_routing_module__WEBPACK_IMPORTED_MODULE_5__["EntrypointRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"], _ionic_storage__WEBPACK_IMPORTED_MODULE_8__["IonicStorageModule"].forRoot(), _core_delphi_core_module__WEBPACK_IMPORTED_MODULE_9__["DelphiCoreModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"].forChild({
+          loader: {
+            provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateLoader"],
+            useFactory: HttpLoaderFactory,
+            deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClient"]]
+          }
+        }), _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClientModule"]],
         providers: [{
           provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"],
           useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"]
-        }],
+        }, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateService"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateStore"]],
         bootstrap: [_entrypoint_component__WEBPACK_IMPORTED_MODULE_6__["EntrypointComponent"]]
-      })], EntrypointModule);
+      })], EntrypointModule); // required for AOT compilation
+
+      function HttpLoaderFactory(http) {
+        return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_12__["TranslateHttpLoader"](http);
+      }
       /***/
+
     },
 
     /***/

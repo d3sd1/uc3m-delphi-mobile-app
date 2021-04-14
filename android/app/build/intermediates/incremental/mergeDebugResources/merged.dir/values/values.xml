@@ -699,6 +699,7 @@
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="copy_toast_msg">Link copied to clipboard</string>
     <string name="custom_url_scheme">org.uc3m.irsst.idelphi</string>
+    <string name="default_web_client_id" translatable="false">283065184797-tqrm5vqd0ff7472nag54uue61rltk2pp.apps.googleusercontent.com</string>
     <string name="error_icon_content_description">Error</string>
     <string name="exposed_dropdown_menu_content_description">Show dropdown menu</string>
     <string name="fab_transformation_scrim_behavior" translatable="false">com.google.android.material.transformation.FabTransformationScrimBehavior</string>
@@ -707,6 +708,11 @@
     <string name="fallback_menu_item_open_in_browser">Open in browser</string>
     <string name="fallback_menu_item_share_link">Share link</string>
     <string name="fcm_fallback_notification_channel_label">Miscellaneous</string>
+    <string name="gcm_defaultSenderId" translatable="false">283065184797</string>
+    <string name="google_api_key" translatable="false">AIzaSyB1CjYz6p7JoTOEHRxsoTIeSGRS0QdphUk</string>
+    <string name="google_app_id" translatable="false">1:283065184797:android:3c65e58bac7570157eccf4</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB1CjYz6p7JoTOEHRxsoTIeSGRS0QdphUk</string>
+    <string name="google_storage_bucket" translatable="false">agiledelphi.appspot.com</string>
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
     <string description="Content description for an icon that appears in the title area of a dialog" name="icon_content_description">Dialog Icon</string>
     <string description="Content description for new notification (no number count) [CHAR_LIMIT=NONE]" name="mtrl_badge_numberless_content_description">New notification</string>
@@ -751,6 +757,7 @@
     <string name="path_password_eye_mask_visible" translatable="false">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through" translatable="false">M3.27,4.27 L19.74,20.74</string>
     <string name="picture">Picture</string>
+    <string name="project_id" translatable="false">agiledelphi</string>
     <string name="request_permission">Allow this app to take pictures</string>
     <string name="search_menu_title">Search</string>
     <string name="status_bar_notification_info_overflow">999+</string>
