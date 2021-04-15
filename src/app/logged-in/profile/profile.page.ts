@@ -47,12 +47,26 @@ export class ProfilePage implements OnInit {
   triggerUploadImage() {
     this.uploadPicture.nativeElement.click();
   }
+  @ViewChild('uploadCvRef') uploadCvRef: ElementRef;
+  triggerUploadCv() {
+    this.uploadCvRef.nativeElement.click();
+  }
   async uploadImage() {
     console.log("upload")
     const formData = new FormData();
     formData.append('image', this.uploadPicture.nativeElement.files[0]);
     console.log(this.uploadPicture.nativeElement.value)
     this.httpClient.post(environment.apiUrl + '/v1/profile/img', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+    await this.loadUserImage();
+    await this.userStorage.setUser(this.user);
+  }
+  async uploadCv() {
+    const formData = new FormData();
+    formData.append('cv', this.uploadCvRef.nativeElement.files[0]);
+    this.httpClient.post(environment.apiUrl + '/v1/profile/cv', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );
