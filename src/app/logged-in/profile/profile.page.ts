@@ -112,7 +112,8 @@ export class ProfilePage implements OnInit {
         cssClass: this.user.language.id === lang.id ? 'current-lang' : '',
         //his.userStorage.
         handler: async () => {
-          this.user.language = new Language(lang.keyName.toLowerCase());
+          lang.keyName = lang.keyName.toLowerCase();
+          this.user.language = lang;
           this.translate.use(this.user.language.keyName);
           await this.userStorage.setUser(this.user);
         }

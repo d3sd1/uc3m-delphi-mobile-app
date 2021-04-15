@@ -3,7 +3,10 @@ export class Language {
   keyName: string;
   available: boolean;
 
-  constructor(keyName: string) {
+
+  constructor(id: number, keyName: string, available: boolean) {
+    this.id = id;
     this.keyName = keyName;
+    this.available = available;
   }
 }

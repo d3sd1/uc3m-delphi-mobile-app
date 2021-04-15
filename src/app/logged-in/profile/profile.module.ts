@@ -8,6 +8,7 @@ import {ProfilePage} from './profile.page';
 import {ProfilePageRoutingModule} from './profile-routing.module';
 import {LangService} from './lang.service';
 import {TranslateModule} from '@ngx-translate/core';
+import {LogoutPage} from './logout/logout.page';
 
 @NgModule({
   imports: [
@@ -16,8 +17,12 @@ import {TranslateModule} from '@ngx-translate/core';
     FormsModule,
     RouterModule.forChild([{path: '', component: ProfilePage}]),
     ProfilePageRoutingModule,
+    TranslateModule
   ],
-  declarations: [ProfilePage],
+  declarations: [
+    ProfilePage,
+    LogoutPage
+  ],
   providers: [
     LangService
   ],

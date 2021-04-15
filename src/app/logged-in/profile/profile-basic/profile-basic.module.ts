@@ -17,7 +17,10 @@ import {TranslateModule} from '@ngx-translate/core';
     ProfileBasicPageRoutingModule,
     TranslateModule
   ],
-  declarations: [ProfileBasicPage]
+  declarations: [ProfileBasicPage],
+  exports: [
+    TranslateModule
+  ]
 })
 export class ProfileBasicPageModule {
 }

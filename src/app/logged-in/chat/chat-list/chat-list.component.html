@@ -1,4 +1,4 @@
-<ion-lis+-t *ngIf="!loading && userChats.length > 0">
+<ion-list *ngIf="!loading && userChats.length > 0">
   <!-- Searchbar with cancel button shown on focus -->
   <ion-searchbar (ionInput)="filterList($event)" autocomplete="on" autocorrect="on"
                  cancel-button-text="Cancelar" placeholder="Buscar chat" showCancelButton="focus"></ion-searchbar>

@@ -5,7 +5,6 @@ import {LogoutPage} from './logout/logout.page';
 import {LoggedInGuard} from '../logged-in.guard';
 import {ProfilePasswordPage} from './profile-password/profile-password.page';
 import {ProfileBasicPage} from './profile-basic/profile-basic.page';
-import {StudiesPage} from './studies/studies.page';
 
 const routes: Routes = [
   {
@@ -23,10 +22,6 @@ const routes: Routes = [
   {
     path: 'logout',
     component: LogoutPage
-  },
-  {
-    path: 'studies',
-    component: StudiesPage
   },
 ];
 
