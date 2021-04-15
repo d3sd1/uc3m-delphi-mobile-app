@@ -1,5 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {IonContent, NavController} from '@ionic/angular';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {IonContent, NavController, NavParams} from '@ionic/angular';
+
+
 import {ChatService} from '../chat.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {getChatName, UserChat} from '../user-chat';
@@ -15,7 +17,10 @@ import {ChatMessage} from './chat-message';
 export class ChatConversationComponent implements OnInit {
   chat: UserChat = null;
   user: User = null;
-  msg = '';
+
+  editorMsg = '';
+  showEmojiPicker = false;
+
   @ViewChild(IonContent, {read: IonContent, static: false}) myContent: IonContent;
 
   constructor(
@@ -23,9 +28,11 @@ export class ChatConversationComponent implements OnInit {
     private chatService: ChatService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private authService: UserStorage
+    private authService: UserStorage,
+    navParams: NavParams
   ) {
   }
+
 
   selfChatName() {
     if (this.chat === null || this.user === null) {
@@ -73,11 +80,11 @@ export class ChatConversationComponent implements OnInit {
     const chatMessage = new ChatMessage();
     chatMessage.sentBy = this.user;
     chatMessage.id = 0;
-    chatMessage.message = this.msg;
+    chatMessage.message = this.editorMsg;
     chatMessage.read = false;
     this.chat.chatMessages.push(chatMessage);
     this.scrollToBottomOnInit();
-    this.msg = '';
+    this.editorMsg = '';
     await this.chatService.writeToChat(this.chat.id, chatMessage);
   }
 
@@ -85,4 +92,127 @@ export class ChatConversationComponent implements OnInit {
     this.navCtrl.back();
   }
 
+
+  //@ViewChild(Content) content: Content;
+  @ViewChild('chat_input') messageInput: ElementRef;
+  msgList: ChatMessage[] = [];
+
+
+  ionViewWillLeave() {
+    // unsubscribe
+    //this.events.unsubscribe('chat:received');
+  }
+
+  ionViewDidEnter() {
+    //get message list
+    this.getMsg();
+
+    // Subscribe to received  new message events
+    /*this.events.subscribe('chat:received', msg => {
+      this.pushNewMsg(msg);
+    })*/
+  }
+
+  onFocus() {
+    this.showEmojiPicker = false;
+   // this.content.resize();
+    this.scrollToBottom();
+  }
+
+  switchEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+    if (!this.showEmojiPicker) {
+      this.focus();
+    } else {
+      this.setTextareaScroll();
+    }
+    //this.content.resize();
+    this.scrollToBottom();
+  }
+
+  /**
+   * @name getMsg
+   * @returns {Promise<ChatMessage[]>}
+   */
+  getMsg() {
+    /*// Get mock message list
+    return this.chatService
+      .getMsgList()
+      .subscribe(res => {
+
+        this.msgList = res;
+        this.scrollToBottom();
+      });*/
+  }
+
+  /**
+   * @name sendMsg
+   */
+  sendMsg() {/*TODO
+    if (!this.editorMsg.trim()) return;
+
+    // Mock message
+    const id = Date.now().toString();
+    let newMsg: ChatMessage = {
+      messageId: Date.now().toString(),
+      userId: this.user.id,
+      userName: this.user.name,
+      userAvatar: this.user.avatar,
+      toUserId: this.toUser.id,
+      time: Date.now(),
+      message: this.editorMsg,
+      status: 'pending'
+    };
+
+    this.pushNewMsg(newMsg);
+    this.editorMsg = '';
+
+    if (!this.showEmojiPicker) {
+      this.focus();
+    }
+
+    this.chatService.sendMsg(newMsg)
+      .then(() => {
+        let index = this.getMsgIndexById(id);
+        if (index !== -1) {
+          this.msgList[index].status = 'success';
+        }
+      })*/
+  }
+
+  /**
+   * @name pushNewMsg
+   * @param msg
+   */
+  pushNewMsg(msg: ChatMessage) {/*
+    const userId = this.user.id,
+      toUserId = this.toUser.id;
+    // Verify user relationships
+    if (msg.userId === userId && msg.toUserId === toUserId) {
+      this.msgList.push(msg);
+    } else if (msg.toUserId === userId && msg.userId === toUserId) {
+      this.msgList.push(msg);
+    }*/ // TODO
+    this.scrollToBottom();
+  }
+
+
+  scrollToBottom() {
+    setTimeout(() => {
+     /* if (this.content.scrollToBottom) {
+        this.content.scrollToBottom();
+      }*/
+    }, 400)
+  }
+
+  private focus() {
+    if (this.messageInput && this.messageInput.nativeElement) {
+      this.messageInput.nativeElement.focus();
+    }
+  }
+
+  private setTextareaScroll() {
+    const textarea = this.messageInput.nativeElement;
+    textarea.scrollTop = textarea.scrollHeight;
+  }
 }

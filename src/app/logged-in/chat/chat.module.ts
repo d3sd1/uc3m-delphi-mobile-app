@@ -1,4 +1,4 @@
-import {IonicModule} from '@ionic/angular';
+import {IonicModule, NavParams} from '@ionic/angular';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -12,6 +12,7 @@ import {ChatConversationLoadingPage} from './chat-conversation/chat-conversation
 import {ChatConversationComponent} from './chat-conversation/chat-conversation.component';
 import {ChatService} from './chat.service';
 import {TranslateModule} from '@ngx-translate/core';
+import {RelativeTime} from './relative-time.pipe';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import {TranslateModule} from '@ngx-translate/core';
     TranslateModule
   ],
   providers: [
-
+    RelativeTime,
+    NavParams
   ],
   declarations: [ChatPage, ChatListComponent, ChatEmptyPage, ChatConversationLoadingPage, ChatConversationComponent]
 })

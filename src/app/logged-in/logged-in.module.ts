@@ -4,10 +4,13 @@ import {LoggedInRoutingModule} from './logged-in-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoggedInInterceptor} from './logged-in.interceptor';
 import {TranslateModule} from '@ngx-translate/core';
+import {ProfilePasswordPage} from './profile/profile-password/profile-password.page';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ProfilePasswordPage
+  ],
   imports: [
     CommonModule,
     LoggedInRoutingModule,

@@ -1086,13 +1086,6 @@
   "resolved" "https://registry.npmjs.org/@capacitor/ios/-/ios-2.4.2.tgz"
   "version" "2.4.2"
 
-"@ionic-native/chooser@^5.32.0":
-  "integrity" "sha512-TmJQvuGRs+owpBz8sL6hCkFLHzA7+Zsue7zkuViCs9eNKXzVmslosDKzEVtgnagUq8gFOdJnsSIpOq0fKWmn/g=="
-  "resolved" "https://registry.npmjs.org/@ionic-native/chooser/-/chooser-5.32.0.tgz"
-  "version" "5.32.0"
-  dependencies:
-    "@types/cordova" "latest"
-
 "@ionic-native/core@^5.0.0", "@ionic-native/core@^5.1.0":
   "integrity" "sha512-dmS6rL38FAWCX9Xry2rtaMEe144MJgZ/8YVR5tVfWNSRmOOnDg+cZTYwt8Qeqm9ndqFBCjGh8PE7mteC8FvUGg=="
   "resolved" "https://registry.npmjs.org/@ionic-native/core/-/core-5.29.0.tgz"
@@ -2840,11 +2833,6 @@
     "serialize-javascript" "^4.0.0"
     "webpack-sources" "^1.4.3"
 
-"cordova-plugin-chooser@^1.3.2":
-  "integrity" "sha512-GfAibvrPdWe/ri+h3e3xkmq5bietY6yJRBIZawYDE7w600j2mtRsxgat7siWZtjRRhJuVsVwUG6H86Hyp3WKvA=="
-  "resolved" "https://registry.npmjs.org/cordova-plugin-chooser/-/cordova-plugin-chooser-1.3.2.tgz"
-  "version" "1.3.2"
-
 "cordova-plugin-file@^6.0.2":
   "integrity" "sha512-m7cughw327CjONN/qjzsTpSesLaeybksQh420/gRuSXJX5Zt9NfgsSbqqKDon6jnQ9Mm7h7imgyO2uJ34XMBtA=="
   "resolved" "https://registry.npmjs.org/cordova-plugin-file/-/cordova-plugin-file-6.0.2.tgz"
@@ -3175,6 +3163,11 @@
     "abab" "^2.0.3"
     "whatwg-mimetype" "^2.3.0"
     "whatwg-url" "^8.0.0"
+
+"date-fns@1.29.0":
+  "integrity" "sha512-lbTXWZ6M20cWH8N9S6afb0SBm6tMk+uUg6z3MqHPKE9atmsY3kJkTm8vKe93izJ2B2+q5MV990sM2CHgtAZaOw=="
+  "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-1.29.0.tgz"
+  "version" "1.29.0"
 
 "date-format@^2.1.0":
   "integrity" "sha512-bYQuGLeFxhkxNOF3rcMtiZxvCBAquGzZm6oWA1oZ0g2THUzivaRhv8uOhdr19LmoobSOLoIAxeUK2RdbM8IFTA=="
