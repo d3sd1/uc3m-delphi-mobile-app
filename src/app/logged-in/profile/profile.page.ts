@@ -8,6 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
+import {Language} from './language';
 
 @Component({
   selector: 'delphi-profile',
@@ -96,9 +97,10 @@ export class ProfilePage implements OnInit {
         text: lang.keyName,
         cssClass: this.user.language.id === lang.id ? 'current-lang' : '',
         //his.userStorage.
-        handler: () => {
-          console.log("changed lang to " + lang.keyName.toLowerCase())
-          this.translate.resetLang(lang.keyName.toLowerCase());
+        handler: async () => {
+          this.user.language = new Language(lang.keyName.toLowerCase());
+          this.translate.use(this.user.language.keyName);
+          await this.userStorage.setUser(this.user);
         }
       });
     });

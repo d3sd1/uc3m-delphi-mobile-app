@@ -8,6 +8,8 @@ import {
   PushNotificationToken,
   PushNotificationActionPerformed,
 } from '@capacitor/core';
+import {LangService} from './logged-in/profile/lang.service';
+import {UserStorage} from './core/storage/user.storage';
 
 const {PushNotifications} = Plugins;
 
@@ -40,11 +42,15 @@ export class EntrypointComponent implements OnInit {
         this.loaderService.initialize();
       });
     }*/
-  constructor(private translate: TranslateService) {
-    translate.setDefaultLang('en');
+   constructor(private translate: TranslateService, private langService: LangService, private userStorage: UserStorage) {
+
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.translate.setDefaultLang('en');
+    this.translate.addLangs(['es','en']);
+    const userLang = (await this.userStorage.getUser()).language.keyName;
+    this.translate.use(userLang);
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
     if (isPushNotificationsAvailable) {
 
