@@ -29,6 +29,7 @@ export class ProfilePage implements OnInit {
     this.profileOptions = await this.initializeItems();
     this.user = await this.userStorage.getUser();
     await this.loadUserImage();
+    console.log(this.user);
   }
 
   private async loadUserImage() {
@@ -55,6 +56,7 @@ export class ProfilePage implements OnInit {
       (err) => console.log(err)
     );
     await this.loadUserImage();
+    await this.userStorage.setUser(this.user);
   }
 
   async triggerStatusChatHandler() {
@@ -76,8 +78,13 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  updateNotificationPreferences() {
-
+  async updateNotificationPreferences(enabled: boolean) {
+    this.user.notificationStatus = enabled;
+    this.httpClient.post(environment.apiUrl + '/v1/profile/notifications?enabled=' + this.user.notificationStatus, {}).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+    await this.userStorage.setUser(this.user);
   }
 
   async changeLanguage() {
@@ -90,6 +97,7 @@ export class ProfilePage implements OnInit {
         cssClass: this.user.language.id === lang.id ? 'current-lang' : '',
         //his.userStorage.
         handler: () => {
+          console.log("changed lang to " + lang.keyName.toLowerCase())
           this.translate.resetLang(lang.keyName.toLowerCase());
         }
       });

@@ -22,7 +22,10 @@ import {TranslateModule} from '@ngx-translate/core';
     ChatService,
     UserStorage
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  exports: [
+    TranslateModule
+  ]
 })
 export class TabsPageModule {
 }

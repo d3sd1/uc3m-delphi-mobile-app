@@ -16,11 +16,14 @@ import {TranslateModule} from '@ngx-translate/core';
     FormsModule,
     RouterModule.forChild([{path: '', component: ProfilePage}]),
     ProfilePageRoutingModule,
-    TranslateModule
+    TranslateModule.forChild()
   ],
   declarations: [ProfilePage],
   providers: [
     LangService
+  ],
+  exports: [
+    TranslateModule
   ]
 })
 export class ProfilePageModule {

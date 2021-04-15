@@ -13,4 +13,5 @@ export class User {
   needsOnboard: boolean;
   roles: Role[];
   language: Language;
+  notificationStatus: boolean;
 }
