@@ -17,7 +17,7 @@ export class LoggedInInterceptor implements HttpInterceptor {
     const jwt = await this.userStorage.getJwt();
     const authReq = req.clone({
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+        //'Content-Type': 'application/json',
         Authorization: 'Bearer ' + jwt
       })
     });

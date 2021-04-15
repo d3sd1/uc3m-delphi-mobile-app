@@ -7,7 +7,9 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <ion-card color="light">
-    <div class="img-wrapper">
+    <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()">
+
+    <div class="img-wrapper" (click)="triggerUploadImage()">
       <img [src]="user?.photo"/>
       <ion-button color="light">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">
@@ -29,7 +31,6 @@
   <ion-list>
     <ion-item>
       <ion-label (click)="triggerStatusChatHandler()">{{ 'profile_page.notificationLabel' | translate }}</ion-label>
-      <ion-label>Notificaciones</ion-label>
       <ion-toggle (ionChange)="updateNotificationPreferences()"></ion-toggle>
     </ion-item>
 

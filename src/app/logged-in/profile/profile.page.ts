@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActionSheetController} from '@ionic/angular';
 import {LangService} from './lang.service';
 import {UserService} from '../onboarding/user.service';
 import {UserStorage} from '../../core/storage/user.storage';
 import {User} from '../user';
 import {TranslateService} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
 
@@ -39,6 +39,22 @@ export class ProfilePage implements OnInit {
   }
 
   async initializeItems(): Promise<any> {
+  }
+
+  @ViewChild('uploadPicture') uploadPicture: ElementRef;
+  triggerUploadImage() {
+    this.uploadPicture.nativeElement.click();
+  }
+  async uploadImage() {
+    console.log("upload")
+    const formData = new FormData();
+    formData.append('image', this.uploadPicture.nativeElement.files[0]);
+    console.log(this.uploadPicture.nativeElement.value)
+    this.httpClient.post(environment.apiUrl + '/v1/profile/img', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+    await this.loadUserImage();
   }
 
   async triggerStatusChatHandler() {
