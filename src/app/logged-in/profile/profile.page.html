@@ -8,20 +8,19 @@
 <ion-content [fullscreen]="true">
   <ion-card color="light">
     <div class="img-wrapper">
-      <img
-        src="https://i.ibb.co/KLqGy5q/2021-03-12-03-13-17.jpg"/>
+      <img [src]="user?.photo"/>
       <ion-button color="light">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">
         </ion-icon>
       </ion-button>
     </div>
     <ion-card-content class="ion-text-center" routerLink="basic">
-      <h2>{{ 'profile_page.name' | translate }}</h2>
+      <h2>{{user?.name }} {{user?.surnames}}</h2>
       <ion-text color="medium">
         <div class="ion-justify-content-center" style="display: flex;">
           <ion-icon class="user-email" color="medium" name="mail-outline">
           </ion-icon>
-          <p>{{ 'profile_page.email' | translate }}</p>
+          <p>{{user?.email}}</p>
         </div>
       </ion-text>
     </ion-card-content>

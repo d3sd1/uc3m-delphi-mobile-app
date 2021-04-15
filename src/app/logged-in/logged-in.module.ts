@@ -20,6 +20,9 @@ import {TranslateModule} from '@ngx-translate/core';
       useClass: LoggedInInterceptor,
       multi: true
     }
+  ],
+  exports: [
+    TranslateModule
   ]
 })
 export class LoggedInModule {

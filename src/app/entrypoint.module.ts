@@ -37,7 +37,10 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     TranslateService,
     TranslateStore
   ],
-  bootstrap: [EntrypointComponent]
+  bootstrap: [EntrypointComponent],
+  exports: [
+    TranslateModule
+  ]
 })
 export class EntrypointModule {
 }

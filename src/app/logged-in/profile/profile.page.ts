@@ -5,6 +5,9 @@ import {UserService} from '../onboarding/user.service';
 import {UserStorage} from '../../core/storage/user.storage';
 import {User} from '../user';
 import {TranslateService} from '@ngx-translate/core';
+import {HttpClient} from '@angular/common/http';
+import {DomSanitizer} from '@angular/platform-browser';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'delphi-profile',
@@ -16,48 +19,26 @@ export class ProfilePage implements OnInit {
 
   public profileOptions: any[];
   public profileOptionsBackup: any[];
-  private user: User;
+  public user: User;
 
   constructor(private actionSheetController: ActionSheetController, private langService: LangService, private userStorage: UserStorage,
-              private translate: TranslateService) {
+              private translate: TranslateService, private httpClient: HttpClient, private sanitizer: DomSanitizer) {
   }
 
   async ngOnInit() {
     this.profileOptions = await this.initializeItems();
     this.user = await this.userStorage.getUser();
+    await this.loadUserImage();
+  }
+
+  private async loadUserImage() {
+    const blob = await this.httpClient.get(environment.apiUrl + '/v1/profile/img', {responseType: 'blob'}).toPromise();
+    const objectURL = URL.createObjectURL(blob);
+    const img = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    this.user.photo = img;
   }
 
   async initializeItems(): Promise<any> {
-    /*const profileOptions = [
-      {
-        name: 'Notificaciones',
-        type: 'switcher',
-        disabled: true,
-        callback:
-      },
-      {
-        name: 'Estado del chat',
-        type: 'bottom-multichoice',
-        disabled: false
-      },
-      {
-        name: 'Cambiar contraseña',
-        type: 'modal-trigger',
-        modalName: 'change-password',
-        disabled: false
-      },
-      {
-        name: 'Desconectar',
-        type: 'modal-trigger',
-        modalName: 'user-logout-confirm',
-        disabled: false
-      },
-      {
-        name: 'Perfil profesional',
-        type: 'link',
-        linkRouterUrl: '/profile/profesional',
-        disabled: false
-      }];*/
   }
 
   async triggerStatusChatHandler() {
