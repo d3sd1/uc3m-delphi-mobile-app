@@ -1,6 +1,6 @@
 {
   "chatEmpty_page": {
-    "noConversations": "No conversations!",
+    "noConversations": "No conversations yet!",
     "participate": "Participate in processes to obtain access to chat conversations!"
   },
   "chatList_component": {
@@ -14,22 +14,22 @@
   },
   "onboardin_page": {
     "welcome_1": "Welcome",
-    "welcome_2": "Welcome to <b>Delphi</b>. Thanks for using our application. We briefly explain you our operation.",
-    "delphi": "What is Delphi?",
-    "explanation": "<b>Automation of occupational risk prevention</b> by Delphi method. We have simplified and optimized the method to make your processes as fast as possible.",
-    "next": "Next.",
+    "welcome_2": "Welcome to <b>Agile Delphi</b>. Thanks for using the application. Following, we'll briefly explain its operation.",
+    "delphi": "What is Agile Delphi?",
+    "explanation": "<b>Automation of objective criteria generation</b> by applying a modified Delphi methodology. We have simplified and optimized the method to successfully complete your processes as fast as possible.",
+    "next": "Next",
     "whatToDo_1": "What do I have to do?",
-    "whatToDo_2": "Participate or create</b> processes to start guaranteeing the security of employees.",
+    "whatToDo_2": "<b>Participate or create</b> processes to produce objective criteria about relevant topics.",
     "ready": "Ready to start?",
-    "goToApp": "Go to application."
+    "goToApp": "Go to the app"
   },
   "create_page": {
     "create": "Create",
-    "selectExperts": "Select experts (platform experts or invite)"
+    "selectExperts": "Select experts (already in the platform, or invite new ones)"
   },
   "empty_page": {
     "noProcesses": "No processes in progress!",
-    "thanks": "Thanks for your participation in the platform."
+    "thanks": "Thanks for participating in the platform."
   },
   "list_page": {
     "inProgress": "In progress",
@@ -46,7 +46,7 @@
     "commentsTitle": "Comments",
     "comment_1": "Globes must be worn",
     "comment_2": "Fork-lift must be pulled by 4 operators",
-    "comment_3": "Las carretillas deben llevar mangos",
+    "comment_3": "Fork-lifts must be equipped with handles",
     "inviteButton": "Invite an expert",
     "sendInvitationButton": "Send invitation",
     "finishRoundButton": "Conclude round and analyze results"
@@ -106,10 +106,10 @@
     "loginButton": "Login"
   },
   "splashScreen_component": {
-    "appName": "Delphi"
+    "appName": "Agile Delphi"
   },
   "startupSplashScreen_component": {
-    "appName": "Delphi"
+    "appName": "Agile Delphi"
   }
 }
 
