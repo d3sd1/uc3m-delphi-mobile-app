@@ -1,11 +1,15 @@
-<ion-header class="ion-no-border">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="" (click)="goBack()" text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{selfChatName()}}</ion-title>
+    <ion-title>{{selfChat()?.name}}</ion-title>
+    <ion-buttons slot="end">
+      <img class="user-img-header" [src]="selfChat()?.photo" alt="">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
   <div class="message-wrap" #chatDisplay>
 

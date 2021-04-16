@@ -4,7 +4,7 @@ import {IonContent, NavController, NavParams} from '@ionic/angular';
 
 import {ChatService} from '../chat.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {getChatName, UserChat} from '../user-chat';
+import {getChatInfo, UserChat} from '../user-chat';
 import {User} from '../../user';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {ChatMessage} from './chat-message';
@@ -34,12 +34,13 @@ export class ChatConversationComponent implements OnInit {
   }
 
 
-  selfChatName() {
+  selfChat() {
     if (this.chat === null || this.user === null) {
       return;
     }
-    return getChatName(this.chat, this.user?.id);
+    return getChatInfo(this.chat, this.user?.id);
   }
+
 
   async scrollToBottom() {
     await this.chatDisplay.scrollToBottom(300);

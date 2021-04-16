@@ -292,6 +292,111 @@ DelphiCoreModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
+/***/ "./src/app/core/storage/user.storage.ts":
+/*!**********************************************!*\
+  !*** ./src/app/core/storage/user.storage.ts ***!
+  \**********************************************/
+/*! exports provided: UserStorage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserStorage", function() { return UserStorage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/__ivy_ngcc__/fesm2015/ionic-storage.js");
+/* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/__ivy_ngcc__/fesm2015/auth0-angular-jwt.js");
+
+
+
+
+let UserStorage = class UserStorage {
+    constructor(storage) {
+        this.storage = storage;
+        this.JWT_KEY_NAME = 'JWT_TOKEN_STR';
+        this.USER_KEY_NAME = 'USER_ENCODED';
+        this.user = null;
+    }
+    getJwt() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+                resolve(yield this.storage.get(this.JWT_KEY_NAME));
+            }));
+        });
+    }
+    getUser() {
+        return new Promise((resolve, reject) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            resolve(JSON.parse(yield this.storage.get(this.USER_KEY_NAME)));
+        }));
+    }
+    setUser(user) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.storage.set(this.USER_KEY_NAME, JSON.stringify(user));
+        });
+    }
+    setJwt(jwt) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.storage.set(this.JWT_KEY_NAME, jwt);
+        });
+    }
+    logout() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.storage.clear();
+            yield this.setUser(null);
+            yield this.setJwt(null);
+            yield this.storage.remove(this.USER_KEY_NAME);
+            yield this.storage.remove(this.JWT_KEY_NAME);
+            console.log("KEYS -> ", yield this.storage.keys());
+        });
+    }
+    needsOnboard() {
+        return new Promise((resolve, reject) => {
+            /*this.getUser().then((user: User) => {
+              resolve(user.needsOnboard);
+            }).catch(() => {
+              reject();
+            });*/
+        });
+    }
+    hasRole(roleName) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const user = yield this.getUser();
+            /*const roleIdx = user.roles.findIndex((role: Role) => {
+              return role.name === roleName;
+            });
+            return roleIdx !== -1;*/
+            return false;
+        });
+    }
+    isLoggedIn() {
+        return new Promise((resolve, reject) => {
+            this.getJwt().then((jwt) => {
+                console.log("JEWT -> ", jwt);
+                if (jwt === null || jwt === '') {
+                    resolve(false);
+                }
+                const helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__["JwtHelperService"]();
+                const isExpired = helper.isTokenExpired(jwt);
+                resolve(!isExpired);
+            }).catch(e => {
+                reject(e);
+            });
+        });
+    }
+};
+UserStorage.ctorParameters = () => [
+    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_2__["Storage"] }
+];
+UserStorage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], UserStorage);
+
+
+
+/***/ }),
+
 /***/ "./src/app/entrypoint-routing.module.ts":
 /*!**********************************************!*\
   !*** ./src/app/entrypoint-routing.module.ts ***!
@@ -320,11 +425,11 @@ const routes = [
     },
     {
         path: 'logged-in',
-        loadChildren: () => Promise.all(/*! import() | logged-in-logged-in-module */[__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-in-logged-in-module")]).then(__webpack_require__.bind(null, /*! ./logged-in/logged-in.module */ "./src/app/logged-in/logged-in.module.ts")).then(m => m.LoggedInModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | logged-in-logged-in-module */ "logged-in-logged-in-module").then(__webpack_require__.bind(null, /*! ./logged-in/logged-in.module */ "./src/app/logged-in/logged-in.module.ts")).then(m => m.LoggedInModule)
     },
     {
         path: 'logged-out',
-        loadChildren: () => Promise.all(/*! import() | logged-out-logged-out-module */[__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-out-logged-out-module")]).then(__webpack_require__.bind(null, /*! ./logged-out/logged-out.module */ "./src/app/logged-out/logged-out.module.ts")).then(m => m.LoggedOutModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | logged-out-logged-out-module */ "logged-out-logged-out-module").then(__webpack_require__.bind(null, /*! ./logged-out/logged-out.module */ "./src/app/logged-out/logged-out.module.ts")).then(m => m.LoggedOutModule)
     },
 ];
 let EntrypointRoutingModule = class EntrypointRoutingModule {
@@ -356,6 +461,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
 /* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @capacitor/core */ "./node_modules/@capacitor/core/dist/esm/index.js");
+/* harmony import */ var _logged_in_profile_lang_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logged-in/profile/lang.service */ "./src/app/logged-in/profile/lang.service.ts");
+/* harmony import */ var _core_storage_user_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core/storage/user.storage */ "./src/app/core/storage/user.storage.ts");
+
+
 
 
 
@@ -383,36 +492,48 @@ let EntrypointComponent = class EntrypointComponent {
           this.loaderService.initialize();
         });
       }*/
-    constructor(translate) {
+    constructor(translate, langService, userStorage) {
         this.translate = translate;
-        translate.setDefaultLang('en');
+        this.langService = langService;
+        this.userStorage = userStorage;
     }
     ngOnInit() {
-        PushNotifications.requestPermission().then(result => {
-            if (result.granted) {
-                // Register with Apple / Google to receive push via APNS/FCM
-                PushNotifications.register();
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.translate.setDefaultLang('en');
+            this.translate.addLangs(['es', 'en']);
+            const userLang = (yield this.userStorage.getUser()).language.keyName;
+            this.translate.use(userLang);
+            const isPushNotificationsAvailable = _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Capacitor"].isPluginAvailable('PushNotifications');
+            if (isPushNotificationsAvailable) {
+                PushNotifications.requestPermission().then(result => {
+                    if (result.granted) {
+                        // Register with Apple / Google to receive push via APNS/FCM
+                        PushNotifications.register();
+                    }
+                    else {
+                        // Show some error
+                    }
+                });
+                PushNotifications.addListener('registration', (token) => {
+                    alert('Push registration success, token: ' + token.value);
+                });
+                PushNotifications.addListener('registrationError', (error) => {
+                    alert('Error on registration: ' + JSON.stringify(error));
+                });
+                PushNotifications.addListener('pushNotificationReceived', (notification) => {
+                    alert('Push received: ' + JSON.stringify(notification));
+                });
+                PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+                    alert('Push action performed: ' + JSON.stringify(notification));
+                });
             }
-            else {
-                // Show some error
-            }
-        });
-        PushNotifications.addListener('registration', (token) => {
-            alert('Push registration success, token: ' + token.value);
-        });
-        PushNotifications.addListener('registrationError', (error) => {
-            alert('Error on registration: ' + JSON.stringify(error));
-        });
-        PushNotifications.addListener('pushNotificationReceived', (notification) => {
-            alert('Push received: ' + JSON.stringify(notification));
-        });
-        PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
-            alert('Push action performed: ' + JSON.stringify(notification));
         });
     }
 };
 EntrypointComponent.ctorParameters = () => [
-    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"] }
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"] },
+    { type: _logged_in_profile_lang_service__WEBPACK_IMPORTED_MODULE_4__["LangService"] },
+    { type: _core_storage_user_storage__WEBPACK_IMPORTED_MODULE_5__["UserStorage"] }
 ];
 EntrypointComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -478,7 +599,7 @@ EntrypointModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"],
             _ionic_storage__WEBPACK_IMPORTED_MODULE_8__["IonicStorageModule"].forRoot(),
             _core_delphi_core_module__WEBPACK_IMPORTED_MODULE_9__["DelphiCoreModule"],
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"].forChild({
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"].forRoot({
                 loader: {
                     provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateLoader"],
                     useFactory: HttpLoaderFactory,
@@ -492,7 +613,10 @@ EntrypointModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateService"],
             _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateStore"]
         ],
-        bootstrap: [_entrypoint_component__WEBPACK_IMPORTED_MODULE_6__["EntrypointComponent"]]
+        bootstrap: [_entrypoint_component__WEBPACK_IMPORTED_MODULE_6__["EntrypointComponent"]],
+        exports: [
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"]
+        ]
     })
 ], EntrypointModule);
 
@@ -500,6 +624,45 @@ EntrypointModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 function HttpLoaderFactory(http) {
     return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_12__["TranslateHttpLoader"](http);
 }
+
+
+/***/ }),
+
+/***/ "./src/app/logged-in/profile/lang.service.ts":
+/*!***************************************************!*\
+  !*** ./src/app/logged-in/profile/lang.service.ts ***!
+  \***************************************************/
+/*! exports provided: LangService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LangService", function() { return LangService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
+
+
+
+
+let LangService = class LangService {
+    constructor(httpClient) {
+        this.httpClient = httpClient;
+    }
+    getAvailableLangs() {
+        return this.httpClient.get(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].apiUrl + '/v1/delphi/langs').toPromise();
+    }
+};
+LangService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+];
+LangService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], LangService);
+
 
 
 /***/ }),
@@ -519,7 +682,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    apiUrl: 'http://127.0.0.1:8080',
+    apiUrl: 'http://localhost:8080',
     debug: true
 };
 /*

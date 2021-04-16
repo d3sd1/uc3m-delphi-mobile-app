@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChatService} from '../chat.service';
 import {User} from '../../user';
-import {getChatName, getChatPicture, getChatUnreadMessages, getUserChatStatus, UserChat} from '../user-chat';
+import {getChatInfo, getChatPicture, getChatUnreadMessages, getUserChatStatus, UserChat} from '../user-chat';
 import {UserStorage} from '../../../core/storage/user.storage';
 
 @Component({
@@ -29,7 +29,7 @@ export class ChatListComponent implements OnInit {
   }
 
   selfChatName(chat: UserChat) {
-    return getChatName(chat, this.user.id);
+    return getChatInfo(chat, this.user.id).name;
   }
 
   selfChatPicture(chat: UserChat): string {

@@ -30,17 +30,17 @@ export function getChatsUnreadMessages(userChats: UserChat[], currentUserId: num
   return unreadMessages;
 }
 
-export function getChatName(chat: UserChat, currentUserId: number) {
+export function getChatInfo(chat: UserChat, currentUserId: number) {
   if (chat.group) {
     return chat.groupName;
   }
-  let fullName = null;
+  let info = null;
   chat.users.forEach((chatUser: User) => {
     if (chatUser.id !== currentUserId) {
-      fullName = chatUser.name + ' ' + chatUser.surnames;
+      info = chatUser;
     }
   });
-  return fullName;
+  return info;
 }
 
 export function getChatPicture(chat: UserChat, currentUserId: number): string {
