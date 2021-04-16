@@ -1,6 +1,6 @@
 {
   "chatEmpty_page": {
-    "noConversations": "¡Sin conversaciones!",
+    "noConversations": "¡Todavía no hay conversaciones!",
     "participate": "¡Participa en procesos para obtener acceso a las conversaciones del chat!"
   },
   "chatList_component": {
@@ -14,18 +14,18 @@
   },
   "onboardin_page": {
     "welcome_1": "Bienvenido",
-    "welcome_2": "Bienvenido a <b>Delphi</b>. Gracias por usar nuestra aplicación. Te explicaremos brevemente nuestro funcionamiento.",
-    "delphi": "¿Qué es Delphi?",
-    "explanation": "<b>Automatización de prevención de riesgos laborales</b> mediante la metodología Delphi. La hemos simplificado y optimizado para que tus procesos sean lo más rápidos posibles.",
-    "next": "Siguiente.",
+    "welcome_2": "Bienvenido a <b>Agile Delphi</b>. Gracias por usar la aplicación. A continuación explicaremos brevemente su funcionamiento.",
+    "delphi": "¿Qué es Agile Delphi?",
+    "explanation": "<b>Automatización para la generación de criterios objetivos</b> mediante la metodología Delphi. La hemos simplificado y optimizado para que tus procesos se lleven a cabo con éxito de la forma más rápida posible.",
+    "next": "Siguiente",
     "whatToDo_1": "¿Qué tengo que hacer?",
-    "whatToDo_2": "Participa o crea</b> procesos y comienza a garantizar la seguridad de los empleados.",
+    "whatToDo_2": "<b>Participa o crea</b> procesos y comienza a generar criterios objetivos sobre temas de interés.",
     "ready": "¿Listo para comenzar?",
     "goToApp": "Ir a la aplicación"
   },
   "create_page": {
     "create": "Crear",
-    "selectExperts": "Seleccionar expertos (de la plataforma o invitar) "
+    "selectExperts": "Seleccionar expertos (ya en la plataforma, o invitar a nuevos) "
   },
   "empty_page": {
     "noProcesses": "¡Sin procesos en curso!",
@@ -106,9 +106,9 @@
     "loginButton": "Login"
   },
   "splashScreen_component": {
-    "appName": "Delphi"
+    "appName": "Agile Delphi"
   },
   "startupSplashScreen_component": {
-    "appName": "Delphi"
+    "appName": "Agile Delphi"
   }
 }
