@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {LoadingController, ToastController} from '@ionic/angular';
 import {LoginConsumer} from '../../core/consumer/login/login.consumer';
 import {LoginUser} from '../../core/consumer/login/login.user';
+import {WsService} from '../../core/ws/ws.service';
 
 @Component({
   selector: 'delphi-login',
@@ -15,7 +16,8 @@ export class LoginPage {
   constructor(private loginConsumer: LoginConsumer,
               private router: Router,
               private loadingController: LoadingController,
-              private toastController: ToastController) {
+              private toastController: ToastController,
+              private wsService: WsService) {
     this.loginUser = new LoginUser();
   }
 

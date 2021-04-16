@@ -4,6 +4,7 @@ import {Storage} from '@ionic/storage';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {User} from '../../logged-in/user';
 import {Role} from '../../../model/role';
+import {WsService} from '../ws/ws.service';
 
 
 @Injectable({
@@ -14,7 +15,8 @@ export class UserStorage {
   private USER_KEY_NAME = 'USER_ENCODED';
   private user: User = null;
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage,
+              private wsService: WsService) {
   }
 
   async getJwt(): Promise<string> {
@@ -43,6 +45,8 @@ export class UserStorage {
     await this.setJwt(null);
     await this.storage.remove(this.USER_KEY_NAME);
     await this.storage.remove(this.JWT_KEY_NAME);
+
+    await this.wsService.disconnectWs();
     console.log("KEYS -> " , await this.storage.keys())
   }
 
@@ -69,7 +73,6 @@ export class UserStorage {
   isLoggedIn(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.getJwt().then((jwt: string) => {
-        console.log("JEWT -> ", jwt)
         if (jwt === null || jwt === '') {
           resolve(false);
         }

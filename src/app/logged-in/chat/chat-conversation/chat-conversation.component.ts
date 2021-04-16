@@ -8,6 +8,7 @@ import {getChatInfo, UserChat} from '../user-chat';
 import {User} from '../../user';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {ChatMessage} from './chat-message';
+import {WsService} from '../../../core/ws/ws.service';
 
 @Component({
   selector: 'delphi-chat-conversation',
@@ -29,7 +30,7 @@ export class ChatConversationComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService: UserStorage,
-    navParams: NavParams
+    private wsService: WsService
   ) {
   }
 
@@ -60,7 +61,15 @@ export class ChatConversationComponent implements OnInit {
         this.scrollToBottom();
       });
     });
+
+    this.wsService.subscribe('chat/messages', true).subscribe(async (msg: ChatMessage) => {
+      console.log('current messages ', this.chat?.chatMessages);
+      console.log('new message ', msg);
+      this.chat?.chatMessages.push(msg);
+      await this.scrollToBottom();
+    });
   }
+
 
   showKeyboard() {
     //  this.keyboard.showMessenger(null);
@@ -78,8 +87,14 @@ export class ChatConversationComponent implements OnInit {
 
 
   async sendMessage() {
+    if (this.editorMsg === '') {
+      return;
+    }
     const chatMessage = new ChatMessage();
     chatMessage.sentBy = this.user;
+    chatMessage.sentTo = this.chat.users.find((user: User) => {
+      return user.id !== this.user.id;
+    });
     chatMessage.id = 0;
     chatMessage.message = this.editorMsg;
     chatMessage.read = false;
@@ -109,66 +124,15 @@ export class ChatConversationComponent implements OnInit {
     await this.scrollToBottom();
   }
 
-  /**
-   * @name getMsg
-   * @returns {Promise<ChatMessage[]>}
-   */
-  getMsg() {
-    /*// Get mock message list
-    return this.chatService
-      .getMsgList()
-      .subscribe(res => {
-
-        this.msgList = res;
-        this.scrollToBottom();
-      });*/
-  }
-
-  /**
-   * TODO REMVE ASA!
-   * @name sendMsg
-   */
-  sendMsg() {/*TODO
-    if (!this.editorMsg.trim()) return;
-
-    // Mock message
-    const id = Date.now().toString();
-    let newMsg: ChatMessage = {
-      messageId: Date.now().toString(),
-      userId: this.user.id,
-      userName: this.user.name,
-      userAvatar: this.user.avatar,
-      toUserId: this.toUser.id,
-      time: Date.now(),
-      message: this.editorMsg,
-      status: 'pending'
-    };
-
-    this.pushNewMsg(newMsg);
-    this.editorMsg = '';
-
-    if (!this.showEmojiPicker) {
-      this.focus();
+  /*
+    private focus() {
+      if (this.messageInput && this.messageInput.nativeElement) {
+        this.messageInput.nativeElement.focus();
+      }
     }
 
-    this.chatService.sendMsg(newMsg)
-      .then(() => {
-        let index = this.getMsgIndexById(id);
-        if (index !== -1) {
-          this.msgList[index].status = 'success';
-        }
-      })*/
-  }
-
-/*
-  private focus() {
-    if (this.messageInput && this.messageInput.nativeElement) {
-      this.messageInput.nativeElement.focus();
-    }
-  }
-
-  private setTextareaScroll() {
-    const textarea = this.messageInput.nativeElement;
-    textarea.scrollTop = textarea.scrollHeight;
-  }*/
+    private setTextareaScroll() {
+      const textarea = this.messageInput.nativeElement;
+      textarea.scrollTop = textarea.scrollHeight;
+    }*/
 }
