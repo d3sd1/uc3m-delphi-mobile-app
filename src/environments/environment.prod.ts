@@ -1,6 +1,6 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'http://163.117.154.123:8080/',
+  apiUrl: 'https://api.ad.esventura.es',
   debug: false
 };

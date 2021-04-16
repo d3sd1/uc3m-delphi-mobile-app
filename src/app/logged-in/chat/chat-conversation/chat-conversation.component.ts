@@ -21,7 +21,7 @@ export class ChatConversationComponent implements OnInit {
   editorMsg = '';
   showEmojiPicker = false;
 
-  @ViewChild(IonContent, {read: IonContent, static: false}) myContent: IonContent;
+  @ViewChild(IonContent, {read: IonContent, static: false}) chatDisplay: IonContent;
 
   constructor(
     private navCtrl: NavController,
@@ -41,8 +41,8 @@ export class ChatConversationComponent implements OnInit {
     return getChatName(this.chat, this.user?.id);
   }
 
-  scrollToBottomOnInit() {
-    this.myContent.scrollToBottom(300);
+  async scrollToBottom() {
+    await this.chatDisplay.scrollToBottom(300);
   }
 
   async ngOnInit() {
@@ -56,7 +56,7 @@ export class ChatConversationComponent implements OnInit {
       this.chat = userChat;
       this.chatService.postReadChat(chatId).then(() => {
         this.chatService.getCurrentUserChats(); // reload chats
-        this.scrollToBottomOnInit();
+        this.scrollToBottom();
       });
     });
   }
@@ -82,52 +82,30 @@ export class ChatConversationComponent implements OnInit {
     chatMessage.id = 0;
     chatMessage.message = this.editorMsg;
     chatMessage.read = false;
+    chatMessage.sentDate = new Date();
     this.chat.chatMessages.push(chatMessage);
-    this.scrollToBottomOnInit();
     this.editorMsg = '';
     await this.chatService.writeToChat(this.chat.id, chatMessage);
+    await this.scrollToBottom();
   }
 
   goBack() {
     this.navCtrl.back();
   }
 
-
-  //@ViewChild(Content) content: Content;
-  @ViewChild('chat_input') messageInput: ElementRef;
-  msgList: ChatMessage[] = [];
-
-
-  ionViewWillLeave() {
-    // unsubscribe
-    //this.events.unsubscribe('chat:received');
-  }
-
-  ionViewDidEnter() {
-    //get message list
-    this.getMsg();
-
-    // Subscribe to received  new message events
-    /*this.events.subscribe('chat:received', msg => {
-      this.pushNewMsg(msg);
-    })*/
-  }
-
-  onFocus() {
+  async onFocus() {
     this.showEmojiPicker = false;
-   // this.content.resize();
-    this.scrollToBottom();
+    await this.scrollToBottom();
   }
 
-  switchEmojiPicker() {
+  async switchEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
     if (!this.showEmojiPicker) {
-      this.focus();
+      //this.focus();
     } else {
-      this.setTextareaScroll();
+      //this.setTextareaScroll();
     }
-    //this.content.resize();
-    this.scrollToBottom();
+    await this.scrollToBottom();
   }
 
   /**
@@ -146,6 +124,7 @@ export class ChatConversationComponent implements OnInit {
   }
 
   /**
+   * TODO REMVE ASA!
    * @name sendMsg
    */
   sendMsg() {/*TODO
@@ -180,31 +159,7 @@ export class ChatConversationComponent implements OnInit {
       })*/
   }
 
-  /**
-   * @name pushNewMsg
-   * @param msg
-   */
-  pushNewMsg(msg: ChatMessage) {/*
-    const userId = this.user.id,
-      toUserId = this.toUser.id;
-    // Verify user relationships
-    if (msg.userId === userId && msg.toUserId === toUserId) {
-      this.msgList.push(msg);
-    } else if (msg.toUserId === userId && msg.userId === toUserId) {
-      this.msgList.push(msg);
-    }*/ // TODO
-    this.scrollToBottom();
-  }
-
-
-  scrollToBottom() {
-    setTimeout(() => {
-     /* if (this.content.scrollToBottom) {
-        this.content.scrollToBottom();
-      }*/
-    }, 400)
-  }
-
+/*
   private focus() {
     if (this.messageInput && this.messageInput.nativeElement) {
       this.messageInput.nativeElement.focus();
@@ -214,5 +169,5 @@ export class ChatConversationComponent implements OnInit {
   private setTextareaScroll() {
     const textarea = this.messageInput.nativeElement;
     textarea.scrollTop = textarea.scrollHeight;
-  }
+  }*/
 }

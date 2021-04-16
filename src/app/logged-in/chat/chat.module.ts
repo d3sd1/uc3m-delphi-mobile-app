@@ -13,6 +13,8 @@ import {ChatConversationComponent} from './chat-conversation/chat-conversation.c
 import {ChatService} from './chat.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {RelativeTime} from './relative-time.pipe';
+import {EmojiPickerComponent} from './chat-conversation/emoji-picker/emoji-picker';
+import {EmojiProvider} from './chat-conversation/emoji-picker/emoji-provider';
 
 @NgModule({
   imports: [
@@ -21,13 +23,14 @@ import {RelativeTime} from './relative-time.pipe';
     FormsModule,
     ChatPageRoutingModule,
     LoadingPageModule,
-    TranslateModule
+    TranslateModule,
   ],
   providers: [
-    RelativeTime,
-    NavParams
+    NavParams,
+    EmojiProvider
   ],
-  declarations: [ChatPage, ChatListComponent, ChatEmptyPage, ChatConversationLoadingPage, ChatConversationComponent]
+  declarations: [ChatPage, ChatListComponent, ChatEmptyPage, ChatConversationLoadingPage, ChatConversationComponent,
+    RelativeTime, EmojiPickerComponent]
 })
 export class ChatPageModule {
 }

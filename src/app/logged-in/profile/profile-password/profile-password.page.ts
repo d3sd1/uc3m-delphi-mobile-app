@@ -14,17 +14,22 @@ import {environment} from '../../../../environments/environment';
 export class ProfilePasswordPage implements OnInit {
 
   user: User;
-  reset = {
-    currentPass: '',
-    newPass: '',
-    newPassRep: ''
-  };
+  reset;
 
   constructor(
     private navCtrl: NavController,
     private authService: UserStorage,
     private toastController: ToastController,
     private httpClient: HttpClient) {
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.reset = {
+      currentPass: '',
+      newPass: '',
+      newPassRep: ''
+    };
   }
 
   async ngOnInit() {
@@ -47,6 +52,7 @@ export class ProfilePasswordPage implements OnInit {
   }
 
   async resetPass() {
+    this.resetForm();
     if (this.reset.newPass !== this.reset.newPassRep) {
       await this.showToast('Las nuevas contraseñas no coinciden.');
       return;

@@ -5,6 +5,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoggedInInterceptor} from './logged-in.interceptor';
 import {TranslateModule} from '@ngx-translate/core';
 import {ProfilePasswordPage} from './profile/profile-password/profile-password.page';
+import {IonicModule} from '@ionic/angular';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import {ProfilePasswordPage} from './profile/profile-password/profile-password.p
     CommonModule,
     LoggedInRoutingModule,
     HttpClientModule,
-    TranslateModule
+    TranslateModule,
+    IonicModule,
+    FormsModule
   ],
   providers: [
     {

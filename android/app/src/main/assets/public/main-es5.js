@@ -167,6 +167,287 @@
     },
 
     /***/
+    "./src/app/core/storage/user.storage.ts":
+    /*!**********************************************!*\
+      !*** ./src/app/core/storage/user.storage.ts ***!
+      \**********************************************/
+
+    /*! exports provided: UserStorage */
+
+    /***/
+    function srcAppCoreStorageUserStorageTs(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "UserStorage", function () {
+        return UserStorage;
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      "./node_modules/tslib/tslib.es6.js");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/core */
+      "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+      /* harmony import */
+
+
+      var _ionic_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @ionic/storage */
+      "./node_modules/@ionic/storage/__ivy_ngcc__/fesm2015/ionic-storage.js");
+      /* harmony import */
+
+
+      var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @auth0/angular-jwt */
+      "./node_modules/@auth0/angular-jwt/__ivy_ngcc__/fesm2015/auth0-angular-jwt.js");
+
+      var UserStorage = /*#__PURE__*/function () {
+        function UserStorage(storage) {
+          _classCallCheck(this, UserStorage);
+
+          this.storage = storage;
+          this.JWT_KEY_NAME = 'JWT_TOKEN_STR';
+          this.USER_KEY_NAME = 'USER_ENCODED';
+          this.user = null;
+        }
+
+        _createClass(UserStorage, [{
+          key: "getJwt",
+          value: function getJwt() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+              var _this = this;
+
+              return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                while (1) {
+                  switch (_context2.prev = _context2.next) {
+                    case 0:
+                      return _context2.abrupt("return", new Promise(function (resolve, reject) {
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                          return regeneratorRuntime.wrap(function _callee$(_context) {
+                            while (1) {
+                              switch (_context.prev = _context.next) {
+                                case 0:
+                                  _context.t0 = resolve;
+                                  _context.next = 3;
+                                  return this.storage.get(this.JWT_KEY_NAME);
+
+                                case 3:
+                                  _context.t1 = _context.sent;
+                                  (0, _context.t0)(_context.t1);
+
+                                case 5:
+                                case "end":
+                                  return _context.stop();
+                              }
+                            }
+                          }, _callee, this);
+                        }));
+                      }));
+
+                    case 1:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              }, _callee2);
+            }));
+          }
+        }, {
+          key: "getUser",
+          value: function getUser() {
+            var _this2 = this;
+
+            return new Promise(function (resolve, reject) {
+              return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this2, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                  while (1) {
+                    switch (_context3.prev = _context3.next) {
+                      case 0:
+                        _context3.t0 = resolve;
+                        _context3.t1 = JSON;
+                        _context3.next = 4;
+                        return this.storage.get(this.USER_KEY_NAME);
+
+                      case 4:
+                        _context3.t2 = _context3.sent;
+                        _context3.t3 = _context3.t1.parse.call(_context3.t1, _context3.t2);
+                        (0, _context3.t0)(_context3.t3);
+
+                      case 7:
+                      case "end":
+                        return _context3.stop();
+                    }
+                  }
+                }, _callee3, this);
+              }));
+            });
+          }
+        }, {
+          key: "setUser",
+          value: function setUser(user) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+              return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                while (1) {
+                  switch (_context4.prev = _context4.next) {
+                    case 0:
+                      _context4.next = 2;
+                      return this.storage.set(this.USER_KEY_NAME, JSON.stringify(user));
+
+                    case 2:
+                    case "end":
+                      return _context4.stop();
+                  }
+                }
+              }, _callee4, this);
+            }));
+          }
+        }, {
+          key: "setJwt",
+          value: function setJwt(jwt) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+              return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                while (1) {
+                  switch (_context5.prev = _context5.next) {
+                    case 0:
+                      _context5.next = 2;
+                      return this.storage.set(this.JWT_KEY_NAME, jwt);
+
+                    case 2:
+                    case "end":
+                      return _context5.stop();
+                  }
+                }
+              }, _callee5, this);
+            }));
+          }
+        }, {
+          key: "logout",
+          value: function logout() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+              return regeneratorRuntime.wrap(function _callee6$(_context6) {
+                while (1) {
+                  switch (_context6.prev = _context6.next) {
+                    case 0:
+                      _context6.next = 2;
+                      return this.storage.clear();
+
+                    case 2:
+                      _context6.next = 4;
+                      return this.setUser(null);
+
+                    case 4:
+                      _context6.next = 6;
+                      return this.setJwt(null);
+
+                    case 6:
+                      _context6.next = 8;
+                      return this.storage.remove(this.USER_KEY_NAME);
+
+                    case 8:
+                      _context6.next = 10;
+                      return this.storage.remove(this.JWT_KEY_NAME);
+
+                    case 10:
+                      _context6.t0 = console;
+                      _context6.next = 13;
+                      return this.storage.keys();
+
+                    case 13:
+                      _context6.t1 = _context6.sent;
+
+                      _context6.t0.log.call(_context6.t0, "KEYS -> ", _context6.t1);
+
+                    case 15:
+                    case "end":
+                      return _context6.stop();
+                  }
+                }
+              }, _callee6, this);
+            }));
+          }
+        }, {
+          key: "needsOnboard",
+          value: function needsOnboard() {
+            return new Promise(function (resolve, reject) {
+              /*this.getUser().then((user: User) => {
+                resolve(user.needsOnboard);
+              }).catch(() => {
+                reject();
+              });*/
+            });
+          }
+        }, {
+          key: "hasRole",
+          value: function hasRole(roleName) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+              var user;
+              return regeneratorRuntime.wrap(function _callee7$(_context7) {
+                while (1) {
+                  switch (_context7.prev = _context7.next) {
+                    case 0:
+                      _context7.next = 2;
+                      return this.getUser();
+
+                    case 2:
+                      user = _context7.sent;
+                      return _context7.abrupt("return", false);
+
+                    case 4:
+                    case "end":
+                      return _context7.stop();
+                  }
+                }
+              }, _callee7, this);
+            }));
+          }
+        }, {
+          key: "isLoggedIn",
+          value: function isLoggedIn() {
+            var _this3 = this;
+
+            return new Promise(function (resolve, reject) {
+              _this3.getJwt().then(function (jwt) {
+                console.log("JEWT -> ", jwt);
+
+                if (jwt === null || jwt === '') {
+                  resolve(false);
+                }
+
+                var helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__["JwtHelperService"]();
+                var isExpired = helper.isTokenExpired(jwt);
+                resolve(!isExpired);
+              })["catch"](function (e) {
+                reject(e);
+              });
+            });
+          }
+        }]);
+
+        return UserStorage;
+      }();
+
+      UserStorage.ctorParameters = function () {
+        return [{
+          type: _ionic_storage__WEBPACK_IMPORTED_MODULE_2__["Storage"]
+        }];
+      };
+
+      UserStorage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+      })], UserStorage);
+      /***/
+    },
+
+    /***/
     "./src/app/entrypoint-routing.module.ts":
     /*!**********************************************!*\
       !*** ./src/app/entrypoint-routing.module.ts ***!
@@ -222,9 +503,9 @@
       }, {
         path: 'logged-in',
         loadChildren: function loadChildren() {
-          return Promise.all(
+          return __webpack_require__.e(
           /*! import() | logged-in-logged-in-module */
-          [__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-in-logged-in-module")]).then(__webpack_require__.bind(null,
+          "logged-in-logged-in-module").then(__webpack_require__.bind(null,
           /*! ./logged-in/logged-in.module */
           "./src/app/logged-in/logged-in.module.ts")).then(function (m) {
             return m.LoggedInModule;
@@ -233,9 +514,9 @@
       }, {
         path: 'logged-out',
         loadChildren: function loadChildren() {
-          return Promise.all(
+          return __webpack_require__.e(
           /*! import() | logged-out-logged-out-module */
-          [__webpack_require__.e("default~logged-in-logged-in-module~logged-out-logged-out-module"), __webpack_require__.e("logged-out-logged-out-module")]).then(__webpack_require__.bind(null,
+          "logged-out-logged-out-module").then(__webpack_require__.bind(null,
           /*! ./logged-out/logged-out.module */
           "./src/app/logged-out/logged-out.module.ts")).then(function (m) {
             return m.LoggedOutModule;
@@ -299,6 +580,18 @@
       var _capacitor_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @capacitor/core */
       "./node_modules/@capacitor/core/dist/esm/index.js");
+      /* harmony import */
+
+
+      var _logged_in_profile_lang_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! ./logged-in/profile/lang.service */
+      "./src/app/logged-in/profile/lang.service.ts");
+      /* harmony import */
+
+
+      var _core_storage_user_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! ./core/storage/user.storage */
+      "./src/app/core/storage/user.storage.ts");
 
       var PushNotifications = _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Plugins"].PushNotifications;
 
@@ -322,35 +615,62 @@
               this.loaderService.initialize();
             });
           }*/
-        function EntrypointComponent(translate) {
+        function EntrypointComponent(translate, langService, userStorage) {
           _classCallCheck(this, EntrypointComponent);
 
           this.translate = translate;
-          translate.setDefaultLang('en');
+          this.langService = langService;
+          this.userStorage = userStorage;
         }
 
         _createClass(EntrypointComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            PushNotifications.requestPermission().then(function (result) {
-              if (result.granted) {
-                // Register with Apple / Google to receive push via APNS/FCM
-                PushNotifications.register();
-              } else {// Show some error
-              }
-            });
-            PushNotifications.addListener('registration', function (token) {
-              alert('Push registration success, token: ' + token.value);
-            });
-            PushNotifications.addListener('registrationError', function (error) {
-              alert('Error on registration: ' + JSON.stringify(error));
-            });
-            PushNotifications.addListener('pushNotificationReceived', function (notification) {
-              alert('Push received: ' + JSON.stringify(notification));
-            });
-            PushNotifications.addListener('pushNotificationActionPerformed', function (notification) {
-              alert('Push action performed: ' + JSON.stringify(notification));
-            });
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+              var userLang, isPushNotificationsAvailable;
+              return regeneratorRuntime.wrap(function _callee8$(_context8) {
+                while (1) {
+                  switch (_context8.prev = _context8.next) {
+                    case 0:
+                      this.translate.setDefaultLang('en');
+                      this.translate.addLangs(['es', 'en']);
+                      _context8.next = 4;
+                      return this.userStorage.getUser();
+
+                    case 4:
+                      userLang = _context8.sent.language.keyName;
+                      this.translate.use(userLang);
+                      isPushNotificationsAvailable = _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Capacitor"].isPluginAvailable('PushNotifications');
+
+                      if (isPushNotificationsAvailable) {
+                        PushNotifications.requestPermission().then(function (result) {
+                          if (result.granted) {
+                            // Register with Apple / Google to receive push via APNS/FCM
+                            PushNotifications.register();
+                          } else {// Show some error
+                          }
+                        });
+                        PushNotifications.addListener('registration', function (token) {
+                          alert('Push registration success, token: ' + token.value);
+                        });
+                        PushNotifications.addListener('registrationError', function (error) {
+                          alert('Error on registration: ' + JSON.stringify(error));
+                        });
+                        PushNotifications.addListener('pushNotificationReceived', function (notification) {
+                          alert('Push received: ' + JSON.stringify(notification));
+                        });
+                        PushNotifications.addListener('pushNotificationActionPerformed', function (notification) {
+                          alert('Push action performed: ' + JSON.stringify(notification));
+                        });
+                      }
+
+                    case 8:
+                    case "end":
+                      return _context8.stop();
+                  }
+                }
+              }, _callee8, this);
+            }));
           }
         }]);
 
@@ -360,6 +680,10 @@
       EntrypointComponent.ctorParameters = function () {
         return [{
           type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"]
+        }, {
+          type: _logged_in_profile_lang_service__WEBPACK_IMPORTED_MODULE_4__["LangService"]
+        }, {
+          type: _core_storage_user_storage__WEBPACK_IMPORTED_MODULE_5__["UserStorage"]
         }];
       };
 
@@ -481,7 +805,7 @@
       EntrypointModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [_entrypoint_component__WEBPACK_IMPORTED_MODULE_6__["EntrypointComponent"]],
         entryComponents: [],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), _entrypoint_routing_module__WEBPACK_IMPORTED_MODULE_5__["EntrypointRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"], _ionic_storage__WEBPACK_IMPORTED_MODULE_8__["IonicStorageModule"].forRoot(), _core_delphi_core_module__WEBPACK_IMPORTED_MODULE_9__["DelphiCoreModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"].forChild({
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), _entrypoint_routing_module__WEBPACK_IMPORTED_MODULE_5__["EntrypointRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_7__["BrowserAnimationsModule"], _ionic_storage__WEBPACK_IMPORTED_MODULE_8__["IonicStorageModule"].forRoot(), _core_delphi_core_module__WEBPACK_IMPORTED_MODULE_9__["DelphiCoreModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"].forRoot({
           loader: {
             provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateLoader"],
             useFactory: HttpLoaderFactory,
@@ -492,7 +816,8 @@
           provide: _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouteReuseStrategy"],
           useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"]
         }, _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateService"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateStore"]],
-        bootstrap: [_entrypoint_component__WEBPACK_IMPORTED_MODULE_6__["EntrypointComponent"]]
+        bootstrap: [_entrypoint_component__WEBPACK_IMPORTED_MODULE_6__["EntrypointComponent"]],
+        exports: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__["TranslateModule"]]
       })], EntrypointModule); // required for AOT compilation
 
       function HttpLoaderFactory(http) {
@@ -500,6 +825,79 @@
       }
       /***/
 
+    },
+
+    /***/
+    "./src/app/logged-in/profile/lang.service.ts":
+    /*!***************************************************!*\
+      !*** ./src/app/logged-in/profile/lang.service.ts ***!
+      \***************************************************/
+
+    /*! exports provided: LangService */
+
+    /***/
+    function srcAppLoggedInProfileLangServiceTs(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "LangService", function () {
+        return LangService;
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      "./node_modules/tslib/tslib.es6.js");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/core */
+      "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+      /* harmony import */
+
+
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @angular/common/http */
+      "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
+      /* harmony import */
+
+
+      var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! ../../../environments/environment */
+      "./src/environments/environment.ts");
+
+      var LangService = /*#__PURE__*/function () {
+        function LangService(httpClient) {
+          _classCallCheck(this, LangService);
+
+          this.httpClient = httpClient;
+        }
+
+        _createClass(LangService, [{
+          key: "getAvailableLangs",
+          value: function getAvailableLangs() {
+            return this.httpClient.get(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].apiUrl + '/v1/delphi/langs').toPromise();
+          }
+        }]);
+
+        return LangService;
+      }();
+
+      LangService.ctorParameters = function () {
+        return [{
+          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+        }];
+      };
+
+      LangService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+      })], LangService);
+      /***/
     },
 
     /***/
@@ -527,7 +925,7 @@
 
       var environment = {
         production: false,
-        apiUrl: 'http://127.0.0.1:8080',
+        apiUrl: 'http://localhost:8080',
         debug: true
       };
       /*

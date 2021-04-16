@@ -6,9 +6,9 @@
   "scripts": {
     "setup": "ionic capacitor add ios || true && ionic capacitor add android || true",
     "dev": "ionic serve",
-    "ios": " npx cap sync && ng build && ionic capacitor run ios -l --external --public-host",
-    "android": "npx cap sync && ng build && ionic capacitor run android -l --external --public-host",
-    "markets": "ionic build && ionic cap copy && ionic cap add android || true && ionic cap add ios || true && ionic cap sync && ionic cap open android && ionic cap open ios"
+    "ios": " npx cap sync && ng build --prod && ionic capacitor run ios -l --external --public-host",
+    "android": "npx cap sync && ng build --prod && ionic capacitor run android -l --external --public-host",
+    "markets": "ionic build --prod && ionic cap copy && ionic cap add android || true && ionic cap add ios || true && ionic cap sync && ionic cap open android && ionic cap open ios"
   },
   "private": true,
   "dependencies": {
