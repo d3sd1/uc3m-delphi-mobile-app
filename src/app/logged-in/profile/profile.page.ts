@@ -114,7 +114,7 @@ export class ProfilePage implements OnInit {
         handler: async () => {
           lang.keyName = lang.keyName.toLowerCase();
           this.user.language = lang;
-          this.translate.use(this.user.language.keyName);
+          this.translate.use(this.user.language.keyName.toLowerCase());
           await this.userStorage.setUser(this.user);
         }
       });
