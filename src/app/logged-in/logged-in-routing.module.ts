@@ -7,10 +7,10 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'menu'
+    redirectTo: 'home'
   },
   {
-    path: 'menu',
+    path: 'home',
     loadChildren: () => import('./home.module').then(m => m.TabsPageModule),
     canActivateChild: [LoggedInGuard]
   }

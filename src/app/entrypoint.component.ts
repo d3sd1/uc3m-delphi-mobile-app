@@ -53,8 +53,11 @@ export class EntrypointComponent implements OnInit {
     await this.ws.connectWs(await this.userStorage.getJwt());
     this.translate.setDefaultLang('en');
     this.translate.addLangs(['es', 'en']);
-    const userLang = (await this.userStorage.getUser()).language.keyName;
-    this.translate.use(userLang.toLowerCase());
+    if(await this.userStorage.isLoggedIn()){
+      console.log((await this.userStorage.getUser()))
+      const userLang = (await this.userStorage.getUser()).language?.keyName;
+      this.translate.use(userLang.toLowerCase());
+    }
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
     if (isPushNotificationsAvailable) {
 
