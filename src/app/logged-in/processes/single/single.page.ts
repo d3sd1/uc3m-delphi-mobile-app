@@ -1,6 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
 import {UserStorage} from '../../../core/storage/user.storage';
+import {ActivatedRoute} from '@angular/router';
+import {Process} from '../process';
+import {environment} from '../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'delphi-single',
@@ -11,14 +15,19 @@ export class SinglePage implements OnInit {
 
   showExpertForm = false;
   invitationEmail = '';
+  process: Process;
 
   constructor(
     private toastController: ToastController,
     private navCtrl: NavController,
-    public userStorage: UserStorage) {
+    public userStorage: UserStorage,
+    private actRoute: ActivatedRoute,
+    private httpClient: HttpClient) {
+
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.process = await this.httpClient.get<Process>(environment.apiUrl + '/v1/process/id/' + this.actRoute.snapshot.params.processId).toPromise();
   }
 
   showExpertInvitation() {

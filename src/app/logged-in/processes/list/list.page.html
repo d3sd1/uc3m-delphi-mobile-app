@@ -1,4 +1,4 @@
-<ion-list>
+<ion-list *ngIf="processes.length > 0">
   <ion-list-header>
     <ion-toolbar>
       <ion-segment (ionChange)="filterProcesses($event)" value="active">
@@ -11,7 +11,7 @@
       </ion-segment>
     </ion-toolbar>
   </ion-list-header>
-  <ion-item *ngFor="let process of filteredProcesses" [routerLink]="'single/' + process.id">
+  <ion-item *ngFor="let process of filteredProcesses" [routerLink]="'single/' + process.id" [state]="{ data: process}">
     <ion-thumbnail slot="start">
       <img [src]="process.pictureUrl" alt="Process picture.">
     </ion-thumbnail>
@@ -21,14 +21,18 @@
       </h3>
       <p>
         <span
-          *ngIf="isBeforeToday(parseDate(process.endTime))"><countdown #cd [config]="getCountdownConfig(parseDate(process.endTime))" end></countdown> {{ 'list_page.hoursLeft' | translate }}</span>
+          *ngIf="isBeforeToday(parseDate(process.endTime))"><countdown #cd
+                                                                       [config]="getCountdownConfig(parseDate(process.endTime))"
+                                                                       end></countdown>
+          {{ 'list_page.hoursLeft' | translate }}</span>
         <a *ngIf="!isBeforeToday(parseDate(process.endTime))">{{ 'list_page.seeResult' | translate }}</a>
       </p>
     </ion-label>
   </ion-item>
 </ion-list>
-<ion-fab class="process add" horizontal="end" slot="fixed" vertical="bottom" routerLink="create">
+<ion-fab class="process add" horizontal="end" slot="fixed" vertical="bottom" routerLink="modify">
   <ion-fab-button>
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
+<delphi-empty *ngIf="processes.length == 0"></delphi-empty>

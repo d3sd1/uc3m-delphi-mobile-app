@@ -69,9 +69,9 @@ export class ListPage implements OnInit {
     this.filteredProcesses = [];
     const wantsFinished = ev?.target['value'] === 'finished';
     this.processes.forEach((process: Process) => {
-      if (wantsFinished && !this.isBeforeToday(this.parseDate(process.endTime))) {
+      if (wantsFinished && process.processFinished) {
         this.filteredProcesses.push(process);
-      } else if (!wantsFinished && this.isBeforeToday(this.parseDate(process.endTime))) {
+      } else if (!wantsFinished && !process.processFinished) {
         this.filteredProcesses.push(process);
       }
     });

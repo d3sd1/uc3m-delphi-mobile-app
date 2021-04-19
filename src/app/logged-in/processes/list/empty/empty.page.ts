@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {UserStorage} from '../../../core/storage/user.storage';
-import {User} from '../../user';
+import {UserStorage} from '../../../../core/storage/user.storage';
+import {User} from '../../../user';
 
 @Component({
   selector: 'delphi-empty',

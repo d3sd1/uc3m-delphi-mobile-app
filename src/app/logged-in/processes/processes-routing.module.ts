@@ -2,15 +2,12 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProcessesPage} from './processes.page';
 import {SinglePage} from './single/single.page';
+import {ModifyPage} from './modify/modify.page';
 
 const routes: Routes = [
   {
     path: '',
     component: ProcessesPage,
-  },
-  {
-    path: 'empty',
-    loadChildren: () => import('./empty/empty.module').then(m => m.EmptyPageModule)
   },
   {
     path: 'loading',
@@ -25,8 +22,12 @@ const routes: Routes = [
     component: SinglePage
   },
   {
-    path: 'create',
-    loadChildren: () => import('./create/create.module').then(m => m.CreatePageModule)
+    path: 'modify',
+    component: ModifyPage
+  },
+  {
+    path: 'modify/:processId',
+    component: ModifyPage
   }
 ];
 

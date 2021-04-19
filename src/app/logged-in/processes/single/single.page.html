@@ -1,72 +1,37 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()" text="Volver"></ion-back-button>
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'single_page.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-avatar slot="start">
-      <img src="https://media.istockphoto.com/photos/manual-workers-working-in-warehouse-picture-id874515358?k=6&m=874515358&s=612x612&w=0&h=aH-FzxnMgR_x34RKtHy3E60tWTWNFKKzA6Lsna-z_G8=">
-    </ion-avatar>
-    <ion-label>{{ 'single_page.process_1' | translate }}</ion-label>
-  </ion-item>
-  <section>
-    {{ 'single_page.feature_1' | translate }}
-    <rating [rate]="1"
-            readonly="false"
-            size="default" >
-    </rating>
-  </section>
-  <section>
-    {{ 'single_page.feature_2' | translate }}
-    <rating [rate]="2.5"
-            readonly="false"
-            size="default" >
-    </rating>
-  </section>
 
-  <section>
-    {{ 'single_page.feature_3' | translate }}
-    <rating [rate]="4.3"
-            readonly="false"
-            size="default" >
-    </rating>
-  </section>
-
-  <section>
-    <b>{{ 'single_page.commentsTitle' | translate }}</b>
-    <ion-item-divider>
-      <ion-label>
-        {{ 'single_page.comment_1' | translate }}
-      </ion-label>
-    </ion-item-divider>
-    <ion-item-divider>
-      <ion-label>
-        {{ 'single_page.comment_2' | translate }}
-      </ion-label>
-    </ion-item-divider>
-    <ion-item-divider>
-      <ion-label>
-        {{ 'single_page.comment_3' | translate }}
-      </ion-label>
-    </ion-item-divider>
-  </section>
-
-  <section>
-    <ion-button expand="block" (click)="showExpertInvitation()" *ngIf="!showExpertForm">{{ 'single_page.inviteButton' | translate }}</ion-button>
-    <ion-input placeholder="Email del experto" [(ngModel)]="invitationEmail" *ngIf="showExpertForm"></ion-input>
-    <ion-button color="primary" *ngIf="showExpertForm" (click)="sendExpertInvitation()">{{ 'single_page.sendInvitationButton' | translate }}</ion-button>
-  </section>
-  <section>
-    <ion-button expand="block">{{ 'single_page.finishRoundButton' | translate }}</ion-button>
-  </section>
-  <!--<section *ngIf="userStorage.hasRole('EXPERT')">
-    <ion-button expand="block" (click)="showExpertInvitation()" *ngIf="!showExpertForm">Enviar votos</ion-button>
-  </section>-->
-
+  <ion-card color="light">
+    <div class="img-wrapper">
+      <img [src]="process?.pictureUrl"/>
+      <ion-button color="light">
+        <ion-icon color="medium" name="camera-outline" slot="icon-only">
+        </ion-icon>
+      </ion-button>
+    </div>
+    <ion-card-content class="ion-text-center">
+      <h2>{{process?.name }}</h2>
+      <ion-text color="medium">
+        <div class="ion-justify-content-center" style="display: flex;">
+          <p>{{process?.description}}</p>
+        </div>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" [routerLink]="['/logged-in/home/menu/processes/modify/', process?.id]">Editar proceso</ion-button>
+  </ion-toolbar>
+</ion-footer>

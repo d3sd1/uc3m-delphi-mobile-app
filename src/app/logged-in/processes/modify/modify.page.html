@@ -1,13 +1,46 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="../" routerLink="../" text="Volver"></ion-back-button>
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'create_page.create' | translate }}</ion-title>
+    <ion-title>{{ 'create_page.modify' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen="true">
+
+  <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()">
+  <ion-card color="light">
+    <div class="img-wrapper">
+      <img [src]="process?.pictureUrl"/>
+      <ion-button color="light">
+        <ion-icon color="medium" name="camera-outline" slot="icon-only">
+        </ion-icon>
+      </ion-button>
+    </div>
+  </ion-card>
+<!-- TODO: HANDLE IMAGE
+  <ion-card color="light">
+    <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()">
+
+    <div class="img-wrapper" (click)="triggerUploadImage()">
+      <img [src]="user?.photo"/>
+      <ion-button color="light">
+        <ion-icon color="medium" name="camera-outline" slot="icon-only">
+        </ion-icon>
+      </ion-button>
+    </div>
+    <ion-card-content class="ion-text-center" routerLink="basic">
+      <h2>{{user?.name }} {{user?.surnames}}</h2>
+      <ion-text color="medium">
+        <div class="ion-justify-content-center" style="display: flex;">
+          <ion-icon class="user-email" color="medium" name="mail-outline">
+          </ion-icon>
+          <p>{{user?.email}}</p>
+        </div>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>-->
   <!-- COORDINADOR ->>>>>>>>>
 
 -- COORDINADOR
@@ -35,7 +68,7 @@
   </ion-item>
   <ion-item>
     <ion-label position="floating">Fecha de finalización de proceso</ion-label>
-    <ion-datetime displayFormat="D MMM YYYY H:mm" min="1997" max="2010" [(ngModel)]="process.endTime"></ion-datetime>
+    <ion-datetime displayFormat="	YYYY-MM-DDTHH:mm" pickerFormat="YYYY-MM-DDTHH:mm"  [(ngModel)]="process.endTime" ></ion-datetime>
   </ion-item>
 
   <!-- Searchbar with a custom debounce -->
@@ -69,7 +102,6 @@
     </ion-item-divider>
     <ion-button expand="block" fill="outline" (click)="addQuestion(round)">Añadir pregunta</ion-button>
 
-
     <ion-label *ngFor="let question of process.rounds[roundIndex].questions">
       <ion-item>
         <ion-reorder></ion-reorder>
@@ -98,3 +130,9 @@
   </ion-reorder-group>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="saveProcess()">Guardar proceso</ion-button>
+  </ion-toolbar>
+</ion-footer>

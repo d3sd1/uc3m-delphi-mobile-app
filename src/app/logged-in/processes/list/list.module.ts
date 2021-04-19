@@ -9,6 +9,7 @@ import {ListPageRoutingModule} from './list-routing.module';
 import {ListPage} from './list.page';
 import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
+import {EmptyPage} from './empty/empty.page';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import {TranslateModule} from '@ngx-translate/core';
   exports: [
     ListPage
   ],
-  declarations: [ListPage]
+  declarations: [ListPage, EmptyPage]
 })
 export class ListPageModule {
 }
