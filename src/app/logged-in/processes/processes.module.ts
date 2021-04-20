@@ -19,6 +19,7 @@ import {UserPickerPage} from './user-picker/user-picker.page';
 import {RoleService} from './role.service';
 import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
+import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
     CountdownModule,
     TranslateModule
   ],
-  declarations: [ProcessesPage, SinglePage, ModifyPage, UserPickerPage, ModifyRoundsPage, ModifyQuestionsPage],
+  declarations: [ProcessesPage, SinglePage, ModifyPage, UserPickerPage, ModifyRoundsPage, ModifyQuestionsPage,
+    ModifyQuestionsContentPage],
   providers: [
     Geolocation,
     ProcessService,

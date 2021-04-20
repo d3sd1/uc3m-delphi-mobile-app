@@ -7,6 +7,7 @@ import {UserPickerPage} from './user-picker/user-picker.page';
 import {Process} from './process';
 import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
+import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'modify_questions',
     component: ModifyQuestionsPage
+  },
+  {
+    path: 'modify_question_content',
+    component: ModifyQuestionsContentPage
   },
   {
     path: 'user-picker',

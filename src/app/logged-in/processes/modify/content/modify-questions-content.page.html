@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modificar preguntas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+
+  <ion-item>
+    <ion-label>Tipo de pregunta</ion-label>
+    <ion-select [(ngModel)]="this.process.rounds[roundIndex].questions[questionIndex].type">
+      <ion-select-option [value]="0" >Cualitativa</ion-select-option>
+      <ion-select-option [value]="1">Cuantitativa</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item><ion-textarea placeholder="Introduce tu pregunta aquí"
+                          [(ngModel)]="this.process.rounds[roundIndex].questions[questionIndex].question"></ion-textarea></ion-item>
+
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 1">
+    <ion-item>
+      <ion-input placeholder="Valor mínimo" [value]="this.process?.rounds[roundIndex]?.questions[questionIndex]?.minVal"></ion-input>
+      <ion-input placeholder="Valor máximo" [value]="this.process?.rounds[roundIndex]?.questions[questionIndex]?.maxVal"></ion-input>
+    </ion-item>
+    <ion-range [min]="0"
+               [max]="10"
+               step="1"
+               snaps color="primary" disabled="true" value="5">
+      <ion-icon slot="start" color="danger" name="sad-outline"></ion-icon>
+      <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
+    </ion-range>
+  </div>
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="saveQuestionContent()">Guardar contenido</ion-button>
+  </ion-toolbar>
+</ion-footer>
