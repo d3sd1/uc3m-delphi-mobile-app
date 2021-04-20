@@ -36,7 +36,7 @@ export class ProfilePage implements OnInit {
     const blob = await this.httpClient.get(environment.apiUrl + '/v1/profile/img', {responseType: 'blob'}).toPromise();
     const objectURL = URL.createObjectURL(blob);
     const img = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    this.user.photo = img;
+    //TODO this.user.photo = img;
   }
 
   async initializeItems(): Promise<any> {

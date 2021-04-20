@@ -11,7 +11,7 @@
   <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()" accept="image/*">
   <ion-card color="light">
     <div class="img-wrapper" (click)="triggerUploadImage()">
-      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"/>
+      <img *ngIf="process?.pictureUrl !== undefined" [src]="process.pictureUrl"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
       <ion-button color="light">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">

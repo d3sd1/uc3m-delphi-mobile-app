@@ -28,6 +28,6 @@ export class RoleService {
   }
 
   getRoleByName(name: string): Role {
-    return this.roles.find(role => role.name.toLowerCase() === name.toLowerCase());
+    return this.roles?.find(role => role.name.toLowerCase() === name.toLowerCase());
   }
 }

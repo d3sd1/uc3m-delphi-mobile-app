@@ -15,6 +15,7 @@ import {RoleService} from '../role.service';
 import {Role} from '../../role';
 import {DelphiProcessUser} from '../delphi-process-user';
 import {UserStorage} from '../../../core/storage/user.storage';
+import {Media} from '../media';
 
 @Component({
   selector: 'delphi-create',
@@ -73,9 +74,6 @@ export class ModifyPage implements OnInit {
   triggerUploadImage() {
     this.uploadPicture.nativeElement.click();
   }
-  async uploadImage() {
-    this.process.pictureUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.uploadPicture.nativeElement.files[0]));
-  }
 
   validateForm(): boolean {
     return true; // TODO
@@ -93,8 +91,11 @@ export class ModifyPage implements OnInit {
     });
     await loading.present();
 
-    //TODO REMOve this
-    this.process.pictureUrl = 'nullable';
+    // TODO REMOVE THIS BECAUSE SOMEHOW IT TRIES TO SEND A BLOB
+    this.process.processUsers.forEach((pp) => {
+      pp.user.photo = 'TODO!!';
+    })
+
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
       await this.showToast('Proceso guardado correctamente.');
       await this.router.navigateByUrl('/logged-in/home/menu/processes', {
@@ -105,6 +106,24 @@ export class ModifyPage implements OnInit {
     }).finally(async () => {
       await loading.dismiss();
     });
+  }
+
+  async showImage() {
+    const blob = await this.httpClient.get(this.process?.pictureUrl, {responseType: 'blob'}).toPromise();
+    const objectURL = URL.createObjectURL(blob);
+    const img = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    return img;
+  }
+  async uploadImage() {
+    const formData = new FormData();
+    formData.append('image', this.uploadPicture.nativeElement.files[0]);
+    this.httpClient.post<Media>(environment.apiUrl + '/v1/media/upload', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
+      async (res) => {
+        this.process.pictureUrl = environment.apiUrl + '/v1/media/fetch/' + res.id;
+      },
+      (err) => console.log(err)
+    );
+    //await this.userStorage.setUser(this.user);
   }
 
   private async showToast(msg: string) {
