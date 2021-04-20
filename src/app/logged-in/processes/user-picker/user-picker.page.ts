@@ -61,22 +61,9 @@ export class UserPickerPage implements OnInit {
     // TODO handle err
   }
 
-  forceCurrentUserAdmin() {
-    const admRole = this.roleService.getRoleByName('ADMIN');
-    const userIndex = this.process?.processUsers.findIndex((processUser) => {
-      return processUser.user.id === this.currentUser.id;
-    });
-    if (userIndex === -1) {
-      this.process?.processUsers.push(new DelphiProcessUser(this.currentUser, admRole));
-    } else if(this.process !== undefined) {
-      this.process.processUsers[userIndex].role = admRole;
-    }
-  }
-
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
     this.currentUser = await this.userStorage.getUser();
-    this.forceCurrentUserAdmin();
   }
 
   async filterExperts() {

@@ -13,6 +13,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {map} from 'rxjs/operators';
 import {RoleService} from '../role.service';
 import {Role} from '../../role';
+import {DelphiProcessUser} from '../delphi-process-user';
+import {UserStorage} from '../../../core/storage/user.storage';
 
 @Component({
   selector: 'delphi-create',
@@ -23,6 +25,7 @@ export class ModifyPage implements OnInit {
 
   QuestionType = QuestionType;
   process: Process;
+  currentUser: User;
 
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
 
@@ -33,7 +36,8 @@ export class ModifyPage implements OnInit {
               private router: Router,
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
-              public roleService:RoleService) {
+              public roleService:RoleService,
+              private userStorage: UserStorage) {
   }
 
 
@@ -49,6 +53,20 @@ export class ModifyPage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
+    this.currentUser = await this.userStorage.getUser();
+    this.forceCurrentUserAdmin();
+  }
+
+  forceCurrentUserAdmin() {
+    const admRole = this.roleService.getRoleByName('ADMIN');
+    const userIndex = this.process?.processUsers.findIndex((processUser) => {
+      return processUser.user.id === this.currentUser.id;
+    });
+    if (userIndex === -1) {
+      this.process?.processUsers.push(new DelphiProcessUser(this.currentUser, admRole));
+    } else if(this.process !== undefined) {
+      this.process.processUsers[userIndex].role = admRole;
+    }
   }
 
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
