@@ -27,7 +27,7 @@ export class RoleService {
     return this.roles;
   }
 
-  async getRoleByName(name: string) {
-    return this.roles.find(role => role.name === name);
+  getRoleByName(name: string): Role {
+    return this.roles.find(role => role.name.toLowerCase() === name.toLowerCase());
   }
 }

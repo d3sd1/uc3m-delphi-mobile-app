@@ -9,6 +9,7 @@ import {DelphiProcessUser} from '../delphi-process-user';
 import {Role} from '../../role';
 import {UserService} from '../../onboarding/user.service';
 import {UserStorage} from '../../../core/storage/user.storage';
+import {RoleService} from '../role.service';
 
 @Component({
   selector: 'delphi-user-picker',
@@ -26,7 +27,8 @@ export class UserPickerPage implements OnInit {
     private router: Router,
     private httpClient: HttpClient,
     public navCtrl: NavController,
-    private userStorage: UserStorage) {
+    private userStorage: UserStorage,
+    private roleService: RoleService) {
 
   }
 
@@ -42,9 +44,22 @@ export class UserPickerPage implements OnInit {
     });
   }
 
+  forceCurrentUserAdmin() {
+    const admRole = this.roleService.getRoleByName('ADMIN');
+    const userIndex = this.process.processUsers.findIndex((processUser) => {
+      return processUser.user.id === this.currentUser.id;
+    });
+    if(userIndex === -1) {
+      this.process.processUsers.push(new DelphiProcessUser(this.currentUser, admRole))
+    } else {
+      this.process.processUsers[userIndex].role = admRole;
+    }
+  }
+
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
     this.currentUser = await this.userStorage.getUser();
+    this.forceCurrentUserAdmin();
   }
 
   async filterExperts() {
