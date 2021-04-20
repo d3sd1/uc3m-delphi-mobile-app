@@ -8,9 +8,9 @@
 </ion-header>
 
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-  <ion-reorder-group disabled="false">
+  <ion-reorder-group (ionItemReorder)="onItemReorder($event)"  disabled="false">
     <!-- Default reorder icon, end aligned items -->
-    <ion-item *ngFor="let round of  process.rounds" routerLink="test">
+    <ion-item *ngFor="let round of  process?.rounds" routerLink="test">
       <ion-label>
         {{round.name}}
       </ion-label>

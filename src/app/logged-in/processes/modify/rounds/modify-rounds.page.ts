@@ -23,11 +23,14 @@ export class ModifyRoundsPage implements OnInit {
     private router: Router,
     private userStorage: UserStorage) {
   }
-
+  public onItemReorder({ detail }) {
+    detail.complete(true);
+  }
   private async loadProcess() {
     this.route.queryParams.subscribe(async params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.process = this.router.getCurrentNavigation().extras.state.process;
+        console.log(this.process)
         if(this.process.rounds === undefined) {
           this.process.rounds = [];
         }
