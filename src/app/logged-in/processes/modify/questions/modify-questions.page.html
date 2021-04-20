@@ -8,18 +8,25 @@
 </ion-header>
 
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+
+  <ion-item>
+    <ion-label>Fecha límite de ronda</ion-label>
+    <ion-datetime display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="this.process?.rounds[roundIndex].endTime"></ion-datetime>
+  </ion-item>
+  <ion-item-divider></ion-item-divider>
+
   <ion-reorder-group (ionItemReorder)="onItemReorder($event)"  disabled="false">
     <!-- Default reorder icon, end aligned items -->
 
-  <ion-item *ngFor="let round of  process?.rounds" >
-      <ion-input [(ngModel)]="round.name"></ion-input>
+  <ion-item *ngFor="let question of process?.rounds[roundIndex].questions" >
+      <ion-input [(ngModel)]="question.name"></ion-input>
       <ion-reorder slot="start"></ion-reorder>
     </ion-item>
 
   </ion-reorder-group>
 
   <!-- fab placed to the (vertical) center and end -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="addRound()">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="addQuestion()">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
@@ -30,6 +37,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block">Guardar preguntas</ion-button>
+    <ion-button expand="block" (click)="saveQuestions()">Guardar preguntas</ion-button>
   </ion-toolbar>
 </ion-footer>

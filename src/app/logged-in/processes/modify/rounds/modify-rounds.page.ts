@@ -23,33 +23,61 @@ export class ModifyRoundsPage implements OnInit {
     private router: Router,
     private userStorage: UserStorage) {
   }
-  public onItemReorder({ detail }) {
-    this.reAssignOrder();
 
+  public onItemReorder({detail}) {
     detail.complete(true);
+    const aux = this.process?.rounds[detail.to];
+    this.process.rounds[detail.to] = this.process?.rounds[detail.from];
+    this.process.rounds[detail.from] = aux;
+    this.reAssignOrder();
   }
+
+  async saveRounds() {
+    //TODO determine logic to add to it's role (pass role by routing)
+    //TODO aqui al editar un proceso que ya tiene uysuarios los borra yt solo añade los nuevos
+    // deberia combinar los antiguos y los nuevos, y actualizar roles (sin duplicados)
+    await this.router.navigateByUrl('/logged-in/home/menu/processes/modify', {
+      state: {
+        process: this.process
+      }
+    });
+  }
+
   reAssignOrder() {
     this.process.rounds.forEach((round: Round, index) => {
-      round.order = index;
+      round.orderPosition = index;
     });
-    console.log(this.process.rounds)
   }
+
   private async loadProcess() {
     this.route.queryParams.subscribe(async params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.process = this.router.getCurrentNavigation().extras.state.process;
-        console.log(this.process)
-        if(this.process.rounds === undefined) {
+        if (this.process.rounds === undefined) {
           this.process.rounds = [];
         }
+        this.sortRounds();
       } else {
         await this.router.navigateByUrl('/logged-in/home/menu/processes');
       }
     });
   }
 
+  sortRounds() {
+    console.log(this.process.rounds)
+    this.process.rounds.sort((a, b) => {
+      if (a.orderPosition < b.orderPosition) {
+        return -1;
+      }
+      if (a.orderPosition > b.orderPosition) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
   addRound() {
-    this.process.rounds.push(new Round('Ronda xx', [], null, false));
+    this.process.rounds.push(new Round('Ronda ' + this.process.rounds.length, [], null, false));
     this.reAssignOrder();
   }
 

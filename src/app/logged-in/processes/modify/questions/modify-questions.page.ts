@@ -4,8 +4,8 @@ import {Process} from '../../process';
 import {User} from '../../../user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserStorage} from '../../../../core/storage/user.storage';
-import {Round} from '../../round';
 import {Question} from '../../question';
+import {QuestionType} from '../../question-type';
 
 @Component({
   selector: 'delphi-rounds',
@@ -15,6 +15,7 @@ import {Question} from '../../question';
 export class ModifyQuestionsPage implements OnInit {
 
   process: Process;
+  roundIndex: number;
   currentUser: User;
 
   constructor(
@@ -30,6 +31,7 @@ export class ModifyQuestionsPage implements OnInit {
     this.route.queryParams.subscribe(async params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.process = this.router.getCurrentNavigation().extras.state.process;
+        this.roundIndex = this.router.getCurrentNavigation().extras.state.roundIndex;
         console.log(this.process)
         if(this.process.rounds === undefined) {
           this.process.rounds = [];
@@ -40,8 +42,10 @@ export class ModifyQuestionsPage implements OnInit {
     });
   }
 
-  addRound() {
-    this.process.rounds.push(new Round('Ronda xx', [], null, false));
+  addQuestion() {
+    this.process.rounds[this.roundIndex].questions.push(
+      new Question('Pregunta ' + this.process.rounds[this.roundIndex].questions.length, QuestionType.QUALITATIVE)
+    );
   }
 
   public async ngOnInit(): Promise<void> {
@@ -51,6 +55,16 @@ export class ModifyQuestionsPage implements OnInit {
 
   goBack() {
     this.navCtrl.back();
+  }
+  async saveQuestions() {
+    //TODO determine logic to add to it's role (pass role by routing)
+    //TODO aqui al editar un proceso que ya tiene uysuarios los borra yt solo añade los nuevos
+    // deberia combinar los antiguos y los nuevos, y actualizar roles (sin duplicados)
+    await this.router.navigateByUrl('/logged-in/home/menu/processes/modify_rounds', {
+      state: {
+        process: this.process
+      }
+    });
   }
 
 }

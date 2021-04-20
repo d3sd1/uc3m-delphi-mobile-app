@@ -6,4 +6,8 @@ export class Question {
   name: string;
   type: QuestionType;
 
+  constructor(name: string, type: QuestionType) {
+    this.name = name;
+    this.type = type;
+  }
 }

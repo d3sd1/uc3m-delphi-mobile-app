@@ -8,9 +8,12 @@
 </ion-header>
 
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-  <ion-reorder-group (ionItemReorder)="onItemReorder($event)"  disabled="false">
+
+  <ion-reorder-group (ionItemReorder)="onItemReorder($event)" disabled="false">
     <!-- Default reorder icon, end aligned items -->
-    <ion-item *ngFor="let round of  process?.rounds" [routerLink]="['/logged-in/home/menu/processes/modify_questions']" [state]="{ process: process}">
+    <ion-item *ngFor="let round of process?.rounds; let roundIndex = index"
+              [routerLink]="['/logged-in/home/menu/processes/modify_questions']"
+              [state]="{ process: process, roundIndex: roundIndex}">
       <ion-input [(ngModel)]="round.name"></ion-input>
       <ion-reorder slot="start"></ion-reorder>
     </ion-item>
@@ -29,6 +32,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block">Guardar rondas</ion-button>
+    <ion-button expand="block" (click)="saveRounds()">Guardar rondas</ion-button>
   </ion-toolbar>
 </ion-footer>

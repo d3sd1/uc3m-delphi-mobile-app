@@ -4,15 +4,15 @@ export class Round {
   id: number;
   name: string;
   questions: Question[] = [];
-  finishTime: Date;
+  endTime: Date;
   finished: boolean;
-  order: number;
+  orderPosition: number;
 
 
-  constructor(name: string, questions: Question[], finishTime: Date, finished: boolean) {
+  constructor(name: string, questions: Question[], endTime: Date, finished: boolean) {
     this.name = name;
     this.questions = questions;
-    this.finishTime = finishTime;
+    this.endTime = endTime;
     this.finished = finished;
   }
 
