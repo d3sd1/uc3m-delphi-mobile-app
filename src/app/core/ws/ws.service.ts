@@ -24,7 +24,9 @@ export class WsService {
 
       //_this.stompClient.reconnect_delay = 2000;
     }, (e) => {
-      console.error('eee', e);
+      setTimeout(() => {
+        this.connectWs(jwt);
+      }, 10000);
     });
   }
 
