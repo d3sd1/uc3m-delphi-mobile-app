@@ -4,6 +4,8 @@ import {User} from '../../user';
 import {ProcessService} from '../process.service';
 import {Process} from '../process';
 import {CountdownConfig} from 'ngx-countdown';
+import {ChatMessage} from '../../chat/chat-conversation/chat-message';
+import {WsService} from '../../../core/ws/ws.service';
 
 @Component({
   selector: 'delphi-list',
@@ -16,13 +18,28 @@ export class ListPage implements OnInit {
   user: User;
   currentTime: Date = new Date();
 
-  constructor(private authService: UserStorage, private processService: ProcessService) {
+  constructor(private authService: UserStorage, private processService: ProcessService,
+              private wsService: WsService) {
   }
 
   async ngOnInit() {
     this.filterProcesses();
     this.user = await this.authService.getUser();
     this.currentTime = new Date();
+    // Listen to new generated process that needs current user
+
+
+    this.wsService.subscribe('process/new', true).subscribe(async (process: Process) => {
+      const pIndex = this.processes.findIndex((pProcess) => {
+        return process?.id === pProcess?.id;
+      });
+      if(pIndex === -1) {
+        this.processes.push(process);
+      } else {
+        this.processes[pIndex] = process;
+      }
+      this.filterProcesses();
+    });
   }
 
   parseDate(date: Date): Date {
@@ -33,7 +50,7 @@ export class ListPage implements OnInit {
   }
 
   isBeforeToday(date: Date) {
-    return new Date().getTime() < this.parseDate(date).getTime();
+    return new Date().getTime() < this.parseDate(date)?.getTime();
   }
 
   getCountdownConfig(endTime) {
@@ -69,11 +86,12 @@ export class ListPage implements OnInit {
     this.filteredProcesses = [];
     const wantsFinished = ev?.target['value'] === 'finished';
     this.processes.forEach((process: Process) => {
-      if (wantsFinished && process.processFinished) {
+      if (wantsFinished && process?.processFinished) {
         this.filteredProcesses.push(process);
-      } else if (!wantsFinished && !process.processFinished) {
+      } else if (!wantsFinished && !process?.processFinished) {
         this.filteredProcesses.push(process);
       }
     });
   }
+
 }

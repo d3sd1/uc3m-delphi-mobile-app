@@ -30,7 +30,6 @@ export class ProfilePage implements OnInit {
     this.profileOptions = await this.initializeItems();
     this.user = await this.userStorage.getUser();
     await this.loadUserImage();
-    console.log(this.user);
   }
 
   private async loadUserImage() {
@@ -52,10 +51,8 @@ export class ProfilePage implements OnInit {
     this.uploadCvRef.nativeElement.click();
   }
   async uploadImage() {
-    console.log("upload")
     const formData = new FormData();
     formData.append('image', this.uploadPicture.nativeElement.files[0]);
-    console.log(this.uploadPicture.nativeElement.value)
     this.httpClient.post(environment.apiUrl + '/v1/profile/img', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
@@ -104,7 +101,6 @@ export class ProfilePage implements OnInit {
 
   async changeLanguage() {
     const langs = await this.langService.getAvailableLangs();
-    console.log(langs);
     const sheets = [];
     langs.forEach((lang) => {
       sheets.push({

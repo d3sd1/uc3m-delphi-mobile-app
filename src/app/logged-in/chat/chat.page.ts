@@ -25,7 +25,6 @@ export class ChatPage implements OnInit {
 
   reloadChats() {
     this.chatService.getCurrentUserChats().subscribe((currentUserChats: UserChat[]) => {
-      console.log(currentUserChats);
       this.userChats = currentUserChats;
       this.loading = false;
     });

@@ -6,16 +6,28 @@ import {UserStorage} from '../../core/storage/user.storage';
 import {Process} from './process';
 import {ChatMessage} from '../chat/chat-conversation/chat-message';
 import {WsService} from '../../core/ws/ws.service';
+import {Role} from '../role';
+import {Roles} from '../../core/Roles';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProcessService {
+export class RoleService {
+  roles: Role[];
+
   constructor(private httpClient: HttpClient, private wsService: WsService) {
+    this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/roles')
+      .toPromise().then((roles: Role[]) => {
+      this.roles = roles;
+    });
+    // TODO this could cause nullpointers.xd
   }
 
-  list(): Promise<Process[]> {
-    return this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list')
-      .toPromise();
+  getRoles(): Role[] {
+    return this.roles;
+  }
+
+  async getRoleByName(name: string) {
+    return this.roles.find(role => role.name === name);
   }
 }

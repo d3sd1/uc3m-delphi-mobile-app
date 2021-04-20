@@ -15,7 +15,6 @@ export class ApiService extends InitializerChecker {
 
   protected internalCheck(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      console.log(environment.apiUrl + '/v1/version/current');
       this.httpClient.get(environment.apiUrl + '/v1/version/current').subscribe(() => {
         resolve();
       }, (e) => {

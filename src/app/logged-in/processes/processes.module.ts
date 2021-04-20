@@ -15,6 +15,8 @@ import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
 import {ModifyPage} from './modify/modify.page';
 import {EmptyPage} from './list/empty/empty.page';
+import {UserPickerPage} from './user-picker/user-picker.page';
+import {RoleService} from './role.service';
 
 @NgModule({
   imports: [
@@ -28,10 +30,11 @@ import {EmptyPage} from './list/empty/empty.page';
     CountdownModule,
     TranslateModule
   ],
-  declarations: [ProcessesPage, SinglePage, ModifyPage],
+  declarations: [ProcessesPage, SinglePage, ModifyPage, UserPickerPage],
   providers: [
     Geolocation,
-    ProcessService
+    ProcessService,
+    RoleService
   ],
 
 })

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>experts</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar debounce="500" animated placeholder="Buscar expertos" (focusout)="this.filterCriterial = null"
+                 (ionChange)="filterExperts()" [(ngModel)]="filterCriterial"></ion-searchbar>
+  <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
+    <ion-item *ngFor="let expert of usersFiltered"
+              (click)="pushExpert(expert)">
+      <ion-avatar slot="start">
+        <img [src]="expert.photo" alt="">
+      </ion-avatar>
+      {{ expert.name }} {{ expert.surnames }} <{{ expert.email }}></ion-item>
+  </ion-list>
+  <ion-item *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== ''">
+    <ion-title>Búsqueda sin resultados</ion-title>
+  </ion-item>
+  <ion-item *ngIf="process.processUsers?.length == 0">
+    <ion-title>Proceso sin expertos</ion-title>
+  </ion-item>
+
+  <ion-chip *ngFor="let userWithRole of process.processUsers">
+    <ion-avatar>
+      <img [src]="userWithRole.user.photo">
+    </ion-avatar>
+    <ion-label>{{userWithRole.user.name}} {{userWithRole.user.surnames}} <{{ userWithRole.user.email }}></ion-label>
+    <ion-icon name="close-circle" (click)="removeExpert(userWithRole)"></ion-icon>
+  </ion-chip>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="saveUsers()">Guardar proceso</ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -8,39 +8,34 @@
 </ion-header>
 
 <ion-content fullscreen="true">
-
-  <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()">
+  <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()" accept="image/*">
   <ion-card color="light">
-    <div class="img-wrapper">
-      <img [src]="process?.pictureUrl"/>
+    <div class="img-wrapper" (click)="triggerUploadImage()">
+      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"/>
+      <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
       <ion-button color="light">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">
         </ion-icon>
       </ion-button>
     </div>
   </ion-card>
-<!-- TODO: HANDLE IMAGE
-  <ion-card color="light">
-    <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()">
+  <ion-list lines="full" class="ion-no-margin">
+    <ion-list-header lines="full">
+      <ion-label>
+        Proceso Delphi
+      </ion-label>
+    </ion-list-header>
 
-    <div class="img-wrapper" (click)="triggerUploadImage()">
-      <img [src]="user?.photo"/>
-      <ion-button color="light">
-        <ion-icon color="medium" name="camera-outline" slot="icon-only">
-        </ion-icon>
-      </ion-button>
-    </div>
-    <ion-card-content class="ion-text-center" routerLink="basic">
-      <h2>{{user?.name }} {{user?.surnames}}</h2>
-      <ion-text color="medium">
-        <div class="ion-justify-content-center" style="display: flex;">
-          <ion-icon class="user-email" color="medium" name="mail-outline">
-          </ion-icon>
-          <p>{{user?.email}}</p>
-        </div>
-      </ion-text>
-    </ion-card-content>
-  </ion-card>-->
+
+  <ion-item>
+    <ion-input placeholder="Nombre del proceso" [(ngModel)]="process.name"></ion-input>
+    <ion-datetime placeholder="Fecha finalización" displayFormat="	YYYY-MM-DDTHH:mm" pickerFormat="YYYY-MM-DDTHH:mm"  [(ngModel)]="process.endTime" ></ion-datetime>
+
+  </ion-item>
+  <ion-item>
+    <ion-textarea placeholder="Descripción del proceso" [(ngModel)]="process.description"></ion-textarea>
+  </ion-item>
+  </ion-list>
   <!-- COORDINADOR ->>>>>>>>>
 
 -- COORDINADOR
@@ -57,43 +52,10 @@
 - Se puede cerrar ronda a mano
 
 - Notificar a coordinador cuando experto vota
--->
-  <ion-item>
-    <ion-label position="floating">Nombre del proceso</ion-label>
-    <ion-input [(ngModel)]="process.name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Descripción</ion-label>
-    <ion-textarea [(ngModel)]="process.description"></ion-textarea>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Fecha de finalización de proceso</ion-label>
-    <ion-datetime displayFormat="	YYYY-MM-DDTHH:mm" pickerFormat="YYYY-MM-DDTHH:mm"  [(ngModel)]="process.endTime" ></ion-datetime>
-  </ion-item>
+--
+  !-- Searchbar with a custom debounce --
 
-  <!-- Searchbar with a custom debounce -->
-  <ion-searchbar debounce="500" animated placeholder="Buscar expertos" (focusout)="this.filterCriterial = null"
-                 (ionChange)="filterExperts()" [(ngModel)]="filterCriterial"></ion-searchbar>
-  <ion-list *ngIf="expertsFiltered.length > 0 && this.filterCriterial !== ''" class="experts-filtered">
-    <ion-item *ngFor="let expert of expertsFiltered"
-              (click)="pushExpert(expert)">{{ expert.name }} {{ expert.surnames }}</ion-item>
-  </ion-list>
-  <ion-item *ngIf="expertsFiltered?.length == 0 && this.filterCriterial !== ''">
-    <ion-title>Búsqueda sin resultados</ion-title>
-  </ion-item>
-  <ion-item *ngIf="process.experts?.length == 0">
-    <ion-title>Proceso sin expertos</ion-title>
-  </ion-item>
-
-  <ion-chip *ngFor="let expertUser of process.experts">
-    <ion-avatar>
-      <img [src]="expertUser.photo">
-    </ion-avatar>
-    <ion-label>{{expertUser.name}} {{expertUser.surnames}}</ion-label>
-    <ion-icon name="close-circle" (click)="removeExpert(expertUser)"></ion-icon>
-  </ion-chip>
-
-  <!-- OBJETIVOS -->
+  !-- OBJETIVOS --
   <ion-button expand="block" fill="outline" (click)="addRound()">Añadir ronda</ion-button>
 
   <ion-reorder-group disabled="false" *ngFor="let round of process.rounds; let roundIndex = index">
@@ -110,7 +72,7 @@
                   name="chevron-down-outline"></ion-icon>
         <ion-icon *ngIf="expandedQuestion?.id !== question.id" (click)="expandQuestion(question)" slot="end"
                   name="chevron-back-outline"></ion-icon>
-      </ion-item><!--
+      </ion-item>!--
       <ion-label *ngIf="expandedQuestion?.id === question.id">
         <ion-segment [(ngModel)]="expandedQuestion.type">
           <ion-segment-button [value]="QuestionType.QUALITATIVE" >
@@ -125,9 +87,32 @@
         <ion-icon name="star-outline"></ion-icon>
         <ion-icon name="star-outline"></ion-icon>
         <ion-icon name="star-outline"></ion-icon>
-      </ion-label>-->
+      </ion-label>--
     </ion-label>
   </ion-reorder-group>
+-->
+  <ion-list lines="full" class="ion-no-margin">
+    <ion-list-header lines="full">
+      <ion-label>
+        Usuarios
+      </ion-label>
+    </ion-list-header>
+
+    <!-- Toggles in a List -->
+    <ion-item *ngFor="let role of roleService.getRoles()" [routerLink]="['/logged-in/home/menu/processes/user-picker']" [state]="{ process: process, role: role}">
+      <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>
+      <ion-label>{{role.name}}</ion-label>
+    </ion-item>
+
+
+    <!--
+
+      <ion-icon icon="radio-button-on-outline" [color]="'chat-'"></ion-icon>-->
+    <!--
+      <ion-item>
+        <ion-label routerLink="/logout"></ion-label>
+      </ion-item>-->
+  </ion-list>
 
 </ion-content>
 

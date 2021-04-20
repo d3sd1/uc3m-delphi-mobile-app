@@ -11,11 +11,8 @@
 
   <ion-card color="light">
     <div class="img-wrapper">
-      <img [src]="process?.pictureUrl"/>
-      <ion-button color="light">
-        <ion-icon color="medium" name="camera-outline" slot="icon-only">
-        </ion-icon>
-      </ion-button>
+      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"/>
+      <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
     </div>
     <ion-card-content class="ion-text-center">
       <h2>{{process?.name }}</h2>
@@ -26,12 +23,31 @@
       </ion-text>
     </ion-card-content>
   </ion-card>
+  <div *ngFor="let role of roleService.getRoles()">
+    <div>
+      <ion-item>
+        <ion-label>{{role.name}}</ion-label>
+        <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>
+      </ion-item>
+      <div *ngFor="let userWithRole of process?.processUsers">
+        <ion-chip *ngIf="userWithRole.role.id === role.id" (click)="openChat(userWithRole)">
+          <ion-avatar>
+            <img [src]="userWithRole.user.photo">
+          </ion-avatar>
+          <ion-label>{{userWithRole.user.name}} {{userWithRole.user.surnames}} <{{ userWithRole.user.email }}></ion-label>
+        </ion-chip>
+      </div>
+
+    </div>
+  </div>
 
 </ion-content>
 
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" [routerLink]="['/logged-in/home/menu/processes/modify/', process?.id]">Editar proceso</ion-button>
+    <ion-button expand="block" [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
+      Editar proceso
+    </ion-button>
   </ion-toolbar>
 </ion-footer>

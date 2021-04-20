@@ -42,7 +42,6 @@ export class ChatListComponent implements OnInit {
 
   async ngOnInit() {
     this.userChats = this.userChatsBackup;
-    console.log(this.userChats);
   }
 
   async filterList(evt) {

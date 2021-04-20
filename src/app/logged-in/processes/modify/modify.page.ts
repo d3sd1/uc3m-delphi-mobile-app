@@ -10,6 +10,9 @@ import {ItemReorderEventDetail} from '@ionic/core';
 import {Round} from '../round';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
+import {map} from 'rxjs/operators';
+import {RoleService} from '../role.service';
+import {Role} from '../../role';
 
 @Component({
   selector: 'delphi-create',
@@ -19,61 +22,51 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class ModifyPage implements OnInit {
 
   QuestionType = QuestionType;
-  expertsFiltered: User[] = [];
   process: Process;
-  filterCriterial: string = '';
 
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
 
   constructor(private httpClient: HttpClient,
               private navCtrl: NavController,
-              private actRoute: ActivatedRoute,
+              private route: ActivatedRoute,
               public loadingController: LoadingController,
               private router: Router,
               private toastController: ToastController,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              public roleService:RoleService) {
   }
 
-  async ngOnInit() {
-    const processId = this.actRoute.snapshot.params.processId;
-    this.resetProcess();
-    if (processId !== null && processId !== undefined) {
-      const loading = await this.loadingController.create({
-        cssClass: 'my-custom-class',
-        message: 'Cargando proceso...',
-        duration: 0
-      });
-      await loading.present();
 
-      this.process = await this.httpClient.get<Process>(environment.apiUrl + '/v1/process/id/' + processId).toPromise();
-      await loading.dismiss();
-    }
-
+  private async loadProcess() {
+    this.route.queryParams.subscribe(async params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.process = this.router.getCurrentNavigation().extras.state.process;
+      } else {
+        this.process = new Process();
+      }
+    });
   }
+
+  public async ngOnInit(): Promise<void> {
+    await this.loadProcess();
+  }
+
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
   triggerUploadImage() {
     this.uploadPicture.nativeElement.click();
   }
-  private async loadUserImage() {
-    const blob = await this.httpClient.get(environment.apiUrl + '/v1/profile/img', {responseType: 'blob'}).toPromise();
-    const objectURL = URL.createObjectURL(blob);
-    const img = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    this.process.pictureUrl = img;
-  }
   async uploadImage() {
-    console.log("upload")
-    const formData = new FormData();
-    formData.append('image', this.uploadPicture.nativeElement.files[0]);
-    console.log(this.uploadPicture.nativeElement.value)
-    this.httpClient.post(environment.apiUrl + '/v1/profile/img', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-    //await this.loadUserImage();
-    //await this.userStorage.setUser(this.user);
+    this.process.pictureUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.uploadPicture.nativeElement.files[0]));
+  }
+
+  validateForm(): boolean {
+    return true; // TODO
   }
 
   async saveProcess() {
+    if(!this.validateForm()) {
+      return;
+    }
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Guardando...',
@@ -81,11 +74,14 @@ export class ModifyPage implements OnInit {
     });
     await loading.present();
 
-    // TODO this.process.pictureUrl = 'aaaaaaa';
+    //TODO REMOve this
+    this.process.pictureUrl = 'nullable';
    this.process.endTime = new Date(this.process.endTime).toISOString();
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
       await this.showToast('Proceso guardado correctamente.');
-      await this.router.navigateByUrl('/logged-in/home/menu/processes');
+      await this.router.navigateByUrl('/logged-in/home/menu/processes', {
+        state: {process: this.process}
+      });
     }).catch(async (errMessage: string) => {
       await this.showToast('Proceso guardado correctamente.');
     }).finally(async () => {
@@ -102,18 +98,6 @@ export class ModifyPage implements OnInit {
       toast.dismiss();
     }, 3000);
     return toast;
-  }
-
-  async filterExperts() {
-    if (this.filterCriterial === '' || this.filterCriterial === null) {
-      return;
-    }
-    const users = await this.httpClient.get<User[]>(environment.apiUrl + '/v1/process/filter/expert?criteria=' + this.filterCriterial).toPromise();
-    this.expertsFiltered = users.filter((expert: User) => {
-      return !this.process.experts.find((pExpert: User) => {
-        return pExpert.id === expert.id;
-      });
-    });
   }
 
   async addRound() {
@@ -147,6 +131,11 @@ export class ModifyPage implements OnInit {
   goBack() {
     this.navCtrl.back();
   }
+  countUsersRole(role: Role) {
+    return this.process.processUsers?.filter((delphiProcessUser) => {
+      return delphiProcessUser.role?.id === role.id;
+    }).length;
+  }
 
 
   compressQuestion(round: Round) {
@@ -174,29 +163,6 @@ export class ModifyPage implements OnInit {
 
   toggleReorderGroup() {
     this.reorderGroup.disabled = !this.reorderGroup.disabled;
-  }
-
-  pushExpert(expert: User) {
-    if (this.process.experts.find((pExpert: User) => {
-      return pExpert.id === expert.id;
-    })) {
-      return;
-    }
-    this.expertsFiltered = this.expertsFiltered.filter((pExpert: User) => {
-      return pExpert.id !== expert.id;
-    });
-    this.process.experts.push(expert);
-    this.filterCriterial = '';
-  }
-
-  removeExpert(expert: User) {
-    this.process.experts = this.process.experts.filter((pExpert: User) => {
-      return pExpert.id !== expert.id;
-    });
-  }
-
-  resetProcess() {
-    this.process = new Process();
   }
 
 }

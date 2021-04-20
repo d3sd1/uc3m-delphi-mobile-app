@@ -1,5 +1,7 @@
 import {User} from '../user';
 import {Round} from './round';
+import {SafeUrl} from '@angular/platform-browser';
+import {DelphiProcessUser} from './delphi-process-user';
 
 export class Process {
   id: number;
@@ -7,7 +9,7 @@ export class Process {
   description: string;
   pictureUrl: SafeUrl;
   endTime: string;
-  experts: User[] = [];
+  processUsers: DelphiProcessUser[] = []; // contains everything
   rounds: Round[] = [];
   processFinished: boolean;
 

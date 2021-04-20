@@ -11,21 +11,21 @@
       </ion-segment>
     </ion-toolbar>
   </ion-list-header>
-  <ion-item *ngFor="let process of filteredProcesses" [routerLink]="'single/' + process.id" [state]="{ data: process}">
+  <ion-item *ngFor="let process of filteredProcesses" [routerLink]="['single']" [state]="{ process: process}">
     <ion-thumbnail slot="start">
-      <img [src]="process.pictureUrl" alt="Process picture.">
+      <img [src]="process?.pictureUrl" alt="Process picture.">
     </ion-thumbnail>
     <ion-label>
       <h3>
-        {{ process.description }}
+        {{ process?.description }}
       </h3>
       <p>
         <span
-          *ngIf="isBeforeToday(parseDate(process.endTime))"><countdown #cd
+          *ngIf="isBeforeToday(parseDate(process?.endTime))"><countdown #cd
                                                                        [config]="getCountdownConfig(parseDate(process.endTime))"
                                                                        end></countdown>
           {{ 'list_page.hoursLeft' | translate }}</span>
-        <a *ngIf="!isBeforeToday(parseDate(process.endTime))">{{ 'list_page.seeResult' | translate }}</a>
+        <a *ngIf="!isBeforeToday(parseDate(process?.endTime))">{{ 'list_page.seeResult' | translate }}</a>
       </p>
     </ion-label>
   </ion-item>

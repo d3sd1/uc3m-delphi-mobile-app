@@ -45,7 +45,6 @@ export class HomePage implements ViewDidEnter {
     });
     this.chatService.getCurrentUserChats().subscribe((userChats: UserChat[]) => {
       this.notifications.messages = getChatsUnreadMessages(userChats, this.user.id);
-      console.log('loaded mesahes');
     });
 
     this.preloadSound();

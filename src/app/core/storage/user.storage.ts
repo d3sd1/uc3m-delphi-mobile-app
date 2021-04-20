@@ -47,7 +47,6 @@ export class UserStorage {
     await this.storage.remove(this.JWT_KEY_NAME);
 
     await this.wsService.disconnectWs();
-    console.log("KEYS -> " , await this.storage.keys())
   }
 
   needsOnboard(): Promise<boolean> {

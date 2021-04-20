@@ -21,9 +21,7 @@ export class WsService {
     let ws = new SockJS('http://localhost:8080/ws');
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({jwt: jwt}, (frame) => {
-      this.stompClient.subscribe('/ws/topic/greetings', (message) => {
-        console.log('recved msg ', message);
-      });
+
       //_this.stompClient.reconnect_delay = 2000;
     }, (e) => {
       console.error('eee', e);

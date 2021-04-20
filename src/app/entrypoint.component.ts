@@ -54,7 +54,6 @@ export class EntrypointComponent implements OnInit {
     this.translate.setDefaultLang('en');
     this.translate.addLangs(['es', 'en']);
     if(await this.userStorage.isLoggedIn()){
-      console.log((await this.userStorage.getUser()))
       const userLang = (await this.userStorage.getUser()).language?.keyName;
       this.translate.use(userLang.toLowerCase());
     }

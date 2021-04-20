@@ -63,8 +63,6 @@ export class ChatConversationComponent implements OnInit {
     });
 
     this.wsService.subscribe('chat/messages', true).subscribe(async (msg: ChatMessage) => {
-      console.log('current messages ', this.chat?.chatMessages);
-      console.log('new message ', msg);
       this.chat?.chatMessages.push(msg);
       await this.scrollToBottom();
     });

@@ -7,7 +7,7 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <ion-card color="light">
-    <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()">
+    <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()" accept="image/*">
 
     <div class="img-wrapper" (click)="triggerUploadImage()">
       <img [src]="user?.photo"/>
@@ -51,14 +51,6 @@
     <ion-item routerLink="logout">
       <ion-label>{{ 'profile_page.disconnectLabel' | translate }}</ion-label>
     </ion-item>
-
-    <!--
-
-      <ion-icon icon="radio-button-on-outline" [color]="'chat-'"></ion-icon>-->
-    <!--
-      <ion-item>
-        <ion-label routerLink="/logout"></ion-label>
-      </ion-item>-->
   </ion-list>
 
 </ion-content>
