@@ -6,6 +6,7 @@ import {Process} from '../process';
 import {CountdownConfig} from 'ngx-countdown';
 import {ChatMessage} from '../../chat/chat-conversation/chat-message';
 import {WsService} from '../../../core/ws/ws.service';
+import {Round} from '../round';
 
 @Component({
   selector: 'delphi-list',
@@ -46,15 +47,8 @@ export class ListPage implements OnInit {
     });
   }
 
-  parseDate(date: Date): Date {
-    if (typeof date !== 'object') {
-      date = new Date(date);
-    }
-    return date;
-  }
-
-  isBeforeToday(date: Date) {
-    return new Date().getTime() < this.parseDate(date)?.getTime();
+  parseDate(date: string): Date {
+    return new Date(date);
   }
 
   getCountdownConfig(endTime) {

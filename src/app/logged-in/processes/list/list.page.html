@@ -13,20 +13,19 @@
   </ion-list-header>
   <ion-item *ngFor="let process of filteredProcesses" [routerLink]="['single']" [state]="{ process: process}">
     <ion-thumbnail slot="start">
-      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl" (error)="process.pictureUrl='assets/images/no-process-image.jpeg'"/>
+      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"
+           (error)="process.pictureUrl='assets/images/no-process-image.jpeg'"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
     </ion-thumbnail>
     <ion-label>
       <h3>
-        {{ process?.description }}
+        {{ process?.name }}
       </h3>
       <p>
         <span
-          *ngIf="isBeforeToday(parseDate(process?.endTime))"><countdown #cd
-                                                                       [config]="getCountdownConfig(parseDate(process.endTime))"
-                                                                       end></countdown>
-          {{ 'list_page.hoursLeft' | translate }}</span>
-        <a *ngIf="!isBeforeToday(parseDate(process?.endTime))">{{ 'list_page.seeResult' | translate }}</a>
+          *ngIf="!process.processFinished">
+          {{process.description}}</span>
+        <a *ngIf="process.processFinished">{{ 'list_page.seeResult' | translate }}</a>
       </p>
     </ion-label>
   </ion-item>

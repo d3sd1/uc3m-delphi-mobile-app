@@ -5,5 +5,6 @@ export class Round {
   name: string;
   questions: Question[] = [];
   finishTime: Date;
+  finished: boolean;
 
 }
