@@ -14,7 +14,9 @@
     <ion-item *ngFor="let expert of usersFiltered"
               (click)="pushExpert(expert)">
       <ion-avatar slot="start">
-        <img [src]="expert.photo" alt="">
+        <img *ngIf="expert?.photo !== undefined" [src]="expert?.photo"
+             (error)="expert.photo='assets/images/no-process-image.jpeg'"/>
+        <img *ngIf="expert?.photo === undefined" src="assets/images/no-process-image.jpeg"/>
       </ion-avatar>
       {{ expert.name }} {{ expert.surnames }} <{{ expert.email }}>
     </ion-item>
