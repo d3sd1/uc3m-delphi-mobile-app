@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modificar rondas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+  <ion-reorder-group disabled="false">
+    <!-- Default reorder icon, end aligned items -->
+    <ion-item *ngFor="let round of  process.rounds" routerLink="test">
+      <ion-label>
+        {{round.name}}
+      </ion-label>
+      <ion-reorder slot="start"></ion-reorder>
+    </ion-item>
+
+  </ion-reorder-group>
+
+  <!-- fab placed to the (vertical) center and end -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="addRound()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

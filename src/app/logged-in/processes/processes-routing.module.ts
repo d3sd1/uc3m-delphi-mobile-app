@@ -5,6 +5,7 @@ import {SinglePage} from './single/single.page';
 import {ModifyPage} from './modify/modify.page';
 import {UserPickerPage} from './user-picker/user-picker.page';
 import {Process} from './process';
+import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'modify',
     component: ModifyPage
+  },
+  {
+    path: 'modify_rounds',
+    component: ModifyRoundsPage
   },
   {
     path: 'user-picker',

@@ -103,17 +103,6 @@ export class ModifyPage implements OnInit {
     });
   }
 
-  async uploadImage() {
-    const formData = new FormData();
-    formData.append('image', this.uploadPicture.nativeElement.files[0]);
-    this.httpClient.post<Media>(environment.apiUrl + '/v1/media/upload', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
-      async (res) => {
-        this.process.pictureUrl = environment.apiUrl + '/v1/media/fetch/' + res.id;
-      },
-      (err) => console.log(err)
-    );
-    //await this.userStorage.setUser(this.user);
-  }
 
   private async showToast(msg: string) {
     const toast = await this.toastController.create({
@@ -127,10 +116,7 @@ export class ModifyPage implements OnInit {
   }
 
   async addRound() {
-    const round = new Round();
-    round.name = 'Ronda ' + (this.process.rounds.length + 1);
-    round.finishTime = new Date();
-    round.questions = [];
+    const round = new Round( 'Ronda ' + (this.process.rounds.length + 1), [], new Date(), false);
     this.process.rounds.push(round);
     await this.createProcess.scrollToBottom(300);
   }
