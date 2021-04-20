@@ -26,7 +26,6 @@ export class LogoutPage implements OnInit {
   }
 
   ngOnInit() {
-    /* TODO REMOVE COMMENT
     setTimeout(() => {
       this.userStorage.logout().then(() => {
         this.router.navigateByUrl('/logged-out').then(() => {
@@ -35,7 +34,7 @@ export class LogoutPage implements OnInit {
       }).catch((e) => {
         console.error(e);
       });
-    }, 2000);*/
+    }, 2000);
   }
 
 }
