@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoggedInGuard} from './logged-in.guard';
-import {LogoutPage} from './profile/logout/logout.page';
+import {LogoutPage} from './logout/logout.page';
 
 const routes: Routes = [
   {

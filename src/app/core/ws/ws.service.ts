@@ -26,7 +26,10 @@ export class WsService {
       //_this.stompClient.reconnect_delay = 2000;
     }, (e) => {
       setTimeout(() => {
-        this.connectWs(jwt);
+        if (jwt !== null) {
+          this.connectWs(jwt);
+        }
+
       }, environment.wsReconnectInterval);
     });
   }

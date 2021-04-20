@@ -1,12 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomePage} from './home.page';
+import {LogoutPage} from './logout/logout.page';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'menu',
     pathMatch: 'full'
+  },
+  {
+    path: 'logout',
+    component: LogoutPage
   },
   {
     path: 'menu',

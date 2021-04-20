@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastController} from '@ionic/angular';
-import {UserStorage} from '../../../core/storage/user.storage';
+import {UserStorage} from '../../core/storage/user.storage';
 
 @Component({
   selector: 'delphi-logout',
@@ -26,6 +26,7 @@ export class LogoutPage implements OnInit {
   }
 
   ngOnInit() {
+    /* TODO REMOVE COMMENT
     setTimeout(() => {
       this.userStorage.logout().then(() => {
         this.router.navigateByUrl('/logged-out').then(() => {
@@ -34,7 +35,7 @@ export class LogoutPage implements OnInit {
       }).catch((e) => {
         console.error(e);
       });
-    }, 2000);
+    }, 2000);*/
   }
 
 }

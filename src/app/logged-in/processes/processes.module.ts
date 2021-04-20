@@ -20,6 +20,7 @@ import {RoleService} from './role.service';
 import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';
+import { RoleDirective } from './role.directive';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import {ModifyQuestionsContentPage} from './modify/content/modify-questions-cont
     TranslateModule
   ],
   declarations: [ProcessesPage, SinglePage, ModifyPage, UserPickerPage, ModifyRoundsPage, ModifyQuestionsPage,
-    ModifyQuestionsContentPage],
+    ModifyQuestionsContentPage,
+    RoleDirective],
   providers: [
     Geolocation,
     ProcessService,

@@ -29,6 +29,10 @@
       <ion-label>
         Rondas
       </ion-label>
+
+      <ion-button *hasDelphiRole="['coordinator', 'admin']" expand="block" [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
+        Avanzar ronda
+      </ion-button>
     </ion-list-header>
     <ion-item routerLink="rounds">
       <ion-label>Rondas</ion-label>
@@ -62,14 +66,16 @@
       </div>
     </div>
   </ion-list>
-
 </ion-content>
 
 
-<ion-footer>
+<ion-footer >
   <ion-toolbar>
-    <ion-button expand="block" [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
+    <ion-button *hasDelphiRole="['admin']" expand="block" [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
       Editar proceso
+    </ion-button>
+    <ion-button *hasDelphiRole="['expert']" expand="block" color="secondary" [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
+      Participar
     </ion-button>
   </ion-toolbar>
 </ion-footer>
