@@ -1,11 +1,12 @@
-.fullheight {
-  height: 100%;
+.logo {
+  margin-top: 20%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
-
-.xc {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+::ng-deep ion-list-header {
+  padding-inline-start: 0 !important;
 }
 
 @import 'https://fonts.googleapis.com/css?family=Raleway';

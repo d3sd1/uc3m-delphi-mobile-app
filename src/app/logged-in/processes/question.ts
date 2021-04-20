@@ -9,8 +9,4 @@ export class Question {
   question: string;
   type: QuestionType;
 
-  constructor(name: string, type: QuestionType) {
-    this.name = name;
-    this.type = type;
-  }
 }

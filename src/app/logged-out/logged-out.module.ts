@@ -6,15 +6,13 @@ import {UserStorage} from '../core/storage/user.storage';
 import {FormsModule} from '@angular/forms';
 import {LoginPage} from './login/login.page';
 import {IonicModule} from '@ionic/angular';
-import {InvitationPage} from './invitation/invitation.page';
 import {LoginConsumer} from '../core/consumer/login/login.consumer';
 import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
   declarations: [
-    LoginPage,
-    InvitationPage
+    LoginPage
   ],
   imports: [
     CommonModule,

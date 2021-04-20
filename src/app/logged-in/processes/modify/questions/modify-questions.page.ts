@@ -43,8 +43,11 @@ export class ModifyQuestionsPage implements OnInit {
   }
 
   addQuestion() {
+    const question = new Question();
+    question.name = 'Pregunta ' + this.process.rounds[this.roundIndex].questions.length;
+    question.type = QuestionType.QUALITATIVE;
     this.process.rounds[this.roundIndex].questions.push(
-      new Question('Pregunta ' + this.process.rounds[this.roundIndex].questions.length, QuestionType.QUALITATIVE)
+      question
     );
   }
 
