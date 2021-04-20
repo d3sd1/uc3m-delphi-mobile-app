@@ -95,7 +95,6 @@ export class ModifyPage implements OnInit {
 
     //TODO REMOve this
     this.process.pictureUrl = 'nullable';
-   this.process.endTime = new Date(this.process.endTime).toISOString();
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
       await this.showToast('Proceso guardado correctamente.');
       await this.router.navigateByUrl('/logged-in/home/menu/processes', {

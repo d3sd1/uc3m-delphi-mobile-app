@@ -8,7 +8,6 @@ export class Process {
   name: string;
   description: string;
   pictureUrl: SafeUrl;
-  endTime: string;
   processUsers: DelphiProcessUser[] = []; // contains everything
   rounds: Round[] = [];
   processFinished: boolean;
