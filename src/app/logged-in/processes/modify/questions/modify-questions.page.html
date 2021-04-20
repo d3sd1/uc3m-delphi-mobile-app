@@ -3,14 +3,15 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>Modificar rondas</ion-title>
+    <ion-title>Modificar preguntas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
   <ion-reorder-group (ionItemReorder)="onItemReorder($event)"  disabled="false">
     <!-- Default reorder icon, end aligned items -->
-    <ion-item *ngFor="let round of  process?.rounds" [routerLink]="['/logged-in/home/menu/processes/modify_questions']" [state]="{ process: process}">
+
+  <ion-item *ngFor="let round of  process?.rounds" >
       <ion-input [(ngModel)]="round.name"></ion-input>
       <ion-reorder slot="start"></ion-reorder>
     </ion-item>
@@ -29,6 +30,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block">Guardar rondas</ion-button>
+    <ion-button expand="block">Guardar preguntas</ion-button>
   </ion-toolbar>
 </ion-footer>

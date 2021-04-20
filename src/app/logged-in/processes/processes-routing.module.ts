@@ -6,6 +6,7 @@ import {ModifyPage} from './modify/modify.page';
 import {UserPickerPage} from './user-picker/user-picker.page';
 import {Process} from './process';
 import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
+import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'modify_rounds',
     component: ModifyRoundsPage
+  },
+  {
+    path: 'modify_questions',
+    component: ModifyQuestionsPage
   },
   {
     path: 'user-picker',
