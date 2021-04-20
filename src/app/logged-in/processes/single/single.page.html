@@ -11,7 +11,7 @@
 
   <ion-card color="light">
     <div class="img-wrapper">
-      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"/>
+      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"  (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
     </div>
     <ion-card-content class="ion-text-center">
