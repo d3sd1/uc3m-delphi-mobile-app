@@ -8,7 +8,10 @@
 </ion-header>
 
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-
+  <div id="container" *ngIf="process?.rounds?.length == 0">
+    <strong>Sin rondas</strong>
+    <p>No existen rondas asociadas a este proceso.</p>
+  </div>
   <ion-reorder-group (ionItemReorder)="onItemReorder($event)" disabled="false">
     <!-- Default reorder icon, end aligned items -->
     <ion-item-sliding *ngFor="let round of process?.rounds; let roundIndex = index">

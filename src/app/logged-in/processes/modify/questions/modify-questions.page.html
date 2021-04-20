@@ -14,7 +14,10 @@
     <ion-datetime display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="this.process?.rounds[roundIndex].endTime"></ion-datetime>
   </ion-item>
   <ion-item-divider></ion-item-divider>
-
+  <div id="container" *ngIf="process?.rounds[roundIndex]?.questions.length == 0">
+    <strong>Sin preguntas</strong>
+    <p>No existen preguntas asociadas a esta ronda.</p>
+  </div>
   <ion-reorder-group (ionItemReorder)="onItemReorder($event)" disabled="false">
     <!-- Default reorder icon, end aligned items -->
     <ion-item-sliding *ngFor="let question of process?.rounds[roundIndex].questions; let questionIndex = index">
