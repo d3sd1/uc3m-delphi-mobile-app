@@ -91,11 +91,6 @@ export class ModifyPage implements OnInit {
     });
     await loading.present();
 
-    // TODO REMOVE THIS BECAUSE SOMEHOW IT TRIES TO SEND A BLOB
-    this.process.processUsers.forEach((pp) => {
-      pp.user.photo = 'TODO!!';
-    })
-
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
       await this.showToast('Proceso guardado correctamente.');
       await this.router.navigateByUrl('/logged-in/home/menu/processes', {
@@ -108,12 +103,6 @@ export class ModifyPage implements OnInit {
     });
   }
 
-  async showImage() {
-    const blob = await this.httpClient.get(this.process?.pictureUrl, {responseType: 'blob'}).toPromise();
-    const objectURL = URL.createObjectURL(blob);
-    const img = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    return img;
-  }
   async uploadImage() {
     const formData = new FormData();
     formData.append('image', this.uploadPicture.nativeElement.files[0]);

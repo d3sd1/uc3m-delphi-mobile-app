@@ -6,7 +6,7 @@ export class User {
   email: string;
   name: string;
   surnames: string;
-  photo: any;
+  photo: string;
   enabled: boolean;
   blocked: boolean;
   chatStatus: string;

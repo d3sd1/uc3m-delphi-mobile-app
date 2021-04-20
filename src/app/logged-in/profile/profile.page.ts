@@ -9,6 +9,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
 import {Language} from './language';
+import {Media} from '../processes/media';
 
 @Component({
   selector: 'delphi-profile',
@@ -29,15 +30,9 @@ export class ProfilePage implements OnInit {
   async ngOnInit() {
     this.profileOptions = await this.initializeItems();
     this.user = await this.userStorage.getUser();
-    await this.loadUserImage();
+    console.log(this.user)
   }
 
-  private async loadUserImage() {
-    const blob = await this.httpClient.get(environment.apiUrl + '/v1/profile/img', {responseType: 'blob'}).toPromise();
-    const objectURL = URL.createObjectURL(blob);
-    const img = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    //TODO this.user.photo = img;
-  }
 
   async initializeItems(): Promise<any> {
   }
@@ -50,15 +45,17 @@ export class ProfilePage implements OnInit {
   triggerUploadCv() {
     this.uploadCvRef.nativeElement.click();
   }
+
   async uploadImage() {
     const formData = new FormData();
     formData.append('image', this.uploadPicture.nativeElement.files[0]);
-    this.httpClient.post(environment.apiUrl + '/v1/profile/img', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
-      (res) => console.log(res),
+    this.httpClient.post<Media>(environment.apiUrl + '/v1/media/upload', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
+      async (res) => {
+        this.user.photo = environment.apiUrl + '/v1/media/fetch/' + res.id;
+        await this.userStorage.setUser(this.user);
+      },
       (err) => console.log(err)
     );
-    await this.loadUserImage();
-    await this.userStorage.setUser(this.user);
   }
   async uploadCv() {
     const formData = new FormData();
@@ -67,7 +64,6 @@ export class ProfilePage implements OnInit {
       (res) => console.log(res),
       (err) => console.log(err)
     );
-    await this.loadUserImage();
     await this.userStorage.setUser(this.user);
   }
 
