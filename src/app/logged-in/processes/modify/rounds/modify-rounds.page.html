@@ -11,12 +11,17 @@
 
   <ion-reorder-group (ionItemReorder)="onItemReorder($event)" disabled="false">
     <!-- Default reorder icon, end aligned items -->
-    <ion-item *ngFor="let round of process?.rounds; let roundIndex = index"
-              [routerLink]="['/logged-in/home/menu/processes/modify_questions']"
-              [state]="{ process: process, roundIndex: roundIndex}">
-      <ion-input [(ngModel)]="round.name"></ion-input>
-      <ion-reorder slot="start"></ion-reorder>
-    </ion-item>
+    <ion-item-sliding *ngFor="let round of process?.rounds; let roundIndex = index">
+      <ion-item-options side="start">
+        <ion-item-option color="danger" (click)="deleteRound(roundIndex)">Eliminar</ion-item-option>
+      </ion-item-options>
+      <ion-item
+        [routerLink]="['/logged-in/home/menu/processes/modify_questions']"
+        [state]="{ process: process, roundIndex: roundIndex}">
+        <ion-input [(ngModel)]="round.name"></ion-input>
+        <ion-reorder slot="start"></ion-reorder>
+      </ion-item>
+    </ion-item-sliding>
 
   </ion-reorder-group>
 

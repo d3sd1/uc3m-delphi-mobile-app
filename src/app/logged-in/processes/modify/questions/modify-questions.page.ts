@@ -48,6 +48,9 @@ export class ModifyQuestionsPage implements OnInit {
     );
   }
 
+  deleteQuestion(questionIndex: number) {
+    this.process?.rounds[this.roundIndex]?.questions.splice(questionIndex, 1);
+  }
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
     this.currentUser = await this.userStorage.getUser();

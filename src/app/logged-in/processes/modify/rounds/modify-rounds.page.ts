@@ -31,6 +31,9 @@ export class ModifyRoundsPage implements OnInit {
     this.process.rounds[detail.from] = aux;
     this.reAssignOrder();
   }
+  deleteRound(roundIndex: number) {
+    this.process.rounds.splice(roundIndex, 1);
+  }
 
   async saveRounds() {
     //TODO determine logic to add to it's role (pass role by routing)
