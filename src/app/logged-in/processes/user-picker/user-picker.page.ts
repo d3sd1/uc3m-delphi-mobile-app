@@ -63,12 +63,12 @@ export class UserPickerPage implements OnInit {
 
   forceCurrentUserAdmin() {
     const admRole = this.roleService.getRoleByName('ADMIN');
-    const userIndex = this.process.processUsers.findIndex((processUser) => {
+    const userIndex = this.process?.processUsers.findIndex((processUser) => {
       return processUser.user.id === this.currentUser.id;
     });
     if (userIndex === -1) {
-      this.process.processUsers.push(new DelphiProcessUser(this.currentUser, admRole));
-    } else {
+      this.process?.processUsers.push(new DelphiProcessUser(this.currentUser, admRole));
+    } else if(this.process !== undefined) {
       this.process.processUsers[userIndex].role = admRole;
     }
   }

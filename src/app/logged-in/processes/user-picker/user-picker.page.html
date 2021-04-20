@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-searchbar debounce="500" animated [placeholder]="'Buscar ' + role?.name" (focusout)="!this.validateEmail(this.filterCriterial) ? this.filterCriterial='':null"
-                 (ionChange)="!this.validateEmail(this.filterCriterial) ? filterExperts():null" [(ngModel)]="filterCriterial"></ion-searchbar>
+                 (ionChange)="filterExperts()" [(ngModel)]="filterCriterial"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
     <ion-item *ngFor="let expert of usersFiltered"
               (click)="pushExpert(expert)">
@@ -30,7 +30,7 @@
     <ion-title>Proceso sin expertos</ion-title>
   </ion-item>
 
-  <div *ngFor="let userWithRole of process.processUsers">
+  <div *ngFor="let userWithRole of process?.processUsers">
     <ion-chip *ngIf="userWithRole.role.id === role.id"  [color]="userWithRole?.user.id === currentUser?.id?'primary':'secondary'">
       <ion-avatar>
         <img [src]="userWithRole.user.photo">
