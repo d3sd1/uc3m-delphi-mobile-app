@@ -18,7 +18,15 @@ export class RoleService {
   constructor(private httpClient: HttpClient, private wsService: WsService) {
     this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/roles')
       .toPromise().then((roles: Role[]) => {
-      this.roles = roles;
+      this.roles = roles.sort((a,b) => {
+        if (a.id < b.id) {
+          return -1;
+        }
+        if (a.id > b.id) {
+          return 1;
+        }
+        return 0;
+      });
     });
     // TODO this could cause nullpointers.xd
   }
