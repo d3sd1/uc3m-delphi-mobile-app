@@ -47,7 +47,7 @@
       </ion-label>
     </ion-list-header>
     <div *ngFor="let role of roleService.getRoles()">
-      <div>
+      <div *ngIf="countUsersRole(role)">
         <ion-item>
           <ion-label>{{role.name}}</ion-label>
           <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>

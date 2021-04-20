@@ -109,19 +109,11 @@
     </ion-list-header>
 
     <!-- Toggles in a List -->
-    <ion-item *ngFor="let role of roleService.getRoles()" [routerLink]="['/logged-in/home/menu/processes/user-picker']" [state]="{ process: process, role: role}">
+    <ion-item  [routerLink]="['/logged-in/home/menu/processes/user-picker']" [state]="{ process: process, role: role}">
       <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>
       <ion-label>{{role.name}}</ion-label>
     </ion-item>
 
-
-    <!--
-
-      <ion-icon icon="radio-button-on-outline" [color]="'chat-'"></ion-icon>-->
-    <!--
-      <ion-item>
-        <ion-label routerLink="/logout"></ion-label>
-      </ion-item>-->
   </ion-list>
 
 </ion-content>
