@@ -51,11 +51,11 @@ export class UserStorage {
 
   needsOnboard(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      /*this.getUser().then((user: User) => {
+      this.getUser().then((user: User) => {
         resolve(user.needsOnboard);
       }).catch(() => {
         reject();
-      });*/
+      });
     });
   }
 

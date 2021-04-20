@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar debounce="500" animated placeholder="Buscar expertos" (focusout)="this.filterCriterial = null"
-                 (ionChange)="filterExperts()" [(ngModel)]="filterCriterial"></ion-searchbar>
+  <ion-searchbar debounce="500" animated [placeholder]="'Buscar ' + role?.name" (focusout)="!this.validateEmail(this.filterCriterial) ? this.filterCriterial='':null"
+                 (ionChange)="!this.validateEmail(this.filterCriterial) ? filterExperts():null" [(ngModel)]="filterCriterial"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
     <ion-item *ngFor="let expert of usersFiltered"
               (click)="pushExpert(expert)">
@@ -19,8 +19,12 @@
       {{ expert.name }} {{ expert.surnames }} <{{ expert.email }}>
     </ion-item>
   </ion-list>
-  <ion-item *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== ''">
+  <ion-item *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && !this.validateEmail(this.filterCriterial)">
     <ion-title>Búsqueda sin resultados</ion-title>
+  </ion-item>
+  <ion-item *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && this.validateEmail(this.filterCriterial)">
+    <ion-title></ion-title>
+    <ion-button expand="block" (click)="inviteUser(this.filterCriterial)">Invitar a <{{this.filterCriterial}}></ion-button>
   </ion-item>
   <ion-item *ngIf="process?.processUsers.length == 0">
     <ion-title>Proceso sin expertos</ion-title>

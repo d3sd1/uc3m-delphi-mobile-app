@@ -70,7 +70,7 @@ export class HomePage implements ViewDidEnter {
   async onboarding() {
     const needsOnboard = await this.authService.needsOnboard();
     if (needsOnboard && await this.storage.get('onboard') !== false) {
-      await this.router.navigateByUrl('/home/onboarding');
+      await this.router.navigateByUrl('/logged-in/home/onboarding');
     }
   }
 }

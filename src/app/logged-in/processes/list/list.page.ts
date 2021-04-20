@@ -31,10 +31,13 @@ export class ListPage implements OnInit {
 
 
     this.wsService.subscribe('process/new', true).subscribe(async (process: Process) => {
+      if (process === null) {
+        return;
+      }
       const pIndex = this.processes.findIndex((pProcess) => {
         return process?.id === pProcess?.id;
       });
-      if(pIndex === -1) {
+      if (pIndex === -1) {
         this.processes.push(process);
       } else {
         this.processes[pIndex] = process;

@@ -22,6 +22,7 @@ export class UserPickerPage implements OnInit {
   filterCriterial: string = '';
   usersFiltered: User[] = [];
   currentUser: User;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,13 +45,29 @@ export class UserPickerPage implements OnInit {
     });
   }
 
+  validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  inviteUser(email: string) {
+    this.httpClient.put<User>(environment.apiUrl + '/v1/process/invite?email=' + email, {}).subscribe((user: User) => {
+      this.pushExpert(user);
+    }, (err) => {
+      console.error(err);
+    }, () => {
+      this.filterCriterial = '';
+    });
+    // TODO handle err
+  }
+
   forceCurrentUserAdmin() {
     const admRole = this.roleService.getRoleByName('ADMIN');
     const userIndex = this.process.processUsers.findIndex((processUser) => {
       return processUser.user.id === this.currentUser.id;
     });
-    if(userIndex === -1) {
-      this.process.processUsers.push(new DelphiProcessUser(this.currentUser, admRole))
+    if (userIndex === -1) {
+      this.process.processUsers.push(new DelphiProcessUser(this.currentUser, admRole));
     } else {
       this.process.processUsers[userIndex].role = admRole;
     }
@@ -78,7 +95,7 @@ export class UserPickerPage implements OnInit {
     const userOldPos = this.process.processUsers.findIndex((processUser) => {
       return processUser.user.id === newUser.id;
     });
-    if(userOldPos === -1) {
+    if (userOldPos === -1) {
       this.process.processUsers.push(new DelphiProcessUser(newUser, this.role));
     } else {
       this.process.processUsers[userOldPos] = new DelphiProcessUser(newUser, this.role);
@@ -91,6 +108,7 @@ export class UserPickerPage implements OnInit {
       return pExpert.user.id !== expert.user.id;
     });
   }
+
   async saveUsers() {
     //TODO determine logic to add to it's role (pass role by routing)
     //TODO aqui al editar un proceso que ya tiene uysuarios los borra yt solo añade los nuevos
@@ -101,6 +119,7 @@ export class UserPickerPage implements OnInit {
       }
     });
   }
+
   async goBack() {
     await this.router.navigateByUrl('/logged-in/home/menu/processes/modify', {
       state: {

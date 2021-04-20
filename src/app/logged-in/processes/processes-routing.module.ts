@@ -21,8 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'single',
-    component: SinglePage,
-    data: { process: 'not set' }
+    component: SinglePage
   },
   {
     path: 'modify',
