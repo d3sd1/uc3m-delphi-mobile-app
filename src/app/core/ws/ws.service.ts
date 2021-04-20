@@ -6,6 +6,7 @@ import {UserStorage} from '../storage/user.storage';
 import {BehaviorSubject} from 'rxjs';
 import {User} from '../../logged-in/user';
 import {ChatMessage} from '../../../model/chat-message';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class WsService {
     }, (e) => {
       setTimeout(() => {
         this.connectWs(jwt);
-      }, 10000);
+      }, environment.wsReconnectInterval);
     });
   }
 
