@@ -53,6 +53,7 @@ export class ProfilePage implements OnInit {
       async (res) => {
         this.user.photo = environment.apiUrl + '/v1/media/fetch/' + res.id;
         await this.userStorage.setUser(this.user);
+        await this.httpClient.post(environment.apiUrl + '/v1/profile/photo', this.user).toPromise();
       },
       (err) => console.log(err)
     );
