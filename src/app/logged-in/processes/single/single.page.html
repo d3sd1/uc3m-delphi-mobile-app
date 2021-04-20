@@ -32,7 +32,7 @@
     </ion-list-header>
     <ion-item routerLink="rounds">
       <ion-label>Rondas</ion-label>
-      <ion-badge slot="end">{{process.rounds?.length}}</ion-badge>
+      <ion-badge slot="end">{{process?.rounds === undefined ? 0:process?.rounds?.length}}</ion-badge>
     </ion-item>
   </ion-list>
 
