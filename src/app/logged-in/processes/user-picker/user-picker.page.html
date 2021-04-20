@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>experts</ion-title>
+    <ion-title>{{role?.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,22 +16,25 @@
       <ion-avatar slot="start">
         <img [src]="expert.photo" alt="">
       </ion-avatar>
-      {{ expert.name }} {{ expert.surnames }} <{{ expert.email }}></ion-item>
+      {{ expert.name }} {{ expert.surnames }} <{{ expert.email }}>
+    </ion-item>
   </ion-list>
   <ion-item *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== ''">
     <ion-title>Búsqueda sin resultados</ion-title>
   </ion-item>
-  <ion-item *ngIf="process.processUsers?.length == 0">
+  <ion-item *ngIf="process?.processUsers.length == 0">
     <ion-title>Proceso sin expertos</ion-title>
   </ion-item>
 
-  <ion-chip *ngFor="let userWithRole of process.processUsers">
-    <ion-avatar>
-      <img [src]="userWithRole.user.photo">
-    </ion-avatar>
-    <ion-label>{{userWithRole.user.name}} {{userWithRole.user.surnames}} <{{ userWithRole.user.email }}></ion-label>
-    <ion-icon name="close-circle" (click)="removeExpert(userWithRole)"></ion-icon>
-  </ion-chip>
+  <div *ngFor="let userWithRole of process.processUsers">
+    <ion-chip *ngIf="userWithRole.role.id === role.id"  [color]="userWithRole?.user.id === currentUser?.id?'primary':'secondary'">
+      <ion-avatar>
+        <img [src]="userWithRole.user.photo">
+      </ion-avatar>
+      <ion-label>{{userWithRole.user.name}} {{userWithRole.user.surnames}} <{{ userWithRole.user.email }}></ion-label>
+      <ion-icon *ngIf="userWithRole?.user.id !== currentUser?.id" name="close-circle" (click)="removeExpert(userWithRole)"></ion-icon>
+    </ion-chip>
+  </div>
 
 </ion-content>
 

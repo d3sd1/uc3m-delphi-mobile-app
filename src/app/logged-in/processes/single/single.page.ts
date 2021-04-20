@@ -8,6 +8,7 @@ import {HttpClient} from '@angular/common/http';
 import {RoleService} from '../role.service';
 import {Role} from '../../role';
 import {DelphiProcessUser} from '../delphi-process-user';
+import {User} from '../../user';
 
 @Component({
   selector: 'delphi-single',
@@ -19,6 +20,7 @@ export class SinglePage implements OnInit {
   showExpertForm = false;
   invitationEmail = '';
   process: Process;
+  currentUser: User;
 
   constructor(
     private toastController: ToastController,
@@ -49,6 +51,7 @@ export class SinglePage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
+    this.currentUser = await this.userStorage.getUser();
   }
 
   showExpertInvitation() {
@@ -68,6 +71,9 @@ export class SinglePage implements OnInit {
   }
 
   openChat(user: DelphiProcessUser) {
+    if(user.user.id === this.currentUser.id) {
+      return; // user can't open self chat...
+    }
     this.httpClient.put(environment.apiUrl + '/v1/chat/open?userId=' + user.user.id, {}).subscribe(async (chatId) => {
       await this.router.navigateByUrl('/logged-in/home/menu/chat/chat/' + chatId);
     });

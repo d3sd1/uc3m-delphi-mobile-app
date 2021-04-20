@@ -19,7 +19,8 @@ export class ListPage implements OnInit {
   currentTime: Date = new Date();
 
   constructor(private authService: UserStorage, private processService: ProcessService,
-              private wsService: WsService) {
+              private wsService: WsService,
+              private userStorage: UserStorage) {
   }
 
   async ngOnInit() {
