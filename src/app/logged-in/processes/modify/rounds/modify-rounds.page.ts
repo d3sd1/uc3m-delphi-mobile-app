@@ -24,7 +24,15 @@ export class ModifyRoundsPage implements OnInit {
     private userStorage: UserStorage) {
   }
   public onItemReorder({ detail }) {
+    this.reAssignOrder();
+
     detail.complete(true);
+  }
+  reAssignOrder() {
+    this.process.rounds.forEach((round: Round, index) => {
+      round.order = index;
+    });
+    console.log(this.process.rounds)
   }
   private async loadProcess() {
     this.route.queryParams.subscribe(async params => {
@@ -42,6 +50,7 @@ export class ModifyRoundsPage implements OnInit {
 
   addRound() {
     this.process.rounds.push(new Round('Ronda xx', [], null, false));
+    this.reAssignOrder();
   }
 
   public async ngOnInit(): Promise<void> {
