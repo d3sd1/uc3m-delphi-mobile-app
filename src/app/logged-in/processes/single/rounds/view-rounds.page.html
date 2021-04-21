@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ver rondas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+  <div id="container" *ngIf="process?.rounds?.length == 0">
+    <strong>Sin rondas</strong>
+    <p>No existen rondas asociadas a este proceso.</p>
+  </div>
+  <ion-list *ngFor="let round of process?.rounds; let roundIndex = index">
+    <!-- Default reorder icon, end aligned items -->
+      <ion-item
+        [routerLink]="['/logged-in/home/menu/processes/modify_questions']"
+        [state]="{ process: process, roundIndex: roundIndex}">
+        <ion-input [(ngModel)]="round.name"></ion-input>
+        <ion-reorder slot="start"></ion-reorder>
+      </ion-item>
+
+  </ion-list>
+
+</ion-content>

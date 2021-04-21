@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../process';
 import {User} from '../../../user';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -21,7 +21,8 @@ export class ModifyRoundsPage implements OnInit {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private router: Router,
-    private userStorage: UserStorage) {
+    private userStorage: UserStorage,
+    public alertController: AlertController) {
   }
 
   public onItemReorder({detail}) {
@@ -31,19 +32,38 @@ export class ModifyRoundsPage implements OnInit {
     this.process.rounds[detail.from] = aux;
     this.reAssignOrder();
   }
+
   deleteRound(roundIndex: number) {
     this.process.rounds.splice(roundIndex, 1);
   }
 
   async saveRounds() {
+    let err = false;
+    for (const round of this.process?.rounds) {
+      if (round.endTime === null || round.endTime === undefined) {
+        err = true;
+      }
+    }
     //TODO determine logic to add to it's role (pass role by routing)
     //TODO aqui al editar un proceso que ya tiene uysuarios los borra yt solo añade los nuevos
     // deberia combinar los antiguos y los nuevos, y actualizar roles (sin duplicados)
-    await this.router.navigateByUrl('/logged-in/home/menu/processes/modify', {
-      state: {
-        process: this.process
-      }
-    });
+    if (err) {
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Error',
+        subHeader: 'Existen rondas con errores',
+        message: 'Existen rondas sin fecha de finalización. Debes asignarles una fecha de finalización.',
+        buttons: ['Resolver']
+      });
+
+      await alert.present();
+    } else {
+      await this.router.navigateByUrl('/logged-in/home/menu/processes/modify', {
+        state: {
+          process: this.process
+        }
+      });
+    }
   }
 
   reAssignOrder() {
@@ -67,7 +87,7 @@ export class ModifyRoundsPage implements OnInit {
   }
 
   sortRounds() {
-    console.log(this.process.rounds)
+    console.log(this.process.rounds);
     this.process.rounds.sort((a, b) => {
       if (a.orderPosition < b.orderPosition) {
         return -1;

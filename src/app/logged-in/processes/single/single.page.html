@@ -38,7 +38,7 @@
       </ion-button>
       </span>
     </ion-list-header>
-    <ion-item routerLink="rounds">
+    <ion-item [routerLink]="['/logged-in/home/menu/processes/view_rounds']" [state]="{ process: process}">
       <ion-label>Rondas</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>

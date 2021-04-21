@@ -21,6 +21,7 @@ import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';
 import { RoleDirective } from './role.directive';
+import {ViewRoundsPage} from './single/rounds/view-rounds.page';
 
 @NgModule({
   imports: [
@@ -36,7 +37,9 @@ import { RoleDirective } from './role.directive';
   ],
   declarations: [ProcessesPage, SinglePage, ModifyPage, UserPickerPage, ModifyRoundsPage, ModifyQuestionsPage,
     ModifyQuestionsContentPage,
-    RoleDirective],
+    RoleDirective,
+    ViewRoundsPage
+  ],
   providers: [
     Geolocation,
     ProcessService,
