@@ -20,9 +20,10 @@ import {EmptyPage} from './empty/empty.page';
     CountdownModule,
     TranslateModule
   ],
-  exports: [
-    ListPage
-  ],
+    exports: [
+        ListPage,
+        EmptyPage
+    ],
   declarations: [ListPage, EmptyPage]
 })
 export class ListPageModule {

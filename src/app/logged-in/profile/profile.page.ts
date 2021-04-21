@@ -102,7 +102,7 @@ export class ProfilePage implements OnInit {
     langs.forEach((lang) => {
       sheets.push({
         text: lang.keyName,
-        cssClass: this.user.language.id === lang.id ? 'current-lang' : '',
+        cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',
         //his.userStorage.
         handler: async () => {
           lang.keyName = lang.keyName.toLowerCase();

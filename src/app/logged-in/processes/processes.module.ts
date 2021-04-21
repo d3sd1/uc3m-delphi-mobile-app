@@ -24,6 +24,7 @@ import { RoleDirective } from './role.directive';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
 import {ViewQuestionsPage} from './single/questions/view-questions.page';
 import {ViewSingleQuestionPage} from './single/single-question/view-single-question.page';
+import {ParticipatePage} from './participate/participate.page';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import {ViewSingleQuestionPage} from './single/single-question/view-single-quest
     RoleDirective,
     ViewRoundsPage,
     ViewQuestionsPage,
-    ViewSingleQuestionPage
+    ViewSingleQuestionPage,
+    ParticipatePage
   ],
   providers: [
     Geolocation,
