@@ -11,7 +11,8 @@
 
   <ion-card color="light">
     <div class="img-wrapper">
-      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"  (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"
+           (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
     </div>
     <ion-card-content class="ion-text-center">
@@ -30,13 +31,16 @@
         Rondas
       </ion-label>
 
-      <ion-button *hasDelphiRole="['coordinator', 'admin']" expand="block" [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
+      <span *ngIf="this.process?.rounds?.length > 0">
+      <ion-button *hasDelphiRole="['coordinator', 'admin']" expand="block"
+                  [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
         Avanzar ronda
       </ion-button>
+      </span>
     </ion-list-header>
     <ion-item routerLink="rounds">
       <ion-label>Rondas</ion-label>
-      <ion-badge slot="end">{{process?.rounds === undefined ? 0:process?.rounds?.length}}</ion-badge>
+      <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
   </ion-list>
 
@@ -56,7 +60,9 @@
           <ion-chip *ngIf="userWithRole.role.id === role.id" (click)="openChat(userWithRole)"
                     [color]="userWithRole?.user.id === currentUser?.id?'primary':'secondary'">
             <ion-avatar>
-              <img [src]="userWithRole.user.photo">
+              <img *ngIf="userWithRole.user.photo !== undefined" [src]="userWithRole.user.photo"
+                   (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+              <img *ngIf="userWithRole.user.photo === undefined" src="assets/images/no-process-image.jpeg"/>
             </ion-avatar>
             <ion-label>{{userWithRole.user.name}} {{userWithRole.user.surnames}} <{{ userWithRole.user.email }}>
             </ion-label>
@@ -69,12 +75,14 @@
 </ion-content>
 
 
-<ion-footer >
+<ion-footer>
   <ion-toolbar>
-    <ion-button *hasDelphiRole="['admin']" expand="block" [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
+    <ion-button *hasDelphiRole="['admin']" expand="block" [routerLink]="['/logged-in/home/menu/processes/modify']"
+                [state]="{ process: process}">
       Editar proceso
     </ion-button>
-    <ion-button *hasDelphiRole="['expert']" expand="block" color="secondary" [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
+    <ion-button *hasDelphiRole="['expert']" expand="block" color="secondary"
+                [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
       Participar
     </ion-button>
   </ion-toolbar>

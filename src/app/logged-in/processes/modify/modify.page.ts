@@ -55,6 +55,7 @@ export class ModifyPage implements OnInit {
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
     this.currentUser = await this.userStorage.getUser();
+
     this.forceCurrentUserAdmin();
   }
 
@@ -155,7 +156,7 @@ export class ModifyPage implements OnInit {
   }
   countUsersRole(role: Role) {
     return this.process.processUsers?.filter((delphiProcessUser) => {
-      return delphiProcessUser.role?.id === role.id;
+      return delphiProcessUser.role?.id === role?.id;
     }).length;
   }
 
