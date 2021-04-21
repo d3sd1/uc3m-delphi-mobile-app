@@ -55,7 +55,7 @@ export class EntrypointComponent implements OnInit {
     this.translate.addLangs(['es', 'en']);
     if(await this.userStorage.isLoggedIn()){
       const userLang = (await this.userStorage.getUser()).language?.keyName;
-      this.translate.use(userLang.toLowerCase());
+      this.translate.use(userLang?.toLowerCase());
     }
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
     if (isPushNotificationsAvailable) {

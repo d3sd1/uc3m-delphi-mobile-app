@@ -11,6 +11,7 @@ import {ModifyQuestionsContentPage} from './modify/content/modify-questions-cont
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
 import {ViewQuestionsPage} from './single/questions/view-questions.page';
 import {ViewSingleQuestionPage} from './single/single-question/view-single-question.page';
+import {ParticipatePage} from './participate/participate.page';
 
 const routes: Routes = [
   {
@@ -60,6 +61,10 @@ const routes: Routes = [
   {
     path: 'view_single_question',
     component: ViewSingleQuestionPage
+  },
+  {
+    path: 'participate',
+    component: ParticipatePage
   }
 ];
 
