@@ -10,6 +10,7 @@ import {Role} from '../../role';
 import {DelphiProcessUser} from '../delphi-process-user';
 import {User} from '../../user';
 import {FilterRole} from '../filter-role';
+import {WsService} from '../../../core/ws/ws.service';
 
 @Component({
   selector: 'delphi-single',
@@ -31,7 +32,8 @@ export class SinglePage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public roleService: RoleService,
-    private httpClient: HttpClient) {
+    private httpClient: HttpClient,
+    private wsService: WsService) {
   }
 
   countUsersRole(role: Role) {
@@ -54,6 +56,18 @@ export class SinglePage implements OnInit {
     await this.loadProcess();
 
     this.loggedInUser = await this.userStorage.getUser();
+
+    // Handle process updatess
+
+
+    this.wsService.subscribe('process/new', true).subscribe(async (process: Process) => {
+      if (process === null) {
+        return;
+      }
+      if(process.id === this.process.id) {
+        this.process = process;
+      }
+    });
   }
 
   showExpertInvitation() {
@@ -81,6 +95,37 @@ export class SinglePage implements OnInit {
     });
     // TODO handle err
   }
+
+  isProcessInitiated(): boolean {
+    let initiated = false;
+    this.process?.rounds?.forEach((round) => {
+      if (round.current || round.finished) {
+        initiated = true;
+      }
+    });
+    return initiated;
+  }
+
+  async advanceRound() {
+    await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/round/open?process_id=' + this.process.id, this.process).toPromise().then(async (delphiProcess: Process) => {
+      await this.showToast('Ronda avanzada correctamente.');
+    }).catch(async (errMessage: string) => {
+      console.log(errMessage);
+      await this.showToast('La ronda no pudo ser avanzada.');
+    });
+  }
+
+  private async showToast(msg: string) {
+    const toast = await this.toastController.create({
+      message: msg,
+    });
+    await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
+    return toast;
+  }
+
 
   filterRole(roles: string[]): FilterRole {
     return new FilterRole(this.process?.processUsers, roles);

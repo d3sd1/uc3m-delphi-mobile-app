@@ -5,8 +5,9 @@ export class Round {
   name: string;
   questions: Question[] = [];
   endTime: Date;
-  finished: boolean;
+  finished: boolean = false;
   orderPosition: number;
+  current: boolean = false;
 
 
   constructor(name: string, questions: Question[], endTime: Date, finished: boolean) {

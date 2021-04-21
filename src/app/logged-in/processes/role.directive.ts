@@ -21,13 +21,11 @@ export class RoleDirective implements OnInit {
 
   filterRole: FilterRole;
   @Input() set hasDelphiRole(filterRole:FilterRole) {
-    console.log(filterRole)
     this.filterRole = filterRole;
   }
 
   async ngOnInit() {
     let found = false;
-    console.log('current user roles: ', this.filterRole);
     // get current user
     const loggedInUser = await this.userStorage.getUser();
     const delphiProcessUser = this.filterRole?.proccessUsers?.find((delphiProcessUser) => {
