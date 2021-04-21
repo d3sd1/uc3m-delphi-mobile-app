@@ -1,4 +1,22 @@
 {
+  "processes_single_page": {
+    "rounds": "Rondas",
+    "users": "Usuarios",
+    "edit": "Editar proceso",
+    "participate": "Participar"
+  },
+  "processes_modify_page": {
+    "save": "Guardar proceso",
+    "delphiProcess": "Proceso Delphi",
+    "rounds": "Rondas",
+    "users": "Usuarios",
+    "processName": "Nombre del proceso",
+    "processDesc": "Descripción del proceso"
+  },
+  "logout_page": {
+    "disconnect": "Desconectando...",
+    "greetings": "¡Gracias por participar en la plataforma!"
+  },
   "chatEmpty_page": {
     "noConversations": "¡Todavía no hay conversaciones!",
     "participate": "¡Participa en procesos para obtener acceso a las conversaciones del chat!"
@@ -11,6 +29,10 @@
   },
   "chat_page": {
     "messaging": "Mensajería"
+  },
+  "chat_conversation": {
+    "goBack": "Volver",
+    "writeMessage": "Escribir mensaje..."
   },
   "onboardin_page": {
     "welcome_1": "Bienvenido",
@@ -33,7 +55,7 @@
   },
   "list_page": {
     "inProgress": "En curso",
-    "finished": "Finalizados,",
+    "finished": "Finalizados",
     "hoursLeft": "horas restantes",
     "seeResult": "Ver resultados"
   },
@@ -86,6 +108,7 @@
     "passwordLabel": "Contraseña",
     "trainingLabel": "Formación",
     "cvLabel": "CV",
+    "languageLabel": "Idioma",
     "disconnectLabel": "Desconectar"
   },
   "home_page": {

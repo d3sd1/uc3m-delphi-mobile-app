@@ -22,16 +22,16 @@
   <ion-list lines="full" class="ion-no-margin">
     <ion-list-header lines="full">
       <ion-label>
-        Proceso Delphi
+        {{ 'processes_modify_page.delphiProcess' | translate }}
       </ion-label>
     </ion-list-header>
 
 
   <ion-item>
-    <ion-input placeholder="Nombre del proceso" [(ngModel)]="process.name"></ion-input>
+    <ion-input [placeholder]="'processes_modify_page.processName' | translate" [(ngModel)]="process.name"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-textarea placeholder="Descripción del proceso" [(ngModel)]="process.description"></ion-textarea>
+    <ion-textarea [placeholder]="'processes_modify_page.processDesc' | translate" [(ngModel)]="process.description"></ion-textarea>
   </ion-item>
   </ion-list>
   <!-- COORDINADOR ->>>>>>>>>
@@ -93,18 +93,18 @@
   <ion-list lines="inset" class="ion-no-margin">
     <ion-list-header>
       <ion-label>
-        Rondas
+        {{ 'processes_modify_page.rounds' | translate }}
       </ion-label>
     </ion-list-header>
     <ion-item [routerLink]="['/logged-in/home/menu/processes/modify_rounds']" [state]="{ process: process}">
-      <ion-label>Rondas</ion-label>
+      <ion-label>{{ 'processes_modify_page.rounds' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0:process?.rounds?.length}}</ion-badge>
     </ion-item>
   </ion-list>
   <ion-list lines="full" class="ion-no-margin">
     <ion-list-header lines="full">
       <ion-label>
-        Usuarios
+        {{ 'processes_modify_page.users' | translate }}
       </ion-label>
     </ion-list-header>
 
@@ -120,6 +120,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" (click)="saveProcess()">Guardar proceso</ion-button>
+    <ion-button expand="block" (click)="saveProcess()">{{ 'processes_modify_page.save' | translate }}</ion-button>
   </ion-toolbar>
 </ion-footer>

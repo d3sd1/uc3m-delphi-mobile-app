@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="" (click)="goBack()" text="Volver"></ion-back-button>
+      <ion-back-button defaultHref="" (click)="goBack()" [text]="'chat_conversation.goBack' | translate" ></ion-back-button>
     </ion-buttons>
     <ion-title>{{selfChat()?.name}}</ion-title>
     <ion-buttons slot="end">
@@ -43,7 +43,7 @@
     <ion-item>
       <form (ngSubmit)="sendMessage()">
         <ion-input #chat_input
-                   placeholder="Escribir mensaje..."
+                   [placeholder]= "'chat_conversation.writeMessage' | translate"
                    [(ngModel)]="editorMsg"
                    (focusin)="onFocus()"
                    name="chat_message"></ion-input>
