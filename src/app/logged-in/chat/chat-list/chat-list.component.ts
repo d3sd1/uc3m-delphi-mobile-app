@@ -41,10 +41,12 @@ export class ChatListComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.userChats = this.userChatsBackup;
+    this.userChatsBackup = [...this.userChats];
+    console.log(this.userChats)
   }
 
   async filterList(evt) {
+    console.log(this.userChatsBackup)
     this.userChats = this.userChatsBackup;
     const searchTerm = evt.srcElement.value;
 

@@ -64,7 +64,7 @@
         </ion-item>
         <div *ngFor="let userWithRole of process?.processUsers">
           <ion-chip *ngIf="userWithRole.role.id === role.id" (click)="openChat(userWithRole)"
-                    [color]="userWithRole?.user.id === currentUser?.id?'primary':'secondary'">
+                    [color]="userWithRole?.user.id === loggedInUser?.id?'primary':'secondary'">
             <ion-avatar>
               <img *ngIf="userWithRole.user.photo !== undefined" [src]="userWithRole.user.photo"
                    (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
@@ -86,11 +86,13 @@
     <ion-button *hasDelphiRole="filterRole(['admin'])" expand="block"
                 [routerLink]="['/logged-in/home/menu/processes/modify']"
                 [state]="{ process: process}">
-      {{ 'processes_single_page.edit' | translate }}
+      Editar
     </ion-button>
-    <ion-button *hasDelphiRole="filterRole(['expert'])" expand="block" color="secondary"
-                [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
-      {{ 'processes_single_page.participate' | translate }}
-    </ion-button>
+    <span *hasDelphiRole="filterRole(['expert'])">
+      <ion-button *ngIf="isProcessInitiated()" expand="block" color="secondary"
+                  [routerLink]="['/logged-in/home/menu/processes/participate']" [state]="{ process: process}">
+        Participar
+      </ion-button>
+    </span>
   </ion-toolbar>
 </ion-footer>

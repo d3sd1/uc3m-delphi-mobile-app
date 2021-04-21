@@ -1,9 +1,39 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>participate</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [routerLink]="['/logged-in/home/menu/processes/single']"
+                       [state]="{ process: process}"
+                       (click)="goBack()" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Participar</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
+<ion-content>
+  <div *ngFor="let question of currentRound?.questions; let questionIndex = index">
+    <ion-item>
+      <ion-label>{{currentRound.questions[questionIndex].question}}</ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="this.currentRound !== undefined"><ion-textarea placeholder="Introduce tu respuesta aquí"></ion-textarea></ion-item>
+
+    <div *ngIf="this.currentRound !== undefined &&
+    currentRound?.questions[questionIndex]?.type == 1">
+      <ion-range [min]="0"
+                 [max]="10"
+                 step="1"
+                 snaps color="primary" disabled="true" value="5">
+        <ion-icon slot="start" color="danger" name="sad-outline"></ion-icon>
+        <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
+      </ion-range>
+    </div>
+  </div>
 </ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="saveParticipation()">Guardar contenido</ion-button>
+  </ion-toolbar>
+</ion-footer>

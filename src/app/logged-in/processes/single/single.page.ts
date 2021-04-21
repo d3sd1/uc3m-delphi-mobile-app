@@ -22,7 +22,6 @@ export class SinglePage implements OnInit {
   showExpertForm = false;
   invitationEmail = '';
   process: Process;
-  currentUser: DelphiProcessUser = null;
   loggedInUser: User;
 
   constructor(
@@ -87,7 +86,7 @@ export class SinglePage implements OnInit {
   }
 
   openChat(user: DelphiProcessUser) {
-    if (user.user.id === this.currentUser.user.id) {
+    if (user.user.id === this.loggedInUser.id) {
       return; // user can't open self chat...
     }
     this.httpClient.put(environment.apiUrl + '/v1/chat/open?userId=' + user.user.id, {}).subscribe(async (chatId) => {
