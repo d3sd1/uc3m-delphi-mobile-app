@@ -8,13 +8,15 @@ import {User} from '../../../user';
 
 @Component({
   selector: 'delphi-rounds',
-  templateUrl: './view-rounds.page.html',
-  styleUrls: ['./view-rounds.page.scss'],
+  templateUrl: './view-single-question.page.html',
+  styleUrls: ['./view-single-question.page.scss'],
 })
-export class ViewRoundsPage implements OnInit {
+export class ViewSingleQuestionPage implements OnInit {
 
   process: Process;
   currentUser: User;
+  roundIndex: number;
+  questionIndex: number;
 
   constructor(
     private navCtrl: NavController,
@@ -31,6 +33,8 @@ export class ViewRoundsPage implements OnInit {
     this.route.queryParams.subscribe(async params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.process = this.router.getCurrentNavigation().extras.state.process;
+        this.roundIndex = this.router.getCurrentNavigation().extras.state.roundIndex;
+        this.questionIndex = this.router.getCurrentNavigation().extras.state.questionIndex;
         if (this.process.rounds === undefined) {
           this.process.rounds = [];
         }

@@ -16,9 +16,10 @@
   <ion-list *ngFor="let round of process?.rounds; let roundIndex = index">
     <!-- Default reorder icon, end aligned items -->
       <ion-item
-        [routerLink]="['/logged-in/home/menu/processes/modify_questions']"
-        [state]="{ process: process, roundIndex: roundIndex}">
-        <ion-input [(ngModel)]="round.name"></ion-input>
+        [routerLink]="['/logged-in/home/menu/processes/view_questions']"
+        [state]="{ process: process, roundIndex: roundIndex}"
+        [color]="round.finished ? 'success':''">
+        <ion-label>{{round?.name}}</ion-label>
         <ion-reorder slot="start"></ion-reorder>
       </ion-item>
 

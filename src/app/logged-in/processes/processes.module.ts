@@ -22,6 +22,8 @@ import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';
 import { RoleDirective } from './role.directive';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
+import {ViewQuestionsPage} from './single/questions/view-questions.page';
+import {ViewSingleQuestionPage} from './single/single-question/view-single-question.page';
 
 @NgModule({
   imports: [
@@ -38,7 +40,9 @@ import {ViewRoundsPage} from './single/rounds/view-rounds.page';
   declarations: [ProcessesPage, SinglePage, ModifyPage, UserPickerPage, ModifyRoundsPage, ModifyQuestionsPage,
     ModifyQuestionsContentPage,
     RoleDirective,
-    ViewRoundsPage
+    ViewRoundsPage,
+    ViewQuestionsPage,
+    ViewSingleQuestionPage
   ],
   providers: [
     Geolocation,

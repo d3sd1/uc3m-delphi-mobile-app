@@ -9,6 +9,8 @@ import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
+import {ViewQuestionsPage} from './single/questions/view-questions.page';
+import {ViewSingleQuestionPage} from './single/single-question/view-single-question.page';
 
 const routes: Routes = [
   {
@@ -50,6 +52,14 @@ const routes: Routes = [
   {
     path: 'view_rounds',
     component: ViewRoundsPage
+  },
+  {
+    path: 'view_questions',
+    component: ViewQuestionsPage
+  },
+  {
+    path: 'view_single_question',
+    component: ViewSingleQuestionPage
   }
 ];
 

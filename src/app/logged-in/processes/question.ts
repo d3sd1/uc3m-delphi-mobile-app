@@ -1,5 +1,6 @@
 import {User} from '../user';
 import {QuestionType} from './question-type';
+import {Answer} from './answer';
 
 export class Question {
   id: number;
@@ -8,5 +9,6 @@ export class Question {
   maxVal: number = 10;
   question: string;
   type: QuestionType;
+  answers: Answer[] = [];
 
 }
