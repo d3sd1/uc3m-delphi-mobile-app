@@ -11,7 +11,6 @@ export class User {
   blocked: boolean;
   chatStatus: string;
   needsOnboard: boolean;
-  roles: Role[];
   language: Language;
   notificationStatus: boolean;
 }

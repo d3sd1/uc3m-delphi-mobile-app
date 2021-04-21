@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {NavController, ToastController} from '@ionic/angular';
+import {NavController, ToastController, ViewWillEnter} from '@ionic/angular';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Process} from '../process';
@@ -9,6 +9,7 @@ import {RoleService} from '../role.service';
 import {Role} from '../../role';
 import {DelphiProcessUser} from '../delphi-process-user';
 import {User} from '../../user';
+import {FilterRole} from '../filter-role';
 
 @Component({
   selector: 'delphi-single',
@@ -20,7 +21,8 @@ export class SinglePage implements OnInit {
   showExpertForm = false;
   invitationEmail = '';
   process: Process;
-  currentUser: User;
+  currentUser: DelphiProcessUser = null;
+  loggedInUser: User;
 
   constructor(
     private toastController: ToastController,
@@ -30,7 +32,6 @@ export class SinglePage implements OnInit {
     private router: Router,
     public roleService: RoleService,
     private httpClient: HttpClient) {
-
   }
 
   countUsersRole(role: Role) {
@@ -51,7 +52,8 @@ export class SinglePage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
-    this.currentUser = await this.userStorage.getUser();
+
+    this.loggedInUser = await this.userStorage.getUser();
   }
 
   showExpertInvitation() {
@@ -71,13 +73,17 @@ export class SinglePage implements OnInit {
   }
 
   openChat(user: DelphiProcessUser) {
-    if(user.user.id === this.currentUser.id) {
+    if (user.user.id === this.currentUser.user.id) {
       return; // user can't open self chat...
     }
     this.httpClient.put(environment.apiUrl + '/v1/chat/open?userId=' + user.user.id, {}).subscribe(async (chatId) => {
       await this.router.navigateByUrl('/logged-in/home/menu/chat/chat/' + chatId);
     });
     // TODO handle err
+  }
+
+  filterRole(roles: string[]): FilterRole {
+    return new FilterRole(this.process?.processUsers, roles);
   }
 
   goBack() {

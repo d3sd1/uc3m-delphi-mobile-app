@@ -32,13 +32,17 @@
       </ion-label>
 
       <span *ngIf="this.process?.rounds?.length > 0">
-      <ion-button *hasDelphiRole="['coordinator', 'admin']" expand="block"
+      <ion-button *hasDelphiRole="filterRole(['coordinator', 'admin'])" expand="block"
                   [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
         Avanzar ronda
       </ion-button>
       </span>
     </ion-list-header>
-    <ion-item [routerLink]="['/logged-in/home/menu/processes/view_rounds']" [state]="{ process: process}">
+    <ion-item *hasDelphiRole="filterRole(['coordinator', 'admin'])" [routerLink]="['/logged-in/home/menu/processes/view_rounds']" [state]="{ process: process}">
+      <ion-label>Rondas</ion-label>
+      <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
+    </ion-item>
+    <ion-item *hasDelphiRole="filterRole(['expert'])">
       <ion-label>Rondas</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
@@ -77,11 +81,11 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button *hasDelphiRole="['admin']" expand="block" [routerLink]="['/logged-in/home/menu/processes/modify']"
+    <ion-button *hasDelphiRole="filterRole(['admin'])" expand="block" [routerLink]="['/logged-in/home/menu/processes/modify']"
                 [state]="{ process: process}">
       Editar proceso
     </ion-button>
-    <ion-button *hasDelphiRole="['expert']" expand="block" color="secondary"
+    <ion-button *hasDelphiRole="filterRole(['expert'])"expand="block" color="secondary"
                 [routerLink]="['/logged-in/home/menu/processes/modify']" [state]="{ process: process}">
       Participar
     </ion-button>

@@ -3,9 +3,12 @@ import {UserStorage} from '../../core/storage/user.storage';
 import {Roles} from '../../core/Roles';
 import {RoleService} from './role.service';
 import {Role} from '../role';
+import {DelphiProcessUser} from './delphi-process-user';
+import {FilterRole} from './filter-role';
 
 @Directive({
-  selector: '[hasDelphiRole]'
+  selector: '[hasDelphiRole]',
+
 })
 export class RoleDirective implements OnInit {
   constructor(
@@ -16,21 +19,25 @@ export class RoleDirective implements OnInit {
   ) {
   }
 
-  roles: string[];
-
-  @Input() set hasDelphiRole(roles: string[]) {
-    this.roles = roles;
+  filterRole: FilterRole;
+  @Input() set hasDelphiRole(filterRole:FilterRole) {
+    console.log(filterRole)
+    this.filterRole = filterRole;
   }
 
   async ngOnInit() {
-    const user = await this.userStorage.getUser();
     let found = false;
-    user.roles.find((role: Role) => {
-      this.roles.forEach((roleStr) => {
-        if (role.name.toLowerCase() === roleStr.toLowerCase()) {
-          found = true;
-        }
-      });
+    console.log('current user roles: ', this.filterRole);
+    // get current user
+    const loggedInUser = await this.userStorage.getUser();
+    const delphiProcessUser = this.filterRole?.proccessUsers?.find((delphiProcessUser) => {
+      return delphiProcessUser.user.id === loggedInUser.id;
+    });
+    // filter
+    this.filterRole.role.forEach((roleStr) => {
+      if (delphiProcessUser?.role?.name.toLowerCase() === roleStr.toLowerCase()) {
+        found = true;
+      }
     });
     if (found) {
       this.viewContainer.createEmbeddedView(this.templateRef);
