@@ -306,13 +306,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/__ivy_ngcc__/fesm2015/ionic-storage.js");
 /* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/__ivy_ngcc__/fesm2015/auth0-angular-jwt.js");
+/* harmony import */ var _ws_ws_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ws/ws.service */ "./src/app/core/ws/ws.service.ts");
+
 
 
 
 
 let UserStorage = class UserStorage {
-    constructor(storage) {
+    constructor(storage, wsService) {
         this.storage = storage;
+        this.wsService = wsService;
         this.JWT_KEY_NAME = 'JWT_TOKEN_STR';
         this.USER_KEY_NAME = 'USER_ENCODED';
         this.user = null;
@@ -346,16 +349,16 @@ let UserStorage = class UserStorage {
             yield this.setJwt(null);
             yield this.storage.remove(this.USER_KEY_NAME);
             yield this.storage.remove(this.JWT_KEY_NAME);
-            console.log("KEYS -> ", yield this.storage.keys());
+            yield this.wsService.disconnectWs();
         });
     }
     needsOnboard() {
         return new Promise((resolve, reject) => {
-            /*this.getUser().then((user: User) => {
-              resolve(user.needsOnboard);
+            this.getUser().then((user) => {
+                resolve(user.needsOnboard);
             }).catch(() => {
-              reject();
-            });*/
+                reject();
+            });
         });
     }
     hasRole(roleName) {
@@ -371,7 +374,6 @@ let UserStorage = class UserStorage {
     isLoggedIn() {
         return new Promise((resolve, reject) => {
             this.getJwt().then((jwt) => {
-                console.log("JEWT -> ", jwt);
                 if (jwt === null || jwt === '') {
                     resolve(false);
                 }
@@ -385,13 +387,91 @@ let UserStorage = class UserStorage {
     }
 };
 UserStorage.ctorParameters = () => [
-    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_2__["Storage"] }
+    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_2__["Storage"] },
+    { type: _ws_ws_service__WEBPACK_IMPORTED_MODULE_4__["WsService"] }
 ];
 UserStorage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     })
 ], UserStorage);
+
+
+
+/***/ }),
+
+/***/ "./src/app/core/ws/ws.service.ts":
+/*!***************************************!*\
+  !*** ./src/app/core/ws/ws.service.ts ***!
+  \***************************************/
+/*! exports provided: WsService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WsService", function() { return WsService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! stompjs */ "./node_modules/stompjs/index.js");
+/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(stompjs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sockjs-client */ "./node_modules/sockjs-client/lib/entry.js");
+/* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sockjs_client__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
+
+
+
+
+
+
+let WsService = class WsService {
+    constructor() {
+        this.stompClient = null;
+    }
+    connectWs(jwt) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            let ws = new sockjs_client__WEBPACK_IMPORTED_MODULE_3__('http://localhost:8080/ws');
+            this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_2__["over"](ws);
+            this.stompClient.connect({ jwt: jwt }, (frame) => {
+                //_this.stompClient.reconnect_delay = 2000;
+            }, (e) => {
+                setTimeout(() => {
+                    if (jwt !== null) {
+                        this.connectWs(jwt);
+                    }
+                }, _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].wsReconnectInterval);
+            });
+        });
+    }
+    publish(channel, body) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.stompClient.send('/ws/publisher/' + channel, {}, JSON.stringify(body)); // stringfify?
+        });
+    }
+    subscribe(channel, privateChannel) {
+        const dataTransfer = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](null);
+        this.stompClient.subscribe((privateChannel ? '/private' : '') + '/ws/subscribe/' + channel, (message) => {
+            dataTransfer.next(JSON.parse(message.body));
+        });
+        //TODO FUTURE: handle unsubcriptions
+        //TODO FUTURE: re-structure chat system =)
+        return dataTransfer;
+    }
+    disconnectWs() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.stompClient !== null) {
+                this.stompClient.disconnect();
+            }
+            this.stompClient = null;
+        });
+    }
+};
+WsService.ctorParameters = () => [];
+WsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], WsService);
 
 
 
@@ -463,6 +543,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _capacitor_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @capacitor/core */ "./node_modules/@capacitor/core/dist/esm/index.js");
 /* harmony import */ var _logged_in_profile_lang_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./logged-in/profile/lang.service */ "./src/app/logged-in/profile/lang.service.ts");
 /* harmony import */ var _core_storage_user_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core/storage/user.storage */ "./src/app/core/storage/user.storage.ts");
+/* harmony import */ var _core_ws_ws_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./core/ws/ws.service */ "./src/app/core/ws/ws.service.ts");
+
 
 
 
@@ -492,17 +574,22 @@ let EntrypointComponent = class EntrypointComponent {
           this.loaderService.initialize();
         });
       }*/
-    constructor(translate, langService, userStorage) {
+    constructor(translate, langService, userStorage, ws) {
         this.translate = translate;
         this.langService = langService;
         this.userStorage = userStorage;
+        this.ws = ws;
     }
     ngOnInit() {
+        var _a;
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.ws.connectWs(yield this.userStorage.getJwt());
             this.translate.setDefaultLang('en');
             this.translate.addLangs(['es', 'en']);
-            const userLang = (yield this.userStorage.getUser()).language.keyName;
-            this.translate.use(userLang);
+            if (yield this.userStorage.isLoggedIn()) {
+                const userLang = (_a = (yield this.userStorage.getUser()).language) === null || _a === void 0 ? void 0 : _a.keyName;
+                this.translate.use(userLang === null || userLang === void 0 ? void 0 : userLang.toLowerCase());
+            }
             const isPushNotificationsAvailable = _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Capacitor"].isPluginAvailable('PushNotifications');
             if (isPushNotificationsAvailable) {
                 PushNotifications.requestPermission().then(result => {
@@ -533,7 +620,8 @@ let EntrypointComponent = class EntrypointComponent {
 EntrypointComponent.ctorParameters = () => [
     { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"] },
     { type: _logged_in_profile_lang_service__WEBPACK_IMPORTED_MODULE_4__["LangService"] },
-    { type: _core_storage_user_storage__WEBPACK_IMPORTED_MODULE_5__["UserStorage"] }
+    { type: _core_storage_user_storage__WEBPACK_IMPORTED_MODULE_5__["UserStorage"] },
+    { type: _core_ws_ws_service__WEBPACK_IMPORTED_MODULE_6__["WsService"] }
 ];
 EntrypointComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -683,7 +771,8 @@ __webpack_require__.r(__webpack_exports__);
 const environment = {
     production: false,
     apiUrl: 'http://localhost:8080',
-    debug: true
+    debug: true,
+    wsReconnectInterval: 1000
 };
 /*
  * For easier debugging in development mode, you can import the following file

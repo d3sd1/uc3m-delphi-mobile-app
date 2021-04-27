@@ -209,12 +209,19 @@
       var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! @auth0/angular-jwt */
       "./node_modules/@auth0/angular-jwt/__ivy_ngcc__/fesm2015/auth0-angular-jwt.js");
+      /* harmony import */
+
+
+      var _ws_ws_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! ../ws/ws.service */
+      "./src/app/core/ws/ws.service.ts");
 
       var UserStorage = /*#__PURE__*/function () {
-        function UserStorage(storage) {
+        function UserStorage(storage, wsService) {
           _classCallCheck(this, UserStorage);
 
           this.storage = storage;
+          this.wsService = wsService;
           this.JWT_KEY_NAME = 'JWT_TOKEN_STR';
           this.USER_KEY_NAME = 'USER_ENCODED';
           this.user = null;
@@ -357,16 +364,10 @@
                       return this.storage.remove(this.JWT_KEY_NAME);
 
                     case 10:
-                      _context6.t0 = console;
-                      _context6.next = 13;
-                      return this.storage.keys();
+                      _context6.next = 12;
+                      return this.wsService.disconnectWs();
 
-                    case 13:
-                      _context6.t1 = _context6.sent;
-
-                      _context6.t0.log.call(_context6.t0, "KEYS -> ", _context6.t1);
-
-                    case 15:
+                    case 12:
                     case "end":
                       return _context6.stop();
                   }
@@ -377,12 +378,14 @@
         }, {
           key: "needsOnboard",
           value: function needsOnboard() {
+            var _this3 = this;
+
             return new Promise(function (resolve, reject) {
-              /*this.getUser().then((user: User) => {
+              _this3.getUser().then(function (user) {
                 resolve(user.needsOnboard);
-              }).catch(() => {
+              })["catch"](function () {
                 reject();
-              });*/
+              });
             });
           }
         }, {
@@ -412,12 +415,10 @@
         }, {
           key: "isLoggedIn",
           value: function isLoggedIn() {
-            var _this3 = this;
+            var _this4 = this;
 
             return new Promise(function (resolve, reject) {
-              _this3.getJwt().then(function (jwt) {
-                console.log("JEWT -> ", jwt);
-
+              _this4.getJwt().then(function (jwt) {
                 if (jwt === null || jwt === '') {
                   resolve(false);
                 }
@@ -438,12 +439,183 @@
       UserStorage.ctorParameters = function () {
         return [{
           type: _ionic_storage__WEBPACK_IMPORTED_MODULE_2__["Storage"]
+        }, {
+          type: _ws_ws_service__WEBPACK_IMPORTED_MODULE_4__["WsService"]
         }];
       };
 
       UserStorage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
       })], UserStorage);
+      /***/
+    },
+
+    /***/
+    "./src/app/core/ws/ws.service.ts":
+    /*!***************************************!*\
+      !*** ./src/app/core/ws/ws.service.ts ***!
+      \***************************************/
+
+    /*! exports provided: WsService */
+
+    /***/
+    function srcAppCoreWsWsServiceTs(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "WsService", function () {
+        return WsService;
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! tslib */
+      "./node_modules/tslib/tslib.es6.js");
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/core */
+      "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+      /* harmony import */
+
+
+      var stompjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! stompjs */
+      "./node_modules/stompjs/index.js");
+      /* harmony import */
+
+
+      var stompjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(stompjs__WEBPACK_IMPORTED_MODULE_2__);
+      /* harmony import */
+
+
+      var sockjs_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! sockjs-client */
+      "./node_modules/sockjs-client/lib/entry.js");
+      /* harmony import */
+
+
+      var sockjs_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sockjs_client__WEBPACK_IMPORTED_MODULE_3__);
+      /* harmony import */
+
+
+      var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! rxjs */
+      "./node_modules/rxjs/_esm2015/index.js");
+      /* harmony import */
+
+
+      var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+      /*! ../../../environments/environment */
+      "./src/environments/environment.ts");
+
+      var WsService = /*#__PURE__*/function () {
+        function WsService() {
+          _classCallCheck(this, WsService);
+
+          this.stompClient = null;
+        }
+
+        _createClass(WsService, [{
+          key: "connectWs",
+          value: function connectWs(jwt) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+              var _this5 = this;
+
+              var ws;
+              return regeneratorRuntime.wrap(function _callee8$(_context8) {
+                while (1) {
+                  switch (_context8.prev = _context8.next) {
+                    case 0:
+                      ws = new sockjs_client__WEBPACK_IMPORTED_MODULE_3__('http://localhost:8080/ws');
+                      this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_2__["over"](ws);
+                      this.stompClient.connect({
+                        jwt: jwt
+                      }, function (frame) {//_this.stompClient.reconnect_delay = 2000;
+                      }, function (e) {
+                        setTimeout(function () {
+                          if (jwt !== null) {
+                            _this5.connectWs(jwt);
+                          }
+                        }, _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].wsReconnectInterval);
+                      });
+
+                    case 3:
+                    case "end":
+                      return _context8.stop();
+                  }
+                }
+              }, _callee8, this);
+            }));
+          }
+        }, {
+          key: "publish",
+          value: function publish(channel, body) {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
+              return regeneratorRuntime.wrap(function _callee9$(_context9) {
+                while (1) {
+                  switch (_context9.prev = _context9.next) {
+                    case 0:
+                      this.stompClient.send('/ws/publisher/' + channel, {}, JSON.stringify(body)); // stringfify?
+
+                    case 1:
+                    case "end":
+                      return _context9.stop();
+                  }
+                }
+              }, _callee9, this);
+            }));
+          }
+        }, {
+          key: "subscribe",
+          value: function subscribe(channel, privateChannel) {
+            var dataTransfer = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](null);
+            this.stompClient.subscribe((privateChannel ? '/private' : '') + '/ws/subscribe/' + channel, function (message) {
+              dataTransfer.next(JSON.parse(message.body));
+            }); //TODO FUTURE: handle unsubcriptions
+            //TODO FUTURE: re-structure chat system =)
+
+            return dataTransfer;
+          }
+        }, {
+          key: "disconnectWs",
+          value: function disconnectWs() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+              return regeneratorRuntime.wrap(function _callee10$(_context10) {
+                while (1) {
+                  switch (_context10.prev = _context10.next) {
+                    case 0:
+                      if (this.stompClient !== null) {
+                        this.stompClient.disconnect();
+                      }
+
+                      this.stompClient = null;
+
+                    case 2:
+                    case "end":
+                      return _context10.stop();
+                  }
+                }
+              }, _callee10, this);
+            }));
+          }
+        }]);
+
+        return WsService;
+      }();
+
+      WsService.ctorParameters = function () {
+        return [];
+      };
+
+      WsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+      })], WsService);
       /***/
     },
 
@@ -592,6 +764,12 @@
       var _core_storage_user_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! ./core/storage/user.storage */
       "./src/app/core/storage/user.storage.ts");
+      /* harmony import */
+
+
+      var _core_ws_ws_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+      /*! ./core/ws/ws.service */
+      "./src/app/core/ws/ws.service.ts");
 
       var PushNotifications = _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Plugins"].PushNotifications;
 
@@ -615,31 +793,79 @@
               this.loaderService.initialize();
             });
           }*/
-        function EntrypointComponent(translate, langService, userStorage) {
+        function EntrypointComponent(translate, langService, userStorage, ws) {
           _classCallCheck(this, EntrypointComponent);
 
           this.translate = translate;
           this.langService = langService;
           this.userStorage = userStorage;
+          this.ws = ws;
         }
 
         _createClass(EntrypointComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
+            var _a;
+
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
               var userLang, isPushNotificationsAvailable;
-              return regeneratorRuntime.wrap(function _callee8$(_context8) {
+              return regeneratorRuntime.wrap(function _callee11$(_context11) {
                 while (1) {
-                  switch (_context8.prev = _context8.next) {
+                  switch (_context11.prev = _context11.next) {
                     case 0:
+                      _context11.t0 = this.ws;
+                      _context11.next = 3;
+                      return this.userStorage.getJwt();
+
+                    case 3:
+                      _context11.t1 = _context11.sent;
+                      _context11.next = 6;
+                      return _context11.t0.connectWs.call(_context11.t0, _context11.t1);
+
+                    case 6:
                       this.translate.setDefaultLang('en');
                       this.translate.addLangs(['es', 'en']);
-                      _context8.next = 4;
+                      _context11.next = 10;
+                      return this.userStorage.isLoggedIn();
+
+                    case 10:
+                      if (!_context11.sent) {
+                        _context11.next = 24;
+                        break;
+                      }
+
+                      _context11.next = 13;
                       return this.userStorage.getUser();
 
-                    case 4:
-                      userLang = _context8.sent.language.keyName;
-                      this.translate.use(userLang);
+                    case 13:
+                      _context11.t3 = _a = _context11.sent.language;
+                      _context11.t2 = _context11.t3 === null;
+
+                      if (_context11.t2) {
+                        _context11.next = 17;
+                        break;
+                      }
+
+                      _context11.t2 = _a === void 0;
+
+                    case 17:
+                      if (!_context11.t2) {
+                        _context11.next = 21;
+                        break;
+                      }
+
+                      _context11.t4 = void 0;
+                      _context11.next = 22;
+                      break;
+
+                    case 21:
+                      _context11.t4 = _a.keyName;
+
+                    case 22:
+                      userLang = _context11.t4;
+                      this.translate.use(userLang === null || userLang === void 0 ? void 0 : userLang.toLowerCase());
+
+                    case 24:
                       isPushNotificationsAvailable = _capacitor_core__WEBPACK_IMPORTED_MODULE_3__["Capacitor"].isPluginAvailable('PushNotifications');
 
                       if (isPushNotificationsAvailable) {
@@ -664,12 +890,12 @@
                         });
                       }
 
-                    case 8:
+                    case 26:
                     case "end":
-                      return _context8.stop();
+                      return _context11.stop();
                   }
                 }
-              }, _callee8, this);
+              }, _callee11, this);
             }));
           }
         }]);
@@ -684,6 +910,8 @@
           type: _logged_in_profile_lang_service__WEBPACK_IMPORTED_MODULE_4__["LangService"]
         }, {
           type: _core_storage_user_storage__WEBPACK_IMPORTED_MODULE_5__["UserStorage"]
+        }, {
+          type: _core_ws_ws_service__WEBPACK_IMPORTED_MODULE_6__["WsService"]
         }];
       };
 
@@ -926,7 +1154,8 @@
       var environment = {
         production: false,
         apiUrl: 'http://localhost:8080',
-        debug: true
+        debug: true,
+        wsReconnectInterval: 1000
       };
       /*
        * For easier debugging in development mode, you can import the following file

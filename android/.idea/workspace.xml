@@ -10,25 +10,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="712fda4c-82e8-4f5a-9a37-a1c923b941f0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/emoji-picker/emoji-picker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/emoji-picker/emoji-picker.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/emoji-picker/emoji-picker.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/emoji-picker/emoji-provider.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.6.4/gc.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/zip-cache/androidResources" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/zip-cache/androidResources" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/capacitor.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/capacitor.config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/main-es2015.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/main-es2015.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/main-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/main-es2015.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/main-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/main-es5.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/main-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/main-es5.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/polyfills-es2015.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/polyfills-es2015.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/polyfills-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/polyfills-es2015.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/polyfills-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/polyfills-es5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/polyfills-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/polyfills-es5.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/runtime-es2015.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/runtime-es2015.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/runtime-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/runtime-es2015.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/runtime-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/runtime-es5.js" afterDir="false" />
@@ -39,11 +35,14 @@
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/vendor-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/vendor-es5.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/processed_res/debug/out/resources-debug.ap_" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/processed_res/debug/out/resources-debug.ap_" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/assets/capacitor.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/capacitor.config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/main-es2015.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/main-es2015.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/main-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/main-es2015.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/main-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/main-es5.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/main-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/main-es5.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/polyfills-es2015.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/polyfills-es2015.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/polyfills-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/polyfills-es2015.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/polyfills-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/polyfills-es5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/polyfills-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/polyfills-es5.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/runtime-es2015.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/runtime-es2015.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/runtime-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/runtime-es2015.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/runtime-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/runtime-es5.js" afterDir="false" />
@@ -52,13 +51,15 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/vendor-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/vendor-es2015.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/vendor-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/vendor-es5.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/vendor-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/vendor-es5.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/App.xcworkspace/xcuserdata/andreigarcia.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/App.xcworkspace/xcuserdata/andreigarcia.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/App/App/capacitor.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/App/capacitor.config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/public/main-es2015.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/main-es2015.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/public/main-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/main-es2015.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/public/main-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/main-es5.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/public/main-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/main-es5.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/App/public/polyfills-es2015.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/polyfills-es2015.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/App/public/polyfills-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/polyfills-es2015.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/App/public/polyfills-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/polyfills-es5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/App/public/polyfills-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/polyfills-es5.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/public/runtime-es2015.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/runtime-es2015.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/public/runtime-es2015.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/runtime-es2015.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/public/runtime-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/runtime-es5.js" afterDir="false" />
@@ -68,14 +69,11 @@
       <change beforePath="$PROJECT_DIR$/../ios/App/public/vendor-es5.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/vendor-es5.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/public/vendor-es5.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/vendor-es5.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/chat-conversation.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/chat-conversation.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/chat-conversation.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/chat-conversation.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/chat/chat.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/chat/chat.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/chat/relative-time.pipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/chat/relative-time.pipe.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/logged-in.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/logged-in.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/profile/profile-password/profile-password.page.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/profile/profile-password/profile-password.page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/profile/profile-password/profile-password.page.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/profile/profile-password/profile-password.page.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/environments/environment.prod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/environments/environment.prod.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/emoji-picker/emoji-picker.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/chat/chat-conversation/emoji-picker/emoji-picker.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/splash-screen/splash-screen.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/splash-screen/splash-screen.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/splash-screen/splash-screen.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/splash-screen/splash-screen.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/startup/splash-screen/splash-screen.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/startup/splash-screen/splash-screen.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/environments/environment.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,6 +103,7 @@
     <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/idelphi" />
     <option name="KEY_ALIAS" value="upload" />
     <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -125,6 +124,7 @@
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-03-26T09:22:12.226Z" />
     <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/build" />
     <property name="ExportApk.BuildVariants" value="release" />
+    <property name="ExportApk.SignV2" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SplashScreenComponent} from './splash-screen.component';
 import {SplashScreenRoutingModule} from './splash-screen-routing.module';
-import {IonicModule} from '@ionic/angular';
+import {IonicModule, IonProgressBar} from '@ionic/angular';
 import {ApiLoaderPage} from './api-loader/api-loader.page';
 import {HttpClientModule} from '@angular/common/http';
 import {PermissionsLoaderPage} from './permissions-loader/permissions-loader.page';
@@ -15,7 +15,7 @@ import {TranslateModule} from '@ngx-translate/core';
   declarations: [
     SplashScreenComponent,
     ApiLoaderPage,
-    PermissionsLoaderPage
+    PermissionsLoaderPage,
   ],
   imports: [
     SplashScreenRoutingModule,
@@ -26,7 +26,8 @@ import {TranslateModule} from '@ngx-translate/core';
   ],
   providers: [
     StatusBar,
-    Geolocation
+    Geolocation,
+    IonProgressBar
   ]
 })
 export class SplashScreenModule {

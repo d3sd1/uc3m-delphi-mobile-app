@@ -39,7 +39,7 @@ export class EmojiPickerComponent implements ControlValueAccessor {
     this._onTouched = fn;
   }
 
-  private setValue(val: any): any {
+  public setValue(val: any): any {
     this._content += val;
     if (this._content) {
       this._onChanged(this._content)
