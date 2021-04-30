@@ -1,20 +1,18 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()" text="Volver"></ion-back-button>
+      <ion-back-button (click)="goBack()" [text]="'home.profile.basic.back' | translate"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'profileBasic_page.title' | translate }}</ion-title>
+    <ion-title>{{ 'home.profile.basic.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-item>
-    <ion-label position="stacked">{{ 'profileBasic_page.label' | translate }}</ion-label>
-    <ion-input (ngModelChange)="user.name=$event" [ngModel]="user?.name" placeholder="Nombre"></ion-input>
-    <ion-input (ngModelChange)="user.surnames=$event" [ngModel]="user?.surnames" placeholder="Apellidos"></ion-input>
-    <ion-input (ngModelChange)="user.email=$event" [ngModel]="user?.email" placeholder="Email"></ion-input>
+    <ion-label position="stacked">{{ 'home.profile.basic.header' | translate }}</ion-label>
+    <ion-input (ngModelChange)="user.email=$event" [ngModel]="user?.email" [placeholder]="'home.profile.basic.email' | translate"></ion-input>
   </ion-item>
   <section>
-    <ion-button expand="block">{{ 'profileBasic_page.saveButton' | translate }}</ion-button>
+    <ion-button expand="block">{{ 'home.profile.basic.save' | translate }}</ion-button>
   </section>
 </ion-content>

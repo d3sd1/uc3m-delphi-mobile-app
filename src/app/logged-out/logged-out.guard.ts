@@ -13,7 +13,7 @@ export class LoggedOutGuard implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
     const canActivate = !(await this.userStorage.isLoggedIn());
-    if(!canActivate) {
+    if (!canActivate) {
       return this.router.parseUrl('/logged-in');
     }
     return true;

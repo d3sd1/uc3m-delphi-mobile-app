@@ -1,137 +1,204 @@
 {
-  "processes_single_page": {
-    "rounds": "Rondas",
-    "users": "Usuarios",
-    "edit": "Editar proceso",
-    "participate": "Participar"
+  "login": {
+    "connecting": "Espere por favor...",
+    "title": "Conexión",
+    "email": {
+      "label": "Email",
+      "placeholder": "Introduce tu email..."
+    },
+    "password": {
+      "label": "Contraseña",
+      "placeholder": "Introduce tu contraseña..."
+    },
+    "extended": {
+      "label": "Sesión extendida"
+    },
+    "button": "Conectar",
+    "response": {
+      "ok": "Conexión satisfactoria",
+      "invalid": "Credenciales inválidas",
+      "blocked": "Usuario bloqueado",
+      "err": {
+        "app": "Error en la aplicación",
+        "server": "Error en el servidor",
+        "desc": "Error desconocido"
+      }
+    }
   },
-  "processes_modify_page": {
-    "save": "Guardar proceso",
-    "delphiProcess": "Proceso Delphi",
-    "rounds": "Rondas",
-    "users": "Usuarios",
-    "processName": "Nombre del proceso",
-    "processDesc": "Descripción del proceso"
+  "loader": {
+    "init": {
+      "loading": "Iniciando...",
+      "failed": "No se ha podido iniciar la aplicación."
+    },
+    "api": {
+      "loading": "Cargando API...",
+      "failed": "No se ha podido cargar la API."
+    },
+    "ws": {
+      "loading": "Cargando sockets...",
+      "failed": "No se ha podido cargar los SOCKET."
+    },
+    "permissions": {
+      "api": {
+        "loading": "Cargando permisos...",
+        "failed": "No se ha podido cargar los permisos."
+      }
+    }
   },
-  "logout_page": {
-    "disconnect": "Desconectando...",
-    "greetings": "¡Gracias por participar en la plataforma!"
+  "home": {
+    "tab": {
+      "processes": "Procesos",
+      "chat": "Mensajería",
+      "profile": "Perfil"
+    },
+    "processes": {
+      "title": "Procesos",
+      "empty": {
+        "title": "Sin procesos",
+        "desc": "¡Aún no estás inscrito a ningún proceso!"
+      },
+      "modify": {
+        "title": "Editar proceso",
+        "base": "Datos básicos",
+        "name": "Nombre del proceso",
+        "desc": "Descripción del proceso",
+        "rounds": {
+          "title": "Datos de rondas",
+          "enter": "Rondas",
+          "users": "Usuarios"
+        },
+        "save": "Guardar"
+      },
+      "role": {
+        "coordinator": "Coordinador",
+        "expert": "Experto"
+      },
+      "filter": {
+        "in_progress": "En progreso",
+        "finished": "Finalizados"
+      },
+      "user_picker": {
+        "back": "Volver",
+        "search": {
+          "title": "Buscar {{role}}",
+          "no_results": "Búsqueda sin resultados"
+        },
+        "no_experts": "Proceso sin expertos",
+        "save": "Guardar"
+      },
+      "single": {
+        "title": "Vista de proceso",
+        "back": "Volver",
+        "invitation": {
+          "sent": "Invitación enviada"
+        },
+        "rounds": "Rondas",
+        "users": "Participantes",
+        "round": {
+          "advance": {
+            "title": "Avanzar ronda",
+            "err": "La ronda no pudo ser avanzada"
+          },
+          "start": {
+            "title": "Iniciar ronda"
+          }
+        },
+        "participate": {
+          "initiate": "Participar",
+          "back": "Volver",
+          "title": "Participar",
+          "answer": "Introduce tu respuesta aquí",
+          "send": "Enviar participación"
+        },
+        "modify": {
+          "title": "Editar proceso",
+          "saving": "Guardando...",
+          "saved": "Proceso guardado correctamente",
+          "round": "Ronda {{round}}",
+          "question": "Pregunta {{questionquestion}}"
+        },
+        "view": {
+          "back": "Volver",
+          "answers": "Ver respuestas",
+          "no_answers": {
+            "title": "Sin respuestas",
+            "desc": "No existen respuestas asociadas a la pregunta de este proceso."
+          },
+          "rounds": {
+            "title": "Ver rondas",
+            "back": "Volver",
+            "empty": {
+              "title": "Sin rondas",
+              "desc": "No existen rondas asociadas a este proceso."
+            }
+          },
+          "questions": {
+            "title": "Ver preguntas",
+            "back": "Volver",
+            "empty": {
+              "title": "Sin preguntas",
+              "desc": "No existen rondas asociadas a este proceso."
+            }
+          }
+        }
+      }
+    },
+    "profile": {
+      "title": "Perfil",
+      "notifications": {
+        "menu": "Notificaciones"
+      },
+      "password": {
+        "menu": "Cambiar contraseña",
+        "title": "Cambiar contraseña",
+        "back": "Volver",
+        "security": "Seguridad de la cuenta",
+        "current": "Contraseña actual",
+        "reset": "Modificación de contraseña",
+        "new": "Nueva contraseña",
+        "new_rep": "Repite la nueva contraseña",
+        "change": "Cambiar contraseña",
+        "changed": "Contraseña modificada corectamente.",
+        "err": {
+          "differ": "Las nuevas contraseñas no coinciden.",
+          "generic": "Error al modificar contraseña.",
+          "old_pass": "La contraseña antigua es incorrecta."
+        }
+      },
+      "basic": {
+        "title": "Perfil básico",
+        "back": "Volver",
+        "header": "Modificar perfil",
+        "email": "Email",
+        "save": "Modificar perfil"
+      },
+      "cv": {
+        "menu": "Currículum Vitae"
+      },
+      "language": {
+        "menu": "Cambiar idioma",
+        "header": "Idioma"
+      },
+      "logout": {
+        "menu": "Desconectar"
+      }
+    },
+    "chat": {
+      "title": "Mensajería",
+      "empty": {
+        "title": "Sin conversaciones",
+        "desc": "¡Participa en procesos para usar el chat!"
+      },
+      "status": {
+        "title": "Estado de conexión",
+        "connected": "Conectado",
+        "busy": "Ocupado",
+        "offline": "Desconectado"
+      }
+    }
   },
-  "chatEmpty_page": {
-    "noConversations": "¡Todavía no hay conversaciones!",
-    "participate": "¡Participa en procesos para obtener acceso a las conversaciones del chat!"
-  },
-  "chatList_component": {
-    "read": "Leído",
-    "delete": "Borrar",
-    "group": "Conversación grupal",
-    "private": "Conversación privada"
-  },
-  "chat_page": {
-    "messaging": "Mensajería"
-  },
-  "chat_conversation": {
-    "goBack": "Volver",
-    "writeMessage": "Escribir mensaje..."
-  },
-  "onboardin_page": {
-    "welcome_1": "Bienvenido",
-    "welcome_2": "Bienvenido a <b>Agile Delphi</b>. Gracias por usar la aplicación. A continuación explicaremos brevemente su funcionamiento.",
-    "delphi": "¿Qué es Agile Delphi?",
-    "explanation": "<b>Automatización para la generación de criterios objetivos</b> mediante la metodología Delphi. La hemos simplificado y optimizado para que tus procesos se lleven a cabo con éxito de la forma más rápida posible.",
-    "next": "Siguiente",
-    "whatToDo_1": "¿Qué tengo que hacer?",
-    "whatToDo_2": "<b>Participa o crea</b> procesos y comienza a generar criterios objetivos sobre temas de interés.",
-    "ready": "¿Listo para comenzar?",
-    "goToApp": "Ir a la aplicación"
-  },
-  "create_page": {
-    "create": "Crear",
-    "selectExperts": "Seleccionar expertos (ya en la plataforma, o invitar a nuevos) "
-  },
-  "empty_page": {
-    "noProcesses": "¡Sin procesos en curso!",
-    "thanks": "Gracias por su participación en la plataforma."
-  },
-  "list_page": {
-    "inProgress": "En curso",
-    "finished": "Finalizados",
-    "hoursLeft": "horas restantes",
-    "seeResult": "Ver resultados"
-  },
-  "single_page": {
-    "title": "Proceso Delphi",
-    "process_1": "Carretilleros",
-    "feature_1": "Accesibilidad",
-    "feature_2": "Seguridad",
-    "feature_3": "Calidad trabajo actual",
-    "commentsTitle": "Comentarios",
-    "comment_1": "Se deben llevar guantes",
-    "comment_2": "Debemos tirar de la carretera entre 4",
-    "comment_3": "Las carretillas deben llevar mangos",
-    "inviteButton": "Invitar experto",
-    "sendInvitationButton": "Enviar invitación",
-    "finishRoundButton": "Cerrar ronda y analizar resultados"
-  },
-  "processes_page": {
-    "title": "Procesos"
-  },
-  "cv_page": {
-    "title": "Perfil básico",
-    "label": "Perfil básico",
-    "saveButton": "Guardar perfil"
-  },
-  "logout_page": {
+  "logout": {
     "title": "Desconectando...",
-    "disconecting": "DESCONECTANDO..."
-  },
-  "profileBasic_page": {
-    "title": "Perfil básico",
-    "label": "Perfil básico",
-    "saveButton": "Guardar perfil"
-  },
-  "profilePassword_page": {
-    "title": "Perfil básico",
-    "label": "Perfil básico",
-    "saveButton": "Guardar perfil"
-  },
-  "studies_page": {
-    "title": "Perfil básico",
-    "label": "Perfil básico",
-    "saveButton": "Guardar perfil"
-  },
-  "profile_page": {
-    "title": " Mi perfil ",
-    "name": "Lisardo Prieto",
-    "email": "lisardo_prieto@delphi.com",
-    "notificationLabel": "Notificaciones",
-    "passwordLabel": "Contraseña",
-    "trainingLabel": "Formación",
-    "cvLabel": "CV",
-    "languageLabel": "Idioma",
-    "disconnectLabel": "Desconectar"
-  },
-  "home_page": {
-    "processesLabel": "Procesos",
-    "messagesLabel": "Mensajes",
-    "profileLabel": "Perfil"
-  },
-  "invitation_page": {
-    "title": "Invitación",
-    "newPasswordLabel": "Nueva contraseña",
-    "finishInvitationLabel": "Finalizar invitación"
-  },
-  "login_page": {
-    "title": "Login",
-    "passwordLabel": "Contraseña",
-    "emailLabel": "Email",
-    "rememberMeLabel": "Recordar contraseña",
-    "loginButton": "Login"
-  },
-  "splashScreen_component": {
-    "appName": "Agile Delphi"
-  },
-  "startupSplashScreen_component": {
-    "appName": "Agile Delphi"
+    "desc": "¡Gracias por participar en la plataforma!"
   }
 }

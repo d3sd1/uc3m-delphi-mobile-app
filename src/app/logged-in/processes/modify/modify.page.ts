@@ -16,6 +16,7 @@ import {Role} from '../../role';
 import {DelphiProcessUser} from '../delphi-process-user';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {Media} from '../media';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'delphi-create',
@@ -37,8 +38,9 @@ export class ModifyPage implements OnInit {
               private router: Router,
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
-              public roleService:RoleService,
-              private userStorage: UserStorage) {
+              public roleService: RoleService,
+              private userStorage: UserStorage,
+              private translate: TranslateService) {
   }
 
 
@@ -60,28 +62,30 @@ export class ModifyPage implements OnInit {
   }
 
   forceCurrentUserAdmin() {
-    const admRole = this.roleService.getRoleByName('ADMIN');
+    const admRole = this.roleService.getRoleByName('COORDINATOR');
     const userIndex = this.process?.processUsers.findIndex((processUser) => {
       return processUser.user.id === this.currentUser.id;
     });
     if (userIndex === -1) {
       this.process?.processUsers.push(new DelphiProcessUser(this.currentUser, admRole));
-    } else if(this.process !== undefined) {
+    } else if (this.process !== undefined) {
       this.process.processUsers[userIndex].role = admRole;
     }
   }
+
   async uploadImage() {
     const formData = new FormData();
     formData.append('image', this.uploadPicture.nativeElement.files[0]);
-    this.httpClient.post<Media>(environment.apiUrl + '/v1/media/upload', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
+    this.httpClient.post<Media>(environment.apiUrl + '/v1/media/upload', formData, {headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})}).subscribe(
       async (res) => {
         this.process.pictureUrl = environment.apiUrl + '/v1/media/fetch/' + res.id;
-        },
+      },
       (err) => console.log(err)
     );
   }
 
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
+
   triggerUploadImage() {
     this.uploadPicture.nativeElement.click();
   }
@@ -92,23 +96,23 @@ export class ModifyPage implements OnInit {
 
 
   async saveProcess() {
-    if(!this.validateForm()) {
+    if (!this.validateForm()) {
       return;
     }
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Guardando...',
+      message: await this.translate.get('home.processes.single.modify.saving').toPromise(),
       duration: 0
     });
     await loading.present();
 
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
-      await this.showToast('Proceso guardado correctamente.');
+      await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
       await this.router.navigateByUrl('/logged-in/home/menu/processes', {
         state: {process: this.process}
       });
     }).catch(async (errMessage: string) => {
-      await this.showToast('Proceso guardado correctamente.');
+      await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
     }).finally(async () => {
       await loading.dismiss();
     });
@@ -127,7 +131,8 @@ export class ModifyPage implements OnInit {
   }
 
   async addRound() {
-    const round = new Round( 'Ronda ' + (this.process.rounds.length + 1), [], new Date(), false);
+
+    const round = new Round(await this.translate.get('home.processes.single.modify.round', {round: (this.process.rounds.length + 1)}).toPromise(), [], new Date(), false);
     this.process.rounds.push(round);
     await this.createProcess.scrollToBottom(300);
   }
@@ -137,7 +142,7 @@ export class ModifyPage implements OnInit {
       return iRound.id === round.id;
     });
     const question = new Question();
-    question.name = 'Pregunta ' + (this.process.rounds[roundIndex].questions.length + 1);
+    question.name = await this.translate.get('home.processes.single.modify.question', {question: (this.process.rounds[roundIndex].questions.length + 1)}).toPromise()
     this.process.rounds[roundIndex].questions.push(question);
     await this.createProcess.scrollToBottom(300);
   }
@@ -154,6 +159,7 @@ export class ModifyPage implements OnInit {
   goBack() {
     this.navCtrl.back();
   }
+
   countUsersRole(role: Role) {
     return this.process.processUsers?.filter((delphiProcessUser) => {
       return delphiProcessUser.role?.id === role?.id;
@@ -174,13 +180,6 @@ export class ModifyPage implements OnInit {
   @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
 
   doReorder(ev: CustomEvent<ItemReorderEventDetail>) {
-    // The `from` and `to` properties contain the index of the item
-    // when the drag started and ended, respectively
-    console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
-
-    // Finish the reorder and position the item in the DOM based on
-    // where the gesture ended. This method can also be called directly
-    // by the reorder group
     ev.detail.complete();
   }
 

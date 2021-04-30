@@ -5,6 +5,7 @@ import {UserStorage} from '../../../core/storage/user.storage';
 import {LoginUser} from '../../../core/consumer/login/login.user';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'delphi-profile-password',
@@ -20,7 +21,8 @@ export class ProfilePasswordPage implements OnInit {
     private navCtrl: NavController,
     private authService: UserStorage,
     private toastController: ToastController,
-    private httpClient: HttpClient) {
+    private httpClient: HttpClient,
+    private translate: TranslateService) {
     this.resetForm();
   }
 
@@ -54,17 +56,17 @@ export class ProfilePasswordPage implements OnInit {
   async resetPass() {
     this.resetForm();
     if (this.reset.newPass !== this.reset.newPassRep) {
-      await this.showToast('Las nuevas contraseñas no coinciden.');
+      await this.showToast(await this.translate.get('home.profile.password.err.differ').toPromise());
       return;
     }
 
     this.httpClient.post(environment.apiUrl + '/v1/profile/change_pass', this.reset).subscribe(async () => {
-      await this.showToast('Contraseña cambiada correctamente.');
+      await this.showToast(await this.translate.get('home.profile.password.changed').toPromise());
     }, async (e) => {
       if (e.status === 409) {
-        await this.showToast('La contraseña antigua no es correcta.');
+        await this.showToast(await this.translate.get('home.profile.password.err.old_pass').toPromise());
       } else {
-        await this.showToast('Error al cambiar contraseña.');
+        await this.showToast(await this.translate.get('home.profile.password.err.generic').toPromise());
       }
     });
   }

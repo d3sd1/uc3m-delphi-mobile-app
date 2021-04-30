@@ -6,7 +6,15 @@
         <img alt="" src="../../../assets/images/onboarding/slide-1.png"/>
         <h2>Bienvenid@ a Delphi</h2>
         <p>La plataforma ágil de procesos Delphi</p>
-        <ion-button (click)="swipeNext()" fill="clear">Siguiente
+        <ion-item>
+          <ion-label>Nombre</ion-label>
+          <ion-input placeholder="Introduce tu nombre" type="text" [(ngModel)]="user.name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Apellidos</ion-label>
+          <ion-input placeholder="Introduce tus apellidos" type="text" [(ngModel)]="user.surnames"></ion-input>
+        </ion-item>
+        <ion-button (click)="setupAccount()" fill="clear">Siguiente
           <ion-icon name="arrow-forward" slot="end"></ion-icon>
         </ion-button>
       </div>
@@ -16,7 +24,11 @@
       <img alt="" src="../../../assets/images/onboarding/slide-2.png"/>
       <h2>Disponible offline</h2>
       <p>La aplicación está disponible offline.</p>
-      <ion-button (click)="swipeNext()" fill="clear">Siguiente
+      <ion-item>
+        <ion-label>Nueva contraseña</ion-label>
+        <ion-input placeholder="Introduce tu nueva contraseña" type="password" [(ngModel)]="reset.newPass"></ion-input>
+      </ion-item>
+      <ion-button (click)="setupPassword()" fill="clear">Siguiente
         <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-button>
     </ion-slide>

@@ -79,7 +79,6 @@ export class UserPickerPage implements OnInit {
   }
 
   pushExpert(newUser: User) {
-    console.log('push expert')
     const userOldPos = this.process.processUsers.findIndex((processUser) => {
       return processUser.user.id === newUser.id;
     });

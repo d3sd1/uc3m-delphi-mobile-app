@@ -6,6 +6,7 @@ import {LoginUser} from './login.user';
 import {Storage} from '@ionic/storage';
 import {UserStorage} from '../../storage/user.storage';
 import {WsService} from '../../ws/ws.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class LoginConsumer {
   constructor(private http: HttpClient,
               private storage: Storage,
               private userStorage: UserStorage,
-              private wsService: WsService) {
+              private wsService: WsService,
+              private translate: TranslateService) {
   }
 
   doLogin(user: LoginUser): Promise<string> {
@@ -24,18 +26,18 @@ export class LoginConsumer {
         await this.userStorage.setJwt(userLogin.jwt);
         await this.userStorage.setUser(userLogin.user);
         await this.wsService.connectWs(userLogin.jwt);
-        resolve('Conexión satisfactoria');
-      }, (err: HttpErrorResponse) => {
+        resolve(await this.translate.get('login.response.ok').toPromise());
+      }, async (err: HttpErrorResponse) => {
         if (err.status === 400 && err.error.message === 'INVALID_LOGIN') {
-          reject('Credenciales inválidas');
+          reject(await this.translate.get('login.response.invalid').toPromise());
         } else if (err.status === 400 && err.error.message === 'USER_BLOCKED') {
-          reject('Usuario bloqueado');
+          reject(await this.translate.get('login.response.blocked').toPromise());
         } else if (err.status === 400) {
-          reject('Error en la aplicación');
+          reject(await this.translate.get('login.response.err.app').toPromise());
         } else if (err.status === 500) {
-          reject('Error en el servidor');
+          reject(await this.translate.get('login.response.err.server').toPromise());
         }
-        reject('Error desconocido');
+        reject(await this.translate.get('login.response.err.desc').toPromise());
       });
     });
   }

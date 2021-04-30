@@ -30,7 +30,6 @@ export class ProfilePage implements OnInit {
   async ngOnInit() {
     this.profileOptions = await this.initializeItems();
     this.user = await this.userStorage.getUser();
-    console.log(this.user)
   }
 
 
@@ -114,7 +113,7 @@ export class ProfilePage implements OnInit {
     });
 
     const actionSheet = await this.actionSheetController.create({
-      header: 'Idioma',
+      header: await this.translate.get('home.profile.language.header').toPromise(),
       buttons: sheets
     });
     await actionSheet.present();
@@ -123,28 +122,19 @@ export class ProfilePage implements OnInit {
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Estado de conexión',
+      header: await this.translate.get('home.profile.chat.status.title').toPromise(),
       buttons: [{
-        text: 'Conectado',
+        text: await this.translate.get('home.profile.chat.status.connected').toPromise(),
         icon: 'radio-button-on-outline',
-        cssClass: 'chat-online',
-        handler: () => {
-          console.log('Delete clicked');
-        }
+        cssClass: 'chat-online'
       }, {
-        text: 'Ocupado',
+        text: await this.translate.get('home.profile.chat.status.busy').toPromise(),
         icon: 'radio-button-on-outline',
-        cssClass: 'chat-busy',
-        handler: () => {
-          console.log('Share clicked');
-        }
+        cssClass: 'chat-busy'
       }, {
-        text: 'Desconectado',
+        text: await this.translate.get('home.profile.chat.status.offline').toPromise(),
         icon: 'radio-button-on-outline',
-        cssClass: 'chat-offline',
-        handler: () => {
-          console.log('Play clicked');
-        }
+        cssClass: 'chat-offline'
       }]
     });
     await actionSheet.present();

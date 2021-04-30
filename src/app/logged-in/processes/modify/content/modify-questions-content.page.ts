@@ -18,6 +18,8 @@ export class ModifyQuestionsContentPage implements OnInit {
   roundIndex: number;
   questionIndex: number;
   currentUser: User;
+  categories = [];
+  currentCategory = '';
 
   constructor(
     private navCtrl: NavController,
@@ -25,9 +27,16 @@ export class ModifyQuestionsContentPage implements OnInit {
     private router: Router,
     private userStorage: UserStorage) {
   }
-  public onItemReorder({ detail }) {
+
+  public onItemReorder({detail}) {
     detail.complete(true);
   }
+
+  addCategory() {
+    this.categories.push({name: this.currentCategory});
+    this.currentCategory = '';
+  }
+
   private async loadProcess() {
     this.route.queryParams.subscribe(async params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -42,13 +51,14 @@ export class ModifyQuestionsContentPage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
-    console.log(this.process.rounds[this.roundIndex].questions[this.questionIndex].type)
+    console.log(this.process.rounds[this.roundIndex].questions[this.questionIndex].type);
     this.currentUser = await this.userStorage.getUser();
   }
 
   goBack() {
     this.navCtrl.back();
   }
+
   async saveQuestionContent() {
     await this.router.navigateByUrl('/logged-in/home/menu/processes/modify_questions', {
       state: {

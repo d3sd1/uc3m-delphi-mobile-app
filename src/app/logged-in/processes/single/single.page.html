@@ -1,14 +1,13 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" [text]="'home.processes.single.back' | translate"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'single_page.title' | translate }}</ion-title>
+    <ion-title>{{ 'home.processes.single.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
   <ion-card color="light">
     <div class="img-wrapper">
       <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"
@@ -28,24 +27,24 @@
   <ion-list lines="inset" class="ion-no-margin">
     <ion-list-header>
       <ion-label>
-        {{ 'processes_single_page.rounds' | translate }}
+        {{ 'home.processes.single.rounds' | translate }}
       </ion-label>
 
       <span *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished">
-      <ion-button *hasDelphiRole="filterRole(['coordinator', 'admin'])" expand="block"
+      <ion-button *hasDelphiRole="filterRole(['coordinator'])" expand="block"
                   (click)="advanceRound()">
-        {{isProcessInitiated() ? 'Avanzar ronda' : null}}
-        {{!isProcessInitiated() ? 'Iniciar proceso' : null}}
+        {{isProcessInitiated() ? ('home.processes.single.round.advance.title' | translate)  : null}}
+        {{!isProcessInitiated() ? ('home.processes.single.round.start.title' | translate)  : null}}
       </ion-button>
       </span>
     </ion-list-header>
-    <ion-item *hasDelphiRole="filterRole(['coordinator', 'admin'])"
+    <ion-item *hasDelphiRole="filterRole(['coordinator'])"
               [routerLink]="['/logged-in/home/menu/processes/view_rounds']" [state]="{ process: process}">
-      <ion-label>{{ 'processes_single_page.rounds' | translate }}</ion-label>
+      <ion-label>{{ 'home.processes.single.rounds' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
     <ion-item *hasDelphiRole="filterRole(['expert'])">
-      <ion-label>{{ 'processes_single_page.rounds' | translate }}</ion-label>
+      <ion-label>{{ 'home.processes.single.rounds' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
   </ion-list>
@@ -53,13 +52,13 @@
   <ion-list lines="none" class="ion-no-margin">
     <ion-list-header>
       <ion-label>
-        {{ 'processes_single_page.users' | translate }}
+        {{ 'home.processes.single.users' | translate }}
       </ion-label>
     </ion-list-header>
     <div *ngFor="let role of roleService.getRoles()">
       <div *ngIf="countUsersRole(role)">
         <ion-item>
-          <ion-label>{{role.name}}</ion-label>
+          <ion-label>{{'home.processes.role.' + role?.name.toLowerCase() | translate}}</ion-label>
           <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>
         </ion-item>
         <div *ngFor="let userWithRole of process?.processUsers">
@@ -83,15 +82,15 @@
 
 <ion-footer *ngIf="!process?.processFinished">
   <ion-toolbar>
-    <ion-button *hasDelphiRole="filterRole(['admin'])" expand="block"
+    <ion-button *hasDelphiRole="filterRole(['coordinator'])" expand="block"
                 [routerLink]="['/logged-in/home/menu/processes/modify']"
                 [state]="{ process: process}">
-      Editar
+      {{'home.processes.single.modify.title' | translate}}
     </ion-button>
     <span *hasDelphiRole="filterRole(['expert'])">
       <ion-button *ngIf="isProcessInitiated()" expand="block" color="secondary"
                   [routerLink]="['/logged-in/home/menu/processes/participate']" [state]="{ process: process}">
-        Participar
+        {{'home.processes.single.participate.initiate' | translate}}
       </ion-button>
     </span>
   </ion-toolbar>

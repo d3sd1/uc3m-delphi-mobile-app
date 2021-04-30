@@ -3,18 +3,18 @@
 
     <img src="assets/login_logo.png" alt="logo" class="logo">
     <ion-list-header lines="none" class="ion-text-center">
-      <ion-label>Conexión</ion-label>
+      <ion-label>{{'login.title' | translate}}</ion-label>
     </ion-list-header>
     <ion-item lines="inset">
-      <ion-label position="fixed">Email</ion-label>
-      <ion-input [(ngModel)]="loginUser.email" type="email" placeholder="Introduce tu email..."></ion-input>
+      <ion-label position="fixed">{{'login.email.label' | translate}}</ion-label>
+      <ion-input [(ngModel)]="loginUser.email" type="email" [placeholder]="'login.email.placeholder' | translate"></ion-input>
     </ion-item>
     <ion-item lines="inset">
-      <ion-label position="fixed">Contraseña</ion-label>
-      <ion-input [(ngModel)]="loginUser.password" type="password" placeholder="Introduce tu contraseña..."></ion-input>
+      <ion-label position="fixed">{{'login.password.label' | translate}}</ion-label>
+      <ion-input [(ngModel)]="loginUser.password" type="password" [placeholder]="'login.password.placeholder' | translate"></ion-input>
     </ion-item>
     <ion-item lines="none">
-      <ion-label>Sesión extendida</ion-label>
+      <ion-label>{{'login.extended.label' | translate}}</ion-label>
       <ion-toggle [(ngModel)]="loginUser.rememberMe"></ion-toggle>
     </ion-item>
   </ion-list>
@@ -22,6 +22,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button (click)="login()" expand="block">{{ 'login_page.loginButton' | translate }}</ion-button>
+    <ion-button (click)="login()" expand="block">{{ 'login.button' | translate }}</ion-button>
   </ion-toolbar>
 </ion-footer>

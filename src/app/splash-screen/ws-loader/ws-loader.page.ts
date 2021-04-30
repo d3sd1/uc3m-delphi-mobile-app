@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {LoadingController} from '@ionic/angular';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'api-loader',
@@ -10,13 +11,14 @@ import {Router} from '@angular/router';
 })
 export class WsLoaderPage implements OnInit {
   constructor(private httpClient: HttpClient, private loadingController: LoadingController,
-              private router: Router) {
+              private router: Router,
+              private translate: TranslateService) {
 
   }
 
   async ngOnInit() {
     const loading = await this.loadingController.create({
-      message: 'Cargando API...'
+      message: await this.translate.get('loader.ws.loading').toPromise()
     });
     await loading.present();
     this.doCheck().then(() => {
@@ -24,7 +26,7 @@ export class WsLoaderPage implements OnInit {
       this.router.navigateByUrl('/splash-screen/loader/permissions');
     }).catch(async () => {
       const error = await this.loadingController.create({
-        message: 'No se ha podido cargar la API'
+        message: await this.translate.get('loader.ws.fail').toPromise()
       });
       await error.present();
     });

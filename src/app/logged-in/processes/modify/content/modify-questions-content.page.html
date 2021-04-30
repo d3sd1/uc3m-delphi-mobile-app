@@ -12,17 +12,24 @@
   <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
     <ion-select [(ngModel)]="this.process.rounds[roundIndex].questions[questionIndex].type">
-      <ion-select-option [value]="0" >Cualitativa</ion-select-option>
+      <ion-select-option [value]="0">Cualitativa</ion-select-option>
       <ion-select-option [value]="1">Cuantitativa</ion-select-option>
+      <ion-select-option [value]="2">Booleana</ion-select-option>
+      <ion-select-option [value]="3">Categorías</ion-select-option>
+      <ion-select-option [value]="4">Escala de Likert</ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-item><ion-textarea placeholder="Introduce tu pregunta aquí"
-                          [(ngModel)]="this.process.rounds[roundIndex].questions[questionIndex].question"></ion-textarea></ion-item>
+  <ion-item>
+    <ion-textarea placeholder="Introduce tu pregunta aquí"
+                  [(ngModel)]="this.process.rounds[roundIndex].questions[questionIndex].question"></ion-textarea>
+  </ion-item>
 
   <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 1">
     <ion-item>
-      <ion-input placeholder="Valor mínimo" [value]="this.process?.rounds[roundIndex]?.questions[questionIndex]?.minVal"></ion-input>
-      <ion-input placeholder="Valor máximo" [value]="this.process?.rounds[roundIndex]?.questions[questionIndex]?.maxVal"></ion-input>
+      <ion-input placeholder="Valor mínimo"
+                 [value]="this.process?.rounds[roundIndex]?.questions[questionIndex]?.minVal"></ion-input>
+      <ion-input placeholder="Valor máximo"
+                 [value]="this.process?.rounds[roundIndex]?.questions[questionIndex]?.maxVal"></ion-input>
     </ion-item>
     <ion-range [min]="0"
                [max]="10"
@@ -31,6 +38,40 @@
       <ion-icon slot="start" color="danger" name="sad-outline"></ion-icon>
       <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
     </ion-range>
+  </div>
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 2">
+    <ion-item>
+      <ion-label>Respuesta</ion-label>
+      <ion-select value="1">
+        <ion-select-option value="1" disabled>Sí</ion-select-option>
+        <ion-select-option value="2" disabled>No</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 3">
+    <ion-item>
+      <ion-label>Categorías</ion-label>
+      <ion-select value="1">
+        <ion-select-option disabled *ngFor="let category of categories; let i = index"
+                           [value]="i">
+          {{category.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-input placeholder="Introduce categoría..." [(ngModel)]="currentCategory"></ion-input>
+      <ion-button size="small" (click)="addCategory()">Añadir categoría</ion-button>
+  </div>
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 4">
+    <ion-item>
+      <ion-label>Escala de Likert</ion-label>
+      <ion-select value="3">
+        <ion-select-option value="1" disabled>Totalmente en desacuerdo</ion-select-option>
+        <ion-select-option value="2" disabled>En desacuerdo</ion-select-option>
+        <ion-select-option value="3" disabled>Ni de acuerdo ni en desacuerdo</ion-select-option>
+        <ion-select-option value="4" disabled>De acuerdo</ion-select-option>
+        <ion-select-option value="5" disabled>Totalmente de acuerdo</ion-select-option>
+      </ion-select>
+    </ion-item>
   </div>
 </ion-content>
 

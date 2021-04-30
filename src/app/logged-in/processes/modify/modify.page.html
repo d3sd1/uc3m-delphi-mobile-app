@@ -3,15 +3,16 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'create_page.modify' | translate }}</ion-title>
+    <ion-title>{{ 'home.processes.modify.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()" accept="image/*">
+  <input type="file" multiple="multiple" #uploadPicture hidden (change)="uploadImage()" accept="image/*">
   <ion-card color="light">
     <div class="img-wrapper" (click)="triggerUploadImage()">
-      <img *ngIf="process?.pictureUrl !== undefined" [src]="process.pictureUrl" (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+      <img *ngIf="process?.pictureUrl !== undefined" [src]="process.pictureUrl"
+           (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
       <ion-button color="light">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">
@@ -22,96 +23,43 @@
   <ion-list lines="full" class="ion-no-margin">
     <ion-list-header lines="full">
       <ion-label>
-        {{ 'processes_modify_page.delphiProcess' | translate }}
+        {{ 'home.processes.modify.base' | translate }}
       </ion-label>
     </ion-list-header>
 
 
-  <ion-item>
-    <ion-input [placeholder]="'processes_modify_page.processName' | translate" [(ngModel)]="process.name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-textarea [placeholder]="'processes_modify_page.processDesc' | translate" [(ngModel)]="process.description"></ion-textarea>
-  </ion-item>
+    <ion-item>
+      <ion-input [placeholder]="'home.processes.modify.name' | translate" [(ngModel)]="process.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea [placeholder]="'home.processes.modify.desc'  | translate"
+                    [(ngModel)]="process.description"></ion-textarea>
+    </ion-item>
   </ion-list>
-  <!-- COORDINADOR ->>>>>>>>>
-
--- COORDINADOR
-- Crear proceso delphi
-
-
---- Definir cuestionario (Meter preguntas meter preguntas que tengan str, metr preguntas de estrellitas)
-
-
-- Cerrar ronda automáticamente cuando:
-1. llega al final del tiempo
-2. No quedan expertos por votar ni valorar
-
-- Se puede cerrar ronda a mano
-
-- Notificar a coordinador cuando experto vota
---
-  !-- Searchbar with a custom debounce --
-
-  !-- OBJETIVOS --
-  <ion-button expand="block" fill="outline" (click)="addRound()">Añadir ronda</ion-button>
-
-  <ion-reorder-group disabled="false" *ngFor="let round of process.rounds; let roundIndex = index">
-    <ion-item-divider>
-      <ion-label>{{round.name}}</ion-label>
-    </ion-item-divider>
-    <ion-button expand="block" fill="outline" (click)="addQuestion(round)">Añadir pregunta</ion-button>
-
-    <ion-label *ngFor="let question of process.rounds[roundIndex].questions">
-      <ion-item>
-        <ion-reorder></ion-reorder>
-        <ion-input [placeholder]="question.name"></ion-input>
-        <ion-icon *ngIf="expandedQuestion?.id === question.id" (click)="compressQuestion(round)" slot="end"
-                  name="chevron-down-outline"></ion-icon>
-        <ion-icon *ngIf="expandedQuestion?.id !== question.id" (click)="expandQuestion(question)" slot="end"
-                  name="chevron-back-outline"></ion-icon>
-      </ion-item>!--
-      <ion-label *ngIf="expandedQuestion?.id === question.id">
-        <ion-segment [(ngModel)]="expandedQuestion.type">
-          <ion-segment-button [value]="QuestionType.QUALITATIVE" >
-            <ion-label>Cualitativa</ion-label>
-          </ion-segment-button>
-          <ion-segment-button [value]="QuestionType.QUANTITATIVE">
-            <ion-label>Cuantitativa</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-        <ion-icon name="star-outline"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
-      </ion-label>--
-    </ion-label>
-  </ion-reorder-group>
--->
 
   <ion-list lines="inset" class="ion-no-margin">
     <ion-list-header>
       <ion-label>
-        {{ 'processes_modify_page.rounds' | translate }}
+        {{ 'home.processes.modify.rounds.title'  | translate }}
       </ion-label>
     </ion-list-header>
     <ion-item [routerLink]="['/logged-in/home/menu/processes/modify_rounds']" [state]="{ process: process}">
-      <ion-label>{{ 'processes_modify_page.rounds' | translate }}</ion-label>
-      <ion-badge slot="end">{{process?.rounds === undefined ? 0:process?.rounds?.length}}</ion-badge>
+      <ion-label>{{ 'home.processes.modify.rounds.enter' | translate }}</ion-label>
+      <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
   </ion-list>
   <ion-list lines="full" class="ion-no-margin">
     <ion-list-header lines="full">
       <ion-label>
-        {{ 'processes_modify_page.users' | translate }}
+        {{ 'home.processes.modify.rounds.users'  | translate }}
       </ion-label>
     </ion-list-header>
 
     <!-- Toggles in a List -->
-    <ion-item *ngFor="let role of roleService.getRoles()" [routerLink]="['/logged-in/home/menu/processes/user-picker']" [state]="{ process: process, role: role}">
+    <ion-item *ngFor="let role of roleService.getRoles()" [routerLink]="['/logged-in/home/menu/processes/user-picker']"
+              [state]="{ process: process, role: role}">
       <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>
-      <ion-label>{{role.name}}</ion-label>
+      <ion-label>{{'home.processes.role.' + role?.name.toLowerCase() | translate}}</ion-label>
     </ion-item>
 
   </ion-list>
@@ -120,6 +68,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" (click)="saveProcess()">{{ 'processes_modify_page.save' | translate }}</ion-button>
+    <ion-button expand="block" (click)="saveProcess()">{{ 'home.processes.modify.save'  | translate }}</ion-button>
   </ion-toolbar>
 </ion-footer>

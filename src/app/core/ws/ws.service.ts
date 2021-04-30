@@ -19,7 +19,7 @@ export class WsService {
   }
 
   async connectWs(jwt: string) {
-    let ws = new SockJS('http://localhost:8080/ws');
+    let ws = new SockJS(environment.apiUrl + '/ws');
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({jwt: jwt}, (frame) => {
 

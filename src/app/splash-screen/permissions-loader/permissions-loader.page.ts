@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoadingController} from '@ionic/angular';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'loader',
@@ -9,12 +10,13 @@ import {Router} from '@angular/router';
 })
 export class PermissionsLoaderPage implements OnInit {
   constructor(private httpClient: HttpClient, private loadingController: LoadingController,
-              private router: Router) {
+              private router: Router,
+              private translate: TranslateService) {
   }
 
   async ngOnInit() {
     const loading = await this.loadingController.create({
-      message: 'Cargando permisos...'
+      message: await this.translate.get('loader.permissions.loading').toPromise()
     });
     await loading.present();
 
@@ -23,7 +25,7 @@ export class PermissionsLoaderPage implements OnInit {
       this.router.navigateByUrl('/logged-out');
     }).catch(async () => {
       const error = await this.loadingController.create({
-        message: 'No se ha podido cargar los permisos'
+        message: await this.translate.get('loader.permissions.fail').toPromise()
       });
       await error.present();
     });

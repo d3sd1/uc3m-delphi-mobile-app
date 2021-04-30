@@ -11,6 +11,7 @@ import {DelphiProcessUser} from '../delphi-process-user';
 import {User} from '../../user';
 import {FilterRole} from '../filter-role';
 import {WsService} from '../../../core/ws/ws.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'delphi-single',
@@ -32,7 +33,8 @@ export class SinglePage implements OnInit {
     private router: Router,
     public roleService: RoleService,
     private httpClient: HttpClient,
-    private wsService: WsService) {
+    private wsService: WsService,
+    private translate: TranslateService) {
   }
 
   countUsersRole(role: Role) {
@@ -77,7 +79,7 @@ export class SinglePage implements OnInit {
     this.showExpertForm = false;
     this.invitationEmail = '';
     const toast = await this.toastController.create({
-      message: 'Invitación enviada',
+      message: await this.translate.get('home.processes.single.invitation.sent').toPromise(),
     });
     await toast.present();
     setTimeout(() => {
@@ -107,10 +109,10 @@ export class SinglePage implements OnInit {
 
   async advanceRound() {
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/round/open?process_id=' + this.process.id, this.process).toPromise().then(async (delphiProcess: Process) => {
-      await this.showToast('Ronda avanzada correctamente.');
+      await this.showToast(await this.translate.get('home.processes.single.round.advance.title').toPromise());
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
-      await this.showToast('La ronda no pudo ser avanzada.');
+      await this.showToast(await this.translate.get('home.processes.single.round.advance.err').toPromise());
     });
   }
 
