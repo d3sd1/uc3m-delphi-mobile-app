@@ -13,42 +13,42 @@
 11    <!-- Permissions -->
 12
 13    <uses-permission android:name="android.permission.INTERNET" />
-13-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:47:5-67
-13-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:47:22-64
+13-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:45:5-67
+13-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:45:22-64
 14    <!-- Camera, Photos, input file -->
 15    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-15-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:49:5-79
-15-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:49:22-77
+15-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:47:5-79
+15-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:47:22-77
 16    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-16-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:50:5-81
-16-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:50:22-78
+16-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:48:5-81
+16-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:48:22-78
 17    <!-- Geolocation API -->
 18    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-18-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:52:5-81
-18-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:52:22-78
+18-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:50:5-81
+18-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:50:22-78
 19    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-19-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:53:5-79
-19-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:53:22-76
+19-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:51:5-79
+19-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:51:22-76
 20
 21    <uses-feature android:name="android.hardware.location.gps" />
-21-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:54:5-66
-21-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:54:19-63
+21-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:52:5-66
+21-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:52:19-63
 22    <!-- Network API -->
 23    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-23-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:56:5-79
-23-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:56:22-76
+23-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:54:5-79
+23-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:54:22-76
 24    <!-- Navigator.getUserMedia -->
 25    <!-- Video -->
 26    <uses-permission android:name="android.permission.CAMERA" />
-26-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:59:5-65
-26-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:59:22-62
+26-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:57:5-65
+26-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:57:22-62
 27    <!-- Audio -->
 28    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-28-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:61:5-71
-28-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:61:22-68
+28-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:59:5-71
+28-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:59:22-68
 29    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-29-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:62:5-79
-29-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:62:22-77
+29-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:60:5-79
+29-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:60:22-77
 30
 31    <uses-feature
 31-->[:capacitor-android] /Users/andreigarcia/WebstormProjects/delphi-app/node_modules/@capacitor/android/capacitor/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-13:36
@@ -68,7 +68,7 @@
 37-->[com.google.firebase:firebase-iid:20.1.1] /Users/andreigarcia/.gradle/caches/transforms-2/files-2.1/9e776637e9c57ea02cd0ffdbf600ccae/jetified-firebase-iid-20.1.1/AndroidManifest.xml:26:22-79
 38
 39    <application
-39-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:5:5-43:19
+39-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:5:5-41:19
 40        android:allowBackup="true"
 40-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:6:9-35
 41        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -86,7 +86,7 @@
 48        android:theme="@style/AppTheme" >
 48-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:11:9-40
 49        <activity
-49-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:13:9-32:20
+49-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:13:9-30:20
 50            android:name="org.uc3m.irsst.idelphi.MainActivity"
 50-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:15:13-63
 51            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
@@ -98,49 +98,49 @@
 54            android:theme="@style/AppTheme.NoActionBarLaunch" >
 54-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:17:13-62
 55            <intent-filter>
-55-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:20:13-23:29
+55-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:19:13-22:29
 56                <action android:name="android.intent.action.MAIN" />
-56-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:21:17-69
-56-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:21:25-66
+56-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:20:17-69
+56-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:20:25-66
 57
 58                <category android:name="android.intent.category.LAUNCHER" />
-58-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:22:17-77
-58-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:22:27-74
+58-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:21:17-77
+58-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:21:27-74
 59            </intent-filter>
 60            <intent-filter>
-60-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:25:13-30:29
+60-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:24:13-29:29
 61                <action android:name="android.intent.action.VIEW" />
-61-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:26:17-69
-61-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:26:25-66
+61-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:25:17-69
+61-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:25:25-66
 62
 63                <category android:name="android.intent.category.DEFAULT" />
-63-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:27:17-76
-63-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:27:27-73
+63-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:26:17-76
+63-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:26:27-73
 64                <category android:name="android.intent.category.BROWSABLE" />
-64-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:28:17-78
-64-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:28:27-75
+64-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:27:17-78
+64-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:27:27-75
 65
 66                <data android:scheme="@string/custom_url_scheme" />
-66-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:29:17-68
-66-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:29:23-65
+66-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:28:17-68
+66-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:28:23-65
 67            </intent-filter>
 68        </activity>
 69
 70        <provider
 71            android:name="androidx.core.content.FileProvider"
-71-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:35:13-62
+71-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:33:13-62
 72            android:authorities="org.uc3m.irsst.idelphi.fileprovider"
-72-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:36:13-64
+72-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:34:13-64
 73            android:exported="false"
-73-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:37:13-37
+73-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:35:13-37
 74            android:grantUriPermissions="true" >
-74-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:38:13-47
+74-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:36:13-47
 75            <meta-data
-75-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:39:13-41:64
+75-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:37:13-39:64
 76                android:name="android.support.FILE_PROVIDER_PATHS"
-76-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:40:17-67
+76-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:38:17-67
 77                android:resource="@xml/file_paths" />
-77-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:41:17-51
+77-->/Users/andreigarcia/WebstormProjects/delphi-app/android/app/src/main/AndroidManifest.xml:39:17-51
 78        </provider>
 79
 80        <service
