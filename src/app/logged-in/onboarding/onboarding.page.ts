@@ -51,10 +51,11 @@ export class OnboardingPage implements OnInit {
   }
 
   async endSwiper() {
+    console.log('end swiper')
     const user = await this.userStorage.getUser();
     user.needsOnboard = false;
     await this.userStorage.setUser(user);
-    await this.httpClient.post(environment.apiUrl + '/v1/profile/onboard/false', {});
+    await this.httpClient.post(environment.apiUrl + '/v1/profile/onboard?status=false', {}).toPromise();
     await this.router.navigateByUrl('/logged-in/home/menu');
   }
 
