@@ -105,8 +105,13 @@ export class ProfilePage implements OnInit {
         //his.userStorage.
         handler: async () => {
           lang.keyName = lang.keyName.toLowerCase();
+          console.log("change lang",lang.keyName)
           this.user.language = lang;
-          this.translate.use(this.user.language.keyName.toLowerCase());
+          await this.translate.use(lang.keyName);
+
+          this.translate.setDefaultLang(lang.keyName);
+          this.translate.addLangs([lang.keyName]);
+          this.translate.use(lang.keyName);
           await this.userStorage.setUser(this.user);
         }
       });
