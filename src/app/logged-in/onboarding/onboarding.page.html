@@ -28,6 +28,10 @@
         <ion-label>Nueva contraseña</ion-label>
         <ion-input placeholder="Introduce tu nueva contraseña" type="password" [(ngModel)]="reset.newPass"></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label>Repite contraseña</ion-label>
+        <ion-input placeholder="Repite tu nueva contraseña" type="password" [(ngModel)]="reset.newPassRep"></ion-input>
+      </ion-item>
       <ion-button (click)="setupPassword()" fill="clear">Siguiente
         <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-button>

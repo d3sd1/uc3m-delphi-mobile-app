@@ -46,6 +46,15 @@
     }
   },
   "home": {
+    "onboarding": {
+      "setup": {
+        "error": {
+          "name": "Por favor, introduce nombre y apellidos.",
+          "password_matching": "Las contraseñas no coinciden.",
+          "password_empty": "Por favor, introduce tu nueva contraseña."
+        }
+      }
+    },
     "tab": {
       "processes": "Procesos",
       "chat": "Mensajería",

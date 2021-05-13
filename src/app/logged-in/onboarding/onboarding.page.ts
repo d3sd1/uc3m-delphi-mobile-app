@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {IonSlides} from '@ionic/angular';
+import {IonSlides, ToastController} from '@ionic/angular';
 import {UserService} from './user.service';
 import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {UserStorage} from '../../core/storage/user.storage';
 import {User} from '../user';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'delphi-onboarding',
@@ -25,24 +26,47 @@ export class OnboardingPage implements OnInit {
   @ViewChild('mySlider') slides: IonSlides;
 
   constructor(private userService: UserService, private router: Router, private storage: Storage,
-              private httpClient: HttpClient, private userStorage: UserStorage) {
+              private httpClient: HttpClient, private userStorage: UserStorage,
+              private toastController: ToastController,
+              private translate: TranslateService) {
   }
 
   async ngOnInit() {
+    console.log('reset user')
     this.user = await this.userStorage.getUser();
   }
 
   async setupAccount() {
-    await this.httpClient.post(environment.apiUrl + '/v1/profile/setup', this.user);
+    if (this.user.name === '' ||
+      this.user.surnames === '' ||
+      this.user.name === null ||
+      this.user.surnames === null ||
+      this.user.name === undefined ||
+      this.user.surnames === undefined) {
+      await this.showToast('home.onboarding.setup.error.name');
+      return;
+    }
+    await this.httpClient.post(environment.apiUrl + '/v1/profile/setup', this.user).toPromise();
     await this.userStorage.setUser(this.user);
     await this.slides.slideNext();
   }
 
   async setupPassword() {
-    this.reset.currentPass = this.user.email; // TODO CHANGE THIS TO RANDOM PASS AND ALLOW TO CHANGE ONLY IF IT'S FIRST TIME ONBOARDING
-    this.reset.newPassRep = this.reset.newPass; // TODO CHANGE THIS TO RANDOM PASS AND ALLOW TO CHANGE ONLY IF IT'S FIRST TIME ONBOARDING
-    await this.httpClient.post(environment.apiUrl + '/v1/profile/change_pass', this.reset);
-    await this.userStorage.setUser(this.user);
+    if(this.reset.newPass === null ||
+    this.reset.newPassRep === null ||
+    this.reset.newPass === '' ||
+    this.reset.newPassRep === '' ||
+    this.reset.newPass === undefined ||
+    this.reset.newPassRep === undefined) {
+      await this.showToast('home.onboarding.setup.error.password_empty');
+      return;
+    }
+    else if(this.reset.newPass !== this.reset.newPassRep) {
+      await this.showToast('home.onboarding.setup.error.password_matching');
+      return;
+    }
+    await this.httpClient.post(environment.apiUrl + '/v1/profile/change_pass', this.reset).toPromise();
+
     await this.slides.slideNext();
   }
 
@@ -51,12 +75,22 @@ export class OnboardingPage implements OnInit {
   }
 
   async endSwiper() {
-    console.log('end swiper')
-    const user = await this.userStorage.getUser();
-    user.needsOnboard = false;
-    await this.userStorage.setUser(user);
+    this.user.needsOnboard = false;
+    await this.userStorage.setUser(this.user);
+    console.log(this.user)
     await this.httpClient.post(environment.apiUrl + '/v1/profile/onboard?status=false', {}).toPromise();
     await this.router.navigateByUrl('/logged-in/home/menu');
+  }
+
+  private async showToast(transKey: string) {
+    const toast = await this.toastController.create({
+      message: await this.translate.get(transKey).toPromise(),
+    });
+    await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
+    return toast;
   }
 
 }
