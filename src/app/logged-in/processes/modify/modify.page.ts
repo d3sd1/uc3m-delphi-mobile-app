@@ -91,7 +91,19 @@ export class ModifyPage implements OnInit {
   }
 
   validateForm(): boolean {
-    return true; // TODO
+    if(this.process.name === '' ||
+      this.process.name === null ||
+      this.process.name === undefined) {
+      this.showToast('home.processes.modify.errors.no_name');
+      return false;
+    }
+    if(this.process.description === '' ||
+    this.process.description === null ||
+    this.process.description === undefined) {
+      this.showToast('home.processes.modify.errors.no_description');
+      return false;
+    }
+    return true;
   }
 
 
@@ -119,9 +131,9 @@ export class ModifyPage implements OnInit {
   }
 
 
-  private async showToast(msg: string) {
+  private async showToast(transKey: string) {
     const toast = await this.toastController.create({
-      message: msg,
+      message: await this.translate.get(transKey).toPromise(),
     });
     await toast.present();
     setTimeout(() => {

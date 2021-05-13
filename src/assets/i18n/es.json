@@ -76,7 +76,11 @@
           "enter": "Rondas",
           "users": "Usuarios"
         },
-        "save": "Guardar"
+        "save": "Guardar",
+        "errors": {
+          "no_description": "Debes introducir una descripción.",
+          "no_name": "Debes introducir un nombre para el proceso."
+        }
       },
       "role": {
         "coordinator": "Coordinador",
