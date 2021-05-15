@@ -17,9 +17,8 @@ export class ChatListComponent implements OnInit {
   @Input()
   loading: boolean;
 
-  @Input()
   userChats: UserChat[] = [];
-  userChatsBackup: UserChat[] = [];
+  userChatsOriginal: UserChat[] = [];
 
   constructor(private chatService: ChatService, private authService: UserStorage) {
   }
@@ -29,7 +28,14 @@ export class ChatListComponent implements OnInit {
   }
 
   selfChatName(chat: UserChat) {
-    return getChatInfo(chat, this.user.id).name;
+    const userChat = getChatInfo(chat, this.user.id);
+    let chatName = userChat.name;
+    if(chatName === '' ||
+      chatName === undefined ||
+      chatName === null) {
+      chatName = userChat.email;
+    }
+    return chatName;
   }
 
   selfChatPicture(chat: UserChat): string {
@@ -41,23 +47,29 @@ export class ChatListComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.userChatsBackup = [...this.userChats];
+
+    this.chatService.getCurrentUserChats().subscribe((currentUserChats: UserChat[]) => {
+      console.log(currentUserChats)
+      this.userChats = currentUserChats;
+      this.userChatsOriginal = [...this.userChats];
+      this.loading = false;
+    });
     console.log(this.userChats)
   }
 
   async filterList(evt) {
-    console.log(this.userChatsBackup)
-    this.userChats = this.userChatsBackup;
     const searchTerm = evt.srcElement.value;
 
     if (!searchTerm) {
       return;
     }
 
-    this.userChats = this.userChats.filter(currentChat => {
+    // this crash the app if setting variable. todo on refactor
+    this.userChatsOriginal.filter(currentChat => {
       currentChat.users.forEach((user: User) => {
-        const fullName = user.name + ' ' + user.surnames;
+        const fullName = user.name + ' ' + user.surnames + ' ' + user.email;
         if (fullName && searchTerm) {
+          console.log(fullName.toLowerCase().indexOf(searchTerm.toLowerCase()))
           return (fullName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
         }
       });

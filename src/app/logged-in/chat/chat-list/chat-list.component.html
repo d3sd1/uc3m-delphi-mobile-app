@@ -5,11 +5,13 @@
   <ion-item-sliding #slidingItem *ngFor="let chat of userChats">
     <ion-item [routerLink]="'chat/' + chat.id">
       <ion-avatar slot="start">
-        <img src="{{selfChatPicture(chat)}}">
+        <img *ngIf="selfChatPicture(chat) !== undefined" [src]="selfChatPicture(chat)"
+             (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+        <img *ngIf="selfChatPicture(chat) === undefined" src="assets/images/no-process-image.jpeg"/>
       </ion-avatar>
       <ion-label>
         <h2>{{selfChatName(chat)}}</h2>
-        <h3>{{chat.group ? 'chatList_component.group' : 'chatList_component.private'}}</h3>
+        <h3>{{(chat.group ? 'home.chat.conversation.type.group' : 'home.chat.conversation.type.private') | translate}}</h3>
         <p>{{chat.chatMessages[0]?.message}}</p>
       </ion-label>
       <ion-icon *ngIf="!chat.group" [class]="'chat-' + selfUserChatStatus(chat)" name="radio-button-on-outline"
@@ -21,11 +23,11 @@
     <ion-item-options (ionSwipe)="markChatAsRead(chat.id, slidingItem)"
                       *ngIf="selfChatUnreadMessages(chat, user.id) > 0"
                       side="start">
-      <ion-item-option (click)="markChatAsRead(chat.id, slidingItem)" color="primary">{{ 'chatList_component.read' | translate }}</ion-item-option>
+      <ion-item-option (click)="markChatAsRead(chat.id, slidingItem)" color="primary">{{ 'home.chat.conversation.mark_as_read' | translate }}</ion-item-option>
     </ion-item-options>
 
     <ion-item-options (ionSwipe)="deleteChat(chat.id, slidingItem)" side="end">
-      <ion-item-option (click)="deleteChat(chat.id, slidingItem)" color="danger">{{ 'chatList_component.delete' | translate }}</ion-item-option>
+      <ion-item-option (click)="deleteChat(chat.id, slidingItem)" color="danger">{{ 'home.chat.conversation.delete' | translate }}</ion-item-option>
     </ion-item-options>
   </ion-item-sliding>
 </ion-list>

@@ -207,6 +207,18 @@
         "connected": "Conectado",
         "busy": "Ocupado",
         "offline": "Desconectado"
+      },
+      "conversation": {
+        "back": "Volver",
+        "message": {
+          "placeholder": "Escribe tu mensaje..."
+        },
+        "type": {
+          "group": "Conversación en grupo",
+          "private": "Conversación privada"
+        },
+        "mark_as_read": "Marcar como leído",
+        "delete": "Borrar"
       }
     }
   },

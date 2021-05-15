@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="" (click)="goBack()" [text]="'chat_conversation.goBack' | translate" ></ion-back-button>
+      <ion-back-button defaultHref="" (click)="goBack()" [text]="'home.chat.conversation.back' | translate" ></ion-back-button>
     </ion-buttons>
     <ion-title>{{selfChat()?.name}}</ion-title>
     <ion-buttons slot="end">
@@ -17,12 +17,14 @@
          class="message"
          [class.left]=" msg.sentBy.id !== user.id "
          [class.right]=" msg.sentBy.id === user.id ">
-      <img class="user-img" [src]="msg.sentBy?.photo" alt="">
+      <img class="user-img" *ngIf="msg.sentBy?.photo !== undefined" [src]="msg.sentBy?.photo"
+           (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+      <img class="user-img" *ngIf="msg.sentBy?.photo === undefined" src="assets/images/no-process-image.jpeg"/>
       <!--<ion-spinner name="dots" ></ion-spinner> *ngIf="msg.status === 'pending'" -->
       <div class="msg-detail">
         <div class="msg-info">
           <p>
-            {{msg.sentBy?.name}}&nbsp;&nbsp;&nbsp;{{msg.sentDate | relativeTime}}</p> <!-- relativeTime -->
+            {{msg.sentBy?.name === undefined ? msg.sentBy?.email : msg.sentBy?.name}}&nbsp;&nbsp;&nbsp;{{msg.sentDate | relativeTime}}</p> <!-- relativeTime -->
         </div>
         <div class="msg-content">
           <span class="triangle"></span>
@@ -42,7 +44,7 @@
     <ion-item>
       <form (ngSubmit)="sendMessage()">
         <ion-input #chat_input
-                   [placeholder]= "'chat_conversation.writeMessage' | translate"
+                   [placeholder]= "'home.chat.conversation.message.placeholder' | translate"
                    [(ngModel)]="editorMsg"
                    (focusin)="onFocus()"
                    name="chat_message"></ion-input>

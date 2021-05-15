@@ -5,12 +5,5 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './chat-conversation-loading.page.html',
   styleUrls: ['./chat-conversation-loading.page.scss'],
 })
-export class ChatConversationLoadingPage implements OnInit {
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
+export class ChatConversationLoadingPage {
 }
