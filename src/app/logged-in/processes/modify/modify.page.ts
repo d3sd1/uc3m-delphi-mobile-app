@@ -168,8 +168,10 @@ export class ModifyPage implements OnInit {
     }
   }
 
-  goBack() {
-    this.navCtrl.back();
+  async goBack() {
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
+      state: {process: this.process, currentUser: this.currentUser}
+    });
   }
 
   countUsersRole(role: Role) {

@@ -21,7 +21,7 @@ export class ProfileBasicPage implements OnInit {
     this.user = await this.authService.getUser();
   }
 
-  goBack() {
+  async goBack() {
     this.navCtrl.back();
   }
 

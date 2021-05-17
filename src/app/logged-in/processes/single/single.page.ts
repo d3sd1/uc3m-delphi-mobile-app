@@ -132,8 +132,8 @@ export class SinglePage implements OnInit {
     return new FilterRole(this.process?.processUsers, roles);
   }
 
-  goBack() {
-    this.navCtrl.back();
+  async goBack() {
+    await this.navCtrl.back();
   }
 
 }

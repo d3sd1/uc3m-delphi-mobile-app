@@ -103,7 +103,7 @@ export class ChatConversationComponent implements OnInit {
     await this.scrollToBottom();
   }
 
-  goBack() {
+  async goBack() {
     this.navCtrl.back();
   }
 

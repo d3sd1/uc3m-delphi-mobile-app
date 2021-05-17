@@ -63,8 +63,10 @@ export class ModifyQuestionsPage implements OnInit {
     this.currentUser = await this.userStorage.getUser();
   }
 
-  goBack() {
-    this.navCtrl.back();
+  async goBack() {
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/modify_rounds', {
+      state: {process: this.process, currentUser: this.currentUser}
+    });
   }
 
   async saveQuestions() {

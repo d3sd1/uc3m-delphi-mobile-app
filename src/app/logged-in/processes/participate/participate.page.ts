@@ -25,8 +25,10 @@ export class ParticipatePage implements OnInit {
     private userStorage: UserStorage) {
   }
 
-  goBack() {
-    this.navCtrl.back();
+  async goBack() {
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
+      state: {process: this.process, currentUser: this.currentUser}
+    });
   }
   private async loadProcess() {
     this.route.queryParams.subscribe(async params => {

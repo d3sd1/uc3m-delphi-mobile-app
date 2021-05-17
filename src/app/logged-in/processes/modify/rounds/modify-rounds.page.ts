@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../process';
 import {User} from '../../../user';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, UrlTree} from '@angular/router';
 import {UserStorage} from '../../../../core/storage/user.storage';
 import {Round} from '../../round';
 import {Question} from '../../question';
+import {NavigationOptions} from '@ionic/angular/providers/nav-controller';
 
 @Component({
   selector: 'delphi-rounds',
@@ -58,7 +59,7 @@ export class ModifyRoundsPage implements OnInit {
 
       await alert.present();
     } else {
-      await this.router.navigateByUrl('/logged-in/home/menu/processes/modify', {
+      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/modify', {
         state: {
           process: this.process
         }
@@ -109,8 +110,10 @@ export class ModifyRoundsPage implements OnInit {
     this.currentUser = await this.userStorage.getUser();
   }
 
-  goBack() {
-    this.navCtrl.back();
+  async goBack() {
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/modify', {
+      state: {process: this.process}
+    });
   }
 
 }

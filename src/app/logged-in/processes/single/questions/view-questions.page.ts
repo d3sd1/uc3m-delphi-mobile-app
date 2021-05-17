@@ -24,8 +24,10 @@ export class ViewQuestionsPage implements OnInit {
     private userStorage: UserStorage) {
   }
 
-  goBack() {
-    this.navCtrl.back();
+  async goBack() {
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view_rounds', {
+      state: {process: this.process, currentUser: this.currentUser, roundIndex: this.roundIndex}
+    });
   }
 
   private async loadProcess() {
