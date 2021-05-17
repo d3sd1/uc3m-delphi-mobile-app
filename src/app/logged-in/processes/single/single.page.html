@@ -32,9 +32,8 @@
 
       <span *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished">
       <ion-button *hasDelphiRole="filterRole(['coordinator'])" expand="block"
-                  (click)="advanceRound()">
-        {{isProcessInitiated() ? ('home.processes.single.round.advance.title' | translate)  : null}}
-        {{!isProcessInitiated() ? ('home.processes.single.round.start.title' | translate)  : null}}
+                  (click)="closeRound()">
+        {{roundOngoing() ? ('home.processes.single.round.close.title' | translate)  : null}}
       </ion-button>
       </span>
     </ion-list-header>

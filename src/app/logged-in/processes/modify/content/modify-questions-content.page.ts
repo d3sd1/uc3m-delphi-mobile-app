@@ -20,6 +20,7 @@ export class ModifyQuestionsContentPage implements OnInit {
   currentUser: User;
   categories = [];
   currentCategory = '';
+  responseRange;
 
   constructor(
     private navCtrl: NavController,
@@ -51,7 +52,6 @@ export class ModifyQuestionsContentPage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
-    console.log(this.process.rounds[this.roundIndex].questions[this.questionIndex].type);
     this.currentUser = await this.userStorage.getUser();
   }
 
@@ -68,6 +68,12 @@ export class ModifyQuestionsContentPage implements OnInit {
         roundIndex: this.roundIndex,
         questionIndex: this.questionIndex,
       }
+    });
+  }
+  delCategory(category) {
+    console.log(category);
+    this.categories = this.categories.filter((cat) => {
+        return cat.name.toLowerCase() != category.name.toLowerCase();
     });
   }
 

@@ -108,12 +108,9 @@
         "rounds": "Rondas",
         "users": "Participantes",
         "round": {
-          "advance": {
-            "title": "Avanzar ronda",
-            "err": "La ronda no pudo ser avanzada"
-          },
-          "start": {
-            "title": "Iniciar ronda"
+          "close": {
+            "title": "Cerrar ronda",
+            "err": "La ronda no pudo ser cerrada"
           }
         },
         "participate": {

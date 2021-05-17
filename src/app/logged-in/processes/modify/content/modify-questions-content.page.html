@@ -11,17 +11,19 @@
 
   <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
-    <ion-select [(ngModel)]="this.process.rounds[roundIndex].questions[questionIndex].type">
+    <ion-select [(ngModel)]="this.process?.rounds[roundIndex]?.questions[questionIndex].type">
       <ion-select-option [value]="0">Cualitativa</ion-select-option>
       <ion-select-option [value]="1">Cuantitativa</ion-select-option>
       <ion-select-option [value]="2">Booleana</ion-select-option>
       <ion-select-option [value]="3">Categorías</ion-select-option>
       <ion-select-option [value]="4">Escala de Likert</ion-select-option>
+      <ion-select-option [value]="5">Categorías con selección múltiple</ion-select-option>
+      <ion-select-option [value]="6">Categorías ponderadas</ion-select-option> <!-- este permite reordenar respuesta de categorías-->
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-textarea placeholder="Introduce tu pregunta aquí"
-                  [(ngModel)]="this.process.rounds[roundIndex].questions[questionIndex].question"></ion-textarea>
+                  [(ngModel)]="this.process?.rounds[roundIndex]?.questions[questionIndex].question"></ion-textarea>
   </ion-item>
 
   <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 1">
@@ -49,17 +51,25 @@
     </ion-item>
   </div>
   <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 3">
+
     <ion-item>
-      <ion-label>Categorías</ion-label>
-      <ion-select value="1">
-        <ion-select-option disabled *ngFor="let category of categories; let i = index"
-                           [value]="i">
-          {{category.name}}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-input placeholder="Introduce categoría..." [(ngModel)]="currentCategory"></ion-input>
+      <ion-input placeholder="Nombre categoría..." [(ngModel)]="currentCategory"></ion-input>
       <ion-button size="small" (click)="addCategory()">Añadir categoría</ion-button>
+    </ion-item>
+
+    <ion-list>
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Categorías</ion-label>
+          <ion-badge slot="end" >{{categories.length}}</ion-badge>
+        </ion-item-divider>
+
+        <ion-item *ngFor="let category of categories; let i = index">
+          <ion-label>{{category.name}}</ion-label>
+          <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
   </div>
   <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 4">
     <ion-item>
@@ -72,6 +82,54 @@
         <ion-select-option value="5" disabled>Totalmente de acuerdo</ion-select-option>
       </ion-select>
     </ion-item>
+  </div>
+
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 5">
+    <ion-item>
+      <ion-range min="1" [max]="categories.length + 1" step="1" [(ngModel)]="responseRange" snaps color="primary">
+        <ion-icon slot="start" size="small" color="primary" name="aperture-outline"></ion-icon>
+        <ion-icon slot="end" color="success" name="aperture"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder="Nombre categoría..." [(ngModel)]="currentCategory"></ion-input>
+      <ion-button size="small" (click)="addCategory()">Añadir categoría</ion-button>
+    </ion-item>
+
+    <ion-list>
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Categorías</ion-label>
+          <ion-badge slot="end" >{{categories.length}}</ion-badge>
+        </ion-item-divider>
+
+        <ion-item *ngFor="let category of categories; let i = index">
+          <ion-label>{{category.name}}</ion-label>
+          <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </div>
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 6">
+
+    <ion-item>
+      <ion-input placeholder="Nombre categoría..." [(ngModel)]="currentCategory"></ion-input>
+      <ion-button size="small" (click)="addCategory()">Añadir categoría</ion-button>
+    </ion-item>
+
+    <ion-list>
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Categorías</ion-label>
+          <ion-badge slot="end" >{{categories.length}}</ion-badge>
+        </ion-item-divider>
+
+        <ion-item *ngFor="let category of categories; let i = index">
+          <ion-label>{{category.name}}</ion-label>
+          <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
   </div>
 </ion-content>
 

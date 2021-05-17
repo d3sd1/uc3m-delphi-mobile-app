@@ -97,7 +97,7 @@ export class SinglePage implements OnInit {
     // TODO handle err
   }
 
-  isProcessInitiated(): boolean {
+  roundOngoing(): boolean {
     let initiated = false;
     this.process?.rounds?.forEach((round) => {
       if (round.current || round.finished) {
@@ -107,12 +107,14 @@ export class SinglePage implements OnInit {
     return initiated;
   }
 
-  async advanceRound() {
-    await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/round/open?process_id=' + this.process.id, this.process).toPromise().then(async (delphiProcess: Process) => {
-      await this.showToast(await this.translate.get('home.processes.single.round.advance.title').toPromise());
+  async closeRound() {
+    //TODO: handle close round
+    //TODO: handle create round
+    await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, this.process).toPromise().then(async (delphiProcess: Process) => {
+      await this.showToast(await this.translate.get('home.processes.single.round.close.title').toPromise());
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
-      await this.showToast(await this.translate.get('home.processes.single.round.advance.err').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single.round.close.err').toPromise());
     });
   }
 
