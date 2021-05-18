@@ -24,6 +24,7 @@ export class SinglePage implements OnInit {
   invitationEmail = '';
   process: Process;
   loggedInUser: User;
+  currentUserRole: Role;
 
   constructor(
     private toastController: ToastController,
@@ -57,6 +58,8 @@ export class SinglePage implements OnInit {
     await this.loadProcess();
 
     this.loggedInUser = await this.userStorage.getUser();
+    // current user process role
+    this.currentUserRole = null; //TODO
 
     // Handle process updatess
 

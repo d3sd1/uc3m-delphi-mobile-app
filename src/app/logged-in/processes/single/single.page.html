@@ -1,7 +1,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" [text]="'home.processes.single.back' | translate"></ion-back-button>
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()"
+                       [text]="'home.processes.single.back' | translate"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'home.processes.single.title' | translate }}</ion-title>
   </ion-toolbar>
@@ -33,7 +34,7 @@
       <span *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished">
       <ion-button *hasDelphiRole="filterRole(['coordinator'])" expand="block"
                   (click)="closeRound()">
-        {{roundOngoing() ? ('home.processes.single.round.close.title' | translate)  : null}}
+        {{roundOngoing() ? ('home.processes.single.round.close.title' | translate) : null}}
       </ion-button>
       </span>
     </ion-list-header>
@@ -60,19 +61,20 @@
           <ion-label>{{'home.processes.role.' + role?.name.toLowerCase() | translate}}</ion-label>
           <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>
         </ion-item>
-        <div *ngFor="let userWithRole of process?.processUsers">
-          <ion-chip *ngIf="userWithRole.role.id === role.id" (click)="openChat(userWithRole)"
-                    [color]="userWithRole?.user.id === loggedInUser?.id?'primary':'secondary'">
-            <ion-avatar>
-              <img *ngIf="userWithRole.user.photo !== undefined" [src]="userWithRole.user.photo"
-                   (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
-              <img *ngIf="userWithRole.user.photo === undefined" src="assets/images/no-process-image.jpeg"/>
-            </ion-avatar>
-            <ion-label>{{userWithRole.user.name}} {{userWithRole.user.surnames}} <{{ userWithRole.user.email }}>
-            </ion-label>
-          </ion-chip>
+        <div *ngIf="!(role.name.toLowerCase() == 'expert' && this.currentUserRole.name.toLowerCase() == 'expert')">
+          <div *ngFor="let userWithRole of process?.processUsers">
+            <ion-chip *ngIf="userWithRole.role.id === role.id" (click)="openChat(userWithRole)"
+                      [color]="userWithRole?.user.id === loggedInUser?.id?'primary':'secondary'">
+              <ion-avatar>
+                <img *ngIf="userWithRole.user.photo !== undefined" [src]="userWithRole.user.photo"
+                     (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+                <img *ngIf="userWithRole.user.photo === undefined" src="assets/images/no-process-image.jpeg"/>
+              </ion-avatar>
+              <ion-label>{{userWithRole.user.name}} {{userWithRole.user.surnames}} <{{ userWithRole.user.email }}>
+              </ion-label>
+            </ion-chip>
+          </div>
         </div>
-
       </div>
     </div>
   </ion-list>
@@ -87,7 +89,7 @@
       {{'home.processes.single.modify.title' | translate}}
     </ion-button>
     <span *hasDelphiRole="filterRole(['expert'])">
-      <ion-button *ngIf="isProcessInitiated()" expand="block" color="secondary"
+      <ion-button *ngIf="!this.process.processFinished" expand="block" color="secondary"
                   [routerLink]="['/logged-in/home/menu/processes/participate']" [state]="{ process: process}">
         {{'home.processes.single.participate.initiate' | translate}}
       </ion-button>
