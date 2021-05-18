@@ -107,10 +107,18 @@
         },
         "rounds": "Rondas",
         "users": "Participantes",
+        "close": {
+          "title": "Cerrar proceso",
+          "err": "El proceso no pudo ser cerrado"
+        },
         "round": {
           "close": {
             "title": "Cerrar ronda",
             "err": "La ronda no pudo ser cerrada"
+          },
+          "start": {
+            "title": "Iniciar ronda",
+            "err": "La ronda no pudo ser iniciada"
           }
         },
         "participate": {

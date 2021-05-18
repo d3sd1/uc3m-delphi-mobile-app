@@ -12,6 +12,7 @@ import {User} from '../../user';
 import {FilterRole} from '../filter-role';
 import {WsService} from '../../../core/ws/ws.service';
 import {TranslateService} from '@ngx-translate/core';
+import {Round} from '../round';
 
 @Component({
   selector: 'delphi-single',
@@ -25,6 +26,8 @@ export class SinglePage implements OnInit {
   process: Process;
   loggedInUser: User;
   currentUserRole: Role;
+  currentRound: Round = null;
+  remainingRounds: number = 0;
 
   constructor(
     private toastController: ToastController,
@@ -36,6 +39,20 @@ export class SinglePage implements OnInit {
     private httpClient: HttpClient,
     private wsService: WsService,
     private translate: TranslateService) {
+  }
+
+  findCurrentRound() {
+    this.currentRound = this.process?.rounds.find(round => round.current);
+    if (this.currentRound === undefined) {
+      this.currentRound = null;
+    }
+    console.log('current round:', this.currentRound);
+  }
+
+  getRemainingRounds() {
+    this.remainingRounds = this.process?.rounds.filter(round => !round.finished).length;
+    console.log('remaining rounds:', this.remainingRounds);
+
   }
 
   countUsersRole(role: Role) {
@@ -61,6 +78,9 @@ export class SinglePage implements OnInit {
     // current user process role
     this.currentUserRole = null; //TODO
 
+    this.findCurrentRound();
+    this.getRemainingRounds();
+    console.log('cur round', this.currentRound);
     // Handle process updatess
 
 
@@ -68,7 +88,7 @@ export class SinglePage implements OnInit {
       if (process === null) {
         return;
       }
-      if(process.id === this.process.id) {
+      if (process.id === this.process.id) {
         this.process = process;
       }
     });
@@ -111,14 +131,31 @@ export class SinglePage implements OnInit {
   }
 
   async closeRound() {
-    //TODO: handle close round
-    //TODO: handle create round
-    await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, this.process).toPromise().then(async (delphiProcess: Process) => {
+    await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, null).toPromise().then(async (delphiProcess: Process) => {
+      this.process = delphiProcess;
+      this.getRemainingRounds();
+      this.findCurrentRound();
       await this.showToast(await this.translate.get('home.processes.single.round.close.title').toPromise());
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
       await this.showToast(await this.translate.get('home.processes.single.round.close.err').toPromise());
     });
+  }
+
+  async startRound() {
+    await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, null).toPromise().then(async (delphiProcess: Process) => {
+      this.process = delphiProcess;
+      this.getRemainingRounds();
+      this.findCurrentRound();
+      await this.showToast(await this.translate.get('home.processes.single.round.start.title').toPromise());
+    }).catch(async (errMessage: string) => {
+      console.log(errMessage);
+      await this.showToast(await this.translate.get('home.processes.single.round.start.err').toPromise());
+    });
+  }
+
+  async closeProcess() {
+    //TODO
   }
 
   private async showToast(msg: string) {

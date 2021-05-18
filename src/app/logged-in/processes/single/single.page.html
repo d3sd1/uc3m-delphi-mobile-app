@@ -31,10 +31,18 @@
         {{ 'home.processes.single.rounds' | translate }}
       </ion-label>
 
-      <span *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished">
-      <ion-button *hasDelphiRole="filterRole(['coordinator'])" expand="block"
-                  (click)="closeRound()">
-        {{roundOngoing() ? ('home.processes.single.round.close.title' | translate) : null}}
+      <span *hasDelphiRole="filterRole(['coordinator'])">
+      <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds == 0" expand="block"
+                  (click)="closeProcess()">
+        {{'home.processes.single.close.title' | translate}}
+      </ion-button>
+        <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds > 0" expand="block"
+                    (click)="startRound()">
+        {{'home.processes.single.round.start.title' | translate}}
+      </ion-button>
+        <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound !== null" expand="block"
+                    (click)="closeRound()">
+        {{'home.processes.single.round.close.title' | translate}}
       </ion-button>
       </span>
     </ion-list-header>
@@ -61,7 +69,7 @@
           <ion-label>{{'home.processes.role.' + role?.name.toLowerCase() | translate}}</ion-label>
           <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>
         </ion-item>
-        <div *ngIf="!(role.name.toLowerCase() == 'expert' && this.currentUserRole.name.toLowerCase() == 'expert')">
+        <div *ngIf="!(role?.name.toLowerCase() == 'expert' && this.currentUserRole?.name.toLowerCase() == 'expert')">
           <div *ngFor="let userWithRole of process?.processUsers">
             <ion-chip *ngIf="userWithRole.role.id === role.id" (click)="openChat(userWithRole)"
                       [color]="userWithRole?.user.id === loggedInUser?.id?'primary':'secondary'">
@@ -89,8 +97,9 @@
       {{'home.processes.single.modify.title' | translate}}
     </ion-button>
     <span *hasDelphiRole="filterRole(['expert'])">
-      <ion-button *ngIf="!this.process.processFinished" expand="block" color="secondary"
-                  [routerLink]="['/logged-in/home/menu/processes/participate']" [state]="{ process: process}">
+      <ion-button *ngIf="!this.process.processFinished && this.currentRound !== null" expand="block" color="secondary"
+                  [routerLink]="['/logged-in/home/menu/processes/participate']"
+                  [state]="{ process: process, currentUser: loggedInUser}">
         {{'home.processes.single.participate.initiate' | translate}}
       </ion-button>
     </span>
