@@ -34,7 +34,7 @@
       <span *hasDelphiRole="filterRole(['coordinator'])">
       <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds == 0" expand="block"
                   (click)="closeProcess()">
-        {{'home.processes.single.close.title' | translate}}
+        {{'home.processes.single.end.title' | translate}}
       </ion-button>
         <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds > 0" expand="block"
                     (click)="startRound()">

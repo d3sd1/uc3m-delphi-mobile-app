@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {NavController, ToastController, ViewWillEnter} from '@ionic/angular';
+import {AlertController, ModalController, NavController, ToastController, ViewWillEnter} from '@ionic/angular';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Process} from '../process';
@@ -38,7 +38,8 @@ export class SinglePage implements OnInit {
     public roleService: RoleService,
     private httpClient: HttpClient,
     private wsService: WsService,
-    private translate: TranslateService) {
+    private translate: TranslateService,
+    public alertController: AlertController) {
   }
 
   findCurrentRound() {
@@ -135,7 +136,7 @@ export class SinglePage implements OnInit {
       this.process = delphiProcess;
       this.getRemainingRounds();
       this.findCurrentRound();
-      await this.showToast(await this.translate.get('home.processes.single.round.close.title').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single.round.close.success').toPromise());
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
       await this.showToast(await this.translate.get('home.processes.single.round.close.err').toPromise());
@@ -147,7 +148,7 @@ export class SinglePage implements OnInit {
       this.process = delphiProcess;
       this.getRemainingRounds();
       this.findCurrentRound();
-      await this.showToast(await this.translate.get('home.processes.single.round.start.title').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single.round.start.success').toPromise());
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
       await this.showToast(await this.translate.get('home.processes.single.round.start.err').toPromise());
@@ -155,7 +156,9 @@ export class SinglePage implements OnInit {
   }
 
   async closeProcess() {
-    //TODO
+    await this.navCtrl.navigateForward('/logged-in/home/menu/processes/close', {
+      state: {process: this.process}
+    });
   }
 
   private async showToast(msg: string) {

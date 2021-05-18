@@ -12,4 +12,5 @@ export class Process {
   processUsers: DelphiProcessUser[] = []; // contains everything
   rounds: Round[] = [];
   processFinished: boolean;
+  finalComment: string;
 }

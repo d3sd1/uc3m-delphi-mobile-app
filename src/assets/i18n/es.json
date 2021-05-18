@@ -61,10 +61,14 @@
       "profile": "Perfil"
     },
     "processes": {
+
       "title": "Procesos",
       "empty": {
         "title": "Sin procesos",
         "desc": "¡Aún no estás inscrito a ningún proceso!"
+      },
+      "finished": {
+        "view_results": "Ver resultados"
       },
       "modify": {
         "title": "Editar proceso",
@@ -107,18 +111,25 @@
         },
         "rounds": "Rondas",
         "users": "Participantes",
-        "close": {
-          "title": "Cerrar proceso",
-          "err": "El proceso no pudo ser cerrado"
+        "end": {
+          "title": "Finalizar proceso",
+          "back": "Cancelar",
+          "err": "El proceso no pudo ser cerrado",
+          "success": "Proceso finalizado con éxito",
+          "form": {
+            "err_empty": "Debes introducir una conclusión."
+          }
         },
         "round": {
           "close": {
             "title": "Cerrar ronda",
-            "err": "La ronda no pudo ser cerrada"
+            "err": "La ronda no pudo ser cerrada",
+            "success": "La ronda fue cerrada con éxito"
           },
           "start": {
             "title": "Iniciar ronda",
-            "err": "La ronda no pudo ser iniciada"
+            "err": "La ronda no pudo ser iniciada",
+            "success": "La ronda fue iniciada con éxito "
           }
         },
         "participate": {
