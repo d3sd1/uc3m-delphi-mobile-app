@@ -12,13 +12,13 @@
   <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
     <ion-select [(ngModel)]="this.process?.rounds[roundIndex]?.questions[questionIndex].type">
-      <ion-select-option [value]="0">Cualitativa</ion-select-option>
-      <ion-select-option [value]="1">Cuantitativa</ion-select-option>
-      <ion-select-option [value]="2">Booleana</ion-select-option>
-      <ion-select-option [value]="3">Categorías</ion-select-option>
-      <ion-select-option [value]="4">Escala de Likert</ion-select-option>
-      <ion-select-option [value]="5">Categorías con selección múltiple</ion-select-option>
-      <ion-select-option [value]="6">Categorías ponderadas</ion-select-option> <!-- este permite reordenar respuesta de categorías-->
+      <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
+      <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
+      <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
+      <ion-select-option value="CATCUSTOM">Categorías</ion-select-option>
+      <ion-select-option value="CATLIKERT">Escala de Likert</ion-select-option>
+      <ion-select-option value="CATMULTI">Categorías con selección múltiple</ion-select-option>
+      <ion-select-option value="CATPOND">Categorías ponderadas</ion-select-option> <!-- este permite reordenar respuesta de categorías-->
     </ion-select>
   </ion-item>
   <ion-item>

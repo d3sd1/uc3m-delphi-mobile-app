@@ -1,137 +1,246 @@
 {
-  "processes_single_page": {
-    "rounds": "Rounds",
-    "users": "Users",
-    "edit": "Edit process",
-    "participate": "Participate"
-  },
-  "processes_modify_page": {
-    "save": "Save process",
-    "delphiProcess": "Delphi process",
-    "rounds": "Rounds",
-    "users": "Users",
-    "processName": "Process name",
-    "processDesc": "Process description"
-  },
-  "logout_page": {
-    "disconnect": "Disconnecting...",
-    "greetings": "Thanks for participating in the platform!"
-  },
-  "chatEmpty_page": {
-    "noConversations": "No conversations yet!",
-    "participate": "Participate in processes to obtain access to chat conversations!"
-  },
-  "chatList_component": {
-    "read": "Read",
-    "delete": "Delete",
-    "group": "Group conversation",
-    "private": "Private conversation"
-  },
-  "chat_page": {
-    "messaging": "Messaging"
-  },
-  "chat_conversation": {
-    "goBack": "Go back",
-    "writeMessage": "Write message..."
-  },
-  "onboardin_page": {
-    "welcome_1": "Welcome",
-    "welcome_2": "Welcome to <b>Agile Delphi</b>. Thanks for using the application. Following, we'll briefly explain its operation.",
-    "delphi": "What is Agile Delphi?",
-    "explanation": "<b>Automation of objective criteria generation</b> by applying a modified Delphi methodology. We have simplified and optimized the method to successfully complete your processes as fast as possible.",
-    "next": "Next",
-    "whatToDo_1": "What do I have to do?",
-    "whatToDo_2": "<b>Participate or create</b> processes to produce objective criteria about relevant topics.",
-    "ready": "Ready to start?",
-    "goToApp": "Go to the app"
-  },
-  "create_page": {
-    "create": "Create",
-    "selectExperts": "Select experts (already in the platform, or invite new ones)"
-  },
-  "empty_page": {
-    "noProcesses": "No processes in progress!",
-    "thanks": "Thanks for participating in the platform."
-  },
-  "list_page": {
-    "inProgress": "In progress",
-    "finished": "Finished",
-    "hoursLeft": "hours left",
-    "seeResult": "See results"
-  },
-  "single_page": {
-    "title": "Delphi process",
-    "process_1": "Forklift operators",
-    "feature_1": "Accessibility",
-    "feature_2": "Safety",
-    "feature_3": "Current work quality",
-    "commentsTitle": "Comments",
-    "comment_1": "Globes must be worn",
-    "comment_2": "Fork-lift must be pulled by 4 operators",
-    "comment_3": "Fork-lifts must be equipped with handles",
-    "inviteButton": "Invite an expert",
-    "sendInvitationButton": "Send invitation",
-    "finishRoundButton": "Conclude round and analyze results"
-  },
-  "processes_page": {
-    "title": "Processes"
-  },
-  "cv_page": {
-    "title": "Basic profile",
-    "label": "Basic profile",
-    "saveButton": "Save profile"
-  },
-  "logout_page": {
-    "title": "Disconnecting...",
-    "disconecting": "DISCONNECTING..."
-  },
-  "profileBasic_page": {
-    "title": "Basic profile",
-    "label": "Basic profile",
-    "saveButton": "Save profile"
-  },
-  "profilePassword_page": {
-    "title": "Basic profile",
-    "label": "Basic profile",
-    "saveButton": "Save profile"
-  },
-  "studies_page": {
-    "title": "Basic profile",
-    "label": "Basic profile",
-    "saveButton": "Save profile"
-  },
-  "profile_page": {
-    "title": " My profile ",
-    "name": "Lisardo Prieto",
-    "email": "lisardo_prieto@delphi.com",
-    "notificationLabel": "Notifictions",
-    "passwordLabel": "Password",
-    "trainingLabel": "Training",
-    "cvLabel": "CV",
-    "languageLabel": "Language",
-    "disconnectLabel": "Disconnect"
-  },
-  "home_page": {
-    "processesLabel": "Processes",
-    "messagesLabel": "Messages",
-    "profileLabel": "Profile"
-  },
-  "invitation_page": {
-    "title": "Invitation",
-    "newPasswordLabel": "New password",
-    "finishInvitationLabel": "Finish invitation"
-  },
-  "login_page": {
-    "title": "Login",
-    "passwordLabel": "Password",
-    "emailLabel": "Email",
-    "rememberMeLabel": "Remember password",
-    "loginButton": "Login"
-  },
-  "splashScreen_component": {
-    "appName": "Agile Delphi"
-  },
-  "startupSplashScreen_component": {
-    "appName": "Agile Delphi"
+    "login": {
+      "connecting": "Warten Sie bitte...",
+      "title": "Verbindung",
+      "email": {
+        "label": "E-Mail",
+        "placeholder": "Input your email..."
+      },
+      "password": {
+        "label": "Passwort",
+        "placeholder": "Geben Sie Ihr Passwort ein..."
+      },
+      "extended": {
+        "label": "Erweiterte Sitzung"
+      },
+      "button": "Verbinden",
+      "response": {
+        "ok": "Connected succesfully",
+        "invalid": "Ungültige Anmeldedaten",
+        "blocked": "Benutzer gesperrt",
+        "err": {
+          "app": "App-Fehler",
+          "server": "Serverfehler",
+          "desc": "Unbekannter Fehler"
+        }
+      }
+    },
+    "loader": {
+      "init": {
+        "loading": "Starting...",
+        "failed": "Es war nicht möglich, die App zu starten."
+      },
+      "api": {
+        "loading": "Loading API...",
+        "failed": "Es war nicht möglich, die API zu laden."
+      },
+      "ws": {
+        "loading": "Loading sockets...",
+        "failed": "Es war nicht möglich, die Sockets zu laden."
+      },
+      "permissions": {
+        "api": {
+          "loading": "Loading permissions...",
+          "failed": "Es war nicht möglich, die Berechtigungen zu laden."
+        }
+      }
+    },
+    "home": {
+      "onboarding": {
+        "setup": {
+          "error": {
+            "name": "Bitte geben Sie Ihren Vor- und Nachnamen ein.",
+            "password_matching": "Passwörter stimmen nicht überein.",
+            "password_empty": "Bitte, geben Sie Ihr neues Passwort ein."
+          }
+        }
+      },
+      "tab": {
+        "processes": "Prozesse",
+        "chat": "Chat",
+        "profile": "Profil"
+      },
+      "processes": {
+  
+        "title": "Prozesse",
+        "empty": {
+          "title": "Noch keine Prozesse",
+          "desc": "Sie sind noch in keinen Prozess eingeschrieben!"
+        },
+        "finished": {
+          "view_results": "Ergebnisse ansehen"
+        },
+        "modify": {
+          "title": "Prozess bearbeiten",
+          "base": "Basisinfo",
+          "name": "Prozessname",
+          "desc": "Prozessbeschreibung",
+          "rounds": {
+            "title": "Rundendaten",
+            "enter": "Runden",
+            "users": "Benutzer"
+          },
+          "save": "Speichern",
+          "errors": {
+            "no_description": "Sie müssen eine Beschreibung angeben.",
+            "no_name": "Sie müssen einen Namen für den Prozess angeben."
+          }
+        },
+        "role": {
+          "coordinator": "Koordinator",
+          "expert": "Experte"
+        },
+        "filter": {
+          "in_progress": "In Bearbeitung",
+          "finished": "Beendet"
+        },
+        "user_picker": {
+          "back": "Zurück",
+          "search": {
+            "title": "Suche {{role}}",
+            "no_results": "No results"
+          },
+          "no_experts": "Prozess ohne zugewiesene Experten",
+          "save": "Speichern"
+        },
+        "single": {
+          "title": "Prozessansicht",
+          "back": "Zurück",
+          "invitation": {
+            "sent": "Einladung gesendet"
+          },
+          "rounds": "Runden",
+          "users": "Teilnehmer",
+          "end": {
+            "title": "Prozess beenden",
+            "back": "Abbrechen",
+            "err": "Der Prozess konnte nicht erstellt werden",
+            "success": "Prozess erfolgreich beendet",
+            "form": {
+              "err_empty": "Sie müssen eine Schlussfolgerung angeben."
+            }
+          },
+          "round": {
+            "close": {
+              "title": "Ende Runde",
+              "err": "Die Runde konnte nicht beendet werden",
+              "success": "Runde erfolgreich beendet"
+            },
+            "start": {
+              "title": "Runde gestartet",
+              "err": "Die Runde konnte nicht gestartet werden",
+              "success": "Runde erfolgreich gestartet"
+            }
+          },
+          "participate": {
+            "initiate": "Teilnehmen",
+            "back": "Zurück",
+            "title": "Teilnehmen",
+            "answer": "Geben Sie hier Ihre Antwort ein",
+            "send": "Antworten senden"
+          },
+          "modify": {
+            "title": "Prozess bearbeiten",
+            "saving": "Speichern...",
+            "saved": "Prozess erfolgreich gespeichert",
+            "round": "Runde {{round}}",
+            "question": "Frage {{questionquestion}}"
+          },
+          "view": {
+            "back": "Zurück",
+            "answers": "Siehe Antworten",
+            "no_answers": {
+              "title": "Noch keine Antworten",
+              "desc": "Es gibt keine Antworten für die Frage dieses Prozesses."
+            },
+            "rounds": {
+              "title": "Runden anzeigen",
+              "back": "Zurück",
+              "empty": {
+                "title": "Noch keine Runden",
+                "desc": "Es gibt keine Runden für diesen Prozess."
+              }
+            },
+            "questions": {
+              "title": "Fragen anzeigen",
+              "back": "Zurück",
+              "empty": {
+                "title": "Noch keine Fragen",
+                "desc": "Es sind keine Fragen für diesen Prozess vorhanden."
+              }
+            }
+          }
+        }
+      },
+      "profile": {
+        "title": "Profil",
+        "notifications": {
+          "menu": "Benachrichtigungen"
+        },
+        "password": {
+          "menu": "Passwort ändern",
+          "title": "Passwort ändern",
+          "back": "Zurück",
+          "security": "Kontosicherheit",
+          "current": "Aktuelles Passwort",
+          "reset": "Passwort ändern",
+          "new": "Neues Kennwort",
+          "new_rep": "Neues Kennwort wiederholen",
+          "change": "Passwort ändern",
+          "changed": "Passwort erfolgreich aktualisiert.",
+          "err": {
+            "differ": "Neue Passwörter stimmen nicht überein.",
+            "generic": "Fehler beim Aktualisieren des Kennworts.",
+            "old_pass": "Aktuelles Kennwort ist falsch."
+          }
+        },
+        "basic": {
+          "title": "Basisprofil",
+          "back": "Zurück",
+          "header": "Profil ändern",
+          "email": "E-Mail",
+          "save": "Profil ändern"
+        },
+        "cv": {
+          "menu": "Curriculum Vitae"
+        },
+        "language": {
+          "menu": "Sprache ändern",
+          "header": "Sprache"
+        },
+        "logout": {
+          "menu": "Abmelden"
+        }
+      },
+      "chat": {
+        "title": "Chat",
+        "empty": {
+          "title": "Noch keine Chats",
+          "desc": "Nehmen Sie an Prozessen teil, um den Chat zu nutzen!"
+        },
+        "status": {
+          "title": "Verbindungsstatus",
+          "connected": "Verbunden",
+          "busy": "Besetzt",
+          "offline": "Offline"
+        },
+        "conversation": {
+          "back": "Zurück",
+          "message": {
+            "placeholder": "Schreiben Sie Ihre Nachricht..."
+          },
+          "type": {
+            "group": "Gruppenchat",
+            "private": "Privat-Chat"
+          },
+          "mark_as_read": "Als gelesen markieren",
+          "delete": "Löschen"
+        }
+      }
+    },
+    "logout": {
+      "title": "Abmelden...",
+      "desc": "Danke für die Teilnahme!"
+    }
   }
-}
+  

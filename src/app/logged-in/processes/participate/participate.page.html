@@ -18,8 +18,10 @@
 
     <ion-item *ngIf="this.currentRound !== undefined"><ion-textarea [placeholder]="'home.processes.single.participate.answer' | translate"></ion-textarea></ion-item>
 
+
     <div *ngIf="this.currentRound !== undefined &&
-    currentRound?.questions[questionIndex]?.type == 1">
+    question?.type === 'QUANTITATIVE'">
+      cuantitativa
       <ion-range [min]="0"
                  [max]="10"
                  step="1"
@@ -28,6 +30,29 @@
         <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
       </ion-range>
     </div>
+
+
+    <div *ngIf="this.currentRound !== undefined &&
+    question?.type === 'BOOLTYPE'">
+      si o no
+    </div>
+    <div *ngIf="this.currentRound !== undefined &&
+    question?.type === 'CATCUSTOM'">
+     categorias personalizaas
+    </div>
+    <div *ngIf="this.currentRound !== undefined &&
+    question?.type === 'CATLIKERT'">
+     escala likert
+    </div>
+    <div *ngIf="this.currentRound !== undefined &&
+    question?.type === 'CATMULTI'">
+     categorias multiples
+    </div>
+    <div *ngIf="this.currentRound !== undefined &&
+    question?.type === 'CATPOND'">
+    reordenacion categorias ponderacion
+    </div>
+
   </div>
 </ion-content>
 

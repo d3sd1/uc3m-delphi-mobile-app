@@ -49,6 +49,7 @@ export class ParticipatePage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
+    console.log(this.currentRound)
     this.currentUser = await this.userStorage.getUser();
   }
 
