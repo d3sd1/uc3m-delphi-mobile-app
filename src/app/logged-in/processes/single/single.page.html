@@ -97,7 +97,7 @@
       {{'home.processes.single.modify.title' | translate}}
     </ion-button>
     <span *hasDelphiRole="filterRole(['expert'])">
-      <ion-button *ngIf="!this.process.processFinished && this.currentRound !== null" expand="block" color="secondary"
+      <ion-button *ngIf="!this.process.processFinished && this.currentRound !== null && this.currentUserCanVote()" expand="block" color="secondary"
                   [routerLink]="['/logged-in/home/menu/processes/participate']"
                   [state]="{ process: process, currentUser: loggedInUser}">
         {{'home.processes.single.participate.initiate' | translate}}

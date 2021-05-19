@@ -57,7 +57,7 @@ export class SinglePage implements OnInit {
   }
 
   countUsersRole(role: Role) {
-    return this.process?.processUsers.filter((delphiProcessUser) => {
+    return this.process?.processUsers?.filter((delphiProcessUser) => {
       return delphiProcessUser.role?.id === role.id;
     }).length;
   }
@@ -111,6 +111,13 @@ export class SinglePage implements OnInit {
     setTimeout(() => {
       toast.dismiss();
     }, 3000);
+  }
+  currentUserCanVote() {
+    if(this.currentRound?.expertsVoted === undefined || this.currentRound?.expertsVoted === null
+    || this.currentRound?.expertsVoted.length === 0){
+      return true;
+    }
+    return this.currentRound?.expertsVoted?.filter(expert => expert.id === this.loggedInUser.id).length === 0;
   }
 
   openChat(user: DelphiProcessUser) {

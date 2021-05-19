@@ -9,6 +9,5 @@ export class Question {
   maxVal: number = 10;
   question: string;
   type: QuestionType;
-  answers: Answer[] = [];
 
 }

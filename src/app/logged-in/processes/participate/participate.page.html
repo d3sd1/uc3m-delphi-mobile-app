@@ -3,7 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button [routerLink]="['/logged-in/home/menu/processes/single']"
                        [state]="{ process: process}"
-                       (click)="goBack()" [text]="'home.processes.single.participate.back' | translate"></ion-back-button>
+                       (click)="goBack()"
+                       [text]="'home.processes.single.participate.back' | translate"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'home.processes.single.participate.title' | translate}}</ion-title>
   </ion-toolbar>
@@ -11,54 +12,65 @@
 
 
 <ion-content>
-  <div *ngFor="let question of currentRound?.questions; let questionIndex = index">
-    <ion-item>
-      <ion-label>{{currentRound.questions[questionIndex].question}}</ion-label>
-    </ion-item>
 
-    <ion-item *ngIf="this.currentRound !== undefined"><ion-textarea [placeholder]="'home.processes.single.participate.answer' | translate"></ion-textarea></ion-item>
+  <ion-list>
+    <ion-item-group *ngFor="let answer of answers; let questionIndex = index">
+      <ion-item-divider>
+        <ion-label>{{answer.question.question}}</ion-label>
+      </ion-item-divider>
 
-
-    <div *ngIf="this.currentRound !== undefined &&
-    question?.type === 'QUANTITATIVE'">
-      cuantitativa
-      <ion-range [min]="0"
+      <ion-item *ngIf="this.currentRound !== undefined &&
+    answer.question?.type === 'QUALITATIVE'"><ion-textarea
+        [(ngModel)]="answer.response" [placeholder]="'home.processes.single.participate.answer' | translate"></ion-textarea></ion-item>
+      <ion-range *ngIf="this.currentRound !== undefined &&
+    answer.question?.type === 'QUANTITATIVE'" [min]="0"
                  [max]="10"
                  step="1"
-                 snaps color="primary" disabled="true" value="5">
+                 snaps color="primary" [(ngModel)]="answer.response">
         <ion-icon slot="start" color="danger" name="sad-outline"></ion-icon>
         <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
       </ion-range>
-    </div>
 
+      <ion-item *ngIf="this.currentRound !== undefined &&
+    answer.question?.type === 'BOOLTYPE'">
+        <ion-label>Respuesta</ion-label>
+        <ion-select [(ngModel)]="answer.response">
+          <ion-select-option value="1">Sí</ion-select-option>
+          <ion-select-option value="0">No</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-    <div *ngIf="this.currentRound !== undefined &&
-    question?.type === 'BOOLTYPE'">
-      si o no
-    </div>
-    <div *ngIf="this.currentRound !== undefined &&
-    question?.type === 'CATCUSTOM'">
-     categorias personalizaas
-    </div>
-    <div *ngIf="this.currentRound !== undefined &&
-    question?.type === 'CATLIKERT'">
-     escala likert
-    </div>
-    <div *ngIf="this.currentRound !== undefined &&
-    question?.type === 'CATMULTI'">
-     categorias multiples
-    </div>
-    <div *ngIf="this.currentRound !== undefined &&
-    question?.type === 'CATPOND'">
-    reordenacion categorias ponderacion
-    </div>
-
-  </div>
+      <ion-item *ngIf="this.currentRound !== undefined &&
+    answer.question?.type === 'CATCUSTOM'">
+       <!-- TODO categorias personalizaas -->
+      </ion-item>
+      <ion-item *ngIf="this.currentRound !== undefined &&
+    answer.question?.type === 'CATLIKERT'">
+        <ion-label>Escala de Likert</ion-label>
+        <ion-select [(ngModel)]="answer.response">
+          <ion-select-option value="1">Totalmente en desacuerdo</ion-select-option>
+          <ion-select-option value="2">En desacuerdo</ion-select-option>
+          <ion-select-option value="3">Ni de acuerdo ni en desacuerdo</ion-select-option>
+          <ion-select-option value="4">De acuerdo</ion-select-option>
+          <ion-select-option value="5">Totalmente de acuerdo</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="this.currentRound !== undefined &&
+    answer.question?.type === 'CATMULTI'">
+        categorias multiples
+      </ion-item>
+      <ion-item *ngIf="this.currentRound !== undefined &&
+    answer.question?.type === 'CATPOND'">
+        reordenacion categorias ponderacion
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
 </ion-content>
 
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" (click)="confirmParticipation()">{{'home.processes.single.participate.send' | translate}}</ion-button>
+    <ion-button expand="block"
+                (click)="confirmParticipation()">{{'home.processes.single.participate.send' | translate}}</ion-button>
   </ion-toolbar>
 </ion-footer>

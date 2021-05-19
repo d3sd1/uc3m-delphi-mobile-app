@@ -61,7 +61,7 @@
         "profile": "Profile"
       },
       "processes": {
-  
+
         "title": "Processes",
         "empty": {
           "title": "No processes yet",
@@ -243,4 +243,3 @@
       "desc": "Thanks for participating!"
     }
   }
-  

@@ -121,6 +121,10 @@
           }
         },
         "round": {
+          "participate": {
+            "success": "Participación satisfactoria",
+            "err": "Participación errónea"
+          },
           "close": {
             "title": "Cerrar ronda",
             "err": "La ronda no pudo ser cerrada",
