@@ -63,7 +63,7 @@ export class SinglePage implements OnInit {
   }
 
   private async loadProcess() {
-    this.route.queryParams.subscribe(async params => {
+    await this.route.queryParams.subscribe(async params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.process = this.router.getCurrentNavigation().extras.state.process;
       } else {
@@ -77,7 +77,9 @@ export class SinglePage implements OnInit {
 
     this.loggedInUser = await this.userStorage.getUser();
     // current user process role
-    this.currentUserRole = null; //TODO
+    this.currentUserRole = this.process?.processUsers.find((processUser) => {
+      return processUser.user.id === this.loggedInUser.id;
+    }).role;
 
     this.findCurrentRound();
     this.getRemainingRounds();
