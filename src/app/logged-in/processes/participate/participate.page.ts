@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Process} from '../process';
 import {User} from '../../user';
-import {NavController} from '@ionic/angular';
+import {AlertController, NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {Round} from '../round';
@@ -22,7 +22,8 @@ export class ParticipatePage implements OnInit {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private router: Router,
-    private userStorage: UserStorage) {
+    private userStorage: UserStorage,
+    public alertController: AlertController) {
   }
 
   async goBack() {
@@ -58,8 +59,31 @@ export class ParticipatePage implements OnInit {
       }
     });
   }
-  public saveParticipation() {
+  public async confirmParticipation() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar participación',
+      message: '¿Estás seguro de que deseas enviar la participación?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            alert.dismiss();
+          }
+        }, {
+          text: 'Enviar',
+          handler: () => {
+            alert.dismiss();
+            this.saveParticipation();
+          }
+        }
+      ]
+    });
 
+    await alert.present();
+  }
+  public saveParticipation() {
+console.log("participa");
   }
 
 }
