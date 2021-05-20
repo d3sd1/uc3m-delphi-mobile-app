@@ -88,7 +88,6 @@ export class ModifyRoundsPage implements OnInit {
   }
 
   sortRounds() {
-    console.log(this.process.rounds);
     this.process.rounds.sort((a, b) => {
       if (a.orderPosition < b.orderPosition) {
         return -1;

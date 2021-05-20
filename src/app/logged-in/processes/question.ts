@@ -9,5 +9,6 @@ export class Question {
   maxVal: number = 10;
   question: string;
   type: QuestionType;
+  orderPosition: number;
 
 }

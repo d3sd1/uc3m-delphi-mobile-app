@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserStorage} from '../../../../core/storage/user.storage';
 import {Question} from '../../question';
 import {QuestionType} from '../../question-type';
+import {Round} from '../../round';
 
 @Component({
   selector: 'delphi-rounds',
@@ -26,10 +27,6 @@ export class ModifyQuestionsPage implements OnInit {
     public alertController: AlertController) {
   }
 
-  public onItemReorder({detail}) {
-    detail.complete(true);
-  }
-
   private async loadProcess() {
     this.route.queryParams.subscribe(async params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -39,9 +36,35 @@ export class ModifyQuestionsPage implements OnInit {
         if (this.process.rounds === undefined) {
           this.process.rounds = [];
         }
+        this.sortQuestions();
       } else {
         await this.router.navigateByUrl('/logged-in/home/menu/processes');
       }
+    });
+  }
+  public onItemReorder({detail}) {
+    detail.complete(true);
+    const aux = this.process?.rounds[detail.to];
+    this.process.rounds[detail.to] = this.process?.rounds[detail.from];
+    this.process.rounds[detail.from] = aux;
+    this.reAssignOrder();
+  }
+
+
+  reAssignOrder() {
+    this.process.rounds.forEach((round: Round, index) => {
+      round.orderPosition = index;
+    });
+  }
+  sortQuestions() {
+    this.process.rounds[this.roundIndex].questions.sort((a, b) => {
+      if (a.orderPosition < b.orderPosition) {
+        return -1;
+      }
+      if (a.orderPosition > b.orderPosition) {
+        return 1;
+      }
+      return 0;
     });
   }
 
@@ -52,6 +75,7 @@ export class ModifyQuestionsPage implements OnInit {
     this.process.rounds[this.roundIndex].questions.push(
       question
     );
+    this.reAssignOrder();
   }
 
   deleteQuestion(questionIndex: number) {
