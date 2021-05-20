@@ -187,7 +187,8 @@ export class SinglePage implements OnInit {
   }
 
   async goBack() {
-    await this.navCtrl.back();
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes', {
+    });
   }
 
 }
