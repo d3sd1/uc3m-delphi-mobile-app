@@ -61,6 +61,15 @@ export class ListPage implements OnInit {
         this.filteredProcesses.push(process);
       }
     });
+    this.filteredProcesses.sort((a, b) => {
+      if (a.modifiedDate < b.modifiedDate) {
+        return 1;
+      }
+      if (a.modifiedDate > b.modifiedDate) {
+        return -1;
+      }
+      return 0;
+    });
   }
 
 }

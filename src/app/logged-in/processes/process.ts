@@ -13,4 +13,5 @@ export class Process {
   rounds: Round[] = [];
   processFinished: boolean;
   finalComment: string;
+  modifiedDate: Date;
 }
