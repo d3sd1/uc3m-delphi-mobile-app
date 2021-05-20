@@ -32,7 +32,6 @@ export class OnboardingPage implements OnInit {
   }
 
   async ngOnInit() {
-    console.log('reset user')
     this.user = await this.userStorage.getUser();
   }
 
