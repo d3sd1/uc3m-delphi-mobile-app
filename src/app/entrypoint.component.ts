@@ -71,25 +71,25 @@ export class EntrypointComponent implements OnInit {
       PushNotifications.addListener(
         'registration',
         (token: PushNotificationToken) => {
-          alert('Push registration success, token: ' + token.value);
+         // alert('Push registration success, token: ' + token.value);
         },
       );
 
       PushNotifications.addListener('registrationError', (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
+        //alert('Error on registration: ' + JSON.stringify(error));
       });
 
       PushNotifications.addListener(
         'pushNotificationReceived',
         (notification: PushNotification) => {
-          alert('Push received: ' + JSON.stringify(notification));
+        //  alert('Push received: ' + JSON.stringify(notification));
         },
       );
 
       PushNotifications.addListener(
         'pushNotificationActionPerformed',
         (notification: PushNotificationActionPerformed) => {
-          alert('Push action performed: ' + JSON.stringify(notification));
+         // alert('Push action performed: ' + JSON.stringify(notification));
         },
       );
     }
