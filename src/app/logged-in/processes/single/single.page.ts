@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
 import {AlertController, ModalController, NavController, ToastController, ViewWillEnter} from '@ionic/angular';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -38,8 +38,21 @@ export class SinglePage implements OnInit {
     public roleService: RoleService,
     private httpClient: HttpClient,
     private wsService: WsService,
-    private translate: TranslateService,
-    public alertController: AlertController) {
+    private translate: TranslateService) {
+  }
+  hasRole(roles: string[]) {
+    let found = false;
+    // get current user
+    const delphiProcessUser = this.process?.processUsers?.find((delphiProcessUser) => {
+      return delphiProcessUser?.user?.id === this.loggedInUser?.id;
+    });
+    // filter
+    roles.forEach((roleStr) => {
+      if (delphiProcessUser?.role?.name.toLowerCase() === roleStr.toLowerCase()) {
+        found = true;
+      }
+    });
+    return found;
   }
 
   findCurrentRound() {
@@ -179,11 +192,6 @@ export class SinglePage implements OnInit {
       toast.dismiss();
     }, 3000);
     return toast;
-  }
-
-
-  filterRole(roles: string[]): FilterRole {
-    return new FilterRole(this.process?.processUsers, roles);
   }
 
   async goBack() {
