@@ -25,6 +25,17 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-toolbar>
+  <span *hasDelphiRole="filterRole(['expert'])">
+      <ion-button *ngIf="!this.process.processFinished && this.currentRound !== null && this.currentUserCanVote()"
+                  expand="block" color="secondary"
+                  [routerLink]="['/logged-in/home/menu/processes/participate']"
+                  [state]="{ process: process, currentUser: loggedInUser}">
+        {{'home.processes.single.participate.initiate' | translate}}
+      </ion-button>
+    </span>
+  </ion-toolbar>
+
   <ion-list lines="inset" class="ion-no-margin">
     <ion-list-header>
       <ion-label>
@@ -32,15 +43,20 @@
       </ion-label>
 
       <span *hasDelphiRole="filterRole(['coordinator'])">
-      <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds == 0" expand="block"
-                  (click)="closeProcess()">
+      <ion-button
+        *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds == 0"
+        expand="block"
+        (click)="closeProcess()">
         {{'home.processes.single.end.title' | translate}}
       </ion-button>
-        <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds > 0" expand="block"
-                    (click)="startRound()">
+        <ion-button
+          *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds > 0"
+          expand="block"
+          (click)="startRound()">
         {{'home.processes.single.round.start.title' | translate}}
       </ion-button>
-        <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound !== null" expand="block"
+        <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound !== null"
+                    expand="block"
                     (click)="closeRound()">
         {{'home.processes.single.round.close.title' | translate}}
       </ion-button>
@@ -89,19 +105,12 @@
 </ion-content>
 
 
-<ion-footer *ngIf="!process?.processFinished">
-  <ion-toolbar>
-    <ion-button *hasDelphiRole="filterRole(['coordinator'])" expand="block"
+<ion-footer *hasDelphiRole="filterRole(['coordinator'])">
+  <ion-toolbar *ngIf="!process?.processFinished">
+    <ion-button  expand="block"
                 [routerLink]="['/logged-in/home/menu/processes/modify']"
                 [state]="{ process: process}">
       {{'home.processes.single.modify.title' | translate}}
     </ion-button>
-    <span *hasDelphiRole="filterRole(['expert'])">
-      <ion-button *ngIf="!this.process.processFinished && this.currentRound !== null && this.currentUserCanVote()" expand="block" color="secondary"
-                  [routerLink]="['/logged-in/home/menu/processes/participate']"
-                  [state]="{ process: process, currentUser: loggedInUser}">
-        {{'home.processes.single.participate.initiate' | translate}}
-      </ion-button>
-    </span>
   </ion-toolbar>
 </ion-footer>

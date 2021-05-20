@@ -52,7 +52,7 @@ export class EntrypointComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.ws.connectWs(await this.userStorage.getJwt());
     this.translate.setDefaultLang('es');
-    this.translate.addLangs(['es', 'en']);
+    this.translate.addLangs(['es', 'en', 'de']);
     if(await this.userStorage.isLoggedIn()){
       const userLang = (await this.userStorage.getUser()).language?.keyName;
       this.translate.use(userLang?.toLowerCase());
