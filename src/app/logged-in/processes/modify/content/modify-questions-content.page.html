@@ -31,7 +31,7 @@
                   [(ngModel)]="this.process?.rounds[roundIndex]?.questions[questionIndex].question"></ion-textarea>
   </ion-item>
 
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 1">
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type === 'QUANTITATIVE'">
     <ion-item>
       <ion-input placeholder="Valor mínimo"
                  [value]="this.process?.rounds[roundIndex]?.questions[questionIndex]?.minVal"></ion-input>
@@ -46,7 +46,7 @@
       <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
     </ion-range>
   </div>
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 2">
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type === 'BOOLTYPE'">
     <ion-item>
       <ion-label>Respuesta</ion-label>
       <ion-select value="1">
@@ -55,7 +55,7 @@
       </ion-select>
     </ion-item>
   </div>
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 3">
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type === 'CATCUSTOM'">
 
     <ion-item>
       <ion-input placeholder="Nombre categoría..." [(ngModel)]="currentCategory"></ion-input>
@@ -76,7 +76,7 @@
       </ion-item-group>
     </ion-list>
   </div>
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 4">
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type === 'CATLIKERT'">
     <ion-item>
       <ion-label>Escala de Likert</ion-label>
       <ion-select value="3">
@@ -89,7 +89,7 @@
     </ion-item>
   </div>
 
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 5">
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 'CATMULTI'">
     <ion-item>
       <ion-range min="1" [max]="categories.length + 1" step="1" [(ngModel)]="responseRange" snaps color="primary">
         <ion-icon slot="start" size="small" color="primary" name="aperture-outline"></ion-icon>
@@ -115,7 +115,7 @@
       </ion-item-group>
     </ion-list>
   </div>
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 6">
+  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 'CATPOND'">
 
     <ion-item>
       <ion-input placeholder="Nombre categoría..." [(ngModel)]="currentCategory"></ion-input>
