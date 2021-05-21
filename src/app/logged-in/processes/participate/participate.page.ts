@@ -51,6 +51,17 @@ export class ParticipatePage implements OnInit {
       return 0;
     });
   }
+  sortCurRoundQuestions() {
+    this.currentRound.questions?.sort((a, b) => {
+      if (a.orderPosition < b.orderPosition) {
+        return -1;
+      }
+      if (a.orderPosition > b.orderPosition) {
+        return 1;
+      }
+      return 0;
+    });
+  }
   private async loadProcess() {
     this.route.queryParams.subscribe(async params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -77,6 +88,7 @@ export class ParticipatePage implements OnInit {
       this.answers.push(answer);
     });
     this.sortAnswers();
+    this.sortCurRoundQuestions();
   }
 
   public findCurrentRound(): void {
