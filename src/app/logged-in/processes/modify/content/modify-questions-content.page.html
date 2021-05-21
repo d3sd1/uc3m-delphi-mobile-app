@@ -66,10 +66,10 @@
       <ion-item-group>
         <ion-item-divider>
           <ion-label>Categorías</ion-label>
-          <ion-badge slot="end" >{{categories.length}}</ion-badge>
+          <ion-badge slot="end" >{{this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.length}}</ion-badge>
         </ion-item-divider>
 
-        <ion-item *ngFor="let category of categories; let i = index">
+        <ion-item *ngFor="let category of this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories; let i = index">
           <ion-label>{{category.name}}</ion-label>
           <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
         </ion-item>
@@ -91,7 +91,7 @@
 
   <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 'CATMULTI'">
     <ion-item>
-      <ion-range min="1" [max]="categories.length + 1" step="1" [(ngModel)]="responseRange" snaps color="primary">
+      <ion-range min="1" [max]="this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.length + 1" step="1" [(ngModel)]="responseRange" snaps color="primary">
         <ion-icon slot="start" size="small" color="primary" name="aperture-outline"></ion-icon>
         <ion-icon slot="end" color="success" name="aperture"></ion-icon>
       </ion-range>
@@ -105,10 +105,10 @@
       <ion-item-group>
         <ion-item-divider>
           <ion-label>Categorías</ion-label>
-          <ion-badge slot="end" >{{categories.length}}</ion-badge>
+          <ion-badge slot="end" >{{this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.length}}</ion-badge>
         </ion-item-divider>
 
-        <ion-item *ngFor="let category of categories; let i = index">
+        <ion-item *ngFor="let category of this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories; let i = index">
           <ion-label>{{category.name}}</ion-label>
           <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
         </ion-item>
@@ -126,10 +126,10 @@
       <ion-item-group>
         <ion-item-divider>
           <ion-label>Categorías</ion-label>
-          <ion-badge slot="end" >{{categories.length}}</ion-badge>
+          <ion-badge slot="end" >{{this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.length}}</ion-badge>
         </ion-item-divider>
 
-        <ion-item *ngFor="let category of categories; let i = index">
+        <ion-item *ngFor="let category of this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories; let i = index">
           <ion-label>{{category.name}}</ion-label>
           <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
         </ion-item>

@@ -61,7 +61,6 @@
       "profile": "Perfil"
     },
     "processes": {
-
       "title": "Procesos",
       "empty": {
         "title": "Sin procesos",
@@ -134,6 +133,13 @@
             "title": "Iniciar ronda",
             "err": "La ronda no pudo ser iniciada",
             "success": "La ronda fue iniciada con éxito "
+          },
+          "err": {
+            "content": "La pregunta debe tener contenido.",
+            "valsminmax": "El valor mínimo debe ser menor que el valor máximo",
+            "valsnotnumbers": "Los valores deben ser numéricos.",
+            "duplicated_categories": "La pregunta no puede contener categorías duplicadas.",
+            "category_must_be_filled": "La categoría debe ser rellenada."
           }
         },
         "participate": {
