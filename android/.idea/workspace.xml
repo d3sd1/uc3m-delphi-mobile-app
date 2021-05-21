@@ -9,11 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="712fda4c-82e8-4f5a-9a37-a1c923b941f0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/App/App.xcworkspace/xcuserdata/andreigarcia.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/App.xcworkspace/xcuserdata/andreigarcia.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/processes/modify/content/modify-questions-content.page.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/processes/modify/content/modify-questions-content.page.html" afterDir="false" />
-    </list>
+    <list default="true" id="712fda4c-82e8-4f5a-9a37-a1c923b941f0" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

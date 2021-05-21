@@ -40,6 +40,17 @@ export class ParticipatePage implements OnInit {
       state: {process: this.process, currentUser: this.currentUser}
     });
   }
+  sortQuestions() {
+    this.currentRound?.questions.sort((a, b) => {
+      if (a.orderPosition < b.orderPosition) {
+        return -1;
+      }
+      if (a.orderPosition > b.orderPosition) {
+        return 1;
+      }
+      return 0;
+    });
+  }
   private async loadProcess() {
     this.route.queryParams.subscribe(async params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -50,6 +61,7 @@ export class ParticipatePage implements OnInit {
         }
         this.findCurrentRound();
         console.log(this.currentRound)
+        this.sortQuestions();
       } else {
         await this.router.navigateByUrl('/logged-in/home/menu/processes');
       }
