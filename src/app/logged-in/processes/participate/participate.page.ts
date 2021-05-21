@@ -40,12 +40,12 @@ export class ParticipatePage implements OnInit {
       state: {process: this.process, currentUser: this.currentUser}
     });
   }
-  sortQuestions() {
-    this.currentRound?.questions.sort((a, b) => {
-      if (a.orderPosition < b.orderPosition) {
+  sortAnswers() {
+    this.answers?.sort((a, b) => {
+      if (a.question.orderPosition < b.question.orderPosition) {
         return -1;
       }
-      if (a.orderPosition > b.orderPosition) {
+      if (a.question.orderPosition > b.question.orderPosition) {
         return 1;
       }
       return 0;
@@ -61,7 +61,6 @@ export class ParticipatePage implements OnInit {
         }
         this.findCurrentRound();
         console.log(this.currentRound)
-        this.sortQuestions();
       } else {
         await this.router.navigateByUrl('/logged-in/home/menu/processes');
       }
@@ -77,6 +76,7 @@ export class ParticipatePage implements OnInit {
       answer.user = this.currentUser;
       this.answers.push(answer);
     });
+    this.sortAnswers();
   }
 
   public findCurrentRound(): void {
@@ -119,8 +119,8 @@ export class ParticipatePage implements OnInit {
     }, 3000);
     return toast;
   }
-  public async saveParticipation() {
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/answers', this.answers).toPromise().then(async (delphiProcess: Process) => {
+  public async saveParticipation() { // ñapa temporal
+    await this.httpClient.post(environment.apiUrl + '/v1/process/tmp_json_upl', this.answers).toPromise().then(async (delphiProcess: Process) => {
       await this.showToast('home.processes.single.round.participate.success');
       if(this.currentRound.expertsVoted === null || this.currentRound.expertsVoted === undefined) {
         this.currentRound.expertsVoted = [];

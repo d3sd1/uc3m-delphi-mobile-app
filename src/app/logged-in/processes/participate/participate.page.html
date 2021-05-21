@@ -42,7 +42,9 @@
 
       <ion-item *ngIf="this.currentRound !== undefined &&
     answer.question?.type === 'CATCUSTOM'">
-       <!-- TODO categorias personalizaas -->
+        <ion-select [(ngModel)]="answer.response">
+          <ion-select-option *ngFor="let cat of answer.question?.categories" [value]="cat.id">{{cat.catName}}</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item *ngIf="this.currentRound !== undefined &&
     answer.question?.type === 'CATLIKERT'">
