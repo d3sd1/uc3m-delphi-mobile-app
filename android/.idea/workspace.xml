@@ -11,8 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="712fda4c-82e8-4f5a-9a37-a1c923b941f0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/App/App.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/App.xcodeproj/project.pbxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/App.xcworkspace/xcuserdata/andreigarcia.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/App.xcworkspace/xcuserdata/andreigarcia.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/logged-in/processes/modify/content/modify-questions-content.page.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/logged-in/processes/modify/content/modify-questions-content.page.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,5 +186,9 @@
       <screen x="1792" y="25" width="1302" height="999" />
     </state>
     <state width="1258" height="269" key="GridCell.Tab.0.right/1792.25.1302.999/0.25.1792.1095@1792.25.1302.999" timestamp="1618585277346" />
+    <state x="942" y="477" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1621562324823">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state x="942" y="477" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1792.1095@0.25.1792.1095" timestamp="1621562324823" />
   </component>
 </project>

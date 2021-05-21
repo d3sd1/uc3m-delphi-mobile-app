@@ -123,11 +123,11 @@ export class ModifyQuestionsContentPage implements OnInit {
     let hasDuplicatedCategories = false;
     this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.forEach((category1, index1) => {
       this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.forEach((category2, index2) => {
-        if (category1.name.toLowerCase() === category2.name.toLowerCase() && index1 !== index2) {
+        if (category1.catName.toLowerCase() === category2.catName.toLowerCase() && index1 !== index2) {
           hasDuplicatedCategories = true;
         }
       });
-      if (checkWith !== null && checkWith.toLowerCase() === category1.name.toLowerCase()) {
+      if (checkWith !== null && checkWith.toLowerCase() === category1.catName.toLowerCase()) {
         hasDuplicatedCategories = true;
       }
     });
@@ -136,7 +136,7 @@ export class ModifyQuestionsContentPage implements OnInit {
 
   delCategory(category) {
     this.process.rounds[this.roundIndex].questions[this.questionIndex].categories = this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.filter((cat) => {
-      return cat.name.toLowerCase() != category.name.toLowerCase();
+      return cat.catName.toLowerCase() != category.name.toLowerCase();
     });
   }
 

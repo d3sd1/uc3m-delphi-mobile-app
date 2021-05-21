@@ -70,7 +70,7 @@
         </ion-item-divider>
 
         <ion-item *ngFor="let category of this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories; let i = index">
-          <ion-label>{{category.name}}</ion-label>
+          <ion-label>{{category.catName}}</ion-label>
           <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
         </ion-item>
       </ion-item-group>
@@ -109,7 +109,7 @@
         </ion-item-divider>
 
         <ion-item *ngFor="let category of this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories; let i = index">
-          <ion-label>{{category.name}}</ion-label>
+          <ion-label>{{category.catName}}</ion-label>
           <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
         </ion-item>
       </ion-item-group>
@@ -130,7 +130,7 @@
         </ion-item-divider>
 
         <ion-item *ngFor="let category of this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories; let i = index">
-          <ion-label>{{category.name}}</ion-label>
+          <ion-label>{{category.catName}}</ion-label>
           <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
         </ion-item>
       </ion-item-group>

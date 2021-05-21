@@ -4,9 +4,9 @@ import {Answer} from './answer';
 
 export class Category {
   id: number;
-  name: string;
+  catName: string;
 
   constructor(name: string) {
-    this.name = name;
+    this.catName = name;
   }
 }
