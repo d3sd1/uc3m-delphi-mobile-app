@@ -57,7 +57,7 @@ export class ModifyQuestionsPage implements OnInit {
     });
   }
   sortQuestions() {
-    this.process.rounds[this.roundIndex].questions.sort((a, b) => {
+    this.process.rounds[this.roundIndex]?.questions.sort((a, b) => {
       if (a.orderPosition < b.orderPosition) {
         return -1;
       }
@@ -70,9 +70,9 @@ export class ModifyQuestionsPage implements OnInit {
 
   addQuestion() {
     const question = new Question();
-    question.name = 'Pregunta ' + this.process.rounds[this.roundIndex].questions.length;
+    question.name = 'Pregunta ' + this.process.rounds[this.roundIndex]?.questions.length;
     question.type = QuestionType.QUALITATIVE;
-    this.process.rounds[this.roundIndex].questions.push(
+    this.process.rounds[this.roundIndex]?.questions.push(
       question
     );
     this.reAssignOrder();
@@ -93,16 +93,15 @@ export class ModifyQuestionsPage implements OnInit {
 
   async saveQuestions() {
     let questionsMissing = false;
-    this.process?.rounds[this.roundIndex].questions.forEach((question) => {
-      console.log('question:',question.question)
+    this.process?.rounds[this.roundIndex]?.questions?.forEach((question) => {
       if (question.question === null ||
         question.question === '' ||
         question.question === undefined) {
         questionsMissing = true;
       }
     });
-    if (this.process?.rounds[this.roundIndex].endTime === null ||
-      this.process?.rounds[this.roundIndex].endTime === undefined) {
+    if (this.process?.rounds[this.roundIndex]?.endTime === null ||
+      this.process?.rounds[this.roundIndex]?.endTime === undefined) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',
@@ -112,9 +111,9 @@ export class ModifyQuestionsPage implements OnInit {
       });
 
       await alert.present();
-    } else if (this.process?.rounds[this.roundIndex].questions === null ||
-      this.process?.rounds[this.roundIndex].questions === undefined ||
-      this.process?.rounds[this.roundIndex].questions.length === 0) {
+    } else if (this.process?.rounds[this.roundIndex]?.questions === null ||
+      this.process?.rounds[this.roundIndex]?.questions === undefined ||
+      this.process?.rounds[this.roundIndex]?.questions.length === 0) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',
