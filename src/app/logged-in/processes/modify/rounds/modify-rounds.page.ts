@@ -87,7 +87,8 @@ export class ModifyRoundsPage implements OnInit {
         }
         this.sortRounds();
       } else {
-        await this.router.navigateByUrl('/logged-in/home/menu/processes');
+        await this.navCtrl.navigateBack('/logged-in/home/menu/processes', {
+        });
       }
     });
   }

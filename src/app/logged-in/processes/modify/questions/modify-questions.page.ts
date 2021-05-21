@@ -38,7 +38,8 @@ export class ModifyQuestionsPage implements OnInit {
         }
         this.sortQuestions();
       } else {
-        await this.router.navigateByUrl('/logged-in/home/menu/processes');
+        await this.navCtrl.navigateBack('/logged-in/home/menu/processes', {
+        });
       }
     });
   }
@@ -139,10 +140,7 @@ export class ModifyQuestionsPage implements OnInit {
 
       await alert.present();
     } else {
-      //TODO determine logic to add to it's role (pass role by routing)
-      //TODO aqui al editar un proceso que ya tiene uysuarios los borra yt solo añade los nuevos
-      // deberia combinar los antiguos y los nuevos, y actualizar roles (sin duplicados)
-      await this.router.navigateByUrl('/logged-in/home/menu/processes/modify_rounds', {
+      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/modify_rounds', {
         state: {
           process: this.process,
           currentUser: this.currentUser
