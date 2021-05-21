@@ -88,9 +88,7 @@ export class ModifyQuestionsPage implements OnInit {
   }
 
   async goBack() {
-    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/modify_rounds', {
-      state: {process: this.process, currentUser: this.currentUser}
-    });
+    await this.saveQuestions();
   }
 
   async saveQuestions() {
@@ -142,7 +140,8 @@ export class ModifyQuestionsPage implements OnInit {
       // deberia combinar los antiguos y los nuevos, y actualizar roles (sin duplicados)
       await this.router.navigateByUrl('/logged-in/home/menu/processes/modify_rounds', {
         state: {
-          process: this.process
+          process: this.process,
+          currentUser: this.currentUser
         }
       });
     }
