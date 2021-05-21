@@ -136,7 +136,7 @@ export class ModifyQuestionsContentPage implements OnInit {
 
   delCategory(category) {
     this.process.rounds[this.roundIndex].questions[this.questionIndex].categories = this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.filter((cat) => {
-      return cat.catName.toLowerCase() != category.name.toLowerCase();
+      return cat.catName?.toLowerCase() != category.name?.toLowerCase();
     });
   }
 

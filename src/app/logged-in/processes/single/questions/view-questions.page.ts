@@ -24,6 +24,18 @@ export class ViewQuestionsPage implements OnInit {
     private userStorage: UserStorage) {
   }
 
+  sortQuestions() {
+    this.process.rounds[this.roundIndex]?.questions.sort((a, b) => {
+      if (a.orderPosition < b.orderPosition) {
+        return -1;
+      }
+      if (a.orderPosition > b.orderPosition) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
   async goBack() {
     await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view_rounds', {
       state: {process: this.process, currentUser: this.currentUser, roundIndex: this.roundIndex}
@@ -38,31 +50,10 @@ export class ViewQuestionsPage implements OnInit {
         if (this.process.rounds === undefined) {
           this.process.rounds = [];
         }
-        this.sortRounds();
+        this.sortQuestions();
       } else {
         await this.router.navigateByUrl('/logged-in/home/menu/processes');
       }
-    });
-  }
-
-  sortRounds() {
-    console.log(this.process.rounds);
-    this.process.rounds.sort((a, b) => {
-      // check if some1 is finished
-      if (!a.finished && b.finished) {
-        return -1;
-      } else if (a.finished && !b.finished) {
-        return 1;
-      }
-
-      // normal ordering
-      if (a.orderPosition < b.orderPosition) {
-        return -1;
-      }
-      if (a.orderPosition > b.orderPosition) {
-        return 1;
-      }
-      return 0;
     });
   }
 
