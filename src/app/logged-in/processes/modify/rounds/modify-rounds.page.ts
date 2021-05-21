@@ -110,9 +110,7 @@ export class ModifyRoundsPage implements OnInit {
   }
 
   async goBack() {
-    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/modify', {
-      state: {process: this.process}
-    });
+    await this.saveRounds();
   }
 
 }
