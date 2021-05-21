@@ -81,6 +81,7 @@ export class ParticipatePage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
+    this.sortCurRoundQuestions();
     this.currentRound.questions.forEach((question: Question) => {
       const answer = new Answer();
       answer.question = question;
@@ -88,7 +89,6 @@ export class ParticipatePage implements OnInit {
       this.answers.push(answer);
     });
     this.sortAnswers();
-    this.sortCurRoundQuestions();
   }
 
   public findCurrentRound(): void {
