@@ -27,6 +27,11 @@ export class ModifyRoundsPage implements OnInit {
   }
 
   public onItemReorder({detail}) {
+    if(detail.from > this.process.rounds.length - 1
+    || detail.to > this.process.rounds.length - 1) {
+      detail.complete(false);
+      return;
+    }
     detail.complete(true);
     const aux = this.process?.rounds[detail.to];
     this.process.rounds[detail.to] = this.process?.rounds[detail.from];
@@ -68,7 +73,7 @@ export class ModifyRoundsPage implements OnInit {
   }
 
   reAssignOrder() {
-    this.process.rounds.forEach((round: Round, index) => {
+    this.process?.rounds?.forEach((round: Round, index) => {
       round.orderPosition = index;
     });
   }

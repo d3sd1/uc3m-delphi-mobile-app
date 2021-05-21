@@ -43,6 +43,11 @@ export class ModifyQuestionsPage implements OnInit {
     });
   }
   public onItemReorder({detail}) {
+    if(detail.from > this.process.rounds.length - 1
+      || detail.to > this.process.rounds.length - 1) {
+      detail.complete(false);
+      return;
+    }
     detail.complete(true);
     const aux = this.process?.rounds[detail.to];
     this.process.rounds[detail.to] = this.process?.rounds[detail.from];
