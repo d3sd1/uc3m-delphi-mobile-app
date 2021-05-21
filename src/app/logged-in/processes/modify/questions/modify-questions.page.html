@@ -13,6 +13,11 @@
     <ion-label>Fecha límite de ronda</ion-label>
     <ion-datetime display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="this.process?.rounds[roundIndex].endTime"></ion-datetime>
   </ion-item>
+
+  <ion-item>
+    <ion-label>Nombre</ion-label>
+    <ion-input [(ngModel)]="this.process?.rounds[roundIndex].name"></ion-input>
+  </ion-item>
   <ion-item-divider></ion-item-divider>
   <div id="container" *ngIf="process?.rounds[roundIndex]?.questions.length == 0">
     <strong>Sin preguntas</strong>
@@ -27,7 +32,7 @@
       <ion-item
         [routerLink]="['/logged-in/home/menu/processes/modify_question_content']"
         [state]="{ process: process, roundIndex: roundIndex, questionIndex: questionIndex}">
-        <ion-input [(ngModel)]="question.name"></ion-input>
+        {{question.name}}
         <ion-reorder slot="start"></ion-reorder>
       </ion-item>
     </ion-item-sliding>

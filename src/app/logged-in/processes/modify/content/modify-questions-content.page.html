@@ -10,6 +10,11 @@
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
 
   <ion-item>
+    <ion-label>Nombre</ion-label>
+    <ion-input [(ngModel)]="this.process?.rounds[roundIndex]?.questions[questionIndex].name"></ion-input>
+  </ion-item>
+
+  <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
     <ion-select [(ngModel)]="this.process?.rounds[roundIndex]?.questions[questionIndex].type">
       <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>

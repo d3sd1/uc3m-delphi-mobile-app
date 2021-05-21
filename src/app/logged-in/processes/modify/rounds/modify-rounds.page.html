@@ -21,7 +21,7 @@
       <ion-item
         [routerLink]="['/logged-in/home/menu/processes/modify_questions']"
         [state]="{ process: process, roundIndex: roundIndex}">
-        <ion-input [(ngModel)]="round.name"></ion-input>
+        {{round.name}}
         <ion-reorder slot="start"></ion-reorder>
       </ion-item>
     </ion-item-sliding>
