@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {User} from '../../logged-in/user';
-import {Role} from '../../../model/role';
 import {WsService} from '../ws/ws.service';
 
 

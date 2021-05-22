@@ -5,8 +5,8 @@ import {SessionStorageService} from '../session-storage.service';
 import {UserStorage} from '../storage/user.storage';
 import {BehaviorSubject} from 'rxjs';
 import {User} from '../../logged-in/user';
-import {ChatMessage} from '../../../model/chat-message';
 import {environment} from '../../../environments/environment';
+import {ChatMessage} from '../../logged-in/chat/chat-conversation/chat-message';
 
 @Injectable({
   providedIn: 'root'
