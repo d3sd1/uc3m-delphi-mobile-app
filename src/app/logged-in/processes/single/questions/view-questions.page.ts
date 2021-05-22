@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserStorage} from '../../../../core/storage/user.storage';
-import {Round} from '../../round';
 import {Process} from '../../process';
 import {User} from '../../../user';
 

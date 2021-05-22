@@ -1,5 +1,5 @@
-import {Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
-import {AlertController, ModalController, NavController, ToastController, ViewWillEnter} from '@ionic/angular';
+import {Component, OnInit} from '@angular/core';
+import {NavController, ToastController} from '@ionic/angular';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Process} from '../process';
@@ -9,7 +9,6 @@ import {RoleService} from '../role.service';
 import {Role} from '../../role';
 import {DelphiProcessUser} from '../delphi-process-user';
 import {User} from '../../user';
-import {FilterRole} from '../filter-role';
 import {WsService} from '../../../core/ws/ws.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Round} from '../round';

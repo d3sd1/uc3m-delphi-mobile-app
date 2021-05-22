@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {Router} from '@angular/router';
 import {NavController} from '@ionic/angular';
 
 @Component({

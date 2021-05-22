@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {UserStorage} from '../core/storage/user.storage';
-import {from} from 'rxjs';
 
 @Injectable()
 export class LoggedInInterceptor implements HttpInterceptor {

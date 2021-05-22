@@ -1,4 +1,3 @@
-import {Platform} from '@ionic/angular';
 import {Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {JwtHelperService} from '@auth0/angular-jwt';

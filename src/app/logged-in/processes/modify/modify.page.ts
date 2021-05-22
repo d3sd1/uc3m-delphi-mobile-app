@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {IonContent, IonInfiniteScroll, IonReorderGroup, LoadingController, NavController, ToastController} from '@ionic/angular';
+import {IonContent, IonReorderGroup, LoadingController, NavController, ToastController} from '@ionic/angular';
 import {Process} from '../process';
 import {User} from '../../user';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -10,7 +10,6 @@ import {ItemReorderEventDetail} from '@ionic/core';
 import {Round} from '../round';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
-import {map} from 'rxjs/operators';
 import {RoleService} from '../role.service';
 import {Role} from '../../role';
 import {DelphiProcessUser} from '../delphi-process-user';

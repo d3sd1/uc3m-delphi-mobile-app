@@ -1,6 +1,4 @@
-import {User} from '../user';
 import {QuestionType} from './question-type';
-import {Answer} from './answer';
 import {Category} from './category';
 
 export class Question {

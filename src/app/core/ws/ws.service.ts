@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {SessionStorageService} from '../session-storage.service';
-import {UserStorage} from '../storage/user.storage';
 import {BehaviorSubject} from 'rxjs';
-import {User} from '../../logged-in/user';
 import {environment} from '../../../environments/environment';
 import {ChatMessage} from '../../logged-in/chat/chat-conversation/chat-message';
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Process} from '../process';
 import {User} from '../../user';
 import {AlertController, NavController, ToastController} from '@ionic/angular';

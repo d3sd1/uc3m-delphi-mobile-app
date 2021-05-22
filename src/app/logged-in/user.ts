@@ -1,4 +1,3 @@
-import {Role} from './role';
 import {Language} from './profile/language';
 
 export class User {

@@ -14,7 +14,6 @@ import {IonicRatingModule} from 'ionic4-rating';
 import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
 import {ModifyPage} from './modify/modify.page';
-import {EmptyPage} from './list/empty/empty.page';
 import {UserPickerPage} from './user-picker/user-picker.page';
 import {RoleService} from './role.service';
 import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';

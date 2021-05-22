@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Process} from '../../process';
-import {User} from '../../../user';
-import {Round} from '../../round';
 import {NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserStorage} from '../../../../core/storage/user.storage';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';

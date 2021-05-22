@@ -7,7 +7,6 @@ import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
 import {DelphiProcessUser} from '../delphi-process-user';
 import {Role} from '../../role';
-import {UserService} from '../../onboarding/user.service';
 import {UserStorage} from '../../../core/storage/user.storage';
 import {RoleService} from '../role.service';
 

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
 import {User} from '../../user';
 import {UserStorage} from '../../../core/storage/user.storage';
-import {LoginUser} from '../../../core/consumer/login/login.user';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';

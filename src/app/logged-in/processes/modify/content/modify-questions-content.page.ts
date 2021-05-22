@@ -4,8 +4,6 @@ import {Process} from '../../process';
 import {User} from '../../../user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserStorage} from '../../../../core/storage/user.storage';
-import {Question} from '../../question';
-import {QuestionType} from '../../question-type';
 import {TranslateService} from '@ngx-translate/core';
 import {Category} from '../../category';
 

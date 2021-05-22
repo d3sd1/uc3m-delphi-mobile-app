@@ -1,14 +1,12 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActionSheetController} from '@ionic/angular';
 import {LangService} from './lang.service';
-import {UserService} from '../onboarding/user.service';
 import {UserStorage} from '../../core/storage/user.storage';
 import {User} from '../user';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
-import {Language} from './language';
 import {Media} from '../processes/media';
 
 @Component({

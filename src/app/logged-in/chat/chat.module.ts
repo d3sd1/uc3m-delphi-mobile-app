@@ -9,7 +9,6 @@ import {ChatListComponent} from './chat-list/chat-list.component';
 import {ChatEmptyPage} from './chat-empty/chat-empty.page';
 import {ChatConversationLoadingPage} from './chat-conversation/chat-conversation-loading/chat-conversation-loading.page';
 import {ChatConversationComponent} from './chat-conversation/chat-conversation.component';
-import {ChatService} from './chat.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {RelativeTime} from './relative-time.pipe';
 import {EmojiPickerComponent} from './chat-conversation/emoji-picker/emoji-picker';

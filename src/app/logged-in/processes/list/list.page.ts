@@ -3,10 +3,7 @@ import {UserStorage} from '../../../core/storage/user.storage';
 import {User} from '../../user';
 import {ProcessService} from '../process.service';
 import {Process} from '../process';
-import {CountdownConfig} from 'ngx-countdown';
-import {ChatMessage} from '../../chat/chat-conversation/chat-message';
 import {WsService} from '../../../core/ws/ws.service';
-import {Round} from '../round';
 
 @Component({
   selector: 'delphi-list',

@@ -1,13 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
-import {
-  Capacitor,
-  Plugins,
-  PushNotification,
-  PushNotificationToken,
-  PushNotificationActionPerformed,
-} from '@capacitor/core';
+import {Capacitor, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken,} from '@capacitor/core';
 import {LangService} from './logged-in/profile/lang.service';
 import {UserStorage} from './core/storage/user.storage';
 import {WsService} from './core/ws/ws.service';

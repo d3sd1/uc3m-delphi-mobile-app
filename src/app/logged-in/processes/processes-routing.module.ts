@@ -4,7 +4,6 @@ import {ProcessesPage} from './processes.page';
 import {SinglePage} from './single/single.page';
 import {ModifyPage} from './modify/modify.page';
 import {UserPickerPage} from './user-picker/user-picker.page';
-import {Process} from './process';
 import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';

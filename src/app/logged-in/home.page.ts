@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ChatService} from './chat/chat.service';
 import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';

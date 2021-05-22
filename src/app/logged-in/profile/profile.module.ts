@@ -8,7 +8,6 @@ import {ProfilePage} from './profile.page';
 import {ProfilePageRoutingModule} from './profile-routing.module';
 import {LangService} from './lang.service';
 import {TranslateModule} from '@ngx-translate/core';
-import {LogoutPage} from '../logout/logout.page';
 
 @NgModule({
   imports: [

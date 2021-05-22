@@ -1,5 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {IonContent, NavController, NavParams} from '@ionic/angular';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {IonContent, NavController} from '@ionic/angular';
 
 
 import {ChatService} from '../chat.service';
