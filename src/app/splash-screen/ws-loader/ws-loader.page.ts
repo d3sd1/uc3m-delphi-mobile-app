@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {LoadingController} from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
@@ -12,7 +12,8 @@ import {TranslateService} from '@ngx-translate/core';
 export class WsLoaderPage implements OnInit {
   constructor(private httpClient: HttpClient, private loadingController: LoadingController,
               private router: Router,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              public alertController: AlertController) {
 
   }
 
@@ -25,10 +26,15 @@ export class WsLoaderPage implements OnInit {
       loading.dismiss();
       this.router.navigateByUrl('/splash-screen/loader/permissions');
     }).catch(async () => {
-      const error = await this.loadingController.create({
-        message: await this.translate.get('loader.ws.fail').toPromise()
+      await loading.dismiss();
+      const alert = await this.alertController.create({
+        header: 'Agile Delphi',
+        message: await this.translate.get('loader.ws.failed').toPromise(),
+        buttons: [],
+        backdropDismiss: false
       });
-      await error.present();
+
+      await alert.present();
     });
   }
 

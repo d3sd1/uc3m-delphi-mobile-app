@@ -39,10 +39,8 @@
       "failed": "No se ha podido cargar los SOCKET."
     },
     "permissions": {
-      "api": {
-        "loading": "Cargando permisos...",
-        "failed": "No se ha podido cargar los permisos."
-      }
+      "loading": "Cargando permisos...",
+      "failed": "No se ha podido cargar los permisos."
     }
   },
   "home": {

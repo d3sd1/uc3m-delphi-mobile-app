@@ -26,7 +26,7 @@ export class ApiLoaderPage implements OnInit {
       this.router.navigateByUrl('/splash-screen/loader/ws');
     }).catch(async () => {
       const error = await this.loadingController.create({
-        message: await this.translate.get('loader.api.loading').toPromise()
+        message: await this.translate.get('loader.api.failed').toPromise()
       });
       await error.present();
     });

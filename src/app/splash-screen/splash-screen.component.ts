@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {Router} from '@angular/router';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'loader',
@@ -11,11 +12,12 @@ export class SplashScreenComponent implements OnInit {
   loadTime = 4000;
 
 
-  constructor(private statusBar: StatusBar,
-              private router: Router) {
+  constructor(private navCtrl: NavController) {
   }
 
   ngOnInit(): void {
-
+    setTimeout(async () => {
+      await this.navCtrl.navigateForward('/splash-screen/loader/init');
+    }, 4000);
   }
 }

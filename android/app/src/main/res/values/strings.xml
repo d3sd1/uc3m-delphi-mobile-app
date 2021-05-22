@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">delphi</string>
-    <string name="title_activity_main">delphi</string>
+    <string name="app_name">Agile Delphi</string>
+    <string name="title_activity_main">Agile Delphi</string>
     <string name="package_name">org.uc3m.irsst.idelphi</string>
     <string name="custom_url_scheme">org.uc3m.irsst.idelphi</string>
 </resources>

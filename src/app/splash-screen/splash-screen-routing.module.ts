@@ -17,11 +17,6 @@ const routes: Routes = [
     component: SplashScreenComponent,
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'init'
-      },
-      {
         path: 'init',
         component: InitLoaderPage
       },

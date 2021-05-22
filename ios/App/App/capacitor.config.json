@@ -1,6 +1,6 @@
 {
   "appId": "org.uc3m.irsst.idelphi",
-  "appName": "delphi",
+  "appName": "Agile Delphi",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
