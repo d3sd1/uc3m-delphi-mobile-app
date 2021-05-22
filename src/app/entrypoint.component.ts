@@ -1,13 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
-import {Capacitor, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken,} from '@capacitor/core';
-import {LangService} from './logged-in/profile/lang.service';
 import {UserStorage} from './core/storage/user.storage';
 import {WsService} from './core/ws/ws.service';
-
-
-const {PushNotifications} = Plugins;
+import {Platform} from '@ionic/angular';
+import {PushNotificationService} from './core/push-notification/push-notification.service';
+import {LangService} from './core/lang/lang.service';
 
 @Component({
   selector: 'delphi-root',
@@ -17,76 +15,21 @@ const {PushNotifications} = Plugins;
     </ion-app>`
 })
 export class EntrypointComponent implements OnInit {
-  /*
+
     constructor(
       private platform: Platform,
-      private themeService: ThemeService,
-      private loaderService: SplashScreenService
+      private langService: LangService,
+      private userStorage: UserStorage,
+      private ws: WsService,
+      private pushNotificationService:PushNotificationService
     ) {
-      this.themeListenerInit();
-      this.initializeApp();
     }
 
-    private themeListenerInit() {
-      this.themeService.addDarkThemeHandler();
-      this.themeService.addLightThemeHandler();
-    }
-
-
-    initializeApp() {
-     /* this.platform.ready().then(() => {
-        this.loaderService.initialize();
-      });
-    }*/
-  constructor(private translate: TranslateService, private langService: LangService, private userStorage: UserStorage,
-              private ws: WsService) {
-
-  }
 
   async ngOnInit(): Promise<void> {
     await this.ws.connectWs(await this.userStorage.getJwt());
-    this.translate.setDefaultLang('es');
-    this.translate.addLangs(['es', 'en', 'de']);
-    if(await this.userStorage.isLoggedIn()){
-      const userLang = (await this.userStorage.getUser()).language?.keyName;
-      this.translate.use(userLang?.toLowerCase());
-    }
-    const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
-    if (isPushNotificationsAvailable) {
-
-      PushNotifications.requestPermission().then(result => {
-        if (result.granted) {
-          // Register with Apple / Google to receive push via APNS/FCM
-          PushNotifications.register();
-        } else {
-          // Show some error
-        }
-      });
-      PushNotifications.addListener(
-        'registration',
-        (token: PushNotificationToken) => {
-         // alert('Push registration success, token: ' + token.value);
-        },
-      );
-
-      PushNotifications.addListener('registrationError', (error: any) => {
-        //alert('Error on registration: ' + JSON.stringify(error));
-      });
-
-      PushNotifications.addListener(
-        'pushNotificationReceived',
-        (notification: PushNotification) => {
-        //  alert('Push received: ' + JSON.stringify(notification));
-        },
-      );
-
-      PushNotifications.addListener(
-        'pushNotificationActionPerformed',
-        (notification: PushNotificationActionPerformed) => {
-         // alert('Push action performed: ' + JSON.stringify(notification));
-        },
-      );
-    }
+    await this.langService.init();
+    this.pushNotificationService.init();
   }
 
 

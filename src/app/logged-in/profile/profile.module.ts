@@ -6,7 +6,6 @@ import {FormsModule} from '@angular/forms';
 import {ProfilePage} from './profile.page';
 
 import {ProfilePageRoutingModule} from './profile-routing.module';
-import {LangService} from './lang.service';
 import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
@@ -22,7 +21,7 @@ import {TranslateModule} from '@ngx-translate/core';
     ProfilePage
   ],
   providers: [
-    LangService
+
   ],
   exports: [
     TranslateModule

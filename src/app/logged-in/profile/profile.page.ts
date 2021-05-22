@@ -1,6 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActionSheetController} from '@ionic/angular';
-import {LangService} from './lang.service';
 import {UserStorage} from '../../core/storage/user.storage';
 import {User} from '../user';
 import {TranslateService} from '@ngx-translate/core';

@@ -8,6 +8,7 @@ import {getChatsUnreadMessages, UserChat} from './chat/user-chat';
 import {ChatMessage} from './chat/chat-conversation/chat-message';
 import {WsService} from '../core/ws/ws.service';
 import {ViewDidEnter} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'delphi-tabs',
@@ -28,11 +29,15 @@ export class HomePage implements ViewDidEnter {
               private authService: UserStorage,
               private router: Router,
               private storage: Storage,
-              private wsService: WsService) {
+              private wsService: WsService,
+              private userStorage: UserStorage,
+              private translate: TranslateService) {
   }
 
   async ionViewDidEnter() {
     this.user = await this.authService.getUser();
+    const userLang = (await this.userStorage.getUser()).language?.keyName;
+    this.translate.use(userLang?.toLowerCase());
 
     this.wsService.subscribe('chat/messages', true).subscribe(async (msg: ChatMessage) => {
       if (msg === null) {

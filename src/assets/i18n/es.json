@@ -1,4 +1,7 @@
 {
+  "push_notifications": {
+    "error": "No se pudieron cargar las notificaciones push."
+  },
   "login": {
     "connecting": "Espere por favor...",
     "title": "Conexión",
