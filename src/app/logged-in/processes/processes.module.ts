@@ -6,7 +6,6 @@ import {ProcessesPage} from './processes.page';
 
 import {ProcessesPageRoutingModule} from './processes-routing.module';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {LoadingPageModule} from './loading/loading.module';
 import {ListPageModule} from './list/list.module';
 import {SinglePage} from './single/single.page';
 import {ProcessService} from './process.service';
@@ -24,6 +23,7 @@ import {ViewQuestionsPage} from './single/questions/view-questions.page';
 import {ViewSingleQuestionPage} from './single/single-question/view-single-question.page';
 import {ParticipatePage} from './participate/participate.page';
 import {ClosePage} from './modify/close/close.page';
+import {LoadingPage} from './loading/loading.page';
 
 @NgModule({
   imports: [
@@ -31,7 +31,6 @@ import {ClosePage} from './modify/close/close.page';
     CommonModule,
     FormsModule,
     ProcessesPageRoutingModule,
-    LoadingPageModule,
     ListPageModule,
     IonicRatingModule,
     CountdownModule,
@@ -43,7 +42,8 @@ import {ClosePage} from './modify/close/close.page';
     ViewQuestionsPage,
     ViewSingleQuestionPage,
     ParticipatePage,
-    ClosePage
+    ClosePage,
+    LoadingPage
   ],
   providers: [
     Geolocation,

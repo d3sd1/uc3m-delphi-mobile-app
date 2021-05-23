@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomePage} from './home.page';
 import {LogoutPage} from './profile/logout/logout.page';
+import {OnboardingPage} from './onboarding/onboarding.page';
 
 const routes: Routes = [
   {
@@ -48,7 +49,7 @@ const routes: Routes = [
   },
   {
     path: 'onboarding',
-    loadChildren: () => import('./onboarding/onboarding.module').then(m => m.OnboardingPageModule)
+    component: OnboardingPage
   }
 ];
 

@@ -38,12 +38,14 @@ export class HomePage implements ViewDidEnter {
   }
 
   async ionViewDidEnter() {
-    this.user = await this.userConsumer.getUser();
+    this.userConsumer.getUser().subscribe((user) => {
+      this.user = user;
+    });
     this.langService.changeLanguage(this.user.language);
 
-    this.chatConsumer.chat().subscribe((chatMessages: ChatMessage[]) => {
+    /*TODO this.chatConsumer.chat().subscribe((chatMessages: ChatMessage[]) => {
       this.notifications.messages = chatMessages.filter((chatMessage) => !chatMessage.read).length;
-    });
+    });*/
 
     await this.onboarding();
   }

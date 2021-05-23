@@ -3,7 +3,6 @@ import {Process} from '../process';
 import {User} from '../../user';
 import {AlertController, NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserStorage} from '../../../core/storage/user.storage';
 import {Round} from '../round';
 import {Answer} from '../answer';
 import {Question} from '../question';
@@ -28,7 +27,6 @@ export class ParticipatePage implements OnInit {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private router: Router,
-    private userStorage: UserStorage,
     public alertController: AlertController,
     private httpClient: HttpClient,
     private toastController: ToastController,

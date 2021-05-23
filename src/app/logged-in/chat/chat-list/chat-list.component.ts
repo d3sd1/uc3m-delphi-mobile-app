@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ChatService} from '../chat.service';
 import {User} from '../../user';
 import {getChatInfo, getChatPicture, getChatUnreadMessages, getUserChatStatus, UserChat} from '../user-chat';
-import {UserStorage} from '../../../core/storage/user.storage';
 
 @Component({
   selector: 'delphi-chat-list',
@@ -20,7 +19,7 @@ export class ChatListComponent implements OnInit {
   userChats: UserChat[] = [];
   userChatsOriginal: UserChat[] = [];
 
-  constructor(private chatService: ChatService, private authService: UserStorage) {
+  constructor(private chatService: ChatService) {
   }
 
   selfChatUnreadMessages(userChat: UserChat, currentUserId: number): number {

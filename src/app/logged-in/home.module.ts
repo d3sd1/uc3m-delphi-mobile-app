@@ -9,7 +9,7 @@ import {HomePage} from './home.page';
 import {ChatService} from './chat/chat.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {LogoutPage} from './profile/logout/logout.page';
-import {ChatConsumer} from '../core/consumer/chat/chat.consumer';
+import {OnboardingPage} from './onboarding/onboarding.page';
 
 @NgModule({
   imports: [
@@ -17,12 +17,12 @@ import {ChatConsumer} from '../core/consumer/chat/chat.consumer';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-    TranslateModule
+    TranslateModule,
   ],
   providers: [
     ChatService
   ],
-  declarations: [HomePage, LogoutPage],
+  declarations: [HomePage, LogoutPage, OnboardingPage],
   exports: [
     TranslateModule
   ]

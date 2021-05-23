@@ -3,7 +3,6 @@ import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../process';
 import {User} from '../../../user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserStorage} from '../../../../core/storage/user.storage';
 import {Question} from '../../question';
 import {QuestionType} from '../../question-type';
 import {Round} from '../../round';
@@ -23,7 +22,6 @@ export class ModifyQuestionsPage implements OnInit {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private router: Router,
-    private userStorage: UserStorage,
     public alertController: AlertController) {
   }
 
@@ -90,7 +88,7 @@ export class ModifyQuestionsPage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
-    this.currentUser = await this.userStorage.getUser();
+    //TODOthis.currentUser = await this.userStorage.getUser();
   }
 
   async goBack() {

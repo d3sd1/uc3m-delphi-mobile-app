@@ -10,7 +10,7 @@ import {BehaviorSubject} from 'rxjs';
 export class ChatConsumer {
 
   constructor(private wsService: WsService) { }
-
+  /*
   chat(): BehaviorSubject<ChatMessage[]> { //TODO REFACTOR
     this.wsService.subscribe('chat/messages', true).subscribe(async (msg: ChatMessage) => {
       if (msg === null) {
@@ -26,5 +26,8 @@ export class ChatConsumer {
       this.notifications.messages = getChatsUnreadMessages(userChats, this.user.id);
     });
     this.preloadSound();
+  }*/
+  chat() {
+
   }
 }

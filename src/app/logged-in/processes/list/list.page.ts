@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserStorage} from '../../../core/storage/user.storage';
 import {User} from '../../user';
 import {ProcessService} from '../process.service';
 import {Process} from '../process';
@@ -16,14 +15,13 @@ export class ListPage implements OnInit {
   user: User;
   currentTime: Date = new Date();
 
-  constructor(private authService: UserStorage, private processService: ProcessService,
-              private wsService: WsService,
-              private userStorage: UserStorage) {
+  constructor(private processService: ProcessService,
+              private wsService: WsService,) {
   }
 
   async ngOnInit() {
     this.filterProcesses();
-    this.user = await this.authService.getUser();
+    //TODO this.user = await this.authService.getUser();
     this.currentTime = new Date();
     // Listen to new generated process that needs current user
 

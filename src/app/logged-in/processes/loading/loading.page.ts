@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {UserStorage} from '../../../core/storage/user.storage';
 
 @Component({
   selector: 'delphi-loading',
@@ -8,7 +7,7 @@ import {UserStorage} from '../../../core/storage/user.storage';
 })
 export class LoadingPage implements OnInit {
 
-  constructor(private authService: UserStorage) {
+  constructor() {
   }
 
   ngOnInit() {

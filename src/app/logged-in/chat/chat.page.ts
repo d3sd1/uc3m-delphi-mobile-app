@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ChatService} from './chat.service';
 import {UserChat} from './user-chat';
 import {User} from '../user';
-import {UserStorage} from '../../core/storage/user.storage';
 
 @Component({
   selector: 'delphi-chat',
@@ -15,11 +14,11 @@ export class ChatPage implements OnInit {
   user: User;
 
 
-  constructor(private chatService: ChatService, private authService: UserStorage) {
+  constructor(private chatService: ChatService) {
   }
 
   async ngOnInit() {
-    this.user = await this.authService.getUser();
+   //TODO this.user = await this.authService.getUser();
     this.reloadChats();
   }
 

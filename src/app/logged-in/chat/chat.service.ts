@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable, Subject} from 'rxjs';
-import {UserStorage} from '../../core/storage/user.storage';
 import {UserChat} from './user-chat';
 import {ChatMessage} from './chat-conversation/chat-message';
 
@@ -15,7 +14,7 @@ export class ChatService {
 
   private subject = new Subject<any>();
 
-  constructor(private httpClient: HttpClient, private authenticationService: UserStorage) {
+  constructor(private httpClient: HttpClient) {
   }
 
   public postReadChat(chatId: number) {

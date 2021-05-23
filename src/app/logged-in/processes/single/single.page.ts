@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
-import {UserStorage} from '../../../core/storage/user.storage';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Process} from '../process';
 import {environment} from '../../../../environments/environment';
@@ -31,7 +30,6 @@ export class SinglePage implements OnInit {
   constructor(
     private toastController: ToastController,
     private navCtrl: NavController,
-    public userStorage: UserStorage,
     private route: ActivatedRoute,
     private router: Router,
     public roleService: RoleService,
@@ -87,7 +85,7 @@ export class SinglePage implements OnInit {
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
 
-    this.loggedInUser = await this.userStorage.getUser();
+   //TODO this.loggedInUser = await this.userStorage.getUser();
     // current user process role
     this.currentUserRole = this.process?.processUsers.find((processUser) => {
       return processUser.user.id === this.loggedInUser.id;

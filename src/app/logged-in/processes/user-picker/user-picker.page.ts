@@ -7,7 +7,6 @@ import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
 import {DelphiProcessUser} from '../delphi-process-user';
 import {Role} from '../../role';
-import {UserStorage} from '../../../core/storage/user.storage';
 import {RoleService} from '../role.service';
 
 @Component({
@@ -27,7 +26,6 @@ export class UserPickerPage implements OnInit {
     private router: Router,
     private httpClient: HttpClient,
     public navCtrl: NavController,
-    private userStorage: UserStorage,
     private roleService: RoleService) {
 
   }
@@ -62,7 +60,7 @@ export class UserPickerPage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
-    this.currentUser = await this.userStorage.getUser();
+    //TODO this.currentUser = await this.userStorage.getUser();
   }
 
   async filterExperts() {

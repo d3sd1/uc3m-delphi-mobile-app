@@ -3,7 +3,6 @@ import {NavController, ToastController} from '@ionic/angular';
 import {Process} from '../../process';
 import {User} from '../../../user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserStorage} from '../../../../core/storage/user.storage';
 import {TranslateService} from '@ngx-translate/core';
 import {Category} from '../../category';
 
@@ -25,7 +24,6 @@ export class ModifyQuestionsContentPage implements OnInit {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private router: Router,
-    private userStorage: UserStorage,
     private toastController: ToastController,
     private translate: TranslateService) {
   }
@@ -66,7 +64,7 @@ export class ModifyQuestionsContentPage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
-    this.currentUser = await this.userStorage.getUser();
+    //TODO this.currentUser = await this.userStorage.getUser();
   }
 
   private async showToast(transKey: string) {

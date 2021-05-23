@@ -13,7 +13,6 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {RoleService} from '../role.service';
 import {Role} from '../../role';
 import {DelphiProcessUser} from '../delphi-process-user';
-import {UserStorage} from '../../../core/storage/user.storage';
 import {Media} from '../media';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -38,7 +37,6 @@ export class ModifyPage implements OnInit {
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
               public roleService: RoleService,
-              private userStorage: UserStorage,
               private translate: TranslateService) {
   }
 
@@ -55,7 +53,7 @@ export class ModifyPage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
-    this.currentUser = await this.userStorage.getUser();
+    //TODOthis.currentUser = await this.userStorage.getUser();
 
     this.forceCurrentUserAdmin();
   }

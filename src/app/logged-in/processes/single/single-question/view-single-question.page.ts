@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserStorage} from '../../../../core/storage/user.storage';
 import {Process} from '../../process';
 import {User} from '../../../user';
 
@@ -20,8 +19,7 @@ export class ViewSingleQuestionPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    private router: Router,
-    private userStorage: UserStorage) {
+    private router: Router) {
   }
 
   async goBack() {
@@ -69,7 +67,7 @@ export class ViewSingleQuestionPage implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.loadProcess();
-    this.currentUser = await this.userStorage.getUser();
+    //TODOthis.currentUser = await this.userStorage.getUser();
   }
 
 }

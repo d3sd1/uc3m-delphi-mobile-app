@@ -1,11 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {IonSlides, ToastController} from '@ionic/angular';
-import {UserService} from './user.service';
 import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {UserStorage} from '../../core/storage/user.storage';
 import {User} from '../user';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -25,14 +23,14 @@ export class OnboardingPage implements OnInit {
 
   @ViewChild('mySlider') slides: IonSlides;
 
-  constructor(private userService: UserService, private router: Router, private storage: Storage,
-              private httpClient: HttpClient, private userStorage: UserStorage,
+  constructor(private router: Router, private storage: Storage,
+              private httpClient: HttpClient,
               private toastController: ToastController,
               private translate: TranslateService) {
   }
 
   async ngOnInit() {
-    this.user = await this.userStorage.getUser();
+   //TODO  this.user = await this.userStorage.getUser();
   }
 
   async setupAccount() {
@@ -46,7 +44,7 @@ export class OnboardingPage implements OnInit {
       return;
     }
     await this.httpClient.post(environment.apiUrl + '/v1/profile/setup', this.user).toPromise();
-    await this.userStorage.setUser(this.user);
+   //TODO await this.userStorage.setUser(this.user);
     await this.slides.slideNext();
   }
 
@@ -75,7 +73,7 @@ export class OnboardingPage implements OnInit {
 
   async endSwiper() {
     this.user.needsOnboard = false;
-    await this.userStorage.setUser(this.user);
+   //TODO await this.userStorage.setUser(this.user);
     console.log(this.user)
     await this.httpClient.post(environment.apiUrl + '/v1/profile/onboard?status=false', {}).toPromise();
     await this.router.navigateByUrl('/logged-in/home/menu');

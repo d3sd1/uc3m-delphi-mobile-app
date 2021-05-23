@@ -6,7 +6,6 @@ import {ChatService} from '../chat.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {getChatInfo, UserChat} from '../user-chat';
 import {User} from '../../user';
-import {UserStorage} from '../../../core/storage/user.storage';
 import {ChatMessage} from './chat-message';
 import {WsService} from '../../../core/ws/ws.service';
 
@@ -29,7 +28,6 @@ export class ChatConversationComponent implements OnInit {
     private chatService: ChatService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private authService: UserStorage,
     private wsService: WsService
   ) {
   }
@@ -48,7 +46,7 @@ export class ChatConversationComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.user = await this.authService.getUser();
+   //TODO  this.user = await this.authService.getUser();
     const chatId = parseInt(this.activatedRoute.snapshot.paramMap.get('chatId'), 10);
     if (chatId === 0 || isNaN(chatId)) {
       await this.router.navigateByUrl('/home/menu/chat');
