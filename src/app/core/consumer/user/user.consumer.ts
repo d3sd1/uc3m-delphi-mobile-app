@@ -74,7 +74,7 @@ export class UserConsumer {
     this.userUpdater.next(this.userConsumerCache.user);
   }
   async updateNotificationPreferences(enabled: boolean) {
-    await this.http.post(environment.apiUrl + '/v1/profile/notifications?enabled=' + enabled, {});
+    await this.http.post(environment.apiUrl + '/v1/profile/notifications?enabled=' + enabled, {}).toPromise();
     this.userConsumerCache.user.notificationStatus = enabled;
     this.userUpdater.next(this.userConsumerCache.user);
   }
