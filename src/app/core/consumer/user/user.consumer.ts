@@ -198,6 +198,7 @@ export class UserConsumer {
     this.initCache();
     await this.dropSession();
     await this.wsService.disconnectWs();
+    await this.databaseService.resetDatabase();
   }
 
 }

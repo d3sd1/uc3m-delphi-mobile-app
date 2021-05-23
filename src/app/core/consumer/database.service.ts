@@ -17,12 +17,29 @@ export class DatabaseService {
 
   constructor(private plt: Platform, private sqlite: SQLite) {
     this.plt.ready().then(async () => {
-      this.database = await this.sqlite.create({
-        name: 'delphi.db',
-        location: 'default'
-      });
+      this.database = await this.createDatabase();
     });
   }
+
+  private async createDatabase(): Promise<SQLiteObject> {
+    return await this.sqlite.create({
+      name: 'delphi.db',
+      location: 'default'
+    });
+  }
+
+  private async deleteDatabase() {
+    await this.sqlite.deleteDatabase({
+      name: 'delphi.db',
+      location: 'default'
+    });
+  }
+
+  public async resetDatabase() {
+    await this.deleteDatabase();
+    await this.createDatabase();
+  }
+
   getDatabase(): Promise<SQLiteObject> {
     return new Promise<SQLiteObject>((resolve) => {
       if(this.database === null){

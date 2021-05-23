@@ -9,6 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../core/consumer/user/user.consumer';
 import {LangService} from '../core/lang/lang.service';
 import {ChatConsumer} from '../core/consumer/chat/chat.consumer';
+import {Observer, Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-tabs',
@@ -24,6 +25,7 @@ export class HomePage implements ViewDidEnter {
   };
   user: User;
   aud;
+  userObserver: Subscription;
 
   constructor(private chatService: ChatService,
               private userConsumer: UserConsumer,
@@ -39,7 +41,7 @@ export class HomePage implements ViewDidEnter {
     (await this.userConsumer.getUser()).subscribe((user) => {
       this.user = user;
 
-      console.log('user is 00',user)
+      console.log('user is 00', user);
       this.langService.changeLanguage(this.user.language);
     });
 
@@ -47,7 +49,18 @@ export class HomePage implements ViewDidEnter {
       this.notifications.messages = chatMessages.filter((chatMessage) => !chatMessage.read).length;
     });*/
 
+    this.listenUserNotifications();
+
     await this.onboarding();
+  }
+
+  listenUserNotifications() {
+    this.userObserver = this.userConsumer.getUser().subscribe((user) => {
+      this.notifications.profile = 0;
+      if (user.photo === '' || user.photo === null || user.photo === undefined) {
+        this.notifications.profile++;
+      }
+    });
   }
 
   preloadSound() {
