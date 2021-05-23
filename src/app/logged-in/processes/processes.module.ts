@@ -6,9 +6,7 @@ import {ProcessesPage} from './processes.page';
 
 import {ProcessesPageRoutingModule} from './processes-routing.module';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {ListPageModule} from './list/list.module';
 import {SinglePage} from './single/single.page';
-import {ProcessService} from './process.service';
 import {IonicRatingModule} from 'ionic4-rating';
 import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
@@ -24,6 +22,9 @@ import {ViewSingleQuestionPage} from './single/single-question/view-single-quest
 import {ParticipatePage} from './participate/participate.page';
 import {ClosePage} from './modify/close/close.page';
 import {LoadingPage} from './loading/loading.page';
+import {ListPage} from './list/list.page';
+import {EmptyProcessesPage} from './list/empty/empty-processes.page';
+import {ProcessConsumer} from '../../core/consumer/process/process.consumer';
 
 @NgModule({
   imports: [
@@ -31,7 +32,6 @@ import {LoadingPage} from './loading/loading.page';
     CommonModule,
     FormsModule,
     ProcessesPageRoutingModule,
-    ListPageModule,
     IonicRatingModule,
     CountdownModule,
     TranslateModule
@@ -43,12 +43,14 @@ import {LoadingPage} from './loading/loading.page';
     ViewSingleQuestionPage,
     ParticipatePage,
     ClosePage,
-    LoadingPage
+    LoadingPage,
+    ListPage,
+    EmptyProcessesPage
   ],
   providers: [
     Geolocation,
-    ProcessService,
-    RoleService
+    RoleService,
+    ProcessConsumer
   ],
 
 })

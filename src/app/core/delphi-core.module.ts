@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {LangService} from './lang/lang.service';
 import {TranslateLoader, TranslateModule, TranslateService, TranslateStore} from '@ngx-translate/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {SQLite} from '@ionic-native/sqlite/ngx';
 import {DatabaseService} from './consumer/database.service';
 import {CompatibilityService} from './devices/compatibility.service';

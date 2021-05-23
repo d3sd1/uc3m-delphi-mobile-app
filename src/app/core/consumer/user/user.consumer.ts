@@ -21,7 +21,8 @@ import {LangService} from '../../lang/lang.service';
 export class UserConsumer {
 
   private userConsumerCache;
-  private userUpdater = new BehaviorSubject<User>(new User());
+  private userUpdater = new BehaviorSubject<User>(null);
+  private jwtUpdater = new BehaviorSubject<string>(null);
 
   constructor(private http: HttpClient,
               private storage: Storage,
@@ -40,8 +41,8 @@ export class UserConsumer {
     };
   }
 
-  getJwt(): string {
-    return this.userConsumerCache.jwt;
+  getJwt(): BehaviorSubject<string> {
+    return this.jwtUpdater;
   }
 
   getUser(): BehaviorSubject<User> {
@@ -104,6 +105,7 @@ export class UserConsumer {
       this.userConsumerCache.user.language.keyName = dbRow.language_key;
       this.userConsumerCache.user.notificationStatus = dbRow.notification_status;
       this.userUpdater.next(this.userConsumerCache.user);
+      this.jwtUpdater.next(this.userConsumerCache.jwt);
     }
   }
 
@@ -129,6 +131,7 @@ export class UserConsumer {
   async dropSession() {
     const db = await this.databaseService.getDatabase();
     await db.executeSql('DELETE FROM current_session;', []);
+    this.jwtUpdater.next(null);
   }
 
   async storeSession(userLogin: LoginResponse) {
@@ -153,6 +156,7 @@ export class UserConsumer {
         userLogin.user.notificationStatus,
       ]);
     this.userUpdater.next(this.userConsumerCache.user);
+    this.jwtUpdater.next(this.userConsumerCache.jwt);
     await this.fetchDatabaseCache();
   }
 
@@ -179,7 +183,6 @@ export class UserConsumer {
 
   async isLoggedIn(): Promise<boolean> {
     return new Promise<boolean>(async (resolve) => {
-      await this.fetchDatabaseCache();
       if (this.userConsumerCache.jwt === '' ||
         this.userConsumerCache.jwt === undefined ||
         this.userConsumerCache.jwt === null) {

@@ -24,7 +24,7 @@ export class ProfilePage implements OnInit {
   }
 
   async ngOnInit() {
-    await this.userConsumer.getUser().subscribe((user) => {
+    (await this.userConsumer.getUser()).subscribe((user) => {
       this.user = user;
     });
   }
@@ -66,7 +66,7 @@ export class ProfilePage implements OnInit {
   async changeLanguage() {
     const langs = await this.langService.getAvailableLangs();
     const sheets = [];
-    langs.forEach((lang) => {
+    langs?.forEach((lang) => {
       sheets.push({
         text: lang.keyName,
         cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',

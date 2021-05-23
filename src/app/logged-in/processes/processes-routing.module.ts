@@ -13,6 +13,7 @@ import {ViewSingleQuestionPage} from './single/single-question/view-single-quest
 import {ParticipatePage} from './participate/participate.page';
 import {ClosePage} from './modify/close/close.page';
 import {LoadingPage} from './loading/loading.page';
+import {ListPage} from './list/list.page';
 
 const routes: Routes = [
   {
@@ -25,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
+    component: ListPage
   },
   {
     path: 'single',

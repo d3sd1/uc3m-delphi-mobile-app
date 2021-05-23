@@ -11,11 +11,11 @@ import {ChatMessage} from '../../logged-in/chat/chat-conversation/chat-message';
 export class WsService {
   private stompClient: Stomp = null;
 
-
   constructor() {
   }
 
   async connectWs(jwt: string) {
+    console.log('conn')
     if (jwt === null || jwt === '' || jwt === undefined) {
       return;
     }
@@ -39,14 +39,12 @@ export class WsService {
     this.stompClient.send('/ws/publisher/' + channel, {}, JSON.stringify(body)); // stringfify?
   }
 
-  subscribe(channel: string, privateChannel: boolean): BehaviorSubject<any> {
-    const dataTransfer = new BehaviorSubject<ChatMessage>(null);
+  subscribe(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
     this.stompClient.subscribe((privateChannel ? '/private' : '') + '/ws/subscribe/' + channel, (message) => {
-      dataTransfer.next(JSON.parse(message.body));
+      subject.next(JSON.parse(message.body));
     });
     //TODO FUTURE: handle unsubcriptions
     //TODO FUTURE: re-structure chat system =)
-    return dataTransfer;
   }
 
   async disconnectWs() {

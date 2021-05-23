@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../user';
-import {ProcessService} from '../process.service';
 import {Process} from '../process';
 import {WsService} from '../../../core/ws/ws.service';
+import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
 
 @Component({
   selector: 'delphi-list',
@@ -15,7 +15,7 @@ export class ListPage implements OnInit {
   user: User;
   currentTime: Date = new Date();
 
-  constructor(private processService: ProcessService,
+  constructor(private processService: ProcessConsumer,
               private wsService: WsService,) {
   }
 
@@ -25,7 +25,7 @@ export class ListPage implements OnInit {
     this.currentTime = new Date();
     // Listen to new generated process that needs current user
 
-
+/* TODO
     this.wsService.subscribe('process/new', true).subscribe(async (process: Process) => {
       if (process === null) {
         return;
@@ -39,7 +39,7 @@ export class ListPage implements OnInit {
         this.processes[pIndex] = process;
       }
       this.filterProcesses();
-    });
+    }); */
   }
 
   parseDate(date: string): Date {

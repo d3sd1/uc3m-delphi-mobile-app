@@ -96,7 +96,7 @@ export class SinglePage implements OnInit {
     console.log('cur round', this.currentRound);
     // Handle process updatess
 
-
+/* TODO
     this.wsService.subscribe('process/new', true).subscribe(async (process: Process) => {
       if (process === null) {
         return;
@@ -104,7 +104,7 @@ export class SinglePage implements OnInit {
       if (process.id === this.process.id) {
         this.process = process;
       }
-    });
+    });*/
   }
 
   showExpertInvitation() {

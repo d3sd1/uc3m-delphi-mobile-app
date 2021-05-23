@@ -38,7 +38,7 @@ export class HomePage implements ViewDidEnter {
   }
 
   async ionViewDidEnter() {
-    this.userConsumer.getUser().subscribe((user) => {
+    (await this.userConsumer.getUser()).subscribe((user) => {
       this.user = user;
     });
     this.langService.changeLanguage(this.user.language);

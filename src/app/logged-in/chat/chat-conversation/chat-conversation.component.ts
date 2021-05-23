@@ -59,11 +59,11 @@ export class ChatConversationComponent implements OnInit {
         this.scrollToBottom();
       });
     });
-
+/*TODO
     this.wsService.subscribe('chat/messages', true).subscribe(async (msg: ChatMessage) => {
       this.chat?.chatMessages.push(msg);
       await this.scrollToBottom();
-    });
+    });*/
   }
 
 

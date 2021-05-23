@@ -3,9 +3,9 @@ import {User} from '../../../user';
 
 @Component({
   selector: 'delphi-empty',
-  templateUrl: './empty.page.html',
-  styleUrls: ['./empty.page.scss'],
+  templateUrl: './empty-processes.page.html',
+  styleUrls: ['./empty-processes.page.scss'],
 })
-export class EmptyPage {
+export class EmptyProcessesPage {
 
 }

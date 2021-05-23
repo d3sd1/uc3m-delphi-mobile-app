@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <delphi-empty *ngIf="processes == null && loaded"></delphi-empty>
-  <delphi-list *ngIf="processes != null && loaded" [processes]="processes"></delphi-list>
-  <delphi-loading *ngIf="!loaded"></delphi-loading>
+  <delphi-empty *ngIf="processes?.length == 0"></delphi-empty>
+  <delphi-list *ngIf="processes != null"></delphi-list>
+  <delphi-loading *ngIf="processes == null"></delphi-loading>
 </ion-content>

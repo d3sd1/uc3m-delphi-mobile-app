@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {ProcessService} from './process.service';
 import {Process} from './process';
+import {ProcessConsumer} from '../../core/consumer/process/process.consumer';
+import {BehaviorSubject, Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-processes',
@@ -9,19 +10,30 @@ import {Process} from './process';
 })
 export class ProcessesPage {
 
+  processesUpdater: BehaviorSubject<Process[]>;
   processes: Process[] = null;
-  loaded = false;
+  processesSubscription: Subscription;
 
-  constructor(private processService: ProcessService) {
+  constructor(private processService: ProcessConsumer) {
   }
 
   async ionViewWillEnter() {
     await this.loadProcesses();
   }
 
-  async loadProcesses() {
-   this.processes = await this.processService.list();
-    this.loaded = true;
+  async ionViewWillLeave() {
+    this.processesSubscription.unsubscribe();
   }
+
+  async loadProcesses() {
+   this.processesUpdater = await this.processService.all();
+
+
+    this.processesSubscription = this.processesUpdater.subscribe((processes: Process[]) => {
+      this.processes = processes;
+      console.log('updated processes:', this.processes);
+    });
+  }
+
 
 }
