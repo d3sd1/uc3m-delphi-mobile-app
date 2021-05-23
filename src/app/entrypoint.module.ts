@@ -10,8 +10,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IonicStorageModule} from '@ionic/storage';
 import {DelphiCoreModule} from './core/delphi-core.module';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {TranslateLoader, TranslateModule, TranslateService, TranslateStore} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [EntrypointComponent],
@@ -34,8 +33,4 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
   ]
 })
 export class EntrypointModule {
-}
-// required for AOT compilation
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
 }
