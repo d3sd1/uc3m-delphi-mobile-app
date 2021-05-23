@@ -4,9 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Process} from '../process';
 import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {RoleService} from '../role.service';
-import {Role} from '../../role';
-import {DelphiProcessUser} from '../delphi-process-user';
 import {User} from '../../user';
 import {WsService} from '../../../core/ws/ws.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -23,7 +20,6 @@ export class SinglePage implements OnInit {
   invitationEmail = '';
   process: Process;
   loggedInUser: User;
-  currentUserRole: Role;
   currentRound: Round = null;
   remainingRounds: number = 0;
 
@@ -32,24 +28,9 @@ export class SinglePage implements OnInit {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private router: Router,
-    public roleService: RoleService,
     private httpClient: HttpClient,
     private wsService: WsService,
     private translate: TranslateService) {
-  }
-  hasRole(roles: string[]) {
-    let found = false;
-    // get current user
-    const delphiProcessUser = this.process?.processUsers?.find((delphiProcessUser) => {
-      return delphiProcessUser?.user?.id === this.loggedInUser?.id;
-    });
-    // filter
-    roles.forEach((roleStr) => {
-      if (delphiProcessUser?.role?.name.toLowerCase() === roleStr.toLowerCase()) {
-        found = true;
-      }
-    });
-    return found;
   }
 
   findCurrentRound() {
@@ -66,30 +47,7 @@ export class SinglePage implements OnInit {
 
   }
 
-  countUsersRole(role: Role) {
-    return this.process?.processUsers?.filter((delphiProcessUser) => {
-      return delphiProcessUser.role?.id === role.id;
-    }).length;
-  }
-
-  private async loadProcess() {
-    await this.route.queryParams.subscribe(async params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.process = this.router.getCurrentNavigation().extras.state.process;
-      } else {
-        await this.router.navigateByUrl('/logged-in/home/menu/processes');
-      }
-    });
-  }
-
   public async ngOnInit(): Promise<void> {
-    await this.loadProcess();
-
-   //TODO this.loggedInUser = await this.userStorage.getUser();
-    // current user process role
-    this.currentUserRole = this.process?.processUsers.find((processUser) => {
-      return processUser.user.id === this.loggedInUser.id;
-    }).role;
 
     this.findCurrentRound();
     this.getRemainingRounds();
@@ -130,13 +88,14 @@ export class SinglePage implements OnInit {
     return this.currentRound?.expertsVoted?.filter(expert => expert.id === this.loggedInUser.id).length === 0;
   }
 
-  openChat(user: DelphiProcessUser) {
+  openChat() {
+    /* TODO
     if (user.user.id === this.loggedInUser.id) {
       return; // user can't open self chat...
     }
     this.httpClient.put(environment.apiUrl + '/v1/chat/open?userId=' + user.user.id, {}).subscribe(async (chatId) => {
       await this.router.navigateByUrl('/logged-in/home/menu/chat/chat/' + chatId);
-    });
+    });*/
     // TODO handle err
   }
 

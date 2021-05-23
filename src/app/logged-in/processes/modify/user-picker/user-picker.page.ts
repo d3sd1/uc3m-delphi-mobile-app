@@ -1,13 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../../user';
-import {environment} from '../../../../environments/environment';
-import {Process} from '../process';
+import {User} from '../../../user';
+import {environment} from '../../../../../environments/environment';
+import {Process} from '../../process';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
-import {DelphiProcessUser} from '../delphi-process-user';
-import {Role} from '../../role';
-import {RoleService} from '../role.service';
 
 @Component({
   selector: 'delphi-user-picker',
@@ -16,7 +13,6 @@ import {RoleService} from '../role.service';
 })
 export class UserPickerPage implements OnInit {
   process: Process;
-  role: Role;
   filterCriterial: string = '';
   usersFiltered: User[] = [];
   currentUser: User;
@@ -25,21 +21,8 @@ export class UserPickerPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private httpClient: HttpClient,
-    public navCtrl: NavController,
-    private roleService: RoleService) {
+    public navCtrl: NavController) {
 
-  }
-
-
-  private async loadProcess() {
-    this.route.queryParams.subscribe(async params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.process = this.router.getCurrentNavigation().extras.state.process;
-        this.role = this.router.getCurrentNavigation().extras.state.role;
-      } else {
-        await this.router.navigateByUrl('/logged-in/home/menu/processes');
-      }
-    });
   }
 
   validateEmail(email) {
@@ -59,8 +42,6 @@ export class UserPickerPage implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    await this.loadProcess();
-    //TODO this.currentUser = await this.userStorage.getUser();
   }
 
   async filterExperts() {
@@ -68,29 +49,16 @@ export class UserPickerPage implements OnInit {
       return;
     }
     const users = await this.httpClient.get<User[]>(environment.apiUrl + '/v1/process/filter/expert?criteria=' + this.filterCriterial).toPromise();
-    this.usersFiltered = users.filter((expert: User) => {
-      return !this.process.processUsers.find((pExpert: DelphiProcessUser) => {
-        return pExpert.user.id === expert.id;
-      });
-    });
+
   }
 
   pushExpert(newUser: User) {
-    const userOldPos = this.process.processUsers.findIndex((processUser) => {
-      return processUser.user.id === newUser.id;
-    });
-    if (userOldPos === -1) {
-      this.process.processUsers.push(new DelphiProcessUser(newUser, this.role));
-    } else {
-      this.process.processUsers[userOldPos] = new DelphiProcessUser(newUser, this.role);
-    }
+
     this.filterCriterial = '';
   }
 
-  removeExpert(expert: DelphiProcessUser) {
-    this.process.processUsers = this.process.processUsers.filter((pExpert: DelphiProcessUser) => {
-      return pExpert.user.id !== expert.user.id;
-    });
+  removeExpert() {
+
   }
 
   async saveUsers() {

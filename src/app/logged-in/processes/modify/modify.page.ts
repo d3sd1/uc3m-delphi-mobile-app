@@ -10,9 +10,6 @@ import {ItemReorderEventDetail} from '@ionic/core';
 import {Round} from '../round';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
-import {RoleService} from '../role.service';
-import {Role} from '../../role';
-import {DelphiProcessUser} from '../delphi-process-user';
 import {Media} from '../media';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -36,38 +33,17 @@ export class ModifyPage implements OnInit {
               private router: Router,
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
-              public roleService: RoleService,
               private translate: TranslateService) {
   }
 
-
-  private async loadProcess() {
-    this.route.queryParams.subscribe(async params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.process = this.router.getCurrentNavigation().extras.state.process;
-      } else {
-        this.process = new Process();
-      }
-    });
-  }
-
   public async ngOnInit(): Promise<void> {
-    await this.loadProcess();
     //TODOthis.currentUser = await this.userStorage.getUser();
 
     this.forceCurrentUserAdmin();
   }
 
   forceCurrentUserAdmin() {
-    const admRole = this.roleService.getRoleByName('COORDINATOR');
-    const userIndex = this.process?.processUsers.findIndex((processUser) => {
-      return processUser.user.id === this.currentUser.id;
-    });
-    if (userIndex === -1) {
-      this.process?.processUsers.push(new DelphiProcessUser(this.currentUser, admRole));
-    } else if (this.process !== undefined) {
-      this.process.processUsers[userIndex].role = admRole;
-    }
+    //TODO set current user as adm
   }
 
   async uploadImage() {
@@ -174,12 +150,6 @@ export class ModifyPage implements OnInit {
         state: {process: this.process, currentUser: this.currentUser}
       });
     }
-  }
-
-  countUsersRole(role: Role) {
-    return this.process.processUsers?.filter((delphiProcessUser) => {
-      return delphiProcessUser.role?.id === role?.id;
-    }).length;
   }
 
 

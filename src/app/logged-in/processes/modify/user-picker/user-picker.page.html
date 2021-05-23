@@ -16,7 +16,7 @@
       <ion-avatar slot="start">
         <img *ngIf="expert?.photo !== undefined" [src]="expert?.photo"
              (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
-        <img *ngIf="expert?.photo === undefined" src="assets/images/no-process-image.jpeg"/>
+        <img *ngIf="expert?.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-avatar>
       {{ expert.name }} {{ expert.surnames }} <{{ expert.email }}>
     </ion-item>
@@ -37,7 +37,7 @@
       <ion-avatar>
         <img *ngIf="userWithRole.user.photo !== undefined" [src]="userWithRole?.user.photo"
              (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
-        <img *ngIf="userWithRole.user.photo === undefined" src="assets/images/no-process-image.jpeg"/>
+        <img *ngIf="userWithRole.user.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-avatar>
       <ion-label>{{userWithRole?.user.name}} {{userWithRole?.user.surnames}} <{{ userWithRole?.user.email }}></ion-label>
       <ion-icon *ngIf="userWithRole?.user.id !== currentUser?.id" name="close-circle" (click)="removeExpert(userWithRole)"></ion-icon>

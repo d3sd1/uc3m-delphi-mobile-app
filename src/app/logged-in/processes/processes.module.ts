@@ -11,15 +11,14 @@ import {IonicRatingModule} from 'ionic4-rating';
 import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
 import {ModifyPage} from './modify/modify.page';
-import {UserPickerPage} from './user-picker/user-picker.page';
-import {RoleService} from './role.service';
+import {UserPickerPage} from './modify/user-picker/user-picker.page';
 import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';
 import {ViewRoundsPage} from './view/rounds/view-rounds.page';
 import {ViewQuestionsPage} from './view/questions/view-questions.page';
 import {ViewSingleQuestionPage} from './view/single-question/view-single-question.page';
-import {ParticipatePage} from './participate/participate.page';
+import {ParticipatePage} from './view/participate/participate.page';
 import {ClosePage} from './modify/close/close.page';
 import {LoadingPage} from './list/loading/loading.page';
 import {ListPage} from './list/all/list.page';
@@ -49,8 +48,7 @@ import {UserConsumer} from '../../core/consumer/user/user.consumer';
     EmptyProcessesPage
   ],
   providers: [
-    Geolocation,
-    RoleService
+    Geolocation
   ],
 
 })

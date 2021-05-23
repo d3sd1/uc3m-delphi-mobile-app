@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Process} from '../process';
-import {User} from '../../user';
+import {Process} from '../../process';
+import {User} from '../../../user';
 import {AlertController, NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Round} from '../round';
-import {Answer} from '../answer';
-import {Question} from '../question';
-import {environment} from '../../../../environments/environment';
+import {Round} from '../../round';
+import {Answer} from '../../answer';
+import {Question} from '../../question';
+import {environment} from '../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
 
