@@ -15,7 +15,7 @@ export interface Dev {
   providedIn: 'root'
 })
 export class DatabaseService {
-  private database: SQLiteObject;
+  private database: SQLiteObject = null;
 
   constructor(private plt: Platform, private sqlite: SQLite) {
     this.plt.ready().then(async () => {
@@ -25,8 +25,19 @@ export class DatabaseService {
       });
     });
   }
-  getDatabase() {
-    return this.database;
+  getDatabase(): Promise<SQLiteObject> {
+    return new Promise<SQLiteObject>((resolve) => {
+      console.log(this.database)
+      if(this.database === null){
+        console.log('fetch new thread')
+        setTimeout(() => {
+          resolve(this.getDatabase());
+        }, 100);
+      } else {
+        console.log('resolve')
+        resolve(this.database);
+      }
+    });
   }
 
 }

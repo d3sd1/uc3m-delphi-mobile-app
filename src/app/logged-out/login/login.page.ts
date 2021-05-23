@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {LoadingController, ToastController} from '@ionic/angular';
+import {LoadingController, NavController, ToastController} from '@ionic/angular';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 import {LoginUser} from '../../core/consumer/user/login.user';
 import {WsService} from '../../core/ws/ws.service';
@@ -11,11 +11,11 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   loginUser: LoginUser;
 
-  constructor(private loginConsumer: UserConsumer,
-              private router: Router,
+  constructor(private userConsumer: UserConsumer,
+              private navCtrl: NavController,
               private loadingController: LoadingController,
               private toastController: ToastController,
               private wsService: WsService,
@@ -23,11 +23,16 @@ export class LoginPage {
     this.loginUser = new LoginUser();
   }
 
+  async ngOnInit() {
+    console.log('LOGGED IN?? -> ', await this.userConsumer.isLoggedIn())
+  }
+
+
   async login() {
     const loading = await this.showToast('login.connecting');
-    this.loginConsumer.doLogin(this.loginUser).then(async (sucMessage: string) => {
+    this.userConsumer.doLogin(this.loginUser).then(async (sucMessage: string) => {
       await this.showToast(sucMessage);
-      this.router.navigateByUrl('/logged-in').then(() => {
+      this.navCtrl.navigateForward('/logged-in').then(() => {
         this.loginUser = new LoginUser();
       });
     }).catch(async (errMessage: string) => {

@@ -9,7 +9,7 @@ import {HomePage} from './home.page';
 import {ChatService} from './chat/chat.service';
 import {UserStorage} from '../core/storage/user.storage';
 import {TranslateModule} from '@ngx-translate/core';
-import {LogoutPage} from './logout/logout.page';
+import {LogoutPage} from './profile/logout/logout.page';
 
 @NgModule({
   imports: [

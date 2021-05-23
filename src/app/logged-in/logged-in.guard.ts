@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, CanActivateChild, Router, UrlTree} from '@angular/router';
-import {UserStorage} from '../core/storage/user.storage';
+import {UserConsumer} from '../core/consumer/user/user.consumer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoggedInGuard implements CanActivate, CanActivateChild {
 
-  constructor(public userStorage: UserStorage, private router: Router) {
+  constructor(public userConsumer: UserConsumer, private router: Router) {
   }
 
   async canActivate(): Promise<boolean | UrlTree> {
-    const canActivate = await this.userStorage.isLoggedIn();
+    const canActivate = await this.userConsumer.isLoggedIn();
     if (!canActivate) {
       return this.router.parseUrl('/logged-out');
     }

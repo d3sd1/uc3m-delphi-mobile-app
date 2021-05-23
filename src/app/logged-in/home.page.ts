@@ -9,6 +9,7 @@ import {ChatMessage} from './chat/chat-conversation/chat-message';
 import {WsService} from '../core/ws/ws.service';
 import {ViewDidEnter} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
+import {UserConsumer} from '../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-tabs',
@@ -31,10 +32,12 @@ export class HomePage implements ViewDidEnter {
               private storage: Storage,
               private wsService: WsService,
               private userStorage: UserStorage,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private userConsumer: UserConsumer) {
   }
 
   async ionViewDidEnter() {
+    console.log('LOGGED IN?? -> ', await this.userConsumer.isLoggedIn())
     this.user = await this.authService.getUser();
     const userLang = (await this.userStorage.getUser()).language?.keyName;
     this.translate.use(userLang?.toLowerCase());
