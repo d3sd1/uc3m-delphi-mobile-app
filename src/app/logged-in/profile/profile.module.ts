@@ -10,26 +10,23 @@ import {TranslateModule} from '@ngx-translate/core';
 import {ProfileBasicPage} from './profile-basic/profile-basic.page';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 import {ProcessConsumer} from '../../core/consumer/process/process.consumer';
+import {ProfilePasswordPage} from './profile-password/profile-password.page';
+import {LogoutPage} from './logout/logout.page';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{path: '', component: ProfilePage}]),
     ProfilePageRoutingModule,
     TranslateModule
   ],
   declarations: [
     ProfilePage,
-    ProfileBasicPage
+    ProfileBasicPage,
+    ProfilePasswordPage,
+    LogoutPage
   ],
-  providers: [
-
-  ],
-  exports: [
-    TranslateModule
-  ]
 })
 export class ProfilePageModule {
 }

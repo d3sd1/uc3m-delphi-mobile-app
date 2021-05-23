@@ -25,8 +25,7 @@ import {WsLoaderPage} from './ws-loader/ws-loader.page';
     SplashScreenRoutingModule,
     CommonModule,
     IonicModule,
-    HttpClientModule,
-    TranslateModule
+    HttpClientModule
   ],
   providers: [
     StatusBar,

@@ -45,7 +45,7 @@ import {UserConsumer} from '../../core/consumer/user/user.consumer';
     ClosePage,
     LoadingPage,
     ListPage,
-    EmptyProcessesPage
+    EmptyProcessesPage,
   ],
   providers: [
     Geolocation

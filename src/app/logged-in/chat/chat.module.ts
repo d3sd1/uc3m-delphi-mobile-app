@@ -21,14 +21,23 @@ import {ChatLoadingPage} from './chat-loading/chat-loading.page';
     CommonModule,
     FormsModule,
     ChatPageRoutingModule,
-    TranslateModule,
+    TranslateModule
   ],
   providers: [
     NavParams,
-    EmojiProvider
+    EmojiProvider,
+
   ],
-  declarations: [ChatPage, ChatListComponent, ChatEmptyPage, ChatConversationLoadingPage, ChatConversationComponent,
-    RelativeTime, EmojiPickerComponent, ChatLoadingPage]
+  declarations: [
+    ChatPage,
+    ChatListComponent,
+    ChatEmptyPage,
+    ChatConversationLoadingPage,
+    ChatConversationComponent,
+    RelativeTime,
+    EmojiPickerComponent,
+    ChatLoadingPage
+  ]
 })
 export class ChatPageModule {
 }

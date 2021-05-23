@@ -14,24 +14,13 @@ import {ChatConsumer} from './consumer/chat/chat.consumer';
 @NgModule({
   declarations: [],
   imports: [
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
+
   ],
   providers: [
     DatabaseService,
     LangService,
-    TranslateService,
-    TranslateStore,
     SQLite,
     CompatibilityService,
-  ],
-  exports: [
-    TranslateModule
   ],
 })
 export class DelphiCoreModule {
@@ -47,7 +36,3 @@ export class DelphiCoreModule {
   }
 }
 
-// required for AOT compilation
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
-}

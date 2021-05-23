@@ -26,7 +26,7 @@
   </ion-card>
 
   <ion-toolbar>
-  <span *ngIf="hasRole(['expert'])">
+  <span>
       <ion-button *ngIf="!this.process.processFinished && this.currentRound !== null && this.currentUserCanVote()"
                   expand="block" color="secondary"
                   [routerLink]="['/logged-in/home/menu/processes/participate']"
@@ -42,7 +42,7 @@
         {{ 'home.processes.view.rounds' | translate }}
       </ion-label>
 
-      <span *ngIf="hasRole(['coordinator'])">
+      <span>
       <ion-button
         *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds == 0"
         expand="block"
@@ -62,12 +62,12 @@
       </ion-button>
       </span>
     </ion-list-header>
-    <ion-item *ngIf="hasRole(['coordinator'])"
+    <ion-item
               [routerLink]="['/logged-in/home/menu/processes/view_rounds']" [state]="{ process: process}">
       <ion-label>{{ 'home.processes.view.rounds' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
-    <ion-item *ngIf="hasRole(['expert'])">
+    <ion-item>
       <ion-label>{{ 'home.processes.view.rounds' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
@@ -79,35 +79,34 @@
         {{ 'home.processes.view.users' | translate }}
       </ion-label>
     </ion-list-header>
-    <div *ngFor="let role of roleService.getRoles()">
-      <div *ngIf="countUsersRole(role)">
-        <ion-item>
-          <ion-label>{{'home.processes.role.' + role?.name.toLowerCase() | translate}}</ion-label>
-          <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>
-        </ion-item>
-        <div *ngIf="!(role?.name.toLowerCase() == 'expert' && this.currentUserRole?.name.toLowerCase() == 'expert')">
-          <div *ngFor="let userWithRole of process?.processUsers">
-            <ion-chip *ngIf="userWithRole.role.id === role.id" (click)="openChat(userWithRole)"
-                      [color]="userWithRole?.user.id === loggedInUser?.id?'primary':'secondary'">
-              <ion-avatar>
-                <img *ngIf="userWithRole.user.photo !== undefined" [src]="userWithRole.user.photo"
-                     (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
-                <img *ngIf="userWithRole.user.photo === undefined" src="assets/images/no-process-image.jpeg"/>
-              </ion-avatar>
-              <ion-label>{{userWithRole.user.name}} {{userWithRole.user.surnames}} <{{ userWithRole.user.email }}>
-              </ion-label>
-            </ion-chip>
-          </div>
-        </div>
+    <ion-item>
+      <ion-label>{{'home.processes.role.experts' | translate}}</ion-label>
+      <ion-badge slot="end">XX</ion-badge>
+    </ion-item>
+    <!--<div *ngIf="!(role?.name.toLowerCase() == 'expert' && this?.name.toLowerCase() == 'expert')">
+      <div *ngFor="let userWithRole of process?.experts.concat(process?.coordinators)">
+        <ion-chip *ngIf="userWithRole.id === role.id" (click)="openChat(userWithRole)"
+                  [color]="userWithRole?.id === loggedInUser?.id?'primary':'secondary'">
+          <ion-avatar>
+            <img *ngIf="userWithRole.photo !== undefined" [src]="userWithRole.photo"
+                 (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+            <img *ngIf="userWithRole.photo === undefined" src="assets/images/no-process-image.jpeg"/>
+          </ion-avatar>
+          <ion-label>{{userWithRole.name}} {{userWithRole.surnames}} <{{ userWithRole.email }}>
+          </ion-label>
+        </ion-chip>
       </div>
     </div>
+  </div>
+</div>-->
   </ion-list>
 </ion-content>
 
 
-<ion-footer *ngIf="hasRole(['coordinator'])">
+<!-- TODO coordinador only -->
+<ion-footer>
   <ion-toolbar *ngIf="!process?.processFinished">
-    <ion-button  expand="block"
+    <ion-button expand="block"
                 [routerLink]="['/logged-in/home/menu/processes/modify']"
                 [state]="{ process: process}">
       {{'home.processes.view.modify.title' | translate}}

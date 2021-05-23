@@ -56,10 +56,15 @@
     </ion-list-header>
 
     <!-- Toggles in a List -->
-    <ion-item *ngFor="let role of roleService.getRoles()" [routerLink]="['/logged-in/home/menu/processes/user-picker']"
-              [state]="{ process: process, role: role}">
-      <ion-badge slot="end">{{countUsersRole(role)}}</ion-badge>
-      <ion-label>{{'home.processes.role.' + role?.name.toLowerCase() | translate}}</ion-label>
+    <ion-item *ngFor="let coordinator of process?.coordinators" [routerLink]="['/logged-in/home/menu/processes/user-picker']">
+      <ion-badge slot="end">{{process?.coordinators?.length}}</ion-badge>
+      <ion-label>{{'home.processes.role.coordinator' | translate}}</ion-label>
+    </ion-item>
+
+    <!-- Toggles in a List -->
+    <ion-item *ngFor="let expert of process?.experts" [routerLink]="['/logged-in/home/menu/processes/user-picker']">
+      <ion-badge slot="end">{{process?.experts?.length}}</ion-badge>
+      <ion-label>{{'home.processes.role.expert' | translate}}</ion-label>
     </ion-item>
 
   </ion-list>

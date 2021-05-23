@@ -4,28 +4,29 @@ import {LoggedInRoutingModule} from './logged-in-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoggedInInterceptor} from './logged-in.interceptor';
 import {TranslateModule} from '@ngx-translate/core';
-import {ProfilePasswordPage} from './profile/profile-password/profile-password.page';
 import {IonicModule} from '@ionic/angular';
 import {FormsModule} from '@angular/forms';
-import {ProcessConsumer} from '../core/consumer/process/process.consumer';
-import {UserConsumer} from '../core/consumer/user/user.consumer';
-import {DelphiCoreModule} from '../core/delphi-core.module';
-import {ChatPageModule} from './chat/chat.module';
 import {OnboardingPage} from './onboarding/onboarding.page';
-import {ProcessesPageModule} from './processes/processes.module';
 import {ProfilePageModule} from './profile/profile.module';
+import {ProcessesPageModule} from './processes/processes.module';
+import {ChatPageModule} from './chat/chat.module';
+import {HomePage} from './home.page';
 
 
 @NgModule({
   declarations: [
-    OnboardingPage
+    OnboardingPage,
+    HomePage
   ],
   imports: [
     CommonModule,
     LoggedInRoutingModule,
-    TranslateModule,
     IonicModule,
     FormsModule,
+    ProfilePageModule,
+    ProcessesPageModule,
+    ChatPageModule,
+    TranslateModule
   ],
   providers: [
     {
@@ -33,9 +34,6 @@ import {ProfilePageModule} from './profile/profile.module';
       useClass: LoggedInInterceptor,
       multi: true
     },
-  ],
-  exports: [
-    TranslateModule
   ]
 })
 export class LoggedInModule {

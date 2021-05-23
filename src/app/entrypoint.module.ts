@@ -10,13 +10,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IonicStorageModule} from '@ionic/storage';
 import {DelphiCoreModule} from './core/delphi-core.module';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {TranslateModule} from '@ngx-translate/core';
+import {TranslateLoader, TranslateModule, TranslateService, TranslateStore} from '@ngx-translate/core';
 import {UserConsumer} from './core/consumer/user/user.consumer';
 import {ProcessConsumer} from './core/consumer/process/process.consumer';
+import {LoggedInModule} from './logged-in/logged-in.module';
+import {LoggedOutModule} from './logged-out/logged-out.module';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [EntrypointComponent],
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -24,17 +26,32 @@ import {ProcessConsumer} from './core/consumer/process/process.consumer';
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
     DelphiCoreModule.forRoot(),
-    HttpClientModule
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    HttpClientModule,
+    LoggedInModule,
+    LoggedOutModule
   ],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-    UserConsumer
+    TranslateService,
+    TranslateStore,
   ],
   bootstrap: [EntrypointComponent],
   exports: [
-    TranslateModule,
-    DelphiCoreModule
+    DelphiCoreModule,
+    TranslateModule
   ]
 })
 export class EntrypointModule {
+}
+
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
 }
