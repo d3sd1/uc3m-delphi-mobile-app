@@ -7,6 +7,7 @@ import {LoginPage} from './login/login.page';
 import {IonicModule} from '@ionic/angular';
 import {UserConsumer} from '../core/consumer/user/user.consumer';
 import {TranslateModule} from '@ngx-translate/core';
+import {LoggedOutGuard} from './logged-out.guard';
 
 
 @NgModule({
@@ -21,6 +22,9 @@ import {TranslateModule} from '@ngx-translate/core';
     IonicModule,
     TranslateModule
   ],
+  providers: [
+    LoggedOutGuard
+  ]
 })
 export class LoggedOutModule {
 }

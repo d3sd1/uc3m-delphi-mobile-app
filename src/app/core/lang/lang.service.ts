@@ -16,7 +16,6 @@ export class LangService {
   }
 
   async init() {
-    console.log('usre lang',)
     const langs = await this.getAvailableLangs();
     this.registerLanguages(langs);
     this.changeLanguage(

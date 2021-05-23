@@ -27,14 +27,11 @@ export class DatabaseService {
   }
   getDatabase(): Promise<SQLiteObject> {
     return new Promise<SQLiteObject>((resolve) => {
-      console.log(this.database)
       if(this.database === null){
-        console.log('fetch new thread')
         setTimeout(() => {
           resolve(this.getDatabase());
         }, 100);
       } else {
-        console.log('resolve')
         resolve(this.database);
       }
     });

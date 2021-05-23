@@ -189,7 +189,8 @@ export class UserConsumer {
       if (this.userConsumerCache.jwt === '' ||
         this.userConsumerCache.jwt === undefined ||
         this.userConsumerCache.jwt === null) {
-        resolve(false);
+        await this.fetchDatabaseCache();
+        console.log('update db')
       }
       const helper = new JwtHelperService();
       const isExpired = helper.isTokenExpired(this.userConsumerCache.jwt);

@@ -26,7 +26,6 @@ export class ProfilePage {
   }
 
   async ionViewWillEnter() {
-    console.log('data is', await this.userConsumer.getUser().getValue());
     this.userSubscription = (await this.userConsumer.getUser()).subscribe((user) => {
       this.user = user;
     });

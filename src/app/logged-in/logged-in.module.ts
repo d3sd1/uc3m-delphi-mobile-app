@@ -11,6 +11,7 @@ import {ProfilePageModule} from './profile/profile.module';
 import {ProcessesPageModule} from './processes/processes.module';
 import {ChatPageModule} from './chat/chat.module';
 import {HomePage} from './home.page';
+import {LoggedInGuard} from './logged-in.guard';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {HomePage} from './home.page';
       useClass: LoggedInInterceptor,
       multi: true
     },
+    LoggedInGuard
   ]
 })
 export class LoggedInModule {
