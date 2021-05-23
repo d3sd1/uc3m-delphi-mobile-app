@@ -27,8 +27,6 @@ export class ProcessesPage {
 
   async loadProcesses() {
    this.processesUpdater = await this.processService.all();
-
-
     this.processesSubscription = this.processesUpdater.subscribe((processes: Process[]) => {
       this.processes = processes;
       console.log('updated processes:', this.processes);

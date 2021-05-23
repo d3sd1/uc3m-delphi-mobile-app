@@ -37,7 +37,9 @@ export class LangService {
   }
 
   async getAvailableLangs(): Promise<Language[]> {
-    if(this.langs?.length === 0) {
+    if(this.langs === undefined ||
+      this.langs === null ||
+      this.langs?.length === 0) {
       this.langs = await this.httpClient.get<Language[]>(environment.apiUrl + '/v1/delphi/langs').toPromise();
     }
     return this.langs;

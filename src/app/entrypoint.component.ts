@@ -28,10 +28,10 @@ export class EntrypointComponent implements OnInit {
   }
 
 
-  async ngOnInit(): Promise<void> {
+  async ngOnInit() {
+    await this.langService.init();
     await this.userConsumer.fetchDatabaseCache();
     await this.ws.connectWs(await this.userConsumer.getJwt().getValue());
-    await this.langService.init();
     this.pushNotificationService.init();
     await this.compatibilityService.checkDevice();
   }
