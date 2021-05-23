@@ -25,7 +25,7 @@
     "component-selector": [
       true,
       "element",
-      "Agile Delphi",
+      "agile_delphi",
       "app",
       "kebab-case"
     ],

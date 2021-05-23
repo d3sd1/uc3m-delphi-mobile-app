@@ -28,7 +28,7 @@ export class LogoutPage implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.userStorage.logout().then(() => {
-        this.router.navigateByUrl('/logged-out/login').then(() => {
+        this.router.navigateByUrl('/logged-out/user').then(() => {
           this.sendToast('Desconexión satisfactoria').then();
         });
       }).catch((e) => {

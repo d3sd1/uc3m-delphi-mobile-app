@@ -14,6 +14,8 @@
 #import "CDVFile.h"
 #import "CDVLocalFilesystem.h"
 #import "CDVLocation.h"
+#import "sqlite3.h"
+#import "SQLitePlugin.h"
 
 FOUNDATION_EXPORT double CordovaPluginsVersionNumber;
 FOUNDATION_EXPORT const unsigned char CordovaPluginsVersionString[];

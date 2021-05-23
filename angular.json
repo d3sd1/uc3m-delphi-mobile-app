@@ -8,7 +8,7 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "Agile Delphi",
+      "prefix": "agile_delphi",
       "schematics": {},
       "architect": {
         "build": {

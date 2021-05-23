@@ -6,7 +6,7 @@ import {UserStorage} from '../core/storage/user.storage';
 import {FormsModule} from '@angular/forms';
 import {LoginPage} from './login/login.page';
 import {IonicModule} from '@ionic/angular';
-import {LoginConsumer} from '../core/consumer/login/login.consumer';
+import {UserConsumer} from '../core/consumer/user/user.consumer';
 import {TranslateModule} from '@ngx-translate/core';
 
 
@@ -24,7 +24,7 @@ import {TranslateModule} from '@ngx-translate/core';
   ],
   providers: [
     UserStorage,
-    LoginConsumer
+    UserConsumer
   ],
 })
 export class LoggedOutModule {

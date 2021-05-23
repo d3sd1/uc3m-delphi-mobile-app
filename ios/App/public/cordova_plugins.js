@@ -34,6 +34,14 @@
         ]
         },
       {
+          "id": "cordova-sqlite-storage.SQLitePlugin",
+          "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+          "pluginId": "cordova-sqlite-storage",
+        "clobbers": [
+          "SQLitePlugin"
+        ]
+        },
+      {
           "id": "cordova-plugin-file.DirectoryEntry",
           "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
           "pluginId": "cordova-plugin-file",
@@ -211,7 +219,8 @@
     // TOP OF METADATA
     {
       "cordova-plugin-file": "6.0.2",
-      "cordova-plugin-geolocation": "4.0.2"
+      "cordova-plugin-geolocation": "4.0.2",
+      "cordova-sqlite-storage": "6.0.0"
     };
     // BOTTOM OF METADATA
     });

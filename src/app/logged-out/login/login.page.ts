@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoadingController, ToastController} from '@ionic/angular';
-import {LoginConsumer} from '../../core/consumer/login/login.consumer';
-import {LoginUser} from '../../core/consumer/login/login.user';
+import {UserConsumer} from '../../core/consumer/user/user.consumer';
+import {LoginUser} from '../../core/consumer/user/login.user';
 import {WsService} from '../../core/ws/ws.service';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -14,7 +14,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class LoginPage {
   loginUser: LoginUser;
 
-  constructor(private loginConsumer: LoginConsumer,
+  constructor(private loginConsumer: UserConsumer,
               private router: Router,
               private loadingController: LoadingController,
               private toastController: ToastController,

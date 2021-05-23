@@ -7,6 +7,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
 import {Media} from '../processes/media';
+import {LangService} from '../../core/lang/lang.service';
 
 @Component({
   selector: 'delphi-profile',
@@ -93,9 +94,9 @@ export class ProfilePage implements OnInit {
   }
 
   async changeLanguage() {
-    const langs = await this.langService.getAvailableLangs();
+   //TODO const langs = await this.langService.getAvailableLangs();
     const sheets = [];
-    langs.forEach((lang) => {
+  /*  langs.forEach((lang) => {
       sheets.push({
         text: lang.keyName,
         cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',
@@ -118,7 +119,7 @@ export class ProfilePage implements OnInit {
       header: await this.translate.get('home.profile.language.header').toPromise(),
       buttons: sheets
     });
-    await actionSheet.present();
+    await actionSheet.present();*/
   }
 
 

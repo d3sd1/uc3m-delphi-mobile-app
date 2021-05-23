@@ -27,8 +27,6 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
   ],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-    TranslateService,
-    TranslateStore
   ],
   bootstrap: [EntrypointComponent],
   exports: [
