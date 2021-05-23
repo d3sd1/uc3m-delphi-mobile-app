@@ -60,17 +60,7 @@ export class UserConsumer {
   }
 
   async updateCv(cv: FormData) {
-    //TODO update profile cv??!?!?!
-    this.http.post(environment.apiUrl + '/v1/profile/cv', cv, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-    //TODO this.user.cv ... value?
-    /*
-    const db = await this.databaseService.getDatabase();
-    await db.executeSql('UPDATE current_session SET photo=?', [this.userConsumerCache.user.photo]);
-    this.userUpdater.next(this.userConsumerCache.user);
-     */
+    await this.http.post(environment.apiUrl + '/v1/profile/cv', cv, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).toPromise();
     this.userUpdater.next(this.userConsumerCache.user);
   }
   async updateNotificationPreferences(enabled: boolean) {
