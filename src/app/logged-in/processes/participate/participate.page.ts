@@ -34,7 +34,7 @@ export class ParticipatePage implements OnInit {
   }
 
   async goBack() {
-    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view', {
       state: {process: this.process, currentUser: this.currentUser}
     });
   }
@@ -131,12 +131,12 @@ export class ParticipatePage implements OnInit {
   }
   public async saveParticipation() { // ñapa temporal
     await this.httpClient.post(environment.apiUrl + '/v1/process/tmp_json_upl', this.answers).toPromise().then(async (delphiProcess: Process) => {
-      await this.showToast('home.processes.single.round.participate.success');
+      await this.showToast('home.processes.view.round.participate.success');
       if(this.currentRound.expertsVoted === null || this.currentRound.expertsVoted === undefined) {
         this.currentRound.expertsVoted = [];
       }
       this.currentRound.expertsVoted.push(this.currentUser);
-      await this.router.navigateByUrl('/logged-in/home/menu/processes/single', {
+      await this.router.navigateByUrl('/logged-in/home/menu/processes/view', {
         state: {
           process: this.process,
           currentUser: this.currentUser
@@ -144,8 +144,8 @@ export class ParticipatePage implements OnInit {
       });
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
-      await this.showToast('home.processes.single.round.participate.err');
-      await this.router.navigateByUrl('/logged-in/home/menu/processes/single', {
+      await this.showToast('home.processes.view.round.participate.err');
+      await this.router.navigateByUrl('/logged-in/home/menu/processes/view', {
         state: {
           process: this.process,
           currentUser: this.currentUser

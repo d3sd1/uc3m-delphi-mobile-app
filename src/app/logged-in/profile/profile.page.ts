@@ -8,25 +8,32 @@ import {environment} from '../../../environments/environment';
 import {Media} from '../processes/media';
 import {LangService} from '../../core/lang/lang.service';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-profile',
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss']
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
 
   public profileOptionsBackup: any[];
   public user: User;
+  private userSubscription: Subscription;
 
   constructor(private actionSheetController: ActionSheetController, private langService: LangService, private userConsumer: UserConsumer,
-              private translate: TranslateService, private httpClient: HttpClient, private sanitizer: DomSanitizer) {
+              private translate: TranslateService) {
   }
 
-  async ngOnInit() {
-    (await this.userConsumer.getUser()).subscribe((user) => {
+  async ionViewWillEnter() {
+    console.log('data is', await this.userConsumer.getUser().getValue());
+    this.userSubscription = (await this.userConsumer.getUser()).subscribe((user) => {
       this.user = user;
     });
+  }
+
+  async ionViewWillLeave() {
+    this.userSubscription.unsubscribe();
   }
 
   @ViewChild('uploadPicture') uploadPicture: ElementRef;

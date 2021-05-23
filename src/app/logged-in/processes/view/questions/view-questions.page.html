@@ -1,17 +1,17 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" [text]="'home.processes.single.view.questions.back' | translate"></ion-back-button>
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" [text]="'home.processes.view.view.questions.back' | translate"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'home.processes.single.view.questions.title' | translate}}</ion-title>
+    <ion-title>{{'home.processes.view.view.questions.title' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
   <div id="container" *ngIf="process?.rounds[this.roundIndex]?.questions.length == 0">
-    <strong>{{'home.processes.single.view.questions.empty.title' | translate}}</strong>
-    <p>{{'home.processes.single.view.questions.empty.desc' | translate}}</p>
+    <strong>{{'home.processes.view.view.questions.empty.title' | translate}}</strong>
+    <p>{{'home.processes.view.view.questions.empty.desc' | translate}}</p>
   </div>
   <ion-list *ngFor="let question of process?.rounds[this.roundIndex]?.questions; let questionIndex = index">
     <!-- Default reorder icon, end aligned items -->

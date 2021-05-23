@@ -10,6 +10,7 @@ import {ChatService} from './chat/chat.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {LogoutPage} from './profile/logout/logout.page';
 import {OnboardingPage} from './onboarding/onboarding.page';
+import {UserConsumer} from '../core/consumer/user/user.consumer';
 
 @NgModule({
   imports: [

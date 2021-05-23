@@ -3,8 +3,6 @@ import {ChatService} from './chat/chat.service';
 import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {User} from './user';
-import {getChatsUnreadMessages, UserChat} from './chat/user-chat';
-import {ChatMessage} from './chat/chat-conversation/chat-message';
 import {WsService} from '../core/ws/ws.service';
 import {ViewDidEnter} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
@@ -40,8 +38,9 @@ export class HomePage implements ViewDidEnter {
   async ionViewDidEnter() {
     (await this.userConsumer.getUser()).subscribe((user) => {
       this.user = user;
+
+      this.langService.changeLanguage(this.user.language);
     });
-    this.langService.changeLanguage(this.user.language);
 
     /*TODO this.chatConsumer.chat().subscribe((chatMessages: ChatMessage[]) => {
       this.notifications.messages = chatMessages.filter((chatMessage) => !chatMessage.read).length;

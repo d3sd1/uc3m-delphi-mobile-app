@@ -7,26 +7,32 @@ import {TranslateModule} from '@ngx-translate/core';
 import {ProfilePasswordPage} from './profile/profile-password/profile-password.page';
 import {IonicModule} from '@ionic/angular';
 import {FormsModule} from '@angular/forms';
+import {ProcessConsumer} from '../core/consumer/process/process.consumer';
+import {UserConsumer} from '../core/consumer/user/user.consumer';
+import {DelphiCoreModule} from '../core/delphi-core.module';
+import {ChatPageModule} from './chat/chat.module';
+import {OnboardingPage} from './onboarding/onboarding.page';
+import {ProcessesPageModule} from './processes/processes.module';
+import {ProfilePageModule} from './profile/profile.module';
 
 
 @NgModule({
   declarations: [
-    ProfilePasswordPage
+    OnboardingPage
   ],
   imports: [
     CommonModule,
     LoggedInRoutingModule,
-    HttpClientModule,
     TranslateModule,
     IonicModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoggedInInterceptor,
       multi: true
-    }
+    },
   ],
   exports: [
     TranslateModule

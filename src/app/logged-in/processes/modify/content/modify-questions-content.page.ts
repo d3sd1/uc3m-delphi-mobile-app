@@ -36,11 +36,11 @@ export class ModifyQuestionsContentPage implements OnInit {
     if(this.currentCategory === undefined
     || this.currentCategory === null
     || this.currentCategory === '') {
-      await this.showToast('home.processes.single.round.err.category_must_be_filled');
+      await this.showToast('home.processes.view.round.err.category_must_be_filled');
       return;
     }
     if (this.checkDuplicatedCategories(this.currentCategory)) {
-      await this.showToast('home.processes.single.round.err.duplicated_categories');
+      await this.showToast('home.processes.view.round.err.duplicated_categories');
       return;
     }
     this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.push(new Category(this.currentCategory));
@@ -88,22 +88,22 @@ export class ModifyQuestionsContentPage implements OnInit {
     if (this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.question === null
       || this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.question === undefined
       || this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.question === '') {
-      await this.showToast('home.processes.single.round.err.content');
+      await this.showToast('home.processes.view.round.err.content');
       return;
     }
 
     if (this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.minVal
       > this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.maxVal) {
-      await this.showToast('home.processes.single.round.err.valsminmax');
+      await this.showToast('home.processes.view.round.err.valsminmax');
       return;
     }
     if (isNaN(this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.minVal)
       || isNaN(this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.maxVal)) {
-      await this.showToast('home.processes.single.round.err.valsnotnumbers');
+      await this.showToast('home.processes.view.round.err.valsnotnumbers');
       return;
     }
     if (this.checkDuplicatedCategories()) {
-      await this.showToast('home.processes.single.round.err.duplicated_categories');
+      await this.showToast('home.processes.view.round.err.duplicated_categories');
       return;
     }
     await this.router.navigateByUrl('/logged-in/home/menu/processes/modify_questions', {

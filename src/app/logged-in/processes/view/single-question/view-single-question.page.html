@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" [text]="'home.processes.single.view.back' | translate"></ion-back-button>
+      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" [text]="'home.processes.view.view.back' | translate"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'home.processes.single.view.answers' | translate}}</ion-title>
+    <ion-title>{{'home.processes.view.view.answers' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,8 +11,8 @@
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
   <div id="container" *ngIf="process?.rounds[this.roundIndex]?.questions[questionIndex].answers === undefined ||
   process?.rounds[this.roundIndex]?.questions[questionIndex].answers.length == 0">
-    <strong>{{'home.processes.single.view.no_answers.title' | translate}}</strong>
-    <p>{{'home.processes.single.view.no_answers.desc' | translate}}</p>
+    <strong>{{'home.processes.view.view.no_answers.title' | translate}}</strong>
+    <p>{{'home.processes.view.view.no_answers.desc' | translate}}</p>
   </div>
   <ion-list *ngFor="let answer of process?.rounds[this.roundIndex]?.questions[this.questionIndex].answers; let roundIndex = index">
     <!-- Default reorder icon, end aligned items -->

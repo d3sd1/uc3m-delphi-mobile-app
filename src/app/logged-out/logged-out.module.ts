@@ -22,7 +22,7 @@ import {TranslateModule} from '@ngx-translate/core';
     TranslateModule
   ],
   providers: [
-    UserConsumer
+
   ],
 })
 export class LoggedOutModule {

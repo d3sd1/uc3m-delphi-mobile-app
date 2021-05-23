@@ -2,9 +2,9 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()"
-                       [text]="'home.processes.single.back' | translate"></ion-back-button>
+                       [text]="'home.processes.view.back' | translate"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'home.processes.single.title' | translate }}</ion-title>
+    <ion-title>{{ 'home.processes.view.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -31,7 +31,7 @@
                   expand="block" color="secondary"
                   [routerLink]="['/logged-in/home/menu/processes/participate']"
                   [state]="{ process: process, currentUser: loggedInUser}">
-        {{'home.processes.single.participate.initiate' | translate}}
+        {{'home.processes.view.participate.initiate' | translate}}
       </ion-button>
     </span>
   </ion-toolbar>
@@ -39,7 +39,7 @@
   <ion-list lines="inset" class="ion-no-margin">
     <ion-list-header>
       <ion-label>
-        {{ 'home.processes.single.rounds' | translate }}
+        {{ 'home.processes.view.rounds' | translate }}
       </ion-label>
 
       <span *ngIf="hasRole(['coordinator'])">
@@ -47,28 +47,28 @@
         *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds == 0"
         expand="block"
         (click)="closeProcess()">
-        {{'home.processes.single.end.title' | translate}}
+        {{'home.processes.view.end.title' | translate}}
       </ion-button>
         <ion-button
           *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds > 0"
           expand="block"
           (click)="startRound()">
-        {{'home.processes.single.round.start.title' | translate}}
+        {{'home.processes.view.round.start.title' | translate}}
       </ion-button>
         <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound !== null"
                     expand="block"
                     (click)="closeRound()">
-        {{'home.processes.single.round.close.title' | translate}}
+        {{'home.processes.view.round.close.title' | translate}}
       </ion-button>
       </span>
     </ion-list-header>
     <ion-item *ngIf="hasRole(['coordinator'])"
               [routerLink]="['/logged-in/home/menu/processes/view_rounds']" [state]="{ process: process}">
-      <ion-label>{{ 'home.processes.single.rounds' | translate }}</ion-label>
+      <ion-label>{{ 'home.processes.view.rounds' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
     <ion-item *ngIf="hasRole(['expert'])">
-      <ion-label>{{ 'home.processes.single.rounds' | translate }}</ion-label>
+      <ion-label>{{ 'home.processes.view.rounds' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
   </ion-list>
@@ -76,7 +76,7 @@
   <ion-list lines="none" class="ion-no-margin">
     <ion-list-header>
       <ion-label>
-        {{ 'home.processes.single.users' | translate }}
+        {{ 'home.processes.view.users' | translate }}
       </ion-label>
     </ion-list-header>
     <div *ngFor="let role of roleService.getRoles()">
@@ -110,7 +110,7 @@
     <ion-button  expand="block"
                 [routerLink]="['/logged-in/home/menu/processes/modify']"
                 [state]="{ process: process}">
-      {{'home.processes.single.modify.title' | translate}}
+      {{'home.processes.view.modify.title' | translate}}
     </ion-button>
   </ion-toolbar>
 </ion-footer>

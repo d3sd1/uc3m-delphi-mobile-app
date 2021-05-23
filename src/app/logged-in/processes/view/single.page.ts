@@ -115,7 +115,7 @@ export class SinglePage implements OnInit {
     this.showExpertForm = false;
     this.invitationEmail = '';
     const toast = await this.toastController.create({
-      message: await this.translate.get('home.processes.single.invitation.sent').toPromise(),
+      message: await this.translate.get('home.processes.view.invitation.sent').toPromise(),
     });
     await toast.present();
     setTimeout(() => {
@@ -155,10 +155,10 @@ export class SinglePage implements OnInit {
       this.process = delphiProcess;
       this.getRemainingRounds();
       this.findCurrentRound();
-      await this.showToast(await this.translate.get('home.processes.single.round.close.success').toPromise());
+      await this.showToast(await this.translate.get('home.processes.view.round.close.success').toPromise());
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
-      await this.showToast(await this.translate.get('home.processes.single.round.close.err').toPromise());
+      await this.showToast(await this.translate.get('home.processes.view.round.close.err').toPromise());
     });
   }
 
@@ -167,10 +167,10 @@ export class SinglePage implements OnInit {
       this.process = delphiProcess;
       this.getRemainingRounds();
       this.findCurrentRound();
-      await this.showToast(await this.translate.get('home.processes.single.round.start.success').toPromise());
+      await this.showToast(await this.translate.get('home.processes.view.round.start.success').toPromise());
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
-      await this.showToast(await this.translate.get('home.processes.single.round.start.err').toPromise());
+      await this.showToast(await this.translate.get('home.processes.view.round.start.err').toPromise());
     });
   }
 

@@ -26,7 +26,7 @@ export class ClosePage implements OnInit {
   }
 
   async goBack() {
-    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view', {
       state: {process: this.process}
     });
   }
@@ -51,17 +51,17 @@ export class ClosePage implements OnInit {
 
   public async closeProcess() {
     if (this.conclusion === '' || this.conclusion === undefined || this.conclusion === null) {
-      await this.showToast(await this.translate.get('home.processes.single.end.form.err_empty').toPromise());
+      await this.showToast(await this.translate.get('home.processes.view.end.form.err_empty').toPromise());
       return;
     }
     this.process.finalComment = 'acabar esta parte plsss'; // TODO <---
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/end?process_id=' + this.process.id, this.process).toPromise().then(async (delphiProcess: Process) => {
       this.process = delphiProcess;
-      await this.showToast(await this.translate.get('home.processes.single.end.success').toPromise());
+      await this.showToast(await this.translate.get('home.processes.view.end.success').toPromise());
       await this.goBack();
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
-      await this.showToast(await this.translate.get('home.processes.single.end.err').toPromise());
+      await this.showToast(await this.translate.get('home.processes.view.end.err').toPromise());
       await this.goBack();
     });
   }

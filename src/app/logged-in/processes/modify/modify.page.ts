@@ -110,18 +110,18 @@ export class ModifyPage implements OnInit {
     }
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: await this.translate.get('home.processes.single.modify.saving').toPromise(),
+      message: await this.translate.get('home.processes.view.modify.saving').toPromise(),
       duration: 0
     });
     await loading.present();
 
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
-      await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
+      await this.showToast(await this.translate.get('home.processes.view.modify.saved').toPromise());
       await this.router.navigateByUrl('/logged-in/home/menu/processes', {
         state: {process: this.process}
       });
     }).catch(async (errMessage: string) => {
-      await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
+      await this.showToast(await this.translate.get('home.processes.view.modify.saved').toPromise());
     }).finally(async () => {
       await loading.dismiss();
     });
@@ -141,7 +141,7 @@ export class ModifyPage implements OnInit {
 
   async addRound() {
 
-    const round = new Round(await this.translate.get('home.processes.single.modify.round', {round: (this.process.rounds.length + 1)}).toPromise(), [], new Date(), false);
+    const round = new Round(await this.translate.get('home.processes.view.modify.round', {round: (this.process.rounds.length + 1)}).toPromise(), [], new Date(), false);
     this.process.rounds.push(round);
     await this.createProcess.scrollToBottom(300);
   }
@@ -151,7 +151,7 @@ export class ModifyPage implements OnInit {
       return iRound.id === round.id;
     });
     const question = new Question();
-    question.name = await this.translate.get('home.processes.single.modify.question', {question: (this.process.rounds[roundIndex].questions.length + 1)}).toPromise()
+    question.name = await this.translate.get('home.processes.view.modify.question', {question: (this.process.rounds[roundIndex].questions.length + 1)}).toPromise()
     this.process.rounds[roundIndex].questions.push(question);
     await this.createProcess.scrollToBottom(300);
   }
@@ -170,7 +170,7 @@ export class ModifyPage implements OnInit {
       await this.navCtrl.navigateBack('/logged-in/home/menu/processes', {
       });
     } else {
-      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
+      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view', {
         state: {process: this.process, currentUser: this.currentUser}
       });
     }

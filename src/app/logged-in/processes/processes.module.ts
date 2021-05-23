@@ -2,11 +2,11 @@ import {IonicModule} from '@ionic/angular';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {ProcessesPage} from './processes.page';
+import {ProcessesPage} from './list/processes.page';
 
 import {ProcessesPageRoutingModule} from './processes-routing.module';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {SinglePage} from './single/single.page';
+import {SinglePage} from './view/single.page';
 import {IonicRatingModule} from 'ionic4-rating';
 import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
@@ -16,15 +16,16 @@ import {RoleService} from './role.service';
 import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';
-import {ViewRoundsPage} from './single/rounds/view-rounds.page';
-import {ViewQuestionsPage} from './single/questions/view-questions.page';
-import {ViewSingleQuestionPage} from './single/single-question/view-single-question.page';
+import {ViewRoundsPage} from './view/rounds/view-rounds.page';
+import {ViewQuestionsPage} from './view/questions/view-questions.page';
+import {ViewSingleQuestionPage} from './view/single-question/view-single-question.page';
 import {ParticipatePage} from './participate/participate.page';
 import {ClosePage} from './modify/close/close.page';
-import {LoadingPage} from './loading/loading.page';
-import {ListPage} from './list/list.page';
+import {LoadingPage} from './list/loading/loading.page';
+import {ListPage} from './list/all/list.page';
 import {EmptyProcessesPage} from './list/empty/empty-processes.page';
 import {ProcessConsumer} from '../../core/consumer/process/process.consumer';
+import {UserConsumer} from '../../core/consumer/user/user.consumer';
 
 @NgModule({
   imports: [
@@ -49,8 +50,7 @@ import {ProcessConsumer} from '../../core/consumer/process/process.consumer';
   ],
   providers: [
     Geolocation,
-    RoleService,
-    ProcessConsumer
+    RoleService
   ],
 
 })

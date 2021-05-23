@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from '../../user';
-import {Process} from '../process';
-import {WsService} from '../../../core/ws/ws.service';
-import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
+import {User} from '../../../user';
+import {Process} from '../../process';
+import {WsService} from '../../../../core/ws/ws.service';
+import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
 
 @Component({
   selector: 'delphi-list',

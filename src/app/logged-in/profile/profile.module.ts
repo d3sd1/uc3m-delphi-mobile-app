@@ -8,6 +8,8 @@ import {ProfilePage} from './profile.page';
 import {ProfilePageRoutingModule} from './profile-routing.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {ProfileBasicPage} from './profile-basic/profile-basic.page';
+import {UserConsumer} from '../../core/consumer/user/user.consumer';
+import {ProcessConsumer} from '../../core/consumer/process/process.consumer';
 
 @NgModule({
   imports: [

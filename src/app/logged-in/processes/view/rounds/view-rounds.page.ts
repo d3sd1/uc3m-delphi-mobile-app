@@ -21,7 +21,7 @@ export class ViewRoundsPage implements OnInit {
   }
 
   async goBack() {
-    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view', {
       state: {process: this.process, currentUser: this.currentUser}
     });
   }

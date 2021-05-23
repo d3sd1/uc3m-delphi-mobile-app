@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [routerLink]="['/logged-in/home/menu/processes/single']"
+      <ion-back-button [routerLink]="['/logged-in/home/menu/processes/view']"
                        [state]="{ process: process}"
                        (click)="goBack()"
-                       [text]="'home.processes.single.participate.back' | translate"></ion-back-button>
+                       [text]="'home.processes.view.participate.back' | translate"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'home.processes.single.participate.title' | translate}}</ion-title>
+    <ion-title>{{'home.processes.view.participate.title' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,7 +21,7 @@
 
       <ion-item *ngIf="this.currentRound !== undefined &&
     answer.question?.type === 'QUALITATIVE'"><ion-textarea
-        [(ngModel)]="answer.response" [placeholder]="'home.processes.single.participate.answer' | translate"></ion-textarea></ion-item>
+        [(ngModel)]="answer.response" [placeholder]="'home.processes.view.participate.answer' | translate"></ion-textarea></ion-item>
       <ion-range *ngIf="this.currentRound !== undefined &&
     answer.question?.type === 'QUANTITATIVE'" [min]="0"
                  [max]="10"
@@ -73,6 +73,6 @@
 <ion-footer>
   <ion-toolbar>
     <ion-button expand="block"
-                (click)="confirmParticipation()">{{'home.processes.single.participate.send' | translate}}</ion-button>
+                (click)="confirmParticipation()">{{'home.processes.view.participate.send' | translate}}</ion-button>
   </ion-toolbar>
 </ion-footer>

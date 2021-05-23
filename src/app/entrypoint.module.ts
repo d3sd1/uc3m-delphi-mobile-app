@@ -11,6 +11,8 @@ import {IonicStorageModule} from '@ionic/storage';
 import {DelphiCoreModule} from './core/delphi-core.module';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateModule} from '@ngx-translate/core';
+import {UserConsumer} from './core/consumer/user/user.consumer';
+import {ProcessConsumer} from './core/consumer/process/process.consumer';
 
 @NgModule({
   declarations: [EntrypointComponent],
@@ -21,15 +23,17 @@ import {TranslateModule} from '@ngx-translate/core';
     EntrypointRoutingModule,
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
-    DelphiCoreModule,
+    DelphiCoreModule.forRoot(),
     HttpClientModule
   ],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    UserConsumer
   ],
   bootstrap: [EntrypointComponent],
   exports: [
-    TranslateModule
+    TranslateModule,
+    DelphiCoreModule
   ]
 })
 export class EntrypointModule {

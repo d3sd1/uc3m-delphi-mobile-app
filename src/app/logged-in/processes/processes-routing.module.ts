@@ -1,19 +1,19 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ProcessesPage} from './processes.page';
-import {SinglePage} from './single/single.page';
+import {ProcessesPage} from './list/processes.page';
+import {SinglePage} from './view/single.page';
 import {ModifyPage} from './modify/modify.page';
 import {UserPickerPage} from './user-picker/user-picker.page';
 import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/content/modify-questions-content.page';
-import {ViewRoundsPage} from './single/rounds/view-rounds.page';
-import {ViewQuestionsPage} from './single/questions/view-questions.page';
-import {ViewSingleQuestionPage} from './single/single-question/view-single-question.page';
+import {ViewRoundsPage} from './view/rounds/view-rounds.page';
+import {ViewQuestionsPage} from './view/questions/view-questions.page';
+import {ViewSingleQuestionPage} from './view/single-question/view-single-question.page';
 import {ParticipatePage} from './participate/participate.page';
 import {ClosePage} from './modify/close/close.page';
-import {LoadingPage} from './loading/loading.page';
-import {ListPage} from './list/list.page';
+import {LoadingPage} from './list/loading/loading.page';
+import {ListPage} from './list/all/list.page';
 
 const routes: Routes = [
   {
@@ -29,7 +29,7 @@ const routes: Routes = [
     component: ListPage
   },
   {
-    path: 'single',
+    path: 'view',
     component: SinglePage
   },
   {
