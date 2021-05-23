@@ -16,14 +16,18 @@ export class WsService {
   }
 
   async connectWs(jwt: string) {
+    if (jwt === null || jwt === '' || jwt === undefined) {
+      return;
+    }
     let ws = new SockJS(environment.apiUrl + '/ws');
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({jwt: jwt}, (frame) => {
 
       //_this.stompClient.reconnect_delay = 2000;
     }, (e) => {
+      console.error(e);
       setTimeout(() => {
-        if (jwt !== null) {
+        if (jwt !== null && jwt !== '' && jwt !== undefined) {
           this.connectWs(jwt);
         }
 
