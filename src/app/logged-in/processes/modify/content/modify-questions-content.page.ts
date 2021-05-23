@@ -69,6 +69,7 @@ export class ModifyQuestionsContentPage implements OnInit {
 
   private async showToast(transKey: string) {
     const toast = await this.toastController.create({
+      position: 'top',
       message: await this.translate.get(transKey).toPromise(),
     });
     await toast.present();

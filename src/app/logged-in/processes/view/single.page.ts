@@ -73,6 +73,7 @@ export class SinglePage implements OnInit {
     this.showExpertForm = false;
     this.invitationEmail = '';
     const toast = await this.toastController.create({
+      position: 'top',
       message: await this.translate.get('home.processes.view.invitation.sent').toPromise(),
     });
     await toast.present();
@@ -141,6 +142,7 @@ export class SinglePage implements OnInit {
 
   private async showToast(msg: string) {
     const toast = await this.toastController.create({
+      position: 'top',
       message: msg,
     });
     await toast.present();

@@ -41,6 +41,12 @@ export class UserConsumer {
     };
   }
 
+  async publishChanges() {
+    this.userUpdater.next(this.userConsumerCache.user);
+    this.jwtUpdater.next(this.userConsumerCache.jwt);
+    await this.wsService.publish(`profile/${this.userConsumerCache.user.id}`, this.userConsumerCache.user);
+  }
+
   getJwt(): BehaviorSubject<string> {
     return this.jwtUpdater;
   }
@@ -56,19 +62,19 @@ export class UserConsumer {
     const db = await this.databaseService.getDatabase();
     await db.executeSql('UPDATE current_session SET photo=?', [this.userConsumerCache.user.photo]);
     await this.http.post(environment.apiUrl + '/v1/profile/photo', this.userConsumerCache.user).toPromise();
-    this.userUpdater.next(this.userConsumerCache.user);
+    await this.publishChanges();
   }
 
   async updateCv(cv: FormData) {
     await this.http.post(environment.apiUrl + '/v1/profile/cv', cv, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).toPromise();
-    this.userUpdater.next(this.userConsumerCache.user);
+    await this.publishChanges();
   }
   async updateNotificationPreferences(enabled: boolean) {
     await this.http.post(environment.apiUrl + '/v1/profile/notifications?enabled=' + enabled, {}).toPromise();
     this.userConsumerCache.user.notificationStatus = enabled;
     const db = await this.databaseService.getDatabase();
     await db.executeSql('UPDATE current_session SET notification_status=?', [this.userConsumerCache.user.notificationStatus]);
-    this.userUpdater.next(this.userConsumerCache.user);
+    await this.publishChanges();
   }
   async updateLanguage(lang: Language) {
     lang.keyName = lang.keyName.toLowerCase();
@@ -77,7 +83,7 @@ export class UserConsumer {
     const db = await this.databaseService.getDatabase();
     await db.executeSql('UPDATE current_session SET language=?', [JSON.stringify(this.userConsumerCache.user.language)]);
     await this.http.post(environment.apiUrl + '/v1/profile/lang?language_id=' + lang.id, {}).toPromise();
-    this.userUpdater.next(this.userConsumerCache.user);
+    await this.publishChanges();
   }
 
   async fetchDatabaseCache() {
@@ -98,8 +104,7 @@ export class UserConsumer {
       this.userConsumerCache.user.needsOnboard = dbRow.needs_onboard;
       this.userConsumerCache.user.language = JSON.parse(dbRow.language);
       this.userConsumerCache.user.notificationStatus = dbRow.notification_status;
-      this.userUpdater.next(this.userConsumerCache.user);
-      this.jwtUpdater.next(this.userConsumerCache.jwt);
+      await this.publishChanges();
     }
   }
 
@@ -149,8 +154,7 @@ export class UserConsumer {
         JSON.stringify(userLogin.user.language),
         userLogin.user.notificationStatus,
       ]);
-    this.userUpdater.next(this.userConsumerCache.user);
-    this.jwtUpdater.next(this.userConsumerCache.jwt);
+    await this.publishChanges();
     await this.fetchDatabaseCache();
   }
 

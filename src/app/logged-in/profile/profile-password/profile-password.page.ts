@@ -38,6 +38,7 @@ export class ProfilePasswordPage implements OnInit {
 
   private async showToast(msg: string) {
     const toast = await this.toastController.create({
+      position: 'top',
       message: msg,
     });
     await toast.present();

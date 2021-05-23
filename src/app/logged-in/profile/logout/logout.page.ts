@@ -16,6 +16,7 @@ export class LogoutPage implements OnInit {
 
   async sendToast(msg) {
     const toast = await this.toastController.create({
+      position: 'top',
       message: msg,
       duration: 2000
     });
