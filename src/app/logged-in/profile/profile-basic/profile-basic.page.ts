@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {UserStorage} from '../../../core/storage/user.storage';
 import {User} from '../../user';
 
 @Component({
@@ -8,17 +7,12 @@ import {User} from '../../user';
   templateUrl: './profile-basic.page.html',
   styleUrls: ['./profile-basic.page.scss'],
 })
-export class ProfileBasicPage implements OnInit {
+export class ProfileBasicPage {
 
   user: User;
 
   constructor(
-    private navCtrl: NavController,
-    private authService: UserStorage) {
-  }
-
-  async ngOnInit() {
-    this.user = await this.authService.getUser();
+    private navCtrl: NavController) {
   }
 
   async goBack() {

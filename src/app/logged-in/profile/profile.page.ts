@@ -1,6 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActionSheetController} from '@ionic/angular';
-import {UserStorage} from '../../core/storage/user.storage';
 import {User} from '../user';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -8,6 +7,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
 import {Media} from '../processes/media';
 import {LangService} from '../../core/lang/lang.service';
+import {UserConsumer} from '../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-profile',
@@ -16,101 +16,62 @@ import {LangService} from '../../core/lang/lang.service';
 })
 export class ProfilePage implements OnInit {
 
-
-  public profileOptions: any[];
   public profileOptionsBackup: any[];
   public user: User;
 
-  constructor(private actionSheetController: ActionSheetController, private langService: LangService, private userStorage: UserStorage,
+  constructor(private actionSheetController: ActionSheetController, private langService: LangService, private userConsumer: UserConsumer,
               private translate: TranslateService, private httpClient: HttpClient, private sanitizer: DomSanitizer) {
   }
 
   async ngOnInit() {
-    this.profileOptions = await this.initializeItems();
-    this.user = await this.userStorage.getUser();
-  }
-
-
-  async initializeItems(): Promise<any> {
+    await this.userConsumer.getUser().subscribe((user) => {
+      this.user = user;
+    });
   }
 
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
+
   triggerUploadImage() {
     this.uploadPicture.nativeElement.click();
   }
+
   @ViewChild('uploadCvRef') uploadCvRef: ElementRef;
+
   triggerUploadCv() {
     this.uploadCvRef.nativeElement.click();
   }
 
   async uploadImage() {
-    const formData = new FormData();
-    formData.append('image', this.uploadPicture.nativeElement.files[0]);
-    this.httpClient.post<Media>(environment.apiUrl + '/v1/media/upload', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
-      async (res) => {
-        this.user.photo = environment.apiUrl + '/v1/media/fetch/' + res.id;
-        await this.userStorage.setUser(this.user);
-        await this.httpClient.post(environment.apiUrl + '/v1/profile/photo', this.user).toPromise();
-      },
-      (err) => console.log(err)
-    );
+    const newPhoto = new FormData();
+    newPhoto.append('image', this.uploadPicture.nativeElement.files[0]);
+    await this.userConsumer.updatePicture(newPhoto);
   }
+
   async uploadCv() {
-    const formData = new FormData();
-    formData.append('cv', this.uploadCvRef.nativeElement.files[0]);
-    this.httpClient.post(environment.apiUrl + '/v1/profile/cv', formData, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-    await this.userStorage.setUser(this.user);
+    const cv = new FormData();
+    cv.append('cv', this.uploadCvRef.nativeElement.files[0]);
+    await this.userConsumer.updateCv(cv);
   }
 
   async triggerStatusChatHandler() {
     await this.presentActionSheet();
   }
 
-  async filterList(evt) {
-    this.profileOptions = this.profileOptionsBackup;
-    const searchTerm = evt.srcElement.value;
-
-    if (!searchTerm) {
-      return;
-    }
-
-    this.profileOptions = this.profileOptions.filter(currentFood => {
-      if (currentFood.name && searchTerm) {
-        return (currentFood.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-      }
-    });
-  }
-
   async updateNotificationPreferences(enabled: boolean) {
-    this.user.notificationStatus = enabled;
-    this.httpClient.post(environment.apiUrl + '/v1/profile/notifications?enabled=' + this.user.notificationStatus, {}).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-    await this.userStorage.setUser(this.user);
+    const cv = new FormData();
+    cv.append('cv', this.uploadCvRef.nativeElement.files[0]);
+    await this.userConsumer.updateNotificationPreferences(enabled);
   }
 
   async changeLanguage() {
-   //TODO const langs = await this.langService.getAvailableLangs();
+    const langs = await this.langService.getAvailableLangs();
     const sheets = [];
-  /*  langs.forEach((lang) => {
+    langs.forEach((lang) => {
       sheets.push({
         text: lang.keyName,
         cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',
-        //his.userStorage.
         handler: async () => {
-          lang.keyName = lang.keyName.toLowerCase();
-          console.log("change lang",lang.keyName)
-          this.user.language = lang;
-          await this.translate.use(lang.keyName);
-
-          this.translate.setDefaultLang(lang.keyName);
-          this.translate.addLangs([lang.keyName]);
-          this.translate.use(lang.keyName);
-          await this.userStorage.setUser(this.user);
+          await this.userConsumer.updateLanguage(lang);
         }
       });
     });
@@ -119,7 +80,7 @@ export class ProfilePage implements OnInit {
       header: await this.translate.get('home.profile.language.header').toPromise(),
       buttons: sheets
     });
-    await actionSheet.present();*/
+    await actionSheet.present();
   }
 
 

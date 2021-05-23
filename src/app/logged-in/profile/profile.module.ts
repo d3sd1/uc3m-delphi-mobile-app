@@ -7,6 +7,7 @@ import {ProfilePage} from './profile.page';
 
 import {ProfilePageRoutingModule} from './profile-routing.module';
 import {TranslateModule} from '@ngx-translate/core';
+import {ProfileBasicPage} from './profile-basic/profile-basic.page';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {TranslateModule} from '@ngx-translate/core';
     TranslateModule
   ],
   declarations: [
-    ProfilePage
+    ProfilePage,
+    ProfileBasicPage
   ],
   providers: [
 

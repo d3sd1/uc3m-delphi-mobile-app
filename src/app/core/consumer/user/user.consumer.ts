@@ -1,16 +1,19 @@
 import {Injectable} from '@angular/core';
 import {LoginResponse} from './login.response';
 import {environment} from '../../../../environments/environment';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {LoginUser} from './login.user';
 import {Storage} from '@ionic/storage';
 import {WsService} from '../../ws/ws.service';
 import {TranslateService} from '@ngx-translate/core';
-import {SQLite, SQLiteObject} from '@ionic-native/sqlite/ngx';
+import {SQLite} from '@ionic-native/sqlite/ngx';
 import {DatabaseService} from '../database.service';
 import {User} from '../../../logged-in/user';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Language} from '../../../logged-in/profile/language';
+import {Media} from '../../../logged-in/processes/media';
+import {BehaviorSubject} from 'rxjs';
+import {LangService} from '../../lang/lang.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +21,15 @@ import {Language} from '../../../logged-in/profile/language';
 export class UserConsumer {
 
   private userConsumerCache;
+  private userUpdater = new BehaviorSubject<User>(new User());
 
   constructor(private http: HttpClient,
               private storage: Storage,
               private wsService: WsService,
               private translate: TranslateService,
               private sqlite: SQLite,
-              private databaseService: DatabaseService) {
+              private databaseService: DatabaseService,
+              private langService: LangService) {
     this.initCache();
   }
 
@@ -33,6 +38,50 @@ export class UserConsumer {
       jwt: '',
       user: new User()
     };
+  }
+
+  getJwt(): string {
+    return this.userConsumerCache.jwt;
+  }
+
+  getUser(): BehaviorSubject<User> {
+    return this.userUpdater;
+  }
+
+  async updatePicture(newPhoto: FormData) {
+    const res = await this.http.post<Media>(environment.apiUrl + '/v1/media/upload', newPhoto, {headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})}).toPromise();
+    this.userConsumerCache.user.photo = environment.apiUrl + '/v1/media/fetch/' + res.id;
+
+    const db = await this.databaseService.getDatabase();
+    await db.executeSql('UPDATE current_session SET photo=?', [this.userConsumerCache.user.photo]);
+    await this.http.post(environment.apiUrl + '/v1/profile/photo', this.userConsumerCache.user).toPromise();
+    this.userUpdater.next(this.userConsumerCache.user);
+  }
+
+  async updateCv(cv: FormData) {
+    //TODO update profile cv??!?!?!
+    this.http.post(environment.apiUrl + '/v1/profile/cv', cv, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+    //TODO this.user.cv ... value?
+    /*
+    const db = await this.databaseService.getDatabase();
+    await db.executeSql('UPDATE current_session SET photo=?', [this.userConsumerCache.user.photo]);
+    this.userUpdater.next(this.userConsumerCache.user);
+     */
+    this.userUpdater.next(this.userConsumerCache.user);
+  }
+  async updateNotificationPreferences(enabled: boolean) {
+    await this.http.post(environment.apiUrl + '/v1/profile/notifications?enabled=' + enabled, {});
+    this.userConsumerCache.user.notificationStatus = enabled;
+    this.userUpdater.next(this.userConsumerCache.user);
+  }
+  async updateLanguage(lang: Language) {
+    lang.keyName = lang.keyName.toLowerCase();
+    this.userConsumerCache.user.language = lang;
+    this.langService.changeLanguage(lang);
+    await this.http.post(environment.apiUrl + '/v1/profile/lang?id=' + lang.id, {});
   }
 
   async fetchDatabaseCache() {
@@ -54,7 +103,7 @@ export class UserConsumer {
       this.userConsumerCache.user.language = new Language(0, '', true);
       this.userConsumerCache.user.language.keyName = dbRow.language_key;
       this.userConsumerCache.user.notificationStatus = dbRow.notification_status;
-      console.log('after row db-> ', this.userConsumerCache);
+      this.userUpdater.next(this.userConsumerCache.user);
     }
   }
 
@@ -103,6 +152,7 @@ export class UserConsumer {
         userLogin.user.language.keyName,
         userLogin.user.notificationStatus,
       ]);
+    this.userUpdater.next(this.userConsumerCache.user);
     await this.fetchDatabaseCache();
   }
 

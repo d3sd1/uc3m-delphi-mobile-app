@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
-import {User} from '../../user';
-import {UserStorage} from '../../../core/storage/user.storage';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
@@ -13,12 +11,10 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class ProfilePasswordPage implements OnInit {
 
-  user: User;
   reset;
 
   constructor(
     private navCtrl: NavController,
-    private authService: UserStorage,
     private toastController: ToastController,
     private httpClient: HttpClient,
     private translate: TranslateService) {
@@ -34,7 +30,6 @@ export class ProfilePasswordPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.user = await this.authService.getUser();
   }
 
   async goBack() {

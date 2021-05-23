@@ -9,18 +9,16 @@ import {environment} from '../../../environments/environment';
 })
 export class LangService {
 
+  private langs: Language[];
   constructor(
     private translate: TranslateService,
     private httpClient: HttpClient) {
   }
 
-  init() {
-    this.getAvailableLangs().then((langs: Language[]) => {
-      this.registerLanguages(langs);
-      this.changeLanguage(langs[0]);
-    }).catch(() => {
-
-    });
+  async init() {
+    const langs = await this.getAvailableLangs();
+    this.registerLanguages(langs);
+    this.changeLanguage(langs[0]);
   }
 
   registerLanguages(langs: Language[]) {
@@ -36,7 +34,10 @@ export class LangService {
     this.translate.use(lang.keyName.toLowerCase());
   }
 
-  private getAvailableLangs(): Promise<Language[]> {
-    return this.httpClient.get<Language[]>(environment.apiUrl + '/v1/delphi/langs').toPromise();
+  async getAvailableLangs(): Promise<Language[]> {
+    if(this.langs.length === 0) {
+      this.langs = await this.httpClient.get<Language[]>(environment.apiUrl + '/v1/delphi/langs').toPromise();
+    }
+    return this.langs;
   }
 }

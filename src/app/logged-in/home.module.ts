@@ -7,9 +7,9 @@ import {TabsPageRoutingModule} from './home-routing.module';
 
 import {HomePage} from './home.page';
 import {ChatService} from './chat/chat.service';
-import {UserStorage} from '../core/storage/user.storage';
 import {TranslateModule} from '@ngx-translate/core';
 import {LogoutPage} from './profile/logout/logout.page';
+import {ChatConsumer} from '../core/consumer/chat/chat.consumer';
 
 @NgModule({
   imports: [
@@ -20,8 +20,7 @@ import {LogoutPage} from './profile/logout/logout.page';
     TranslateModule
   ],
   providers: [
-    ChatService,
-    UserStorage
+    ChatService
   ],
   declarations: [HomePage, LogoutPage],
   exports: [

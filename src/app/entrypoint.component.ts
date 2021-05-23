@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
-import {UserStorage} from './core/storage/user.storage';
 import {WsService} from './core/ws/ws.service';
 import {AlertController, Platform} from '@ionic/angular';
 import {PushNotificationService} from './core/push-notification/push-notification.service';
 import {LangService} from './core/lang/lang.service';
 import {CompatibilityService} from './core/devices/compatibility.service';
+import {UserConsumer} from './core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-root',
@@ -20,16 +20,16 @@ export class EntrypointComponent implements OnInit {
   constructor(
     private platform: Platform,
     private langService: LangService,
-    private userStorage: UserStorage,
     private ws: WsService,
     private pushNotificationService: PushNotificationService,
-    private compatibilityService: CompatibilityService
+    private compatibilityService: CompatibilityService,
+    private userConsumer: UserConsumer
   ) {
   }
 
 
   async ngOnInit(): Promise<void> {
-    await this.ws.connectWs(await this.userStorage.getJwt());
+    await this.ws.connectWs(await this.userConsumer.getJwt());
     await this.langService.init();
     this.pushNotificationService.init();
     await this.compatibilityService.checkDevice();
