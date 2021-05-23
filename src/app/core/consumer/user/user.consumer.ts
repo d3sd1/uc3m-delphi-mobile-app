@@ -76,6 +76,8 @@ export class UserConsumer {
   async updateNotificationPreferences(enabled: boolean) {
     await this.http.post(environment.apiUrl + '/v1/profile/notifications?enabled=' + enabled, {}).toPromise();
     this.userConsumerCache.user.notificationStatus = enabled;
+    const db = await this.databaseService.getDatabase();
+    await db.executeSql('UPDATE current_session SET notification_status=?', [this.userConsumerCache.user.notificationStatus]);
     this.userUpdater.next(this.userConsumerCache.user);
   }
   async updateLanguage(lang: Language) {
@@ -83,17 +85,17 @@ export class UserConsumer {
     this.userConsumerCache.user.language = lang;
     this.langService.changeLanguage(lang);
     const db = await this.databaseService.getDatabase();
-    await db.executeSql('UPDATE current_session SET language_key=?', [this.userConsumerCache.user.language.keyName.toLowerCase()]);
+    await db.executeSql('UPDATE current_session SET language=?', [JSON.stringify(this.userConsumerCache.user.language)]);
     await this.http.post(environment.apiUrl + '/v1/profile/lang?language_id=' + lang.id, {}).toPromise();
     this.userUpdater.next(this.userConsumerCache.user);
   }
 
   async fetchDatabaseCache() {
+    await this.createTable();
     const db = await this.databaseService.getDatabase();
     const data = await db.executeSql('SELECT * FROM current_session LIMIT 1', []);
     if (data.rows.length > 0) {
       const dbRow = data.rows.item(0);
-      console.log('row DB', dbRow);
       this.userConsumerCache.jwt = dbRow.jwt;
       this.userConsumerCache.user.id = dbRow.user_id;
       this.userConsumerCache.user.email = dbRow.email;
@@ -104,8 +106,7 @@ export class UserConsumer {
       this.userConsumerCache.user.blocked = dbRow.blocked;
       this.userConsumerCache.user.chatStatus = dbRow.chat_status;
       this.userConsumerCache.user.needsOnboard = dbRow.needs_onboard;
-      this.userConsumerCache.user.language = new Language(0, '', true);
-      this.userConsumerCache.user.language.keyName = dbRow.language_key;
+      this.userConsumerCache.user.language = JSON.parse(dbRow.language);
       this.userConsumerCache.user.notificationStatus = dbRow.notification_status;
       this.userUpdater.next(this.userConsumerCache.user);
       this.jwtUpdater.next(this.userConsumerCache.jwt);
@@ -126,7 +127,7 @@ export class UserConsumer {
       'blocked BOOLEAN,' +
       'chat_status TEXT,' +
       'needs_onboard BOOLEAN,' +
-      'language_key TEXT,' +
+      'language TEXT,' +
       'notification_status BOOLEAN' +
       ');', []);
   }
@@ -143,7 +144,7 @@ export class UserConsumer {
     await this.dropSession();
     await db.executeSql(
       'INSERT INTO current_session (jwt, user_id, email, name, surnames, photo, enabled, blocked, chat_status,' +
-      'needs_onboard,language_key,notification_status)' +
+      'needs_onboard,language,notification_status)' +
       ' values (?,?,?,?,?,?,?,?,?,?,?,?)', [
         userLogin.jwt,
         userLogin.user.id,
@@ -155,7 +156,7 @@ export class UserConsumer {
         userLogin.user.blocked,
         userLogin.user.chatStatus,
         userLogin.user.needsOnboard,
-        userLogin.user.language.keyName,
+        JSON.stringify(userLogin.user.language),
         userLogin.user.notificationStatus,
       ]);
     this.userUpdater.next(this.userConsumerCache.user);
@@ -190,7 +191,6 @@ export class UserConsumer {
         this.userConsumerCache.jwt === undefined ||
         this.userConsumerCache.jwt === null) {
         await this.fetchDatabaseCache();
-        console.log('update db')
       }
       const helper = new JwtHelperService();
       const isExpired = helper.isTokenExpired(this.userConsumerCache.jwt);

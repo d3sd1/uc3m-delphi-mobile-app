@@ -1,11 +1,7 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ActionSheetController} from '@ionic/angular';
 import {User} from '../user';
 import {TranslateService} from '@ngx-translate/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {DomSanitizer} from '@angular/platform-browser';
-import {environment} from '../../../environments/environment';
-import {Media} from '../processes/media';
 import {LangService} from '../../core/lang/lang.service';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 import {Subscription} from 'rxjs';
@@ -64,23 +60,21 @@ export class ProfilePage {
   }
 
   async updateNotificationPreferences(enabled: boolean) {
-    const cv = new FormData();
-    cv.append('cv', this.uploadCvRef.nativeElement.files[0]);
     await this.userConsumer.updateNotificationPreferences(enabled);
   }
 
   async changeLanguage() {
     const langs = await this.langService.getAvailableLangs();
     const sheets = [];
-    langs?.forEach((lang) => {
+    for (const lang of langs) {
       sheets.push({
-        text: lang.keyName,
+        text: await this.translate.get(`language.${lang.keyName.toLowerCase()}`).toPromise(),
         cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',
         handler: async () => {
           await this.userConsumer.updateLanguage(lang);
         }
       });
-    });
+    }
 
     const actionSheet = await this.actionSheetController.create({
       header: await this.translate.get('home.profile.language.header').toPromise(),

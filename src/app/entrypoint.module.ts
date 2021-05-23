@@ -11,8 +11,6 @@ import {IonicStorageModule} from '@ionic/storage';
 import {DelphiCoreModule} from './core/delphi-core.module';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateLoader, TranslateModule, TranslateService, TranslateStore} from '@ngx-translate/core';
-import {UserConsumer} from './core/consumer/user/user.consumer';
-import {ProcessConsumer} from './core/consumer/process/process.consumer';
 import {LoggedInModule} from './logged-in/logged-in.module';
 import {LoggedOutModule} from './logged-out/logged-out.module';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';

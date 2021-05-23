@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Capacitor, Plugins, PushNotification, PushNotificationActionPerformed, PushNotificationToken} from '@capacitor/core';
-import {AlertController, LoadingController} from '@ionic/angular';
-import {Router} from '@angular/router';
+import {Capacitor, Plugins} from '@capacitor/core';
+import {AlertController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 
 const {PushNotifications} = Plugins;

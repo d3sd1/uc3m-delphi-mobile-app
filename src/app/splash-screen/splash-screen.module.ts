@@ -9,7 +9,6 @@ import {PermissionsLoaderPage} from './permissions-loader/permissions-loader.pag
 
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {TranslateModule} from '@ngx-translate/core';
 import {InitLoaderPage} from './init-loader/init-loader.page';
 import {WsLoaderPage} from './ws-loader/ws-loader.page';
 

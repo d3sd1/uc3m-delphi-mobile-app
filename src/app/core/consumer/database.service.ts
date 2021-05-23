@@ -1,8 +1,6 @@
-import { Platform } from '@ionic/angular';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {Platform} from '@ionic/angular';
+import {Injectable} from '@angular/core';
+import {SQLite, SQLiteObject} from '@ionic-native/sqlite/ngx';
 
 export interface Dev {
   id: number,

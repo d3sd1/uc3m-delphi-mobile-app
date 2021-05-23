@@ -23,8 +23,6 @@ import {ClosePage} from './modify/close/close.page';
 import {LoadingPage} from './list/loading/loading.page';
 import {ListPage} from './list/all/list.page';
 import {EmptyProcessesPage} from './list/empty/empty-processes.page';
-import {ProcessConsumer} from '../../core/consumer/process/process.consumer';
-import {UserConsumer} from '../../core/consumer/user/user.consumer';
 
 @NgModule({
   imports: [

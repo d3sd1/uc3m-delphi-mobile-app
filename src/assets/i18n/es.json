@@ -252,5 +252,10 @@
   "logout": {
     "title": "Desconectando...",
     "desc": "¡Gracias por participar en la plataforma!"
+  },
+  "language": {
+    "es": "Español",
+    "en": "Inglés",
+    "de": "Alemán"
   }
 }

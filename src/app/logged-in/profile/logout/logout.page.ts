@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {NavController, ToastController} from '@ionic/angular';
 import {UserConsumer} from '../../../core/consumer/user/user.consumer';
 

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
 
 import {WsService} from './core/ws/ws.service';
-import {AlertController, Platform} from '@ionic/angular';
+import {Platform} from '@ionic/angular';
 import {PushNotificationService} from './core/push-notification/push-notification.service';
 import {LangService} from './core/lang/lang.service';
 import {CompatibilityService} from './core/devices/compatibility.service';

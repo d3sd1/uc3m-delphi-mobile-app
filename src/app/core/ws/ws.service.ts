@@ -3,7 +3,6 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {BehaviorSubject} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {ChatMessage} from '../../logged-in/chat/chat-conversation/chat-message';
 
 @Injectable({
   providedIn: 'root'

@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {WsService} from '../../ws/ws.service';
 import {Process} from '../../../logged-in/processes/process';
 import {environment} from '../../../../environments/environment';
 import {BehaviorSubject} from 'rxjs';
-import {ChatMessage} from '../../../logged-in/chat/chat-conversation/chat-message';
 
 @Injectable({
   providedIn: 'root'

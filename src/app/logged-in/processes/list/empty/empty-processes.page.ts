@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {User} from '../../../user';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'delphi-empty',

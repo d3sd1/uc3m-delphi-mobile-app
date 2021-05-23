@@ -1,8 +1,5 @@
-import { Injectable } from '@angular/core';
-import {ChatMessage} from '../../../logged-in/chat/chat-conversation/chat-message';
+import {Injectable} from '@angular/core';
 import {WsService} from '../../ws/ws.service';
-import {getChatsUnreadMessages, UserChat} from '../../../logged-in/chat/user-chat';
-import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
