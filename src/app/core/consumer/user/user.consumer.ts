@@ -79,16 +79,13 @@ export class UserConsumer {
     this.userUpdater.next(this.userConsumerCache.user);
   }
   async updateLanguage(lang: Language) {
-    console.log('update language',lang)
     lang.keyName = lang.keyName.toLowerCase();
     this.userConsumerCache.user.language = lang;
     this.langService.changeLanguage(lang);
-    this.http.post(environment.apiUrl + '/v1/profile/lang?language_id=' + lang.id, {}).toPromise().then((resp) => {
-
-      console.log(resp)
-    }).catch((err) => {
-      console.log(err)
-    })
+    const db = await this.databaseService.getDatabase();
+    await db.executeSql('UPDATE current_session SET language_key=?', [this.userConsumerCache.user.language.keyName.toLowerCase()]);
+    await this.http.post(environment.apiUrl + '/v1/profile/lang?language_id=' + lang.id, {}).toPromise();
+    this.userUpdater.next(this.userConsumerCache.user);
   }
 
   async fetchDatabaseCache() {

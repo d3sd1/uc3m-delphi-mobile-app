@@ -39,6 +39,7 @@ export class HomePage implements ViewDidEnter {
     (await this.userConsumer.getUser()).subscribe((user) => {
       this.user = user;
 
+      console.log('user is 00',user)
       this.langService.changeLanguage(this.user.language);
     });
 

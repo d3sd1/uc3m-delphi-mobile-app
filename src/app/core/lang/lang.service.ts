@@ -16,11 +16,12 @@ export class LangService {
   }
 
   async init() {
+    console.log('usre lang',)
     const langs = await this.getAvailableLangs();
     this.registerLanguages(langs);
-    if(langs?.length > 0) {
-      this.changeLanguage(langs[0]);
-    }
+    this.changeLanguage(
+      new Language(0,this.translate.getBrowserLang(),true)
+    );
   }
 
   registerLanguages(langs: Language[]) {
@@ -32,6 +33,7 @@ export class LangService {
   }
 
   changeLanguage(lang: Language) {
+    console.log('new user lang is ', lang)
     this.translate.setDefaultLang(lang.keyName.toLowerCase());
     this.translate.use(lang.keyName.toLowerCase());
   }
