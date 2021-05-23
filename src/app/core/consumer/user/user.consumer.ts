@@ -43,7 +43,6 @@ export class UserConsumer {
 
   async publishChanges() {
     this.userUpdater.next(this.userConsumerCache.user);
-    this.jwtUpdater.next(this.userConsumerCache.jwt);
     await this.wsService.publish(`profile/${this.userConsumerCache.user.id}`, this.userConsumerCache.user);
   }
 
@@ -104,7 +103,8 @@ export class UserConsumer {
       this.userConsumerCache.user.needsOnboard = dbRow.needs_onboard;
       this.userConsumerCache.user.language = JSON.parse(dbRow.language);
       this.userConsumerCache.user.notificationStatus = dbRow.notification_status;
-      await this.publishChanges();
+      this.userUpdater.next(this.userConsumerCache.user);
+      this.jwtUpdater.next(this.userConsumerCache.jwt);
     }
   }
 
@@ -154,7 +154,8 @@ export class UserConsumer {
         JSON.stringify(userLogin.user.language),
         userLogin.user.notificationStatus,
       ]);
-    await this.publishChanges();
+    this.userUpdater.next(this.userConsumerCache.user);
+    this.jwtUpdater.next(this.userConsumerCache.jwt);
     await this.fetchDatabaseCache();
   }
 
@@ -162,6 +163,7 @@ export class UserConsumer {
     return new Promise<string>((resolve, reject) => {
       this.http.post<LoginResponse>(environment.apiUrl + '/v1/session/login', user).subscribe(async (loginResponse: LoginResponse) => {
         await this.storeSession(loginResponse);
+        await this.wsService.disconnectWs();
         await this.wsService.connectWs(loginResponse.jwt);
         resolve(await this.translate.get('login.response.ok').toPromise());
       }, async (err: HttpErrorResponse) => {
@@ -195,6 +197,7 @@ export class UserConsumer {
   async doLogout() {
     this.initCache();
     await this.dropSession();
+    await this.wsService.disconnectWs();
   }
 
 }

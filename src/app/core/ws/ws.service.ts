@@ -14,7 +14,7 @@ export class WsService {
   }
 
   async connectWs(jwt: string) {
-    console.log('conn')
+    console.log('conn ws')
     if (jwt === null || jwt === '' || jwt === undefined) {
       return;
     }
@@ -35,7 +35,7 @@ export class WsService {
   }
 
   async publish(channel: string, body: any) {
-    this.stompClient.send('/ws/publisher/' + channel, {}, JSON.stringify(body)); // stringfify?
+    this.stompClient.send('/ws/publisher/' + channel, {}, JSON.stringify(body));
   }
 
   subscribe(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
