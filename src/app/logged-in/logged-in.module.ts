@@ -12,12 +12,14 @@ import {ProcessesPageModule} from './processes/processes.module';
 import {ChatPageModule} from './chat/chat.module';
 import {HomePage} from './home.page';
 import {LoggedInGuard} from './logged-in.guard';
+import {OnboardNeededGuard} from './onboard-needed.guard';
+import {OnboardMissingGuard} from './onboard-missing.guard';
 
 
 @NgModule({
   declarations: [
     OnboardingPage,
-    HomePage
+    HomePage,
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,9 @@ import {LoggedInGuard} from './logged-in.guard';
       useClass: LoggedInInterceptor,
       multi: true
     },
-    LoggedInGuard
+    LoggedInGuard,
+    OnboardNeededGuard,
+    OnboardMissingGuard
   ]
 })
 export class LoggedInModule {

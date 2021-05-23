@@ -24,7 +24,6 @@ export class HomePage implements ViewDidEnter {
     profile: 0
   };
   user: User;
-  aud;
   userObserver: Subscription;
 
   constructor(private chatService: ChatService,
@@ -40,18 +39,11 @@ export class HomePage implements ViewDidEnter {
   async ionViewDidEnter() {
     (await this.userConsumer.getUser()).subscribe((user) => {
       this.user = user;
-
-      console.log('user is 00', user);
       this.langService.changeLanguage(this.user.language);
     });
-
-    /*TODO this.chatConsumer.chat().subscribe((chatMessages: ChatMessage[]) => {
-      this.notifications.messages = chatMessages.filter((chatMessage) => !chatMessage.read).length;
-    });*/
-
     this.listenUserNotifications();
-
-    await this.onboarding();
+    this.listenChatNotifications();
+    this.listenProcessesNotifications();
   }
 
   listenUserNotifications() {
@@ -62,26 +54,10 @@ export class HomePage implements ViewDidEnter {
       }
     });
   }
-
-  preloadSound() {
-    const sound = '/assets/chat-sound.mp3';
-    this.aud = new Audio(sound);
-    this.aud.muted = false;
-    this.aud.load();
+  listenChatNotifications() {
+    // TODO
   }
-
-  async playSound(): Promise<void> {
-    try {
-      await this.aud.play();
-    } catch (e) {
-
-    }
-  }
-
-  async onboarding() {/* TODO
-    const needsOnboard = await this.authService.needsOnboard();
-    if (needsOnboard && await this.storage.get('onboard') !== false) {
-      await this.router.navigateByUrl('/logged-in/home/onboarding');
-    }*/
+  listenProcessesNotifications() {
+    // TODO
   }
 }

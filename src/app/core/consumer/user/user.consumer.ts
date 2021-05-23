@@ -68,11 +68,27 @@ export class UserConsumer {
     await this.http.post(environment.apiUrl + '/v1/profile/cv', cv, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).toPromise();
     await this.publishChanges();
   }
+
+  async changePass(reset) {
+    this.http.post(environment.apiUrl + '/v1/profile/change_pass', reset).toPromise().then((suc) => {
+      console.log(suc)
+    }).catch((e) => {
+      console.error(e)
+    });
+  }
+
   async updateNotificationPreferences(enabled: boolean) {
     await this.http.post(environment.apiUrl + '/v1/profile/notifications?enabled=' + enabled, {}).toPromise();
     this.userConsumerCache.user.notificationStatus = enabled;
     const db = await this.databaseService.getDatabase();
     await db.executeSql('UPDATE current_session SET notification_status=?', [this.userConsumerCache.user.notificationStatus]);
+    await this.publishChanges();
+  }
+  async updateOnboard(needsOnboard: boolean) {
+    await this.http.post(environment.apiUrl + '/v1/profile/onboard?status=false', {}).toPromise();
+    this.userConsumerCache.user.needsOnboard = needsOnboard;
+    const db = await this.databaseService.getDatabase();
+    await db.executeSql('UPDATE current_session SET needs_onboard=?', [this.userConsumerCache.user.needsOnboard]);
     await this.publishChanges();
   }
   async updateLanguage(lang: Language) {
@@ -82,6 +98,14 @@ export class UserConsumer {
     const db = await this.databaseService.getDatabase();
     await db.executeSql('UPDATE current_session SET language=?', [JSON.stringify(this.userConsumerCache.user.language)]);
     await this.http.post(environment.apiUrl + '/v1/profile/lang?language_id=' + lang.id, {}).toPromise();
+    await this.publishChanges();
+  }
+  async updateNameSurnames(name: string, surnames: string) {
+    this.userConsumerCache.user.name = name;
+    this.userConsumerCache.user.surnames = surnames;
+    const db = await this.databaseService.getDatabase();
+    await db.executeSql('UPDATE current_session SET name=?, surnames=?', [name, surnames]);
+    await this.http.post(environment.apiUrl + '/v1/profile/setup', this.userConsumerCache.user).toPromise();
     await this.publishChanges();
   }
 

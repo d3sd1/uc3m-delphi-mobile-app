@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {User} from '../user';
 import {TranslateService} from '@ngx-translate/core';
+import {UserConsumer} from '../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-onboarding',
@@ -26,11 +27,12 @@ export class OnboardingPage implements OnInit {
   constructor(private router: Router, private storage: Storage,
               private httpClient: HttpClient,
               private toastController: ToastController,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private userConsumer: UserConsumer) {
   }
 
   async ngOnInit() {
-   //TODO  this.user = await this.userStorage.getUser();
+    this.user = this.userConsumer.getUser().getValue();
   }
 
   async setupAccount() {
@@ -43,8 +45,10 @@ export class OnboardingPage implements OnInit {
       await this.showToast('home.onboarding.setup.error.name');
       return;
     }
-    await this.httpClient.post(environment.apiUrl + '/v1/profile/setup', this.user).toPromise();
-   //TODO await this.userStorage.setUser(this.user);
+    await this.userConsumer.updateNameSurnames(
+      this.user.name,
+      this.user.surnames
+    );
     await this.slides.slideNext();
   }
 
@@ -62,8 +66,8 @@ export class OnboardingPage implements OnInit {
       await this.showToast('home.onboarding.setup.error.password_matching');
       return;
     }
-    await this.httpClient.post(environment.apiUrl + '/v1/profile/change_pass', this.reset).toPromise();
 
+    await this.userConsumer.changePass(this.reset);
     await this.slides.slideNext();
   }
 
@@ -72,11 +76,8 @@ export class OnboardingPage implements OnInit {
   }
 
   async endSwiper() {
-    this.user.needsOnboard = false;
-   //TODO await this.userStorage.setUser(this.user);
-    console.log(this.user)
-    await this.httpClient.post(environment.apiUrl + '/v1/profile/onboard?status=false', {}).toPromise();
-    await this.router.navigateByUrl('/logged-in/home/menu');
+    await this.userConsumer.updateOnboard(false);
+    await this.router.navigateByUrl('/logged-in/menu');
   }
 
   private async showToast(transKey: string) {

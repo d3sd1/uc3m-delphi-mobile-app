@@ -27,4 +27,19 @@ export class ChatConsumer {
   chat() {
 
   }
+/*
+  preloadSound() {
+    const sound = '/assets/chat-sound.mp3';
+    this.aud = new Audio(sound);
+    this.aud.muted = false;
+    this.aud.load();
+  }
+
+  async playSound(): Promise<void> {
+    try {
+      await this.aud.play();
+    } catch (e) {
+
+    }
+  }*/
 }

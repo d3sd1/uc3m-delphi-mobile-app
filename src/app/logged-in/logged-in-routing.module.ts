@@ -4,6 +4,8 @@ import {LoggedInGuard} from './logged-in.guard';
 import {LogoutPage} from './profile/logout/logout.page';
 import {HomePage} from './home.page';
 import {OnboardingPage} from './onboarding/onboarding.page';
+import {OnboardNeededGuard} from './onboard-needed.guard';
+import {OnboardMissingGuard} from './onboard-missing.guard';
 
 const routes: Routes = [
   {
@@ -19,8 +21,8 @@ const routes: Routes = [
   {
     path: 'menu',
     component: HomePage,
-    canActivate: [LoggedInGuard],
-    canActivateChild: [LoggedInGuard],
+    canActivate: [LoggedInGuard, OnboardNeededGuard],
+    canActivateChild: [LoggedInGuard, OnboardNeededGuard],
     children: [
       {
         path: '',
@@ -49,7 +51,7 @@ const routes: Routes = [
   {
     path: 'onboarding',
     component: OnboardingPage,
-    canActivate: [LoggedInGuard]
+    canActivate: [LoggedInGuard, OnboardMissingGuard]
   }
 ];
 
