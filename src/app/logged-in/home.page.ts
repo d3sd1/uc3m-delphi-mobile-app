@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {User} from './user';
 import {WsService} from '../core/ws/ws.service';
-import {ViewDidEnter} from '@ionic/angular';
+import {NavController, ViewDidEnter} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../core/consumer/user/user.consumer';
 import {LangService} from '../core/lang/lang.service';
@@ -33,7 +33,8 @@ export class HomePage implements ViewDidEnter {
               private wsService: WsService,
               private translate: TranslateService,
               private langService: LangService,
-              private chatConsumer: ChatConsumer) {
+              private chatConsumer: ChatConsumer,
+              private navCtrl: NavController) {
   }
 
   async ionViewDidEnter() {
@@ -41,9 +42,16 @@ export class HomePage implements ViewDidEnter {
       this.user = user;
       this.langService.changeLanguage(this.user.language);
     });
+    await this.needsOnboard();
     this.listenUserNotifications();
     this.listenChatNotifications();
     this.listenProcessesNotifications();
+  }
+
+  async needsOnboard() {
+    if (this.user.needsOnboard) {
+      await this.navCtrl.navigateForward('/logged-in/onboarding');
+    }
   }
 
   listenUserNotifications() {
@@ -54,9 +62,11 @@ export class HomePage implements ViewDidEnter {
       }
     });
   }
+
   listenChatNotifications() {
     // TODO
   }
+
   listenProcessesNotifications() {
     // TODO
   }

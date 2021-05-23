@@ -12,6 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Media} from '../media';
 import {TranslateService} from '@ngx-translate/core';
+import {ModifyingProcessConsumer} from '../../../core/consumer/process/modifying-process.consumer';
 
 @Component({
   selector: 'delphi-create',
@@ -19,10 +20,7 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./modify.page.scss'],
 })
 export class ModifyPage implements OnInit {
-
-  QuestionType = QuestionType;
   process: Process;
-  currentUser: User;
 
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
 
@@ -33,12 +31,14 @@ export class ModifyPage implements OnInit {
               private router: Router,
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private modifyingProcessConsumer:ModifyingProcessConsumer) {
   }
 
   public async ngOnInit(): Promise<void> {
-    //TODOthis.currentUser = await this.userStorage.getUser();
-
+    (await this.modifyingProcessConsumer.currentProcess()).toPromise().then((process) => {
+      this.process = process;
+    });
     this.forceCurrentUserAdmin();
   }
 
@@ -147,9 +147,7 @@ export class ModifyPage implements OnInit {
       await this.navCtrl.navigateBack('/logged-in/home/menu/processes', {
       });
     } else {
-      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view', {
-        state: {process: this.process, currentUser: this.currentUser}
-      });
+      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view');
     }
   }
 

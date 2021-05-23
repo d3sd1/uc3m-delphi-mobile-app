@@ -85,10 +85,10 @@ export class UserConsumer {
     await this.publishChanges();
   }
   async updateOnboard(needsOnboard: boolean) {
-    await this.http.post(environment.apiUrl + '/v1/profile/onboard?status=false', {}).toPromise();
+    await this.http.post(environment.apiUrl + '/v1/profile/onboard?status=' + needsOnboard, {}).toPromise();
     this.userConsumerCache.user.needsOnboard = needsOnboard;
     const db = await this.databaseService.getDatabase();
-    await db.executeSql('UPDATE current_session SET needs_onboard=?', [this.userConsumerCache.user.needsOnboard]);
+    await db.executeSql('UPDATE current_session SET needs_onboard=0', []);
     await this.publishChanges();
   }
   async updateLanguage(lang: Language) {

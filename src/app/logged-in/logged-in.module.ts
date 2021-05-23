@@ -12,8 +12,6 @@ import {ProcessesPageModule} from './processes/processes.module';
 import {ChatPageModule} from './chat/chat.module';
 import {HomePage} from './home.page';
 import {LoggedInGuard} from './logged-in.guard';
-import {OnboardNeededGuard} from './onboard-needed.guard';
-import {OnboardMissingGuard} from './onboard-missing.guard';
 
 
 @NgModule({
@@ -37,9 +35,7 @@ import {OnboardMissingGuard} from './onboard-missing.guard';
       useClass: LoggedInInterceptor,
       multi: true
     },
-    LoggedInGuard,
-    OnboardNeededGuard,
-    OnboardMissingGuard
+    LoggedInGuard
   ]
 })
 export class LoggedInModule {

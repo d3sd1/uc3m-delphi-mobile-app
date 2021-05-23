@@ -49,7 +49,7 @@ export class ListPage implements OnInit {
   filterProcesses(ev?: Event) {
     this.filteredProcesses = [];
     const wantsFinished = ev?.target['value'] === 'finished';
-    this.processes.forEach((process: Process) => {
+    this.processes?.forEach((process: Process) => {
       if (wantsFinished && process?.processFinished) {
         this.filteredProcesses.push(process);
       } else if (!wantsFinished && !process?.processFinished) {

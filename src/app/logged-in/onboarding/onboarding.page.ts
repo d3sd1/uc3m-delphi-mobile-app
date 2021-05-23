@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {IonSlides, ToastController} from '@ionic/angular';
+import {IonSlides, NavController, ToastController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {HttpClient} from '@angular/common/http';
@@ -28,11 +28,13 @@ export class OnboardingPage implements OnInit {
               private httpClient: HttpClient,
               private toastController: ToastController,
               private translate: TranslateService,
-              private userConsumer: UserConsumer) {
+              private userConsumer: UserConsumer,
+              private navCtrl: NavController) {
   }
 
   async ngOnInit() {
     this.user = this.userConsumer.getUser().getValue();
+    this.onBoardingFinished();
   }
 
   async setupAccount() {
@@ -78,6 +80,11 @@ export class OnboardingPage implements OnInit {
   async endSwiper() {
     await this.userConsumer.updateOnboard(false);
     await this.router.navigateByUrl('/logged-in/menu');
+  }
+  async onBoardingFinished() {
+    if (!this.user.needsOnboard) {
+      await this.navCtrl.navigateForward('/logged-in/menu');
+    }
   }
 
   private async showToast(transKey: string) {
