@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
+      <ion-back-button routerDirection="back" defaultHref="/logged-in/menu/processes" routerLink="/logged-in/menu/processes" text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'home.processes.modify.title' | translate }}</ion-title>
   </ion-toolbar>

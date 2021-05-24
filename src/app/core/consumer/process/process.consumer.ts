@@ -23,7 +23,6 @@ export class ProcessConsumer {
 
   async all(): Promise<BehaviorSubject<Process[]>> {
     if(this.userProcesses === null) {
-
       this.userProcesses = new BehaviorSubject<Process[]>(
         (await this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list').toPromise())
       );

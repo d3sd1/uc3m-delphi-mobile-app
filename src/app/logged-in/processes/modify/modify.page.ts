@@ -36,9 +36,11 @@ export class ModifyPage implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    (await this.modifyingProcessConsumer.currentProcess()).toPromise().then((process) => {
-      this.process = process;
-    });
+    this.modifyingProcessConsumer.currentProcess().then((sub) => {
+      sub.subscribe((process) => {
+        this.process = process;
+      })
+    })
     this.forceCurrentUserAdmin();
   }
 
@@ -141,16 +143,6 @@ export class ModifyPage implements OnInit {
       this.expandedQuestion.type = QuestionType.QUALITATIVE;
     }
   }
-
-  async goBack() {
-    if(this.process.id === undefined) {
-      await this.navCtrl.navigateBack('/logged-in/home/menu/processes', {
-      });
-    } else {
-      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view');
-    }
-  }
-
 
   compressQuestion(round: Round) {
     const roundIndex = this.process.rounds.findIndex((iRound: Round) => {

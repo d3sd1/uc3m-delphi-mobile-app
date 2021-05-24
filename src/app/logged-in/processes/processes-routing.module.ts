@@ -13,7 +13,6 @@ import {ViewSingleQuestionPage} from './view/single-question/view-single-questio
 import {ParticipatePage} from './view/participate/participate.page';
 import {ClosePage} from './modify/close/close.page';
 import {LoadingPage} from './list/loading/loading.page';
-import {ListPage} from './list/all/list.page';
 
 const routes: Routes = [
   {
@@ -23,10 +22,6 @@ const routes: Routes = [
   {
     path: 'loading',
     component: LoadingPage
-  },
-  {
-    path: 'list',
-    component: ListPage
   },
   {
     path: 'view',

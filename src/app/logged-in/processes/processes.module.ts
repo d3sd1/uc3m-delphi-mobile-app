@@ -21,7 +21,6 @@ import {ViewSingleQuestionPage} from './view/single-question/view-single-questio
 import {ParticipatePage} from './view/participate/participate.page';
 import {ClosePage} from './modify/close/close.page';
 import {LoadingPage} from './list/loading/loading.page';
-import {ListPage} from './list/all/list.page';
 import {EmptyProcessesPage} from './list/empty/empty-processes.page';
 
 @NgModule({
@@ -42,7 +41,6 @@ import {EmptyProcessesPage} from './list/empty/empty-processes.page';
     ParticipatePage,
     ClosePage,
     LoadingPage,
-    ListPage,
     EmptyProcessesPage,
   ],
   providers: [
