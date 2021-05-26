@@ -21,8 +21,8 @@ import {LangService} from '../../lang/lang.service';
 export class UserConsumer {
 
   private userConsumerCache;
-  private userUpdater = null;
-  private jwtUpdater = null;
+  private userUpdater = new BehaviorSubject<User>(null);
+  private jwtUpdater = new BehaviorSubject<string>(null);
 
   constructor(private http: HttpClient,
               private storage: Storage,
@@ -31,33 +31,37 @@ export class UserConsumer {
               private sqlite: SQLite,
               private databaseService: DatabaseService,
               private langService: LangService) {
-    this.initCache();
+    this.reset();
   }
 
-  initCache() {
+  private reset() {
     this.userConsumerCache = {
       jwt: '',
       user: new User()
     };
   }
+  private async init() {
+    this.reset();
+    await this.fetchDatabaseCache();
+  }
 
   async publishChanges() {
-    this.userUpdater.next(this.userConsumerCache.user);
+    if(this.userUpdater.getValue() !== null) {
+      this.userUpdater.next(this.userConsumerCache.user);
+    }
     await this.wsService.publish(`profile/${this.userConsumerCache.user.id}`, this.userConsumerCache.user);
   }
 
   async getJwt(): Promise<BehaviorSubject<string>> {
-    if (this.jwtUpdater === null) {
-      this.jwtUpdater = new BehaviorSubject<string>(null);
-      await this.fetchDatabaseCache();
+    if (this.jwtUpdater.getValue() === null || this.userUpdater.getValue() == null) {
+      await this.init();
     }
     return this.jwtUpdater;
   }
 
   async getUser(): Promise<BehaviorSubject<User>> {
-    if (this.userUpdater === null) {
-      this.userUpdater = new BehaviorSubject<User>(null);
-      await this.fetchDatabaseCache();
+    if (this.jwtUpdater.getValue() === null || this.userUpdater.getValue() == null) {
+      await this.init();
     }
     return this.userUpdater;
   }
@@ -230,7 +234,7 @@ export class UserConsumer {
   }
 
   async doLogout() {
-    this.initCache();
+    this.reset();
     await this.dropSession();
     await this.wsService.disconnectWs();
     await this.databaseService.resetDatabase();

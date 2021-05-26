@@ -5,6 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LangService} from '../../core/lang/lang.service';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 import {Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-profile',
@@ -18,11 +19,11 @@ export class ProfilePage {
   private userSubscription: Subscription;
 
   constructor(private actionSheetController: ActionSheetController, private langService: LangService, private userConsumer: UserConsumer,
-              private translate: TranslateService) {
-  }
-
-  async ionViewWillEnter() {
-    this.user = (await this.userConsumer.getUser()).getValue();
+              private translate: TranslateService,
+              private route: ActivatedRoute) {
+    this.userSubscription = this.route.snapshot.data['user'].subscribe((user) => {
+      this.user = user;
+    });
   }
 
   async ionViewWillLeave() {
