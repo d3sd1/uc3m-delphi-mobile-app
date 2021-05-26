@@ -14,7 +14,7 @@ export class PushNotificationService {
               private translate: TranslateService) {
   }
 
-  init() {
+  async init() {
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
     if (isPushNotificationsAvailable) {
       this.requestPermission();

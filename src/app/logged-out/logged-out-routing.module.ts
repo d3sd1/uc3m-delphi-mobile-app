@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginPage} from './login/login.page';
-import {LoggedOutGuard} from './logged-out.guard';
 
 const routes: Routes = [
   {
@@ -11,8 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginPage,
-    canActivate: [LoggedOutGuard]
+    component: LoginPage
   },
 ];
 

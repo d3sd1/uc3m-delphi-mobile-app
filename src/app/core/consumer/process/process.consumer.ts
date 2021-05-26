@@ -19,7 +19,6 @@ export class ProcessConsumer {
   private listenUpdates() {
     this.wsService.subscribe('process/all', true, this.userProcesses);
   }
-  //TODO: stop listening changes on destroy (logout)
 
   async all(): Promise<BehaviorSubject<Process[]>> {
     if(this.userProcesses === null) {

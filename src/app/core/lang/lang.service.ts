@@ -32,7 +32,6 @@ export class LangService {
   }
 
   changeLanguage(lang: Language) {
-    console.log('new user lang is ', lang)
     this.translate.setDefaultLang(lang.keyName.toLowerCase());
     this.translate.use(lang.keyName.toLowerCase());
   }

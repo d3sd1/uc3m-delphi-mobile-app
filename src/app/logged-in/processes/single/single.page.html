@@ -1,0 +1,117 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/logged-in/menu/processes"
+                       routerLink="/logged-in/menu/processes"
+                       routerDirection="back"
+                       [text]="'home.processes.single.back' | translate"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'home.processes.single.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="light">
+    <div class="img-wrapper">
+      <img *ngIf="process?.pictureUrl !== undefined" [src]="process?.pictureUrl"
+           (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+      <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
+    </div>
+    <ion-card-content class="ion-text-center">
+      <h2>{{process?.name }}</h2>
+      <ion-text color="medium">
+        <div class="ion-justify-content-center" style="display: flex;">
+          <p>{{process?.description}}</p>
+        </div>
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-toolbar>
+  <span>
+      <ion-button *ngIf="!this.process.processFinished && this.currentRound !== null && this.currentUserCanVote()"
+                  expand="block" color="secondary"
+                  [routerLink]="['/logged-in/home/menu/processes/participate']"
+                  [state]="{ process: process, currentUser: loggedInUser}">
+        {{'home.processes.single.participate.initiate' | translate}}
+      </ion-button>
+    </span>
+  </ion-toolbar>
+
+  <ion-list lines="inset" class="ion-no-margin">
+    <ion-list-header>
+      <ion-label>
+        {{ 'home.processes.single.rounds' | translate }}
+      </ion-label>
+
+      <span>
+      <ion-button
+        *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds == 0"
+        expand="block"
+        (click)="closeProcess()">
+        {{'home.processes.single.end.title' | translate}}
+      </ion-button>
+        <ion-button
+          *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds > 0"
+          expand="block"
+          (click)="startRound()">
+        {{'home.processes.single.round.start.title' | translate}}
+      </ion-button>
+        <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound !== null"
+                    expand="block"
+                    (click)="closeRound()">
+        {{'home.processes.single.round.close.title' | translate}}
+      </ion-button>
+      </span>
+    </ion-list-header>
+    <ion-item
+              [routerLink]="['/logged-in/home/menu/processes/view_rounds']" [state]="{ process: process}">
+      <ion-label>{{ 'home.processes.single.rounds' | translate }}</ion-label>
+      <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'home.processes.single.rounds' | translate }}</ion-label>
+      <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
+    </ion-item>
+  </ion-list>
+
+  <ion-list lines="none" class="ion-no-margin">
+    <ion-list-header>
+      <ion-label>
+        {{ 'home.processes.single.users' | translate }}
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>{{'home.processes.role.experts' | translate}}</ion-label>
+      <ion-badge slot="end">XX</ion-badge>
+    </ion-item>
+    <!--<div *ngIf="!(role?.name.toLowerCase() == 'expert' && this?.name.toLowerCase() == 'expert')">
+      <div *ngFor="let userWithRole of process?.experts.concat(process?.coordinators)">
+        <ion-chip *ngIf="userWithRole.id === role.id" (click)="openChat(userWithRole)"
+                  [color]="userWithRole?.id === loggedInUser?.id?'primary':'secondary'">
+          <ion-avatar>
+            <img *ngIf="userWithRole.photo !== undefined" [src]="userWithRole.photo"
+                 (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+            <img *ngIf="userWithRole.photo === undefined" src="assets/images/no-process-image.jpeg"/>
+          </ion-avatar>
+          <ion-label>{{userWithRole.name}} {{userWithRole.surnames}} <{{ userWithRole.email }}>
+          </ion-label>
+        </ion-chip>
+      </div>
+    </div>
+  </div>
+</div>-->
+  </ion-list>
+</ion-content>
+
+
+<!-- TODO coordinador only -->
+<ion-footer>
+  <ion-toolbar *ngIf="!process?.processFinished">
+    <ion-button expand="block"
+                [routerLink]="['/logged-in/home/menu/processes/modify']"
+                [state]="{ process: process}">
+      {{'home.processes.single.modify.title' | translate}}
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

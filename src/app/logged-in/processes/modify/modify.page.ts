@@ -4,15 +4,16 @@ import {Process} from '../process';
 import {User} from '../../user';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {Question} from '../question';
-import {QuestionType} from '../question-type';
+import {Question} from './rounds/questions/question';
+import {QuestionType} from './rounds/questions/question-type';
 import {ItemReorderEventDetail} from '@ionic/core';
-import {Round} from '../round';
+import {Round} from './rounds/round';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Media} from '../media';
+import {Media} from './media';
 import {TranslateService} from '@ngx-translate/core';
 import {ModifyingProcessConsumer} from '../../../core/consumer/process/modifying-process.consumer';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'delphi-create',
@@ -25,27 +26,39 @@ export class ModifyPage implements OnInit {
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
 
   constructor(private httpClient: HttpClient,
-              private navCtrl: NavController,
               private route: ActivatedRoute,
               public loadingController: LoadingController,
-              private router: Router,
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
               private translate: TranslateService,
+              private router: Router,
               private modifyingProcessConsumer:ModifyingProcessConsumer) {
   }
 
   public async ngOnInit(): Promise<void> {
-    this.modifyingProcessConsumer.currentProcess().then((sub) => {
-      sub.subscribe((process) => {
-        this.process = process;
-      })
-    })
+    this.process = (await this.modifyingProcessConsumer.currentProcess()).getValue();
+    this.sanitizeProcess();
     this.forceCurrentUserAdmin();
+    console.log(this.router.url)
+  }
+  syncProcess() {
+    this.modifyingProcessConsumer.saveCurrentprocess(this.process);
+  }
+  sanitizeProcess() {
+    if(this.process?.coordinators === undefined ||
+      this.process?.coordinators === null) {
+      this.process.coordinators = [];
+    }
+    if(this.process?.experts === undefined ||
+      this.process?.experts === null) {
+      this.process.experts = [];
+    }
   }
 
   forceCurrentUserAdmin() {
-    //TODO set current user as adm
+   /* if(this.process?.coordinators?.filter(user => user.id === ).length  === 0) {
+
+    }*/
   }
 
   async uploadImage() {
@@ -88,18 +101,18 @@ export class ModifyPage implements OnInit {
     }
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: await this.translate.get('home.processes.view.modify.saving').toPromise(),
+      message: await this.translate.get('home.processes.single.modify.saving').toPromise(),
       duration: 0
     });
     await loading.present();
 
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
-      await this.showToast(await this.translate.get('home.processes.view.modify.saved').toPromise());
-      await this.router.navigateByUrl('/logged-in/home/menu/processes', {
-        state: {process: this.process}
-      });
+      await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
+     //TODO await this.router.navigateByUrl('/logged-in/home/menu/processes', {
+       // state: {process: this.process}
+      //});
     }).catch(async (errMessage: string) => {
-      await this.showToast(await this.translate.get('home.processes.view.modify.saved').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
     }).finally(async () => {
       await loading.dismiss();
     });
@@ -120,7 +133,7 @@ export class ModifyPage implements OnInit {
 
   async addRound() {
 
-    const round = new Round(await this.translate.get('home.processes.view.modify.round', {round: (this.process.rounds.length + 1)}).toPromise(), [], new Date(), false);
+    const round = new Round(await this.translate.get('home.processes.single.modify.round', {round: (this.process.rounds.length + 1)}).toPromise(), [], new Date(), false);
     this.process.rounds.push(round);
     await this.createProcess.scrollToBottom(300);
   }
@@ -130,7 +143,7 @@ export class ModifyPage implements OnInit {
       return iRound.id === round.id;
     });
     const question = new Question();
-    question.name = await this.translate.get('home.processes.view.modify.question', {question: (this.process.rounds[roundIndex].questions.length + 1)}).toPromise()
+    question.name = await this.translate.get('home.processes.single.modify.question', {question: (this.process.rounds[roundIndex].questions.length + 1)}).toPromise()
     this.process.rounds[roundIndex].questions.push(question);
     await this.createProcess.scrollToBottom(300);
   }

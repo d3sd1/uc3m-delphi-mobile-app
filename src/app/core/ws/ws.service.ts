@@ -9,27 +9,27 @@ import {environment} from '../../../environments/environment';
 })
 export class WsService {
   private stompClient: Stomp = null;
+  channels = [];
 
+  //TODO -> store subscribed channels and handle reconnect with 'em
+  // if socket fails
   constructor() {
   }
 
   async connectWs(jwt: string) {
-    console.log('conn ws')
     if (jwt === null || jwt === '' || jwt === undefined) {
       return;
     }
     let ws = new SockJS(environment.apiUrl + '/ws');
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({jwt: jwt}, (frame) => {
-
-      //_this.stompClient.reconnect_delay = 2000;
+      this.reconnectChannels();
     }, (e) => {
       console.error(e);
       setTimeout(() => {
         if (jwt !== null && jwt !== '' && jwt !== undefined) {
           this.connectWs(jwt);
         }
-
       }, environment.wsReconnectInterval);
     });
   }
@@ -38,12 +38,23 @@ export class WsService {
     this.stompClient.send('/ws/publisher/' + channel, {}, JSON.stringify(body));
   }
 
-  subscribe(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
-    this.stompClient.subscribe((privateChannel ? '/private' : '') + '/ws/subscribe/' + channel, (message) => {
-      subject.next(JSON.parse(message.body));
+  reconnectChannels() {
+    this.channels.forEach((channel) => {
+      this.subscribe(channel.channel, channel.privateChannel, channel.subject);
     });
-    //TODO FUTURE: handle unsubcriptions
-    //TODO FUTURE: re-structure chat system =)
+  }
+
+  subscribe(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
+    //TODO verify not connected before
+    if (this.stompClient.status === 'CONNECTED') {
+      this.stompClient.subscribe((privateChannel ? '/private' : '') + '/ws/subscribe/' + channel, (message) => {
+        subject.next(JSON.parse(message.body));
+      });
+    } else {
+      this.channels.push({
+        channel: channel, privateChannel: privateChannel, subject: subject
+      });
+    }
   }
 
   async disconnectWs() {

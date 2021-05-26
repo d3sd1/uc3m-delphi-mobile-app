@@ -22,9 +22,7 @@ export class ProfilePage {
   }
 
   async ionViewWillEnter() {
-    this.userSubscription = (await this.userConsumer.getUser()).subscribe((user) => {
-      this.user = user;
-    });
+    this.user = this.userConsumer.getUser().getValue();
   }
 
   async ionViewWillLeave() {

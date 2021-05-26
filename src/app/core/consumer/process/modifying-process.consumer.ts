@@ -6,7 +6,7 @@ import {environment} from '../../../../environments/environment';
 import {BehaviorSubject} from 'rxjs';
 import {DatabaseService} from '../database.service';
 import {User} from '../../../logged-in/user';
-import {Round} from '../../../logged-in/processes/round';
+import {Round} from '../../../logged-in/processes/modify/rounds/round';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +57,10 @@ export class ModifyingProcessConsumer {
       'final_comment TEXT,' +
       'modified_date DATE' +
       ');', []);
+  }
+
+  saveCurrentprocess(process: Process) {
+
   }
 
   async currentProcess(): Promise<BehaviorSubject<Process>> {

@@ -3,7 +3,7 @@ import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../process';
 import {User} from '../../../user';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Round} from '../../round';
+import {Round} from './round';
 
 @Component({
   selector: 'delphi-rounds',

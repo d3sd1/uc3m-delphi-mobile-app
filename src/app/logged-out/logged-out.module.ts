@@ -6,7 +6,6 @@ import {FormsModule} from '@angular/forms';
 import {LoginPage} from './login/login.page';
 import {IonicModule} from '@ionic/angular';
 import {TranslateModule} from '@ngx-translate/core';
-import {LoggedOutGuard} from './logged-out.guard';
 
 
 @NgModule({
@@ -22,7 +21,7 @@ import {LoggedOutGuard} from './logged-out.guard';
     TranslateModule
   ],
   providers: [
-    LoggedOutGuard
+
   ]
 })
 export class LoggedOutModule {

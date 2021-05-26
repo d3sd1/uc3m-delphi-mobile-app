@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Process} from '../process';
 import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
 import {BehaviorSubject, Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-processes',
@@ -15,7 +16,9 @@ export class ProcessesPage {
   filteredProcesses: Process[] = null;
   processesSubscription: Subscription;
 
-  constructor(private processService: ProcessConsumer) {
+  constructor(private processService: ProcessConsumer,
+              private route: ActivatedRoute) {
+    this.processesUpdater = this.route.snapshot.data['processes'];
   }
 
   async ionViewWillEnter() {

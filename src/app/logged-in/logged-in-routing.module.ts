@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoggedInGuard} from './logged-in.guard';
 import {LogoutPage} from './profile/logout/logout.page';
 import {HomePage} from './home.page';
 import {OnboardingPage} from './onboarding/onboarding.page';
+import {UserResolver} from '../core/router/resolver/user.resolver';
 
 const routes: Routes = [
   {
@@ -13,14 +13,11 @@ const routes: Routes = [
   },
   {
     path: 'logout',
-    component: LogoutPage,
-    canActivate: [LoggedInGuard]
+    component: LogoutPage
   },
   {
     path: 'menu',
     component: HomePage,
-    canActivate: [LoggedInGuard],
-    canActivateChild: [LoggedInGuard],
     children: [
       {
         path: '',
@@ -39,17 +36,11 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule)
       },
-      {
-        path: '',
-        redirectTo: '/menu/processes',
-        pathMatch: 'full'
-      }
     ]
   },
   {
     path: 'onboarding',
     component: OnboardingPage,
-    canActivate: [LoggedInGuard]
   }
 ];
 

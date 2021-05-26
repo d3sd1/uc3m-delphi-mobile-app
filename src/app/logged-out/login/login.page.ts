@@ -10,7 +10,7 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
   loginUser: LoginUser;
 
   constructor(private userConsumer: UserConsumer,
@@ -20,10 +20,6 @@ export class LoginPage implements OnInit {
               private wsService: WsService,
               private translate: TranslateService) {
     this.loginUser = new LoginUser();
-  }
-
-  async ngOnInit() {
-    console.log('LOGGED IN?? -> ', await this.userConsumer.isLoggedIn())
   }
 
 
