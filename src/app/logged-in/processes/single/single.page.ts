@@ -14,7 +14,7 @@ import {Round} from '../modify/rounds/round';
   templateUrl: './single.page.html',
   styleUrls: ['./single.page.scss'],
 })
-export class SinglePage implements OnInit {
+export class SinglePage {
 
   showExpertForm = false;
   invitationEmail = '';
@@ -31,38 +31,6 @@ export class SinglePage implements OnInit {
     private httpClient: HttpClient,
     private wsService: WsService,
     private translate: TranslateService) {
-  }
-
-  findCurrentRound() {
-    this.currentRound = this.process?.rounds.find(round => round.current);
-    if (this.currentRound === undefined) {
-      this.currentRound = null;
-    }
-    console.log('current round:', this.currentRound);
-  }
-
-  getRemainingRounds() {
-    this.remainingRounds = this.process?.rounds.filter(round => !round.finished).length;
-    console.log('remaining rounds:', this.remainingRounds);
-
-  }
-
-  public async ngOnInit(): Promise<void> {
-
-    this.findCurrentRound();
-    this.getRemainingRounds();
-    console.log('cur round', this.currentRound);
-    // Handle process updatess
-
-/* TODO
-    this.wsService.subscribe('process/new', true).subscribe(async (process: Process) => {
-      if (process === null) {
-        return;
-      }
-      if (process.id === this.process.id) {
-        this.process = process;
-      }
-    });*/
   }
 
   showExpertInvitation() {
@@ -100,21 +68,9 @@ export class SinglePage implements OnInit {
     // TODO handle err
   }
 
-  roundOngoing(): boolean {
-    let initiated = false;
-    this.process?.rounds?.forEach((round) => {
-      if (round.current || round.finished) {
-        initiated = true;
-      }
-    });
-    return initiated;
-  }
-
   async closeRound() {
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, null).toPromise().then(async (delphiProcess: Process) => {
       this.process = delphiProcess;
-      this.getRemainingRounds();
-      this.findCurrentRound();
       await this.showToast(await this.translate.get('home.processes.single.round.close.success').toPromise());
     }).catch(async (errMessage: string) => {
       console.log(errMessage);
@@ -125,8 +81,6 @@ export class SinglePage implements OnInit {
   async startRound() {
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, null).toPromise().then(async (delphiProcess: Process) => {
       this.process = delphiProcess;
-      this.getRemainingRounds();
-      this.findCurrentRound();
       await this.showToast(await this.translate.get('home.processes.single.round.start.success').toPromise());
     }).catch(async (errMessage: string) => {
       console.log(errMessage);

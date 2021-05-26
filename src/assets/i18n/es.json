@@ -77,7 +77,7 @@
         "desc": "Descripción del proceso",
         "rounds": {
           "title": "Datos de rondas",
-          "enter": "Rondas",
+          "enter": "Siguiente ronda",
           "users": "Usuarios"
         },
         "save": "Guardar",

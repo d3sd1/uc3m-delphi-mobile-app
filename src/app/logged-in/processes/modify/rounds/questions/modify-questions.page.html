@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" text="Volver"></ion-back-button>
+      <ion-back-button routerDirection="back"
+                       defaultHref="/logged-in/menu/processes/modify"
+                       routerLink="/logged-in/menu/processes/modify"
+                       text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Modificar preguntas</ion-title>
   </ion-toolbar>
@@ -10,16 +13,17 @@
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
 
   <ion-item>
-    <ion-label>Fecha límite de ronda</ion-label>
-    <ion-datetime display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="this.process?.rounds[roundIndex].endTime"></ion-datetime>
+    <ion-label>Fecha de cierre</ion-label>
+    <ion-datetime display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="this.process?.currentRound.endTime"
+    placeholder="Introduce fecha límite"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>Nombre</ion-label>
-    <ion-input [(ngModel)]="this.process?.rounds[roundIndex].name"></ion-input>
+    <ion-input [(ngModel)]="this.process?.currentRound.name" placeholder="Nombre de la ronda"></ion-input>
   </ion-item>
   <ion-item-divider></ion-item-divider>
-  <div id="container" *ngIf="process?.rounds[roundIndex]?.questions.length == 0">
+  <div id="container" *ngIf="process?.currentRound.questions.length == 0">
     <strong>Sin preguntas</strong>
     <p>No existen preguntas asociadas a esta ronda.</p>
   </div>

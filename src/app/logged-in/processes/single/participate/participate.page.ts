@@ -15,13 +15,11 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './participate.page.html',
   styleUrls: ['./participate.page.scss'],
 })
-export class ParticipatePage implements OnInit {
+export class ParticipatePage {
 
   process: Process;
   currentUser: User;
   answers: Answer[] = [];
-
-  currentRound: Round;
 
   constructor(
     private navCtrl: NavController,
@@ -50,7 +48,7 @@ export class ParticipatePage implements OnInit {
     });
   }
   sortCurRoundQuestions() {
-    this.currentRound.questions?.sort((a, b) => {
+    this.process.currentRound.questions?.sort((a, b) => {
       if (a.orderPosition < b.orderPosition) {
         return -1;
       }
@@ -60,42 +58,7 @@ export class ParticipatePage implements OnInit {
       return 0;
     });
   }
-  private async loadProcess() {
-    this.route.queryParams.subscribe(async params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.process = this.router.getCurrentNavigation().extras.state.process;
-        this.currentUser = this.router.getCurrentNavigation().extras.state.currentUser;
-        if (this.process.rounds === undefined) {
-          this.process.rounds = [];
-        }
-        this.findCurrentRound();
-        console.log(this.currentRound)
-      } else {
-        await this.router.navigateByUrl('/logged-in/home/menu/processes');
-      }
-    });
-  }
 
-
-  public async ngOnInit(): Promise<void> {
-    await this.loadProcess();
-    this.sortCurRoundQuestions();
-    this.currentRound.questions.forEach((question: Question) => {
-      const answer = new Answer();
-      answer.question = question;
-      answer.user = this.currentUser;
-      this.answers.push(answer);
-    });
-    this.sortAnswers();
-  }
-
-  public findCurrentRound(): void {
-    this.process?.rounds?.forEach((round) => {
-      if(round.current) {
-        this.currentRound = round;
-      }
-    });
-  }
   public async confirmParticipation() {
     const alert = await this.alertController.create({
       header: 'Confirmar participación',
@@ -133,10 +96,10 @@ export class ParticipatePage implements OnInit {
   public async saveParticipation() { // ñapa temporal
     await this.httpClient.post(environment.apiUrl + '/v1/process/tmp_json_upl', this.answers).toPromise().then(async (delphiProcess: Process) => {
       await this.showToast('home.processes.single.round.participate.success');
-      if(this.currentRound.expertsVoted === null || this.currentRound.expertsVoted === undefined) {
-        this.currentRound.expertsVoted = [];
+      if(this.process.currentRound.expertsVoted === null || this.process.currentRound.expertsVoted === undefined) {
+        this.process.currentRound.expertsVoted = [];
       }
-      this.currentRound.expertsVoted.push(this.currentUser);
+      this.process.currentRound.expertsVoted.push(this.currentUser);
       await this.router.navigateByUrl('/logged-in/home/menu/processes/single', {
         state: {
           process: this.process,

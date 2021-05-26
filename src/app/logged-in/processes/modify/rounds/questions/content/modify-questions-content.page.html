@@ -11,12 +11,12 @@
 
   <ion-item>
     <ion-label>Nombre</ion-label>
-    <ion-input [(ngModel)]="this.process?.rounds[roundIndex]?.questions[questionIndex].name"></ion-input>
+    <ion-input [(ngModel)]="this.process?.currentRound.questions[questionIndex].name"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
-    <ion-select [(ngModel)]="this.process?.rounds[roundIndex]?.questions[questionIndex].type">
+    <ion-select [(ngModel)]="this.process?.currentRound.questions[questionIndex].type">
       <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
       <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
       <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
@@ -28,15 +28,15 @@
   </ion-item>
   <ion-item>
     <ion-textarea placeholder="Introduce tu pregunta aquí"
-                  [(ngModel)]="this.process?.rounds[roundIndex]?.questions[questionIndex].question"></ion-textarea>
+                  [(ngModel)]="this.process.currentRound.questions[questionIndex].question"></ion-textarea>
   </ion-item>
 
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type === 'QUANTITATIVE'">
+  <div *ngIf="this.process?.currentRound.questions[questionIndex]?.type === 'QUANTITATIVE'">
     <ion-item>
       <ion-input placeholder="Valor mínimo"
-                 [value]="this.process?.rounds[roundIndex]?.questions[questionIndex]?.minVal"></ion-input>
+                 [value]="this.process?.currentRound.questions[questionIndex]?.minVal"></ion-input>
       <ion-input placeholder="Valor máximo"
-                 [value]="this.process?.rounds[roundIndex]?.questions[questionIndex]?.maxVal"></ion-input>
+                 [value]="this.process?.currentRound.questions[questionIndex]?.maxVal"></ion-input>
     </ion-item>
     <ion-range [min]="0"
                [max]="10"
@@ -46,7 +46,7 @@
       <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
     </ion-range>
   </div>
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type === 'BOOLTYPE'">
+  <div *ngIf="this.process?.currentRound.questions[questionIndex]?.type === 'BOOLTYPE'">
     <ion-item>
       <ion-label>Respuesta</ion-label>
       <ion-select value="1">
@@ -55,7 +55,7 @@
       </ion-select>
     </ion-item>
   </div>
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type === 'CATCUSTOM'">
+  <div *ngIf="this.process?.currentRound.questions[questionIndex]?.type === 'CATCUSTOM'">
 
     <ion-item>
       <ion-input placeholder="Nombre categoría..." [(ngModel)]="currentCategory"></ion-input>
@@ -66,17 +66,17 @@
       <ion-item-group>
         <ion-item-divider>
           <ion-label>Categorías</ion-label>
-          <ion-badge slot="end" >{{this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.length}}</ion-badge>
+          <ion-badge slot="end" >{{this.process?.currentRound.questions[this.questionIndex]?.categories.length}}</ion-badge>
         </ion-item-divider>
 
-        <ion-item *ngFor="let category of this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories; let i = index">
+        <ion-item *ngFor="let category of this.process?.currentRound.questions[this.questionIndex]?.categories; let i = index">
           <ion-label>{{category.catName}}</ion-label>
           <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
         </ion-item>
       </ion-item-group>
     </ion-list>
   </div>
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type === 'CATLIKERT'">
+  <div *ngIf="this.process?.currentRound.questions[questionIndex]?.type === 'CATLIKERT'">
     <ion-item>
       <ion-label>Escala de Likert</ion-label>
       <ion-select value="3">
@@ -89,9 +89,9 @@
     </ion-item>
   </div>
 
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 'CATMULTI'">
+  <div *ngIf="this.process?.currentRound.questions[questionIndex]?.type == 'CATMULTI'">
     <ion-item>
-      <ion-range min="1" [max]="this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.length + 1" step="1" [(ngModel)]="responseRange" snaps color="primary">
+      <ion-range min="1" [max]="this.process?.currentRound.questions[this.questionIndex]?.categories.length + 1" step="1" [(ngModel)]="responseRange" snaps color="primary">
         <ion-icon slot="start" size="small" color="primary" name="aperture-outline"></ion-icon>
         <ion-icon slot="end" color="success" name="aperture"></ion-icon>
       </ion-range>
@@ -105,17 +105,17 @@
       <ion-item-group>
         <ion-item-divider>
           <ion-label>Categorías</ion-label>
-          <ion-badge slot="end" >{{this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.length}}</ion-badge>
+          <ion-badge slot="end" >{{this.process?.currentRound.questions[this.questionIndex]?.categories.length}}</ion-badge>
         </ion-item-divider>
 
-        <ion-item *ngFor="let category of this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories; let i = index">
+        <ion-item *ngFor="let category of this.process?.currentRound.questions[this.questionIndex]?.categories; let i = index">
           <ion-label>{{category.catName}}</ion-label>
           <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
         </ion-item>
       </ion-item-group>
     </ion-list>
   </div>
-  <div *ngIf="this.process?.rounds[roundIndex]?.questions[questionIndex]?.type == 'CATPOND'">
+  <div *ngIf="this.process?.currentRound.questions[questionIndex]?.type == 'CATPOND'">
 
     <ion-item>
       <ion-input placeholder="Nombre categoría..." [(ngModel)]="currentCategory"></ion-input>
@@ -126,10 +126,10 @@
       <ion-item-group>
         <ion-item-divider>
           <ion-label>Categorías</ion-label>
-          <ion-badge slot="end" >{{this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.length}}</ion-badge>
+          <ion-badge slot="end" >{{this.process?.currentRound.questions[this.questionIndex]?.categories.length}}</ion-badge>
         </ion-item-divider>
 
-        <ion-item *ngFor="let category of this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories; let i = index">
+        <ion-item *ngFor="let category of this.process?.currentRound.questions[this.questionIndex]?.categories; let i = index">
           <ion-label>{{category.catName}}</ion-label>
           <ion-icon slot="end" name="trash" (click)="delCategory(category)"></ion-icon>
         </ion-item>

@@ -11,7 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './close.page.html',
   styleUrls: ['./close.page.scss'],
 })
-export class ClosePage implements OnInit {
+export class ClosePage {
 
   process: Process;
   conclusion: string;
@@ -29,24 +29,6 @@ export class ClosePage implements OnInit {
     await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
       state: {process: this.process}
     });
-  }
-
-  private async loadProcess() {
-    this.route.queryParams.subscribe(async params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.process = this.router.getCurrentNavigation().extras.state.process;
-        if (this.process.rounds === undefined) {
-          this.process.rounds = [];
-        }
-      } else {
-        await this.router.navigateByUrl('/logged-in/home/menu/processes');
-      }
-    });
-  }
-
-
-  public async ngOnInit(): Promise<void> {
-    await this.loadProcess();
   }
 
   public async closeProcess() {

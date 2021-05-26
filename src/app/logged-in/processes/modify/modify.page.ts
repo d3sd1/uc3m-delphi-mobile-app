@@ -139,20 +139,10 @@ export class ModifyPage implements OnInit {
     return toast;
   }
 
-  async addRound() {
-
-    const round = new Round(await this.translate.get('home.processes.single.modify.round', {round: (this.process.rounds.length + 1)}).toPromise(), [], new Date(), false);
-    this.process.rounds.push(round);
-    await this.createProcess.scrollToBottom(300);
-  }
-
   async addQuestion(round: Round) {
-    const roundIndex = this.process.rounds.findIndex((iRound: Round) => {
-      return iRound.id === round.id;
-    });
     const question = new Question();
-    question.name = await this.translate.get('home.processes.single.modify.question', {question: (this.process.rounds[roundIndex].questions.length + 1)}).toPromise();
-    this.process.rounds[roundIndex].questions.push(question);
+    question.name = await this.translate.get('home.processes.single.modify.question').toPromise();
+    this.process.currentRound.questions.push(question);
     await this.createProcess.scrollToBottom(300);
   }
 
@@ -166,10 +156,7 @@ export class ModifyPage implements OnInit {
   }
 
   compressQuestion(round: Round) {
-    const roundIndex = this.process.rounds.findIndex((iRound: Round) => {
-      return iRound.id === round.id;
-    });
-    this.process.rounds[roundIndex].questions.find((question: Question) => {
+    this.process.currentRound.questions.find((question: Question) => {
       return question.id === this.expandedQuestion.id;
     });
     this.expandedQuestion = null;

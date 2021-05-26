@@ -10,14 +10,4 @@ export class Round {
   orderPosition: number;
   current: boolean = false;
   expertsVoted: User[] = [];
-
-
-  constructor(name: string, questions: Question[], endTime: Date, finished: boolean) {
-    this.name = name;
-    this.questions = questions;
-    this.endTime = endTime;
-    this.finished = finished;
-    this.expertsVoted = [];
-  }
-
 }

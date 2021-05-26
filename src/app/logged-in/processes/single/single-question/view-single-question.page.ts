@@ -9,7 +9,7 @@ import {User} from '../../../user';
   templateUrl: './view-single-question.page.html',
   styleUrls: ['./view-single-question.page.scss'],
 })
-export class ViewSingleQuestionPage implements OnInit {
+export class ViewSingleQuestionPage {
 
   process: Process;
   currentUser: User;
@@ -28,25 +28,8 @@ export class ViewSingleQuestionPage implements OnInit {
     });
   }
 
-  private async loadProcess() {
-    this.route.queryParams.subscribe(async params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.process = this.router.getCurrentNavigation().extras.state.process;
-        this.roundIndex = this.router.getCurrentNavigation().extras.state.roundIndex;
-        this.questionIndex = this.router.getCurrentNavigation().extras.state.questionIndex;
-        if (this.process.rounds === undefined) {
-          this.process.rounds = [];
-        }
-        this.sortRounds();
-      } else {
-        await this.router.navigateByUrl('/logged-in/home/menu/processes');
-      }
-    });
-  }
-
   sortRounds() {
-    console.log(this.process.rounds);
-    this.process.rounds.sort((a, b) => {
+    this.process.pastRounds.sort((a, b) => {
       // check if some1 is finished
       if (!a.finished && b.finished) {
         return -1;
@@ -64,10 +47,4 @@ export class ViewSingleQuestionPage implements OnInit {
       return 0;
     });
   }
-
-  public async ngOnInit(): Promise<void> {
-    await this.loadProcess();
-    //TODOthis.currentUser = await this.userStorage.getUser();
-  }
-
 }

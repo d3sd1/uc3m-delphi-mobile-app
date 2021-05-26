@@ -9,7 +9,7 @@ import {User} from '../../../user';
   templateUrl: './view-rounds.page.html',
   styleUrls: ['./view-rounds.page.scss'],
 })
-export class ViewRoundsPage implements OnInit {
+export class ViewRoundsPage {
 
   process: Process;
   currentUser: User;
@@ -25,24 +25,8 @@ export class ViewRoundsPage implements OnInit {
       state: {process: this.process, currentUser: this.currentUser}
     });
   }
-
-  private async loadProcess() {
-    this.route.queryParams.subscribe(async params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.process = this.router.getCurrentNavigation().extras.state.process;
-        if (this.process.rounds === undefined) {
-          this.process.rounds = [];
-        }
-        this.sortRounds();
-      } else {
-        await this.router.navigateByUrl('/logged-in/home/menu/processes');
-      }
-    });
-  }
-
   sortRounds() {
-    console.log(this.process.rounds);
-    this.process.rounds.sort((a, b) => {
+    this.process.pastRounds.sort((a, b) => {
       // check if some1 is finished
       if (!a.finished && b.finished) {
         return -1;
@@ -59,11 +43,6 @@ export class ViewRoundsPage implements OnInit {
       }
       return 0;
     });
-  }
-
-  public async ngOnInit(): Promise<void> {
-    await this.loadProcess();
-   //TODO  this.currentUser = await this.userStorage.getUser();
   }
 
 }

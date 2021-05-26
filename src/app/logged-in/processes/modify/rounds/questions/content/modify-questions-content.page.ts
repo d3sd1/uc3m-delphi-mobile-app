@@ -11,7 +11,7 @@ import {Category} from './category';
   templateUrl: './modify-questions-content.page.html',
   styleUrls: ['./modify-questions-content.page.scss'],
 })
-export class ModifyQuestionsContentPage implements OnInit {
+export class ModifyQuestionsContentPage {
 
   process: Process;
   roundIndex: number;
@@ -43,28 +43,8 @@ export class ModifyQuestionsContentPage implements OnInit {
       await this.showToast('home.processes.single.round.err.duplicated_categories');
       return;
     }
-    this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.push(new Category(this.currentCategory));
+    this.process?.currentRound.questions[this.questionIndex]?.categories.push(new Category(this.currentCategory));
     this.currentCategory = '';
-  }
-
-  private async loadProcess() {
-    this.route.queryParams.subscribe(async params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.process = this.router.getCurrentNavigation().extras.state.process;
-        this.roundIndex = this.router.getCurrentNavigation().extras.state.roundIndex;
-        this.questionIndex = this.router.getCurrentNavigation().extras.state.questionIndex;
-        if (this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories === undefined) {
-          this.process.rounds[this.roundIndex].questions[this.questionIndex].categories = [];
-        }
-      } else {
-        await this.router.navigateByUrl('/logged-in/home/menu/processes');
-      }
-    });
-  }
-
-  public async ngOnInit(): Promise<void> {
-    await this.loadProcess();
-    //TODO this.currentUser = await this.userStorage.getUser();
   }
 
   private async showToast(transKey: string) {
@@ -86,20 +66,20 @@ export class ModifyQuestionsContentPage implements OnInit {
   }
 
   async saveQuestionContent() {
-    if (this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.question === null
-      || this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.question === undefined
-      || this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.question === '') {
+    if (this.process?.currentRound.questions[this.questionIndex]?.question === null
+      || this.process?.currentRound.questions[this.questionIndex]?.question === undefined
+      || this.process?.currentRound.questions[this.questionIndex]?.question === '') {
       await this.showToast('home.processes.single.round.err.content');
       return;
     }
 
-    if (this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.minVal
-      > this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.maxVal) {
+    if (this.process?.currentRound.questions[this.questionIndex]?.minVal
+      > this.process?.currentRound.questions[this.questionIndex]?.maxVal) {
       await this.showToast('home.processes.single.round.err.valsminmax');
       return;
     }
-    if (isNaN(this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.minVal)
-      || isNaN(this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.maxVal)) {
+    if (isNaN(this.process?.currentRound.questions[this.questionIndex]?.minVal)
+      || isNaN(this.process?.currentRound?.questions[this.questionIndex]?.maxVal)) {
       await this.showToast('home.processes.single.round.err.valsnotnumbers');
       return;
     }
@@ -118,8 +98,8 @@ export class ModifyQuestionsContentPage implements OnInit {
 
   checkDuplicatedCategories(checkWith: string = null) {
     let hasDuplicatedCategories = false;
-    this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.forEach((category1, index1) => {
-      this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.forEach((category2, index2) => {
+    this.process?.currentRound.questions[this.questionIndex]?.categories.forEach((category1, index1) => {
+      this.process?.currentRound.questions[this.questionIndex]?.categories.forEach((category2, index2) => {
         if (category1.catName.toLowerCase() === category2.catName.toLowerCase() && index1 !== index2) {
           hasDuplicatedCategories = true;
         }
@@ -132,7 +112,7 @@ export class ModifyQuestionsContentPage implements OnInit {
   }
 
   delCategory(category) {
-    this.process.rounds[this.roundIndex].questions[this.questionIndex].categories = this.process?.rounds[this.roundIndex]?.questions[this.questionIndex]?.categories.filter((cat) => {
+    this.process.currentRound.questions[this.questionIndex].categories = this.process?.currentRound.questions[this.questionIndex]?.categories.filter((cat) => {
       return cat.catName?.toLowerCase() != category.name?.toLowerCase();
     });
   }

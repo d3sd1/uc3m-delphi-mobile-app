@@ -46,18 +46,18 @@
 
       <span>
       <ion-button
-        *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds == 0"
+        *ngIf="this.process?.pastRounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds == 0"
         expand="block"
         (click)="closeProcess()">
         {{'home.processes.single.end.title' | translate}}
       </ion-button>
         <ion-button
-          *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds > 0"
+          *ngIf="this.process?.pastRounds?.length > 0 && !process?.processFinished && this.currentRound === null && this.remainingRounds > 0"
           expand="block"
           (click)="startRound()">
         {{'home.processes.single.round.start.title' | translate}}
       </ion-button>
-        <ion-button *ngIf="this.process?.rounds?.length > 0 && !process?.processFinished && this.currentRound !== null"
+        <ion-button *ngIf="this.process?.pastRounds?.length > 0 && !process?.processFinished && this.currentRound !== null"
                     expand="block"
                     (click)="closeRound()">
         {{'home.processes.single.round.close.title' | translate}}
@@ -67,11 +67,11 @@
     <ion-item
               [routerLink]="['/logged-in/home/menu/processes/view_rounds']" [state]="{ process: process}">
       <ion-label>{{ 'home.processes.single.rounds' | translate }}</ion-label>
-      <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
+      <ion-badge slot="end">{{process?.pastRounds === undefined ? 0 : process?.pastRounds?.length}}</ion-badge>
     </ion-item>
     <ion-item>
       <ion-label>{{ 'home.processes.single.rounds' | translate }}</ion-label>
-      <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
+      <ion-badge slot="end">{{process?.pastRounds === undefined ? 0 : process?.pastRounds?.length}}</ion-badge>
     </ion-item>
   </ion-list>
 

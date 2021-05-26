@@ -12,37 +12,25 @@ import {Round} from '../round';
   templateUrl: './modify-questions.page.html',
   styleUrls: ['./modify-questions.page.scss'],
 })
-export class ModifyQuestionsPage implements OnInit {
+export class ModifyQuestionsPage {
 
   process: Process;
-  roundIndex: number;
-  currentUser: User;
+  user: User;
 
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    private router: Router,
     public alertController: AlertController) {
-  }
-
-  private async loadProcess() {
-    this.route.queryParams.subscribe(async params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.process = this.router.getCurrentNavigation().extras.state.process;
-        this.roundIndex = this.router.getCurrentNavigation().extras.state.roundIndex;
-        console.log(this.process);
-        if (this.process.rounds === undefined) {
-          this.process.rounds = [];
-        }
-        this.sortQuestions();
-      } else {
-        await this.navCtrl.navigateBack('/logged-in/home/menu/processes', {
-        });
-      }
+    this.route.snapshot.data['user'].subscribe((user) => {
+      this.user = user;
+    });
+    this.route.snapshot.data['process'].subscribe((process) => {
+      this.process = process;
     });
   }
+
   public onItemReorder({detail}) {
-    if(detail.from > this.process.rounds.length - 1
+   /* if(detail.from > this.process.rounds.length - 1
       || detail.to > this.process.rounds.length - 1) {
       detail.complete(false);
       return;
@@ -51,17 +39,11 @@ export class ModifyQuestionsPage implements OnInit {
     const aux = this.process?.rounds[detail.to];
     this.process.rounds[detail.to] = this.process?.rounds[detail.from];
     this.process.rounds[detail.from] = aux;
-    this.reAssignOrder();
+    this.reAssignOrder();*/
   }
 
-
-  reAssignOrder() {
-    this.process.rounds.forEach((round: Round, index) => {
-      round.orderPosition = index;
-    });
-  }
   sortQuestions() {
-    this.process.rounds[this.roundIndex]?.questions.sort((a, b) => {
+    this.process.currentRound.questions.sort((a, b) => {
       if (a.orderPosition < b.orderPosition) {
         return -1;
       }
@@ -74,21 +56,15 @@ export class ModifyQuestionsPage implements OnInit {
 
   addQuestion() {
     const question = new Question();
-    question.name = 'Pregunta ' + this.process.rounds[this.roundIndex]?.questions.length;
+    question.name = 'Pregunta ' + this.process.currentRound.questions.length;
     question.type = QuestionType.QUALITATIVE;
-    this.process.rounds[this.roundIndex]?.questions.push(
+    this.process.currentRound.questions.push(
       question
     );
-    this.reAssignOrder();
   }
 
   deleteQuestion(questionIndex: number) {
-    this.process?.rounds[this.roundIndex]?.questions.splice(questionIndex, 1);
-  }
-
-  public async ngOnInit(): Promise<void> {
-    await this.loadProcess();
-    //TODOthis.currentUser = await this.userStorage.getUser();
+    this.process?.currentRound.questions.splice(questionIndex, 1);
   }
 
   async goBack() {
@@ -97,15 +73,15 @@ export class ModifyQuestionsPage implements OnInit {
 
   async saveQuestions() {
     let questionsMissing = false;
-    this.process?.rounds[this.roundIndex]?.questions?.forEach((question) => {
+    this.process?.currentRound.questions?.forEach((question) => {
       if (question.question === null ||
         question.question === '' ||
         question.question === undefined) {
         questionsMissing = true;
       }
     });
-    if (this.process?.rounds[this.roundIndex]?.endTime === null ||
-      this.process?.rounds[this.roundIndex]?.endTime === undefined) {
+    if (this.process?.currentRound.endTime === null ||
+      this.process?.currentRound.endTime === undefined) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',
@@ -115,9 +91,9 @@ export class ModifyQuestionsPage implements OnInit {
       });
 
       await alert.present();
-    } else if (this.process?.rounds[this.roundIndex]?.questions === null ||
-      this.process?.rounds[this.roundIndex]?.questions === undefined ||
-      this.process?.rounds[this.roundIndex]?.questions.length === 0) {
+    } else if (this.process?.currentRound.questions === null ||
+      this.process?.currentRound.questions === undefined ||
+      this.process?.currentRound.questions.length === 0) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',
@@ -138,12 +114,7 @@ export class ModifyQuestionsPage implements OnInit {
 
       await alert.present();
     } else {
-      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/modify_rounds', {
-        state: {
-          process: this.process,
-          currentUser: this.currentUser
-        }
-      });
+      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/modify_rounds');
     }
   }
 

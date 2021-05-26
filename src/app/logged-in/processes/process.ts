@@ -8,7 +8,8 @@ export class Process {
   pictureUrl: string;
   experts: User[] = [];
   coordinators: User[] = [];
-  rounds: Round[] = [];
+  pastRounds: Round[] = [];
+  currentRound: Round = new Round();
   processFinished: boolean;
   finalComment: string;
   modifiedDate: Date;

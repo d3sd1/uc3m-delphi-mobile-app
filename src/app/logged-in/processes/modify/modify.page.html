@@ -49,9 +49,9 @@
         {{ 'home.processes.modify.rounds.title'  | translate }}
       </ion-label>
     </ion-list-header>
-    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/rounds">
+    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/round/questions">
       <ion-label>{{ 'home.processes.modify.rounds.enter' | translate }}</ion-label>
-      <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
+      <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}} Preguntas</ion-badge>
     </ion-item>
   </ion-list>
   <ion-list lines="full" class="ion-no-margin">
