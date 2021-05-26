@@ -6,11 +6,13 @@ import {FormsModule} from '@angular/forms';
 import {LoginPage} from './login/login.page';
 import {IonicModule} from '@ionic/angular';
 import {TranslateModule} from '@ngx-translate/core';
+import {ForgotPasswordPage} from './forgot-password/forgot-password.page';
 
 
 @NgModule({
   declarations: [
-    LoginPage
+    LoginPage,
+    ForgotPasswordPage
   ],
   imports: [
     CommonModule,
