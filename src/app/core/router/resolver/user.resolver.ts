@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {UserConsumer} from '../../consumer/user/user.consumer';
 import {BehaviorSubject} from 'rxjs';
-import {User} from '../../../logged-in/user';
+import {User} from '../../model/user';
 
 @Injectable()
 export class UserResolver implements Resolve<BehaviorSubject<User>> {

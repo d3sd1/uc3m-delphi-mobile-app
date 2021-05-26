@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {WsService} from '../../ws/ws.service';
-import {Process} from '../../../logged-in/processes/process';
+import {Process} from '../../model/process';
 import {BehaviorSubject} from 'rxjs';
 import {DatabaseService} from '../database.service';
 

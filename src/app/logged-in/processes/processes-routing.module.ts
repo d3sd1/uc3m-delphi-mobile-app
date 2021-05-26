@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProcessesPage} from './list/processes.page';
-import {ModifyPage} from './single/modify.page';
+import {SingleProcessPage} from './single/single-process.page';
 import {UserPickerPage} from './single/user-picker/user-picker.page';
 import {ModifyQuestionsPage} from './single/questions/list/modify-questions.page';
 import {ModifyQuestionsContentPage} from './single/questions/content/modify-questions-content.page';
@@ -32,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: 'basic',
-        component: ModifyPage,
+        component: SingleProcessPage,
         resolve: {
           user: UserResolver,
           process: EditingProcessResolver,

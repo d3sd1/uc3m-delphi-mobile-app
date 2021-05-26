@@ -1,5 +1,5 @@
 import {QuestionType} from './question-type';
-import {Category} from './content/category';
+import {Category} from './category';
 
 export class Question {
   id: number;

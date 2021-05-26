@@ -1,5 +1,5 @@
-import {Question} from '../questions/question';
-import {User} from '../../../user';
+import {Question} from './question';
+import {User} from './user';
 
 export class Round {
   id: number;

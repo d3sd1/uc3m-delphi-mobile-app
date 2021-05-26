@@ -1,25 +1,25 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {IonContent, IonReorderGroup, LoadingController, ToastController} from '@ionic/angular';
-import {Process} from '../process';
-import {User} from '../../user';
+import {Process} from '../../../core/model/process';
+import {User} from '../../../core/model/user';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {Question} from './questions/question';
-import {QuestionType} from './questions/question-type';
+import {Question} from '../../../core/model/question';
+import {QuestionType} from '../../../core/model/question-type';
 import {ItemReorderEventDetail} from '@ionic/core';
-import {Round} from './rounds/round';
+import {Round} from '../../../core/model/round';
 import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Media} from './media';
+import {Media} from '../../../core/model/media';
 import {TranslateService} from '@ngx-translate/core';
 import {EditingProcessConsumer} from '../../../core/consumer/process/editing-process.consumer';
 
 @Component({
   selector: 'delphi-create',
-  templateUrl: './modify.page.html',
-  styleUrls: ['./modify.page.scss'],
+  templateUrl: './single-process.page.html',
+  styleUrls: ['./single-process.page.scss'],
 })
-export class ModifyPage implements OnInit {
+export class SingleProcessPage implements OnInit {
   process: Process = new Process(); // todo handle via router
   user: User;
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;

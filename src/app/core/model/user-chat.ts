@@ -1,5 +1,5 @@
-import {User} from '../user';
-import {ChatMessage} from './chat-conversation/chat-message';
+import {User} from './user';
+import {ChatMessage} from './chat-message';
 
 
 export class UserChat {

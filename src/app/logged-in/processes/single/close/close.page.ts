@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Process} from '../../process';
+import {Process} from '../../../../core/model/process';
 import {NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';

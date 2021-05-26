@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {ChatService} from './chat/chat.service';
 import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
-import {User} from './user';
+import {User} from '../core/model/user';
 import {WsService} from '../core/ws/ws.service';
 import {NavController, ViewDidEnter} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';

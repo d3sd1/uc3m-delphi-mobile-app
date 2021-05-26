@@ -8,10 +8,10 @@ import {WsService} from '../../ws/ws.service';
 import {TranslateService} from '@ngx-translate/core';
 import {SQLite} from '@ionic-native/sqlite/ngx';
 import {DatabaseService} from '../database.service';
-import {User} from '../../../logged-in/user';
+import {User} from '../../model/user';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Language} from '../../../logged-in/profile/language';
-import {Media} from '../../../logged-in/processes/single/media';
+import {Language} from '../../model/language';
+import {Media} from '../../model/media';
 import {BehaviorSubject} from 'rxjs';
 import {LangService} from '../../lang/lang.service';
 

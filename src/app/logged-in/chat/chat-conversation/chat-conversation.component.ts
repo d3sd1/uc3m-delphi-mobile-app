@@ -4,9 +4,9 @@ import {IonContent, NavController} from '@ionic/angular';
 
 import {ChatService} from '../chat.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {getChatInfo, UserChat} from '../user-chat';
-import {User} from '../../user';
-import {ChatMessage} from './chat-message';
+import {getChatInfo, UserChat} from '../../../core/model/user-chat';
+import {User} from '../../../core/model/user';
+import {ChatMessage} from '../../../core/model/chat-message';
 import {WsService} from '../../../core/ws/ws.service';
 
 @Component({

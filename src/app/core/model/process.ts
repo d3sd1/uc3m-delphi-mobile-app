@@ -1,5 +1,5 @@
-import {Round} from './single/rounds/round';
-import {User} from '../user';
+import {Round} from './round';
+import {User} from './user';
 
 export class Process {
   id: number;

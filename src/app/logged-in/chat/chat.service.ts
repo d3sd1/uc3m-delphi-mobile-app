@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable, Subject} from 'rxjs';
-import {UserChat} from './user-chat';
-import {ChatMessage} from './chat-conversation/chat-message';
+import {UserChat} from '../../core/model/user-chat';
+import {ChatMessage} from '../../core/model/chat-message';
 
 @Injectable({
   providedIn: 'root'

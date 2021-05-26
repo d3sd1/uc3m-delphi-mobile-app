@@ -3,7 +3,7 @@ import {IonSlides, NavController, ToastController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {HttpClient} from '@angular/common/http';
-import {User} from '../user';
+import {User} from '../../core/model/user';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 

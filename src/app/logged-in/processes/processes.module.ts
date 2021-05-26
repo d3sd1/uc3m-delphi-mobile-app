@@ -9,7 +9,7 @@ import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {IonicRatingModule} from 'ionic4-rating';
 import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
-import {ModifyPage} from './single/modify.page';
+import {SingleProcessPage} from './single/single-process.page';
 import {UserPickerPage} from './single/user-picker/user-picker.page';
 import {ModifyQuestionsPage} from './single/questions/list/modify-questions.page';
 import {ModifyQuestionsContentPage} from './single/questions/content/modify-questions-content.page';
@@ -35,7 +35,7 @@ import {EditingProcessResolver} from '../../core/router/resolver/editing-process
   ],
   declarations: [
     ProcessesPage,
-    ModifyPage,
+    SingleProcessPage,
     UserPickerPage,
     ModifyQuestionsPage,
     ModifyQuestionsContentPage,

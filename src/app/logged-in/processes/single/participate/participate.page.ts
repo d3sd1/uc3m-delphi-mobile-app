@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {Process} from '../../process';
-import {User} from '../../../user';
+import {Process} from '../../../../core/model/process';
+import {User} from '../../../../core/model/user';
 import {AlertController, NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Answer} from '../questions/content/answer';
+import {Answer} from '../../../../core/model/answer';
 import {environment} from '../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';

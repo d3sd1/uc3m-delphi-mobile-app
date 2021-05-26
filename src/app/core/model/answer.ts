@@ -1,5 +1,5 @@
-import {User} from '../../../../user';
-import {Question} from '../question';
+import {User} from './user';
+import {Question} from './question';
 
 export class Answer {
   id: number;

@@ -1,4 +1,4 @@
-import {Language} from './profile/language';
+import {Language} from './language';
 
 export class User {
   id: number;

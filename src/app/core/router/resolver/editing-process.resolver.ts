@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
-import {Process} from '../../../logged-in/processes/process';
+import {Process} from '../../model/process';
 import {EditingProcessConsumer} from '../../consumer/process/editing-process.consumer';
 
 @Injectable()

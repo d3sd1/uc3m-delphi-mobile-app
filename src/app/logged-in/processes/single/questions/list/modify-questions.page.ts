@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {AlertController, NavController} from '@ionic/angular';
-import {Process} from '../../../process';
-import {User} from '../../../../user';
+import {Process} from '../../../../../core/model/process';
+import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {Question} from '../question';
-import {QuestionType} from '../question-type';
+import {Question} from '../../../../../core/model/question';
+import {QuestionType} from '../../../../../core/model/question-type';
 
 @Component({
   selector: 'delphi-rounds',

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
-import {Language} from '../../logged-in/profile/language';
+import {Language} from '../model/language';
 import {environment} from '../../../environments/environment';
 
 @Injectable({

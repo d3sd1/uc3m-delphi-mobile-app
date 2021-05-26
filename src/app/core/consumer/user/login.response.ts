@@ -1,4 +1,4 @@
-import {User} from '../../../logged-in/user';
+import {User} from '../../model/user';
 
 export class LoginResponse {
   id: number;

@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ActionSheetController} from '@ionic/angular';
-import {User} from '../user';
+import {User} from '../../core/model/user';
 import {TranslateService} from '@ngx-translate/core';
 import {LangService} from '../../core/lang/lang.service';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
