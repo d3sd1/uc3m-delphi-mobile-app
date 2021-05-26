@@ -33,6 +33,9 @@ const routes: Routes = [
   {
     path: 'modify',
     component: ModifyPage,
+    resolve: {
+      user: UserResolver,
+    },
     children: [
       {
         path: 'rounds',

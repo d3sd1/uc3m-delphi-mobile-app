@@ -14,6 +14,7 @@ import {Media} from './media';
 import {TranslateService} from '@ngx-translate/core';
 import {ModifyingProcessConsumer} from '../../../core/consumer/process/modifying-process.consumer';
 import {FormControl, FormGroup} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-create',
@@ -21,7 +22,9 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./modify.page.scss'],
 })
 export class ModifyPage implements OnInit {
-  process: Process;
+  process: Process = new Process(); // todo handle via router
+  user: User;
+  private userSubscription: Subscription;
 
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
 
@@ -31,15 +34,22 @@ export class ModifyPage implements OnInit {
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
               private translate: TranslateService,
-              private router: Router,
-              private modifyingProcessConsumer:ModifyingProcessConsumer) {
+              private modifyingProcessConsumer:ModifyingProcessConsumer,
+              private router: Router) {
+    this.userSubscription = this.route.snapshot.data['user'].subscribe((user) => {
+      this.user = user;
+    });
+    console.log('ruta -----', this.router.url)
+  }
+  async ionViewWillLeave() {
+    this.userSubscription.unsubscribe();
   }
 
   public async ngOnInit(): Promise<void> {
-    this.process = (await this.modifyingProcessConsumer.currentProcess()).getValue();
     this.sanitizeProcess();
     this.forceCurrentUserAdmin();
-    console.log(this.router.url)
+   /* this.process = (await this.modifyingProcessConsumer.currentProcess()).getValue();
+   ;*/
   }
   syncProcess() {
     this.modifyingProcessConsumer.saveCurrentprocess(this.process);
