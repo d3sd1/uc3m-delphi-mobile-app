@@ -8,7 +8,7 @@ export class WsResolver implements Resolve<any> {
 
   constructor(private ws: WsService, private userConsumer: UserConsumer) {}
 
-  resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    return this.ws.connectWs(this.userConsumer.getJwt().getValue());
+  async resolve(route: ActivatedRouteSnapshot): Promise<any> {
+    return this.ws.connectWs((await this.userConsumer.getJwt()).getValue());
   }
 }

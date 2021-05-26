@@ -54,8 +54,8 @@ export class HomePage implements ViewDidEnter {
     }
   }
 
-  listenUserNotifications() {
-    this.userObserver = this.userConsumer.getUser().subscribe((user) => {
+  async listenUserNotifications() {
+    this.userObserver = (await this.userConsumer.getUser()).subscribe((user) => {
       this.notifications.profile = 0;
       if (user.photo === '' || user.photo === null || user.photo === undefined) {
         this.notifications.profile++;

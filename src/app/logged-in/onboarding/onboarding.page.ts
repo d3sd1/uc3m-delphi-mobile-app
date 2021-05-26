@@ -33,8 +33,8 @@ export class OnboardingPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.user = this.userConsumer.getUser().getValue();
-    this.onBoardingFinished();
+    this.user = (await this.userConsumer.getUser()).getValue();
+    await this.onBoardingFinished();
   }
 
   async setupAccount() {

@@ -21,8 +21,8 @@ import {LangService} from '../../lang/lang.service';
 export class UserConsumer {
 
   private userConsumerCache;
-  private userUpdater = new BehaviorSubject<User>(null);
-  private jwtUpdater = new BehaviorSubject<string>(null);
+  private userUpdater = null;
+  private jwtUpdater = null;
 
   constructor(private http: HttpClient,
               private storage: Storage,
@@ -46,11 +46,19 @@ export class UserConsumer {
     await this.wsService.publish(`profile/${this.userConsumerCache.user.id}`, this.userConsumerCache.user);
   }
 
-  getJwt(): BehaviorSubject<string> {
+  async getJwt(): Promise<BehaviorSubject<string>> {
+    if (this.jwtUpdater === null) {
+      this.jwtUpdater = new BehaviorSubject<string>(null);
+      await this.fetchDatabaseCache();
+    }
     return this.jwtUpdater;
   }
 
-  getUser(): BehaviorSubject<User> {
+  async getUser(): Promise<BehaviorSubject<User>> {
+    if (this.userUpdater === null) {
+      this.userUpdater = new BehaviorSubject<User>(null);
+      await this.fetchDatabaseCache();
+    }
     return this.userUpdater;
   }
 
@@ -65,15 +73,15 @@ export class UserConsumer {
   }
 
   async updateCv(cv: FormData) {
-    await this.http.post(environment.apiUrl + '/v1/profile/cv', cv, {headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })}).toPromise();
+    await this.http.post(environment.apiUrl + '/v1/profile/cv', cv, {headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})}).toPromise();
     await this.publishChanges();
   }
 
   async changePass(reset) {
     this.http.post(environment.apiUrl + '/v1/profile/change_pass', reset).toPromise().then((suc) => {
-      console.log(suc)
+      console.log(suc);
     }).catch((e) => {
-      console.error(e)
+      console.error(e);
     });
   }
 
@@ -84,6 +92,7 @@ export class UserConsumer {
     await db.executeSql('UPDATE current_session SET notification_status=?', [this.userConsumerCache.user.notificationStatus]);
     await this.publishChanges();
   }
+
   async updateOnboard(needsOnboard: boolean) {
     await this.http.post(environment.apiUrl + '/v1/profile/onboard?status=' + needsOnboard, {}).toPromise();
     this.userConsumerCache.user.needsOnboard = needsOnboard;
@@ -91,6 +100,7 @@ export class UserConsumer {
     await db.executeSql('UPDATE current_session SET needs_onboard=0', []);
     await this.publishChanges();
   }
+
   async updateLanguage(lang: Language) {
     lang.keyName = lang.keyName.toLowerCase();
     this.userConsumerCache.user.language = lang;
@@ -100,6 +110,7 @@ export class UserConsumer {
     await this.http.post(environment.apiUrl + '/v1/profile/lang?language_id=' + lang.id, {}).toPromise();
     await this.publishChanges();
   }
+
   async updateNameSurnames(name: string, surnames: string) {
     this.userConsumerCache.user.name = name;
     this.userConsumerCache.user.surnames = surnames;
