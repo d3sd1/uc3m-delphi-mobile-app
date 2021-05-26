@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Process} from '../../process';
@@ -6,15 +6,13 @@ import {User} from '../../../user';
 
 @Component({
   selector: 'delphi-rounds',
-  templateUrl: './view-single-question.page.html',
-  styleUrls: ['./view-single-question.page.scss'],
+  templateUrl: './view-rounds.page.html',
+  styleUrls: ['./view-rounds.page.scss'],
 })
-export class ViewSingleQuestionPage {
+export class ViewRoundsPage {
 
   process: Process;
   currentUser: User;
-  roundIndex: number;
-  questionIndex: number;
 
   constructor(
     private navCtrl: NavController,
@@ -23,8 +21,8 @@ export class ViewSingleQuestionPage {
   }
 
   async goBack() {
-    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/view_questions', {
-      state: {process: this.process, currentUser: this.currentUser, roundIndex: this.roundIndex}
+    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
+      state: {process: this.process, currentUser: this.currentUser}
     });
   }
 
@@ -47,4 +45,5 @@ export class ViewSingleQuestionPage {
       return 0;
     });
   }
+
 }

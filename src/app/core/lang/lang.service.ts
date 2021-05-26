@@ -10,6 +10,7 @@ import {environment} from '../../../environments/environment';
 export class LangService {
 
   private langs: Language[];
+
   constructor(
     private translate: TranslateService,
     private httpClient: HttpClient) {
@@ -19,7 +20,7 @@ export class LangService {
     const langs = await this.getAvailableLangs();
     this.registerLanguages(langs);
     this.changeLanguage(
-      new Language(0,this.translate.getBrowserLang(),true)
+      new Language(0, this.translate.getBrowserLang(), true)
     );
   }
 
@@ -37,7 +38,7 @@ export class LangService {
   }
 
   async getAvailableLangs(): Promise<Language[]> {
-    if(this.langs === undefined ||
+    if (this.langs === undefined ||
       this.langs === null ||
       this.langs?.length === 0) {
       this.langs = await this.httpClient.get<Language[]>(environment.apiUrl + '/v1/delphi/langs').toPromise();

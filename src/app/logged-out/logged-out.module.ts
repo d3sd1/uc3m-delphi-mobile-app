@@ -20,9 +20,7 @@ import {TranslateModule} from '@ngx-translate/core';
     IonicModule,
     TranslateModule
   ],
-  providers: [
-
-  ]
+  providers: []
 })
 export class LoggedOutModule {
 }

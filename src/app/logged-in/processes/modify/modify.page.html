@@ -1,21 +1,21 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button routerDirection="back"
-                       defaultHref="/logged-in/menu/processes"
+      <ion-back-button defaultHref="/logged-in/menu/processes"
+                       routerDirection="back"
                        routerLink="/logged-in/menu/processes"
                        text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'home.processes.modify.title' | translate }}</ion-title>
+    <ion-title>Proceso Delphi</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <input type="file" multiple="multiple" #uploadPicture hidden (change)="uploadImage()" accept="image/*">
+  <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden multiple="multiple" type="file">
   <ion-card color="light">
-    <div class="img-wrapper" (click)="triggerUploadImage()">
-      <img *ngIf="process?.pictureUrl !== undefined" [src]="process.pictureUrl"
-           (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+    <div (click)="triggerUploadImage()" class="img-wrapper">
+      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="process?.pictureUrl !== undefined"
+           [src]="process.pictureUrl"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
       <ion-button color="light">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">
@@ -23,7 +23,7 @@
       </ion-button>
     </div>
   </ion-card>
-  <ion-list lines="full" class="ion-no-margin">
+  <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
       <ion-label>
         {{ 'home.processes.modify.base' | translate }}
@@ -32,29 +32,30 @@
 
 
     <ion-item>
-      <ion-input [placeholder]="'home.processes.modify.name' | translate"
+      <ion-input (ngModelChange)="syncProcess()"
                  [(ngModel)]="process.name"
-                 (ngModelChange)="syncProcess()"></ion-input>
+                 [placeholder]="'home.processes.modify.name' | translate"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-textarea [placeholder]="'home.processes.modify.desc'  | translate"
+      <ion-textarea (ngModelChange)="syncProcess()"
                     [(ngModel)]="process.description"
-                    (ngModelChange)="syncProcess()"></ion-textarea>
+                    [placeholder]="'home.processes.modify.desc'  | translate"></ion-textarea>
     </ion-item>
   </ion-list>
 
-  <ion-list lines="inset" class="ion-no-margin">
+  <ion-list class="ion-no-margin" lines="inset">
     <ion-list-header>
       <ion-label>
         {{ 'home.processes.modify.rounds.title'  | translate }}
       </ion-label>
     </ion-list-header>
-    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/round/questions">
+    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/questions/list">
       <ion-label>{{ 'home.processes.modify.rounds.enter' | translate }}</ion-label>
-      <ion-badge slot="end">{{process?.pastRounds === undefined ? 0 : process?.pastRounds?.length}} Preguntas</ion-badge>
+      <ion-badge slot="end">{{process?.pastRounds === undefined ? 0 : process?.pastRounds?.length}}Preguntas
+      </ion-badge>
     </ion-item>
   </ion-list>
-  <ion-list lines="full" class="ion-no-margin">
+  <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
       <ion-label>
         {{ 'home.processes.modify.rounds.users'  | translate }}
@@ -81,6 +82,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" (click)="saveProcess()">{{ 'home.processes.modify.save'  | translate }}</ion-button>
+    <ion-button (click)="saveProcess()" expand="block">{{ 'home.processes.modify.save'  | translate }}</ion-button>
   </ion-toolbar>
 </ion-footer>

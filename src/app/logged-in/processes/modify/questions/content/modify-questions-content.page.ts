@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
-import {Process} from '../../../../process';
-import {User} from '../../../../../user';
+import {Process} from '../../../process';
+import {User} from '../../../../user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {Category} from './category';
@@ -33,9 +33,9 @@ export class ModifyQuestionsContentPage {
   }
 
   async addCategory() {
-    if(this.currentCategory === undefined
-    || this.currentCategory === null
-    || this.currentCategory === '') {
+    if (this.currentCategory === undefined
+      || this.currentCategory === null
+      || this.currentCategory === '') {
       await this.showToast('home.processes.single.round.err.category_must_be_filled');
       return;
     }
@@ -45,18 +45,6 @@ export class ModifyQuestionsContentPage {
     }
     this.process?.currentRound.questions[this.questionIndex]?.categories.push(new Category(this.currentCategory));
     this.currentCategory = '';
-  }
-
-  private async showToast(transKey: string) {
-    const toast = await this.toastController.create({
-      position: 'top',
-      message: await this.translate.get(transKey).toPromise(),
-    });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
   }
 
   async goBack() {
@@ -115,6 +103,18 @@ export class ModifyQuestionsContentPage {
     this.process.currentRound.questions[this.questionIndex].categories = this.process?.currentRound.questions[this.questionIndex]?.categories.filter((cat) => {
       return cat.catName?.toLowerCase() != category.name?.toLowerCase();
     });
+  }
+
+  private async showToast(transKey: string) {
+    const toast = await this.toastController.create({
+      position: 'top',
+      message: await this.translate.get(transKey).toPromise(),
+    });
+    await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
+    return toast;
   }
 
 }

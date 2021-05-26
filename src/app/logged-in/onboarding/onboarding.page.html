@@ -1,5 +1,5 @@
 <ion-content class="ion-padding" fullscreen scroll-y="false">
-  <ion-slides #mySlider pager="false" class="swiper-no-swiping" [options]="{ allowTouchMove: false }">
+  <ion-slides #mySlider [options]="{ allowTouchMove: false }" class="swiper-no-swiping" pager="false">
 
     <ion-slide>
       <div class="slide">
@@ -8,11 +8,11 @@
         <p>La plataforma ágil de procesos Delphi</p>
         <ion-item>
           <ion-label>Nombre</ion-label>
-          <ion-input placeholder="Introduce tu nombre" type="text" [(ngModel)]="user.name"></ion-input>
+          <ion-input [(ngModel)]="user.name" placeholder="Introduce tu nombre" type="text"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Apellidos</ion-label>
-          <ion-input placeholder="Introduce tus apellidos" type="text" [(ngModel)]="user.surnames"></ion-input>
+          <ion-input [(ngModel)]="user.surnames" placeholder="Introduce tus apellidos" type="text"></ion-input>
         </ion-item>
         <ion-button (click)="setupAccount()" fill="clear">Siguiente
           <ion-icon name="arrow-forward" slot="end"></ion-icon>
@@ -26,11 +26,11 @@
       <p>La aplicación está disponible offline.</p>
       <ion-item>
         <ion-label>Nueva contraseña</ion-label>
-        <ion-input placeholder="Introduce tu nueva contraseña" type="password" [(ngModel)]="reset.newPass"></ion-input>
+        <ion-input [(ngModel)]="reset.newPass" placeholder="Introduce tu nueva contraseña" type="password"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Repite contraseña</ion-label>
-        <ion-input placeholder="Repite tu nueva contraseña" type="password" [(ngModel)]="reset.newPassRep"></ion-input>
+        <ion-input [(ngModel)]="reset.newPassRep" placeholder="Repite tu nueva contraseña" type="password"></ion-input>
       </ion-item>
       <ion-button (click)="setupPassword()" fill="clear">Siguiente
         <ion-icon name="arrow-forward" slot="end"></ion-icon>

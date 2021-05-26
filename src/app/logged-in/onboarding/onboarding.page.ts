@@ -3,7 +3,6 @@ import {IonSlides, NavController, ToastController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
 import {User} from '../user';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
@@ -55,16 +54,15 @@ export class OnboardingPage implements OnInit {
   }
 
   async setupPassword() {
-    if(this.reset.newPass === null ||
-    this.reset.newPassRep === null ||
-    this.reset.newPass === '' ||
-    this.reset.newPassRep === '' ||
-    this.reset.newPass === undefined ||
-    this.reset.newPassRep === undefined) {
+    if (this.reset.newPass === null ||
+      this.reset.newPassRep === null ||
+      this.reset.newPass === '' ||
+      this.reset.newPassRep === '' ||
+      this.reset.newPass === undefined ||
+      this.reset.newPassRep === undefined) {
       await this.showToast('home.onboarding.setup.error.password_empty');
       return;
-    }
-    else if(this.reset.newPass !== this.reset.newPassRep) {
+    } else if (this.reset.newPass !== this.reset.newPassRep) {
       await this.showToast('home.onboarding.setup.error.password_matching');
       return;
     }
@@ -81,6 +79,7 @@ export class OnboardingPage implements OnInit {
     await this.userConsumer.updateOnboard(false);
     await this.router.navigateByUrl('/logged-in/menu');
   }
+
   async onBoardingFinished() {
     if (!this.user.needsOnboard) {
       await this.navCtrl.navigateForward('/logged-in/menu');

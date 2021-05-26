@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {LoadingController, NavController, ToastController} from '@ionic/angular';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 import {LoginUser} from '../../core/consumer/user/login.user';

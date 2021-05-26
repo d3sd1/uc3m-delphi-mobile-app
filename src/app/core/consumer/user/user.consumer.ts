@@ -34,19 +34,8 @@ export class UserConsumer {
     this.reset();
   }
 
-  private reset() {
-    this.userConsumerCache = {
-      jwt: '',
-      user: new User()
-    };
-  }
-  private async init() {
-    this.reset();
-    await this.fetchDatabaseCache();
-  }
-
   async publishChanges() {
-    if(this.userUpdater.getValue() !== null) {
+    if (this.userUpdater.getValue() !== null) {
       this.userUpdater.next(this.userConsumerCache.user);
     }
     await this.wsService.publish(`profile/${this.userConsumerCache.user.id}`, this.userConsumerCache.user);
@@ -238,6 +227,18 @@ export class UserConsumer {
     await this.dropSession();
     await this.wsService.disconnectWs();
     await this.databaseService.resetDatabase();
+  }
+
+  private reset() {
+    this.userConsumerCache = {
+      jwt: '',
+      user: new User()
+    };
+  }
+
+  private async init() {
+    this.reset();
+    await this.fetchDatabaseCache();
   }
 
 }

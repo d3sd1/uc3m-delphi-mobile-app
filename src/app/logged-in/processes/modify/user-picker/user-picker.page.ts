@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {User} from '../../../user';
 import {environment} from '../../../../../environments/environment';
 import {Process} from '../../process';

@@ -1,245 +1,244 @@
 {
-    "login": {
-      "connecting": "Wait please...",
-      "title": "Connection",
-      "email": {
-        "label": "Email",
-        "placeholder": "Input your email..."
-      },
-      "password": {
-        "label": "Password",
-        "placeholder": "Input your password..."
-      },
-      "extended": {
-        "label": "Extended session"
-      },
-      "button": "Connect",
-      "response": {
-        "ok": "Connected succesfully",
-        "invalid": "Invalid credentials",
-        "blocked": "User blocked",
-        "err": {
-          "app": "App error",
-          "server": "Server error",
-          "desc": "Unknown error"
-        }
-      }
+  "login": {
+    "connecting": "Wait please...",
+    "title": "Connection",
+    "email": {
+      "label": "Email",
+      "placeholder": "Input your email..."
     },
-    "loader": {
-      "init": {
-        "loading": "Starting...",
-        "failed": "It was not possible to start the app."
-      },
+    "password": {
+      "label": "Password",
+      "placeholder": "Input your password..."
+    },
+    "extended": {
+      "label": "Extended session"
+    },
+    "button": "Connect",
+    "response": {
+      "ok": "Connected succesfully",
+      "invalid": "Invalid credentials",
+      "blocked": "User blocked",
+      "err": {
+        "app": "App error",
+        "server": "Server error",
+        "desc": "Unknown error"
+      }
+    }
+  },
+  "loader": {
+    "init": {
+      "loading": "Starting...",
+      "failed": "It was not possible to start the app."
+    },
+    "api": {
+      "loading": "Loading API...",
+      "failed": "It was not possible to load the API."
+    },
+    "ws": {
+      "loading": "Loading sockets...",
+      "failed": "It was not possible to load the sockets."
+    },
+    "permissions": {
       "api": {
-        "loading": "Loading API...",
-        "failed": "It was not possible to load the API."
-      },
-      "ws": {
-        "loading": "Loading sockets...",
-        "failed": "It was not possible to load the sockets."
-      },
-      "permissions": {
-        "api": {
-          "loading": "Loading permissions...",
-          "failed": "It was not possible to load the permissions."
+        "loading": "Loading permissions...",
+        "failed": "It was not possible to load the permissions."
+      }
+    }
+  },
+  "home": {
+    "onboarding": {
+      "setup": {
+        "error": {
+          "name": "Please, input name and surname.",
+          "password_matching": "Passwords don't match.",
+          "password_empty": "Please, input your new password."
         }
       }
     },
-    "home": {
-      "onboarding": {
-        "setup": {
-          "error": {
-            "name": "Please, input name and surname.",
-            "password_matching": "Passwords don't match.",
-            "password_empty": "Please, input your new password."
-          }
+    "tab": {
+      "processes": "Processes",
+      "chat": "Chat",
+      "profile": "Profile"
+    },
+    "processes": {
+      "title": "Processes",
+      "empty": {
+        "title": "No processes yet",
+        "desc": "You are not yet enrolled in any process!"
+      },
+      "finished": {
+        "view_results": "See results"
+      },
+      "modify": {
+        "title": "Edit process",
+        "base": "Basic info",
+        "name": "Process name",
+        "desc": "Process description",
+        "rounds": {
+          "title": "Round data",
+          "enter": "Rounds",
+          "users": "Users"
+        },
+        "save": "Save",
+        "errors": {
+          "no_description": "You must provide a description.",
+          "no_name": "You must provide a name for the process."
         }
       },
-      "tab": {
-        "processes": "Processes",
-        "chat": "Chat",
-        "profile": "Profile"
+      "role": {
+        "coordinator": "Coordinator",
+        "expert": "Expert"
       },
-      "processes": {
-
-        "title": "Processes",
-        "empty": {
-          "title": "No processes yet",
-          "desc": "You are not yet enrolled in any process!"
+      "filter": {
+        "in_progress": "In progress",
+        "finished": "Finished"
+      },
+      "user_picker": {
+        "back": "Back",
+        "search": {
+          "title": "Search {{role}}",
+          "no_results": "No results"
         },
-        "finished": {
-          "view_results": "See results"
+        "no_experts": "Process without experts assigned",
+        "save": "Save"
+      },
+      "single": {
+        "title": "Process view",
+        "back": "Back",
+        "invitation": {
+          "sent": "Invitation sent"
+        },
+        "rounds": "Rounds",
+        "users": "Participants",
+        "end": {
+          "title": "End process",
+          "back": "Cancel",
+          "err": "The process couldn't be created",
+          "success": "Process finished successfully",
+          "form": {
+            "err_empty": "You must provide a conclusion."
+          }
+        },
+        "round": {
+          "close": {
+            "title": "End round",
+            "err": "The round couldn't be ended",
+            "success": "Round ended succesfully"
+          },
+          "start": {
+            "title": "Start round",
+            "err": "The round couldn't be started",
+            "success": "Round started successfully"
+          }
+        },
+        "participate": {
+          "initiate": "Participate",
+          "back": "Back",
+          "title": "Participate",
+          "answer": "Insert your answer here",
+          "send": "Send answers"
         },
         "modify": {
           "title": "Edit process",
-          "base": "Basic info",
-          "name": "Process name",
-          "desc": "Process description",
+          "saving": "Saving...",
+          "saved": "Process saved successfully",
+          "round": "Round {{round}}",
+          "question": "Question {{questionquestion}}"
+        },
+        "view": {
+          "back": "Back",
+          "answers": "See answers",
+          "no_answers": {
+            "title": "No answers yet",
+            "desc": "There are no answers for the question of this process."
+          },
           "rounds": {
-            "title": "Round data",
-            "enter": "Rounds",
-            "users": "Users"
-          },
-          "save": "Save",
-          "errors": {
-            "no_description": "You must provide a description.",
-            "no_name": "You must provide a name for the process."
-          }
-        },
-        "role": {
-          "coordinator": "Coordinator",
-          "expert": "Expert"
-        },
-        "filter": {
-          "in_progress": "In progress",
-          "finished": "Finished"
-        },
-        "user_picker": {
-          "back": "Back",
-          "search": {
-            "title": "Search {{role}}",
-            "no_results": "No results"
-          },
-          "no_experts": "Process without experts assigned",
-          "save": "Save"
-        },
-        "single": {
-          "title": "Process view",
-          "back": "Back",
-          "invitation": {
-            "sent": "Invitation sent"
-          },
-          "rounds": "Rounds",
-          "users": "Participants",
-          "end": {
-            "title": "End process",
-            "back": "Cancel",
-            "err": "The process couldn't be created",
-            "success": "Process finished successfully",
-            "form": {
-              "err_empty": "You must provide a conclusion."
-            }
-          },
-          "round": {
-            "close": {
-              "title": "End round",
-              "err": "The round couldn't be ended",
-              "success": "Round ended succesfully"
-            },
-            "start": {
-              "title": "Start round",
-              "err": "The round couldn't be started",
-              "success": "Round started successfully"
-            }
-          },
-          "participate": {
-            "initiate": "Participate",
+            "title": "View rounds",
             "back": "Back",
-            "title": "Participate",
-            "answer": "Insert your answer here",
-            "send": "Send answers"
+            "empty": {
+              "title": "No rounds yet",
+              "desc": "There are no rounds for this process."
+            }
           },
-          "modify": {
-            "title": "Edit process",
-            "saving": "Saving...",
-            "saved": "Process saved successfully",
-            "round": "Round {{round}}",
-            "question": "Question {{questionquestion}}"
-          },
-          "view": {
+          "questions": {
+            "title": "View questions",
             "back": "Back",
-            "answers": "See answers",
-            "no_answers": {
-              "title": "No answers yet",
-              "desc": "There are no answers for the question of this process."
-            },
-            "rounds": {
-              "title": "View rounds",
-              "back": "Back",
-              "empty": {
-                "title": "No rounds yet",
-                "desc": "There are no rounds for this process."
-              }
-            },
-            "questions": {
-              "title": "View questions",
-              "back": "Back",
-              "empty": {
-                "title": "No questions yet",
-                "desc": "There are no questions for this process."
-              }
+            "empty": {
+              "title": "No questions yet",
+              "desc": "There are no questions for this process."
             }
           }
-        }
-      },
-      "profile": {
-        "title": "Profile",
-        "notifications": {
-          "menu": "Notifications"
-        },
-        "password": {
-          "menu": "Change password",
-          "title": "Change password",
-          "back": "Back",
-          "security": "Account security",
-          "current": "Current password",
-          "reset": "Password change",
-          "new": "New password",
-          "new_rep": "Repeat new password",
-          "change": "Change password",
-          "changed": "Password updated successfully.",
-          "err": {
-            "differ": "New passwords don't match.",
-            "generic": "Error updating the password.",
-            "old_pass": "Current password is incorrect."
-          }
-        },
-        "basic": {
-          "title": "Basic profile",
-          "back": "Back",
-          "header": "Modify profile",
-          "email": "Email",
-          "save": "Modify profile"
-        },
-        "cv": {
-          "menu": "Curriculum Vitae"
-        },
-        "language": {
-          "menu": "Change language",
-          "header": "Language"
-        },
-        "logout": {
-          "menu": "Disconnect"
-        }
-      },
-      "chat": {
-        "title": "Chat",
-        "empty": {
-          "title": "No chats yet",
-          "desc": "Participate in processes to use the chat!"
-        },
-        "status": {
-          "title": "Connection status",
-          "connected": "Connected",
-          "busy": "Busy",
-          "offline": "Offline"
-        },
-        "conversation": {
-          "back": "Back",
-          "message": {
-            "placeholder": "Write your message..."
-          },
-          "type": {
-            "group": "Group chat",
-            "private": "Private chat"
-          },
-          "mark_as_read": "Mark as read",
-          "delete": "Delete"
         }
       }
     },
-    "logout": {
-      "title": "Logging out...",
-      "desc": "Thanks for participating!"
+    "profile": {
+      "title": "Profile",
+      "notifications": {
+        "menu": "Notifications"
+      },
+      "password": {
+        "menu": "Change password",
+        "title": "Change password",
+        "back": "Back",
+        "security": "Account security",
+        "current": "Current password",
+        "reset": "Password change",
+        "new": "New password",
+        "new_rep": "Repeat new password",
+        "change": "Change password",
+        "changed": "Password updated successfully.",
+        "err": {
+          "differ": "New passwords don't match.",
+          "generic": "Error updating the password.",
+          "old_pass": "Current password is incorrect."
+        }
+      },
+      "basic": {
+        "title": "Basic profile",
+        "back": "Back",
+        "header": "Modify profile",
+        "email": "Email",
+        "save": "Modify profile"
+      },
+      "cv": {
+        "menu": "Curriculum Vitae"
+      },
+      "language": {
+        "menu": "Change language",
+        "header": "Language"
+      },
+      "logout": {
+        "menu": "Disconnect"
+      }
+    },
+    "chat": {
+      "title": "Chat",
+      "empty": {
+        "title": "No chats yet",
+        "desc": "Participate in processes to use the chat!"
+      },
+      "status": {
+        "title": "Connection status",
+        "connected": "Connected",
+        "busy": "Busy",
+        "offline": "Offline"
+      },
+      "conversation": {
+        "back": "Back",
+        "message": {
+          "placeholder": "Write your message..."
+        },
+        "type": {
+          "group": "Group chat",
+          "private": "Private chat"
+        },
+        "mark_as_read": "Mark as read",
+        "delete": "Delete"
+      }
     }
+  },
+  "logout": {
+    "title": "Logging out...",
+    "desc": "Thanks for participating!"
   }
+}

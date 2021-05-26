@@ -7,7 +7,8 @@ import {Process} from '../../../logged-in/processes/process';
 @Injectable()
 export class ProcessesResolver implements Resolve<BehaviorSubject<Process[]>> {
 
-  constructor(private processService: ProcessConsumer) {}
+  constructor(private processService: ProcessConsumer) {
+  }
 
   resolve(route: ActivatedRouteSnapshot): Promise<BehaviorSubject<Process[]>> {
     return this.processService.all();

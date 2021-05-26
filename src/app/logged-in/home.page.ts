@@ -9,7 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../core/consumer/user/user.consumer';
 import {LangService} from '../core/lang/lang.service';
 import {ChatConsumer} from '../core/consumer/chat/chat.consumer';
-import {Observer, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-tabs',

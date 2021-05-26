@@ -21,6 +21,23 @@ export class DatabaseService {
     });
   }
 
+  public async resetDatabase() {
+    await this.deleteDatabase();
+    await this.createDatabase();
+  }
+
+  getDatabase(): Promise<SQLiteObject> {
+    return new Promise<SQLiteObject>((resolve) => {
+      if (this.database === null) {
+        setTimeout(() => {
+          resolve(this.getDatabase());
+        }, 100);
+      } else {
+        resolve(this.database);
+      }
+    });
+  }
+
   private async createDatabase(): Promise<SQLiteObject> {
     return await this.sqlite.create({
       name: 'delphi.db',
@@ -32,23 +49,6 @@ export class DatabaseService {
     await this.sqlite.deleteDatabase({
       name: 'delphi.db',
       location: 'default'
-    });
-  }
-
-  public async resetDatabase() {
-    await this.deleteDatabase();
-    await this.createDatabase();
-  }
-
-  getDatabase(): Promise<SQLiteObject> {
-    return new Promise<SQLiteObject>((resolve) => {
-      if(this.database === null){
-        setTimeout(() => {
-          resolve(this.getDatabase());
-        }, 100);
-      } else {
-        resolve(this.database);
-      }
     });
   }
 

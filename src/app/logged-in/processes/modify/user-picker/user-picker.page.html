@@ -1,32 +1,38 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button routerDirection="back" defaultHref="/logged-in/menu/processes/modify" routerLink="/logged-in/menu/processes/modify" [text]="'home.processes.user_picker.back' | translate"></ion-back-button>
+      <ion-back-button [text]="'home.processes.user_picker.back' | translate" defaultHref="/logged-in/menu/processes/modify"
+                       routerDirection="back"
+                       routerLink="/logged-in/menu/processes/modify"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'home.processes.role.expert' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar debounce="500" animated [placeholder]="'home.processes.user_picker.search.title' | translate:{role: 'home.processes.role.expert' | translate}"
-                 (ionChange)="filterExperts()" [(ngModel)]="filterCriterial"></ion-searchbar>
+  <ion-searchbar (ionChange)="filterExperts()" [(ngModel)]="filterCriterial"
+                 [placeholder]="'home.processes.user_picker.search.title' | translate:{role: 'home.processes.role.expert' | translate}"
+                 animated debounce="500"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
-    <ion-item *ngFor="let expert of usersFiltered"
-              (click)="pushExpert(expert)">
+    <ion-item (click)="pushExpert(expert)"
+              *ngFor="let expert of usersFiltered">
       <ion-avatar slot="start">
-        <img *ngIf="expert?.photo !== undefined" [src]="expert?.photo"
-             (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="expert?.photo !== undefined"
+             [src]="expert?.photo"/>
         <img *ngIf="expert?.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-avatar>
       {{ expert.name }} {{ expert.surnames }} <{{ expert.email }}>
     </ion-item>
   </ion-list>
-  <ion-item *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && !this.validateEmail(this.filterCriterial)">
+  <ion-item
+    *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && !this.validateEmail(this.filterCriterial)">
     <ion-title>{{'home.processes.user_picker.search.no_results' | translate}}</ion-title>
   </ion-item>
-  <ion-item *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && this.validateEmail(this.filterCriterial)">
+  <ion-item
+    *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && this.validateEmail(this.filterCriterial)">
     <ion-title></ion-title>
-    <ion-button expand="block" (click)="inviteUser(this.filterCriterial)">Invitar a <{{this.filterCriterial}}></ion-button>
+    <ion-button (click)="inviteUser(this.filterCriterial)" expand="block">Invitar a <{{this.filterCriterial}}>
+    </ion-button>
   </ion-item>
   <ion-item *ngIf="process?.experts.length == 0">
     <ion-title>{{'home.processes.user_picker.no_experts' | translate}}</ion-title>
@@ -49,6 +55,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" routerDirection="back" routerLink="/logged-in/menu/processes/modify">{{'home.processes.user_picker.save' | translate}}</ion-button>
+    <ion-button expand="block" routerDirection="back"
+                routerLink="/logged-in/menu/processes/modify">{{'home.processes.user_picker.save' | translate}}</ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -23,7 +23,8 @@
     </ion-list-header>
     <ion-item *ngFor="let process of filteredProcesses" [routerLink]="['view']">
       <ion-thumbnail slot="start">
-        <img *ngIf="process?.pictureUrl !== undefined" [src]="process.pictureUrl" (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="process?.pictureUrl !== undefined"
+             [src]="process.pictureUrl"/>
         <img *ngIf="process?.pictureUrl === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-thumbnail>
       <ion-label>
@@ -39,7 +40,8 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  <ion-fab class="process add" horizontal="end" slot="fixed" vertical="bottom" routerLink="/logged-in/menu/processes/modify">
+  <ion-fab class="process add" horizontal="end" routerLink="/logged-in/menu/processes/modify" slot="fixed"
+           vertical="bottom">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

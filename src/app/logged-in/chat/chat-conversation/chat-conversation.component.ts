@@ -46,7 +46,7 @@ export class ChatConversationComponent implements OnInit {
   }
 
   async ngOnInit() {
-   //TODO  this.user = await this.authService.getUser();
+    //TODO  this.user = await this.authService.getUser();
     const chatId = parseInt(this.activatedRoute.snapshot.paramMap.get('chatId'), 10);
     if (chatId === 0 || isNaN(chatId)) {
       await this.router.navigateByUrl('/home/menu/chat');
@@ -59,11 +59,11 @@ export class ChatConversationComponent implements OnInit {
         this.scrollToBottom();
       });
     });
-/*TODO
-    this.wsService.subscribe('chat/messages', true).subscribe(async (msg: ChatMessage) => {
-      this.chat?.chatMessages.push(msg);
-      await this.scrollToBottom();
-    });*/
+    /*TODO
+        this.wsService.subscribe('chat/messages', true).subscribe(async (msg: ChatMessage) => {
+          this.chat?.chatMessages.push(msg);
+          await this.scrollToBottom();
+        });*/
   }
 
 

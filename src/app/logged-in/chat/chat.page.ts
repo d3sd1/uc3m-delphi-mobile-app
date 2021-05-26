@@ -18,13 +18,13 @@ export class ChatPage implements OnInit {
   }
 
   async ngOnInit() {
-   //TODO this.user = await this.authService.getUser();
+    //TODO this.user = await this.authService.getUser();
     this.reloadChats();
   }
 
   reloadChats() {
     this.chatService.getCurrentUserChats().subscribe((currentUserChats: UserChat[]) => {
-      console.log(currentUserChats)
+      console.log(currentUserChats);
       this.userChats = currentUserChats;
       this.loading = false;
     });

@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button routerDirection="back"
-                       defaultHref="/logged-in/menu/processes/modify"
+      <ion-back-button defaultHref="/logged-in/menu/processes/modify"
+                       routerDirection="back"
                        routerLink="/logged-in/menu/processes/modify"
                        text="Volver"></ion-back-button>
     </ion-buttons>
@@ -14,8 +14,9 @@
 
   <ion-item>
     <ion-label>Fecha de cierre</ion-label>
-    <ion-datetime display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="this.process?.currentRound.endTime"
-    placeholder="Introduce fecha límite"></ion-datetime>
+    <ion-datetime [(ngModel)]="this.process?.currentRound.endTime" display-format="MMM DD, YYYY HH:mm"
+                  picker-format="MMM DD, YYYY HH:mm"
+                  placeholder="Introduce fecha límite"></ion-datetime>
   </ion-item>
 
   <ion-item>
@@ -23,7 +24,7 @@
     <ion-input [(ngModel)]="this.process?.currentRound.name" placeholder="Nombre de la ronda"></ion-input>
   </ion-item>
   <ion-item-divider></ion-item-divider>
-  <div id="container" *ngIf="process?.currentRound.questions.length == 0">
+  <div *ngIf="process?.currentRound.questions.length == 0" id="container">
     <strong>Sin preguntas</strong>
     <p>No existen preguntas asociadas a esta ronda.</p>
   </div>
@@ -31,10 +32,10 @@
     <!-- Default reorder icon, end aligned items -->
     <ion-item-sliding *ngFor="let question of process?.currentRound.questions; let questionIndex = index">
       <ion-item-options side="start">
-        <ion-item-option color="danger" (click)="deleteQuestion(questionIndex)">Eliminar</ion-item-option>
+        <ion-item-option (click)="deleteQuestion(questionIndex)" color="danger">Eliminar</ion-item-option>
       </ion-item-options>
       <ion-item
-        [routerLink]="['/logged-in/home/menu/processes/modify_question_content']">
+        [routerLink]="['/logged-in/menu/processes/modify/questions/single']">
         {{question.name}}
         <ion-reorder slot="start"></ion-reorder>
       </ion-item>
@@ -43,7 +44,7 @@
   </ion-reorder-group>
 
   <!-- fab placed to the (vertical) center and end -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="addQuestion()">
+  <ion-fab (click)="addQuestion()" horizontal="end" slot="fixed" vertical="bottom">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
@@ -54,6 +55,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" (click)="saveQuestions()">Guardar preguntas</ion-button>
+    <ion-button (click)="saveQuestions()" expand="block">Guardar preguntas</ion-button>
   </ion-toolbar>
 </ion-footer>

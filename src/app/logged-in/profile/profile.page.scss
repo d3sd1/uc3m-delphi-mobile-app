@@ -16,6 +16,7 @@ $chat-color-offline: #eb445a;
 ::ng-deep.chat-offline {
   color: $chat-color-offline !important;
 }
+
 ::ng-deep.current-lang {
   font-weight: bold !important;
 }

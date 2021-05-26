@@ -6,18 +6,16 @@ import {ProcessesPage} from './list/processes.page';
 
 import {ProcessesPageRoutingModule} from './processes-routing.module';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {SinglePage} from './single/single.page';
 import {IonicRatingModule} from 'ionic4-rating';
 import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
 import {ModifyPage} from './modify/modify.page';
 import {UserPickerPage} from './modify/user-picker/user-picker.page';
-import {ModifyQuestionsPage} from './modify/rounds/questions/modify-questions.page';
-import {ModifyQuestionsContentPage} from './modify/rounds/questions/content/modify-questions-content.page';
-import {ViewRoundsPage} from './single/rounds/view-rounds.page';
-import {ViewQuestionsPage} from './single/questions/view-questions.page';
-import {ViewSingleQuestionPage} from './single/single-question/view-single-question.page';
-import {ParticipatePage} from './single/participate/participate.page';
+import {ModifyQuestionsPage} from './modify/questions/list/modify-questions.page';
+import {ModifyQuestionsContentPage} from './modify/questions/content/modify-questions-content.page';
+import {ViewRoundsPage} from './modify/rounds/view-rounds.page';
+import {ViewSingleQuestionPage} from './modify/questions/single-question/view-single-question.page';
+import {ParticipatePage} from './modify/participate/participate.page';
 import {ClosePage} from './modify/close/close.page';
 import {LoadingPage} from './list/loading/loading.page';
 import {EmptyProcessesPage} from './list/empty/empty-processes.page';
@@ -35,10 +33,9 @@ import {EditingProcessResolver} from '../../core/router/resolver/editing-process
     TranslateModule,
     ReactiveFormsModule
   ],
-  declarations: [ProcessesPage, SinglePage, ModifyPage, UserPickerPage, ModifyQuestionsPage,
+  declarations: [ProcessesPage, ModifyPage, UserPickerPage, ModifyQuestionsPage,
     ModifyQuestionsContentPage,
     ViewRoundsPage,
-    ViewQuestionsPage,
     ViewSingleQuestionPage,
     ParticipatePage,
     ClosePage,

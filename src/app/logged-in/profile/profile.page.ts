@@ -16,6 +16,8 @@ export class ProfilePage {
 
   public profileOptionsBackup: any[];
   public user: User;
+  @ViewChild('uploadPicture') uploadPicture: ElementRef;
+  @ViewChild('uploadCvRef') uploadCvRef: ElementRef;
   private userSubscription: Subscription;
 
   constructor(private actionSheetController: ActionSheetController, private langService: LangService, private userConsumer: UserConsumer,
@@ -30,13 +32,9 @@ export class ProfilePage {
     this.userSubscription.unsubscribe();
   }
 
-  @ViewChild('uploadPicture') uploadPicture: ElementRef;
-
   triggerUploadImage() {
     this.uploadPicture.nativeElement.click();
   }
-
-  @ViewChild('uploadCvRef') uploadCvRef: ElementRef;
 
   triggerUploadCv() {
     this.uploadCvRef.nativeElement.click();

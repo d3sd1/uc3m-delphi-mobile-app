@@ -8,10 +8,11 @@ import {environment} from '../../../environments/environment';
   providedIn: 'root'
 })
 export class WsService {
-  private stompClient: Stomp = null;
   channels = [];
+  private stompClient: Stomp = null;
 
   //TODO -> store subscribed channels and handle reconnect with 'em
+
   // if socket fails
   constructor() {
   }

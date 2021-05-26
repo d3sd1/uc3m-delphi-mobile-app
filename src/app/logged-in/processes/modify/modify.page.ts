@@ -1,20 +1,18 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {IonContent, IonReorderGroup, LoadingController, NavController, ToastController} from '@ionic/angular';
+import {IonContent, IonReorderGroup, LoadingController, ToastController} from '@ionic/angular';
 import {Process} from '../process';
 import {User} from '../../user';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {Question} from './rounds/questions/question';
-import {QuestionType} from './rounds/questions/question-type';
+import {Question} from './questions/question';
+import {QuestionType} from './questions/question-type';
 import {ItemReorderEventDetail} from '@ionic/core';
 import {Round} from './rounds/round';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Media} from './media';
 import {TranslateService} from '@ngx-translate/core';
 import {EditingProcessConsumer} from '../../../core/consumer/process/editing-process.consumer';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-create',
@@ -25,6 +23,9 @@ export class ModifyPage implements OnInit {
   process: Process = new Process(); // todo handle via router
   user: User;
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
+  @ViewChild('uploadPicture') uploadPicture: ElementRef;
+  expandedQuestion: Question;
+  @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
 
   constructor(private httpClient: HttpClient,
               private route: ActivatedRoute,
@@ -80,8 +81,6 @@ export class ModifyPage implements OnInit {
     );
   }
 
-  @ViewChild('uploadPicture') uploadPicture: ElementRef;
-
   triggerUploadImage() {
     this.uploadPicture.nativeElement.click();
   }
@@ -101,7 +100,6 @@ export class ModifyPage implements OnInit {
     }
     return true;
   }
-
 
   async saveProcess() {
     if (!this.validateForm()) {
@@ -126,27 +124,12 @@ export class ModifyPage implements OnInit {
     });
   }
 
-
-  private async showToast(transKey: string) {
-    const toast = await this.toastController.create({
-      position: 'top',
-      message: await this.translate.get(transKey).toPromise(),
-    });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
-  }
-
   async addQuestion(round: Round) {
     const question = new Question();
     question.name = await this.translate.get('home.processes.single.modify.question').toPromise();
     this.process.currentRound.questions.push(question);
     await this.createProcess.scrollToBottom(300);
   }
-
-  expandedQuestion: Question;
 
   expandQuestion(question: Question) {
     this.expandedQuestion = question;
@@ -162,14 +145,24 @@ export class ModifyPage implements OnInit {
     this.expandedQuestion = null;
   }
 
-  @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
-
   doReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     ev.detail.complete();
   }
 
   toggleReorderGroup() {
     this.reorderGroup.disabled = !this.reorderGroup.disabled;
+  }
+
+  private async showToast(transKey: string) {
+    const toast = await this.toastController.create({
+      position: 'top',
+      message: await this.translate.get(transKey).toPromise(),
+    });
+    await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
+    return toast;
   }
 
 }

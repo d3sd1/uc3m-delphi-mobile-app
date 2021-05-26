@@ -1,17 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-     {{ 'home.profile.title' | translate }}
+      {{ 'home.profile.title' | translate }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
   <ion-card color="light">
-    <input type="file"  multiple="multiple" #uploadPicture hidden (change)="uploadImage()" accept="image/*">
+    <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden multiple="multiple" type="file">
 
-    <div class="img-wrapper" (click)="triggerUploadImage()">
-      <img *ngIf="user?.photo !== undefined" [src]="user?.photo"
-           (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+    <div (click)="triggerUploadImage()" class="img-wrapper">
+      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="user?.photo !== undefined"
+           [src]="user?.photo"/>
       <img *ngIf="user?.photo === undefined" src="assets/images/no-process-image.jpeg"/>
       <ion-button color="light">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">
@@ -33,14 +33,15 @@
   <ion-list>
     <ion-item>
       <ion-label>{{ 'home.profile.notifications.menu' | translate }}</ion-label>
-      <ion-toggle [checked]="user?.notificationStatus" (ionChange)="updateNotificationPreferences($event.detail.checked)"></ion-toggle>
+      <ion-toggle (ionChange)="updateNotificationPreferences($event.detail.checked)"
+                  [checked]="user?.notificationStatus"></ion-toggle>
     </ion-item>
 
     <ion-item routerLink="password">
       <ion-label>{{ 'home.profile.password.menu' | translate }}</ion-label>
     </ion-item>
 
-    <input type="file" multiple="multiple" #uploadCvRef hidden (change)="uploadCv()">
+    <input #uploadCvRef (change)="uploadCv()" hidden multiple="multiple" type="file">
     <ion-item (click)="triggerUploadCv()">
       <ion-label>{{ 'home.profile.cv.menu' | translate }}</ion-label>
     </ion-item>

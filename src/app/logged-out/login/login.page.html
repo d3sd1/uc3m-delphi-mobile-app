@@ -1,16 +1,18 @@
 <ion-content>
   <ion-list lines="inset">
-    <ion-img src="assets/login_logo.svg" alt="logo" class="logo"></ion-img>
-    <ion-list-header lines="none" class="ion-text-center">
+    <ion-img alt="logo" class="logo" src="assets/login_logo.svg"></ion-img>
+    <ion-list-header class="ion-text-center" lines="none">
       <ion-label>{{'login.title' | translate}}</ion-label>
     </ion-list-header>
     <ion-item lines="inset">
       <ion-label position="fixed">{{'login.email.label' | translate}}</ion-label>
-      <ion-input [(ngModel)]="loginUser.email" type="email" [placeholder]="'login.email.placeholder' | translate"></ion-input>
+      <ion-input [(ngModel)]="loginUser.email" [placeholder]="'login.email.placeholder' | translate"
+                 type="email"></ion-input>
     </ion-item>
     <ion-item lines="inset">
       <ion-label position="fixed">{{'login.password.label' | translate}}</ion-label>
-      <ion-input [(ngModel)]="loginUser.password" type="password" [placeholder]="'login.password.placeholder' | translate"></ion-input>
+      <ion-input [(ngModel)]="loginUser.password" [placeholder]="'login.password.placeholder' | translate"
+                 type="password"></ion-input>
     </ion-item>
     <ion-item lines="none">
       <ion-label>{{'login.extended.label' | translate}}</ion-label>

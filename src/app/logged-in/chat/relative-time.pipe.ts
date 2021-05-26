@@ -9,6 +9,6 @@ export class RelativeTime implements PipeTransform {
    * Takes a value and makes it lowercase.
    */
   transform(value: Date, ...args) {
-    return distanceInWordsToNow(value, { addSuffix: true });
+    return distanceInWordsToNow(value, {addSuffix: true});
   }
 }

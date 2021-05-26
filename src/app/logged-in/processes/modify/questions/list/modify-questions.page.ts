@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../../process';
 import {User} from '../../../../user';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Question} from './question';
-import {QuestionType} from './question-type';
-import {Round} from '../round';
+import {ActivatedRoute} from '@angular/router';
+import {Question} from '../question';
+import {QuestionType} from '../question-type';
 
 @Component({
   selector: 'delphi-rounds',
@@ -30,16 +29,16 @@ export class ModifyQuestionsPage {
   }
 
   public onItemReorder({detail}) {
-   /* if(detail.from > this.process.rounds.length - 1
-      || detail.to > this.process.rounds.length - 1) {
-      detail.complete(false);
-      return;
-    }
-    detail.complete(true);
-    const aux = this.process?.rounds[detail.to];
-    this.process.rounds[detail.to] = this.process?.rounds[detail.from];
-    this.process.rounds[detail.from] = aux;
-    this.reAssignOrder();*/
+    /* if(detail.from > this.process.rounds.length - 1
+       || detail.to > this.process.rounds.length - 1) {
+       detail.complete(false);
+       return;
+     }
+     detail.complete(true);
+     const aux = this.process?.rounds[detail.to];
+     this.process.rounds[detail.to] = this.process?.rounds[detail.from];
+     this.process.rounds[detail.from] = aux;
+     this.reAssignOrder();*/
   }
 
   sortQuestions() {

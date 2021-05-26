@@ -1,4 +1,4 @@
-import {Question} from './questions/question';
+import {Question} from '../questions/question';
 import {User} from '../../../user';
 
 export class Round {

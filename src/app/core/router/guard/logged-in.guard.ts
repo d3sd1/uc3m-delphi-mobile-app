@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CanActivate, CanActivateChild, Router, UrlTree} from '@angular/router';
+import {CanActivateChild, Router, UrlTree} from '@angular/router';
 import {UserConsumer} from '../../consumer/user/user.consumer';
 
 @Injectable({

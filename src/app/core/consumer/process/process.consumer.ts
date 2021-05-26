@@ -15,18 +15,17 @@ export class ProcessConsumer {
   constructor(private httpClient: HttpClient, private wsService: WsService) {
   }
 
-
-  private listenUpdates() {
-    this.wsService.subscribe('process/all', true, this.userProcesses);
-  }
-
   async all(): Promise<BehaviorSubject<Process[]>> {
-    if(this.userProcesses === null) {
+    if (this.userProcesses === null) {
       this.userProcesses = new BehaviorSubject<Process[]>(
         (await this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list').toPromise())
       );
-     this.listenUpdates();
+      this.listenUpdates();
     }
     return this.userProcesses;
+  }
+
+  private listenUpdates() {
+    this.wsService.subscribe('process/all', true, this.userProcesses);
   }
 }

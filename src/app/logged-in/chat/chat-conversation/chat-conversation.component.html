@@ -1,30 +1,32 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="" (click)="goBack()" [text]="'home.chat.conversation.back' | translate" ></ion-back-button>
+      <ion-back-button (click)="goBack()" [text]="'home.chat.conversation.back' | translate"
+                       defaultHref=""></ion-back-button>
     </ion-buttons>
     <ion-title>{{selfChat()?.name}}</ion-title>
     <ion-buttons slot="end">
-      <img class="user-img-header" [src]="selfChat()?.photo" alt="">
+      <img [src]="selfChat()?.photo" alt="" class="user-img-header">
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="message-wrap" #chatDisplay>
+  <div #chatDisplay class="message-wrap">
 
     <div *ngFor="let msg of chat?.chatMessages"
-         class="message"
          [class.left]=" msg.sentBy.id !== user.id "
-         [class.right]=" msg.sentBy.id === user.id ">
-      <img class="user-img" *ngIf="msg.sentBy?.photo !== undefined" [src]="msg.sentBy?.photo"
-           (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
-      <img class="user-img" *ngIf="msg.sentBy?.photo === undefined" src="assets/images/no-process-image.jpeg"/>
+         [class.right]=" msg.sentBy.id === user.id "
+         class="message">
+      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="msg.sentBy?.photo !== undefined" [src]="msg.sentBy?.photo"
+           class="user-img"/>
+      <img *ngIf="msg.sentBy?.photo === undefined" class="user-img" src="assets/images/no-process-image.jpeg"/>
       <!--<ion-spinner name="dots" ></ion-spinner> *ngIf="msg.status === 'pending'" -->
       <div class="msg-detail">
         <div class="msg-info">
           <p>
-            {{msg.sentBy?.name === undefined ? msg.sentBy?.email : msg.sentBy?.name}}&nbsp;&nbsp;&nbsp;{{msg.sentDate | relativeTime}}</p> <!-- relativeTime -->
+            {{msg.sentBy?.name === undefined ? msg.sentBy?.email : msg.sentBy?.name}}&nbsp;&nbsp;&nbsp;{{msg.sentDate | relativeTime}}</p>
+          <!-- relativeTime -->
         </div>
         <div class="msg-content">
           <span class="triangle"></span>
@@ -35,23 +37,23 @@
   </div>
 </ion-content>
 
-<ion-footer class="ion-no-border" [style.height]="showEmojiPicker ? '255px' : '55px'">
+<ion-footer [style.height]="showEmojiPicker ? '255px' : '55px'" class="ion-no-border">
   <div class="input-wrap">
-    <ion-button color="primary" fill="clear" slot="end" (click)="switchEmojiPicker()">
-      <ion-icon slot="end" name="happy-outline"></ion-icon>
+    <ion-button (click)="switchEmojiPicker()" color="primary" fill="clear" slot="end">
+      <ion-icon name="happy-outline" slot="end"></ion-icon>
     </ion-button>
 
     <ion-item>
       <form (ngSubmit)="sendMessage()">
         <ion-input #chat_input
-                   [placeholder]= "'home.chat.conversation.message.placeholder' | translate"
-                   [(ngModel)]="editorMsg"
                    (focusin)="onFocus()"
+                   [(ngModel)]="editorMsg"
+                   [placeholder]="'home.chat.conversation.message.placeholder' | translate"
                    name="chat_message"></ion-input>
       </form>
     </ion-item>
-    <ion-button color="primary" fill="clear" slot="end" (click)="sendMessage()">
-      <ion-icon slot="end" name="send-outline"></ion-icon>
+    <ion-button (click)="sendMessage()" color="primary" fill="clear" slot="end">
+      <ion-icon name="send-outline" slot="end"></ion-icon>
     </ion-button>
   </div>
   <emoji-picker [(ngModel)]="editorMsg"></emoji-picker>

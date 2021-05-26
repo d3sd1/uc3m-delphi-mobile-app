@@ -1,4 +1,4 @@
-import {User} from '../../../../../user';
+import {User} from '../../../../user';
 import {Question} from '../question';
 
 export class Answer {

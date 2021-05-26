@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [routerLink]="['/logged-in/home/menu/processes/single']"
-                       (click)="goBack()"
+      <ion-back-button (click)="goBack()"
+                       [routerLink]="['/logged-in/home/menu/processes/single']"
                        [text]="'home.processes.single.participate.back' | translate"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'home.processes.single.participate.title' | translate}}</ion-title>
@@ -18,14 +18,17 @@
         <ion-label>{{answer.question.question}}</ion-label>
       </ion-item-divider>
 
-      <ion-item *ngIf="answer.question?.type === 'QUALITATIVE'"><ion-textarea
-        [(ngModel)]="answer.response" [placeholder]="'home.processes.single.participate.answer' | translate"></ion-textarea></ion-item>
-      <ion-range *ngIf="answer.question?.type === 'QUANTITATIVE'" [min]="0"
+      <ion-item *ngIf="answer.question?.type === 'QUALITATIVE'">
+        <ion-textarea
+          [(ngModel)]="answer.response"
+          [placeholder]="'home.processes.single.participate.answer' | translate"></ion-textarea>
+      </ion-item>
+      <ion-range *ngIf="answer.question?.type === 'QUANTITATIVE'" [(ngModel)]="answer.response"
                  [max]="10"
-                 step="1"
-                 snaps color="primary" [(ngModel)]="answer.response">
-        <ion-icon slot="start" color="danger" name="sad-outline"></ion-icon>
-        <ion-icon slot="end" color="success" name="happy-outline"></ion-icon>
+                 [min]="0"
+                 color="primary" snaps step="1">
+        <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
+        <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
       </ion-range>
 
       <ion-item *ngIf="answer.question?.type === 'BOOLTYPE'">
@@ -38,7 +41,8 @@
 
       <ion-item *ngIf="answer.question?.type === 'CATCUSTOM'">
         <ion-select [(ngModel)]="answer.response">
-          <ion-select-option *ngFor="let cat of answer.question?.categories" [value]="cat.id">{{cat.catName}}</ion-select-option>
+          <ion-select-option *ngFor="let cat of answer.question?.categories"
+                             [value]="cat.id">{{cat.catName}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item *ngIf="answer.question?.type === 'CATLIKERT'">
@@ -64,7 +68,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block"
-                (click)="confirmParticipation()">{{'home.processes.single.participate.send' | translate}}</ion-button>
+    <ion-button (click)="confirmParticipation()"
+                expand="block">{{'home.processes.single.participate.send' | translate}}</ion-button>
   </ion-toolbar>
 </ion-footer>

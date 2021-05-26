@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Process} from '../process';
 import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
-import {BehaviorSubject, Subscription} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

@@ -36,18 +36,6 @@ export class ProfilePasswordPage implements OnInit {
     this.navCtrl.back();
   }
 
-  private async showToast(msg: string) {
-    const toast = await this.toastController.create({
-      position: 'top',
-      message: msg,
-    });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
-  }
-
   async resetPass() {
     this.resetForm();
     if (this.reset.newPass !== this.reset.newPassRep) {
@@ -64,5 +52,17 @@ export class ProfilePasswordPage implements OnInit {
         await this.showToast(await this.translate.get('home.profile.password.err.generic').toPromise());
       }
     });
+  }
+
+  private async showToast(msg: string) {
+    const toast = await this.toastController.create({
+      position: 'top',
+      message: msg,
+    });
+    await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
+    return toast;
   }
 }

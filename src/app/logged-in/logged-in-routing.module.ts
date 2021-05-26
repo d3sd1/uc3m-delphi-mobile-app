@@ -3,7 +3,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {LogoutPage} from './profile/logout/logout.page';
 import {HomePage} from './home.page';
 import {OnboardingPage} from './onboarding/onboarding.page';
-import {UserResolver} from '../core/router/resolver/user.resolver';
 
 const routes: Routes = [
   {

@@ -2,11 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {WsService} from '../../ws/ws.service';
 import {Process} from '../../../logged-in/processes/process';
-import {environment} from '../../../../environments/environment';
 import {BehaviorSubject} from 'rxjs';
 import {DatabaseService} from '../database.service';
-import {User} from '../../../logged-in/user';
-import {Round} from '../../../logged-in/processes/modify/rounds/round';
 
 @Injectable({
   providedIn: 'root'

@@ -11,9 +11,7 @@ import {EditingProcessConsumer} from './consumer/process/editing-process.consume
 
 @NgModule({
   declarations: [],
-  imports: [
-
-  ],
+  imports: [],
   providers: [
     DatabaseService,
     LangService,
