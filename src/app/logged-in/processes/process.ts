@@ -1,4 +1,4 @@
-import {Round} from './modify/rounds/round';
+import {Round} from './single/rounds/round';
 import {User} from '../user';
 
 export class Process {

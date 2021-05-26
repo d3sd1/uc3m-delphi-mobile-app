@@ -89,13 +89,13 @@ export class ModifyPage implements OnInit {
     if (this.process.name === '' ||
       this.process.name === null ||
       this.process.name === undefined) {
-      this.showToast('home.processes.modify.errors.no_name');
+      this.showToast('home.processes.single.errors.no_name');
       return false;
     }
     if (this.process.description === '' ||
       this.process.description === null ||
       this.process.description === undefined) {
-      this.showToast('home.processes.modify.errors.no_description');
+      this.showToast('home.processes.single.errors.no_description');
       return false;
     }
     return true;
@@ -107,18 +107,18 @@ export class ModifyPage implements OnInit {
     }
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: await this.translate.get('home.processes.single.modify.saving').toPromise(),
+      message: await this.translate.get('home.processes.single.single.saving').toPromise(),
       duration: 0
     });
     await loading.present();
 
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
-      await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single.single.saved').toPromise());
       //TODO await this.router.navigateByUrl('/logged-in/home/menu/processes', {
       // state: {process: this.process}
       //});
     }).catch(async (errMessage: string) => {
-      await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single.single.saved').toPromise());
     }).finally(async () => {
       await loading.dismiss();
     });
@@ -126,7 +126,7 @@ export class ModifyPage implements OnInit {
 
   async addQuestion(round: Round) {
     const question = new Question();
-    question.name = await this.translate.get('home.processes.single.modify.question').toPromise();
+    question.name = await this.translate.get('home.processes.single.single.question').toPromise();
     this.process.currentRound.questions.push(question);
     await this.createProcess.scrollToBottom(300);
   }

@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProcessesPage} from './list/processes.page';
-import {ModifyPage} from './modify/modify.page';
-import {UserPickerPage} from './modify/user-picker/user-picker.page';
-import {ModifyQuestionsPage} from './modify/questions/list/modify-questions.page';
-import {ModifyQuestionsContentPage} from './modify/questions/content/modify-questions-content.page';
+import {ModifyPage} from './single/modify.page';
+import {UserPickerPage} from './single/user-picker/user-picker.page';
+import {ModifyQuestionsPage} from './single/questions/list/modify-questions.page';
+import {ModifyQuestionsContentPage} from './single/questions/content/modify-questions-content.page';
 import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
 import {UserResolver} from '../../core/router/resolver/user.resolver';
 import {EditingProcessResolver} from '../../core/router/resolver/editing-process.resolver';
@@ -23,7 +23,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'modify',
+    path: 'single',
     children: [
       {
         path: '',

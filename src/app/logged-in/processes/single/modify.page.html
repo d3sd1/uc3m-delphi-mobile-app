@@ -26,7 +26,7 @@
   <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
       <ion-label>
-        {{ 'home.processes.modify.base' | translate }}
+        {{ 'home.processes.single.base' | translate }}
       </ion-label>
     </ion-list-header>
 
@@ -34,23 +34,23 @@
     <ion-item>
       <ion-input (ngModelChange)="syncProcess()"
                  [(ngModel)]="process.name"
-                 [placeholder]="'home.processes.modify.name' | translate"></ion-input>
+                 [placeholder]="'home.processes.single.name' | translate"></ion-input>
     </ion-item>
     <ion-item>
       <ion-textarea (ngModelChange)="syncProcess()"
                     [(ngModel)]="process.description"
-                    [placeholder]="'home.processes.modify.desc'  | translate"></ion-textarea>
+                    [placeholder]="'home.processes.single.desc'  | translate"></ion-textarea>
     </ion-item>
   </ion-list>
 
   <ion-list class="ion-no-margin" lines="inset">
     <ion-list-header>
       <ion-label>
-        {{ 'home.processes.modify.rounds.title'  | translate }}
+        {{ 'home.processes.single.rounds.title'  | translate }}
       </ion-label>
     </ion-list-header>
     <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/questions/list">
-      <ion-label>{{ 'home.processes.modify.rounds.enter' | translate }}</ion-label>
+      <ion-label>{{ 'home.processes.single.rounds.enter' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.pastRounds === undefined ? 0 : process?.pastRounds?.length}}Preguntas
       </ion-badge>
     </ion-item>
@@ -58,7 +58,7 @@
   <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
       <ion-label>
-        {{ 'home.processes.modify.rounds.users'  | translate }}
+        {{ 'home.processes.single.rounds.users'  | translate }}
       </ion-label>
     </ion-list-header>
 
@@ -82,6 +82,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button (click)="saveProcess()" expand="block">{{ 'home.processes.modify.save'  | translate }}</ion-button>
+    <ion-button (click)="saveProcess()" expand="block">{{ 'home.processes.single.save'  | translate }}</ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -11,7 +11,7 @@ import {DatabaseService} from '../database.service';
 import {User} from '../../../logged-in/user';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Language} from '../../../logged-in/profile/language';
-import {Media} from '../../../logged-in/processes/modify/media';
+import {Media} from '../../../logged-in/processes/single/media';
 import {BehaviorSubject} from 'rxjs';
 import {LangService} from '../../lang/lang.service';
 
