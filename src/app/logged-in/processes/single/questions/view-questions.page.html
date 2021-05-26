@@ -9,15 +9,14 @@
 
 
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-  <div id="container" *ngIf="process?.rounds[this.roundIndex]?.questions.length == 0">
+  <div id="container" *ngIf="process?.currentRound.questions.length == 0">
     <strong>{{'home.processes.single.single.questions.empty.title' | translate}}</strong>
     <p>{{'home.processes.single.single.questions.empty.desc' | translate}}</p>
   </div>
-  <ion-list *ngFor="let question of process?.rounds[this.roundIndex]?.questions; let questionIndex = index">
+  <ion-list *ngFor="let question of process?.currentRound.questions; let questionIndex = index">
     <!-- Default reorder icon, end aligned items -->
     <ion-item
-      [routerLink]="['/logged-in/home/menu/processes/view_single_question']"
-      [state]="{ process: process, roundIndex: roundIndex, questionIndex:questionIndex}">
+      [routerLink]="['/logged-in/home/menu/processes/view_single_question']">
       <ion-label>{{question?.name}}</ion-label>
       <ion-reorder slot="start"></ion-reorder>
     </ion-item>

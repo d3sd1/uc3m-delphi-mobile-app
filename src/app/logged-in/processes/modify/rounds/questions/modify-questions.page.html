@@ -29,13 +29,12 @@
   </div>
   <ion-reorder-group (ionItemReorder)="onItemReorder($event)" disabled="false">
     <!-- Default reorder icon, end aligned items -->
-    <ion-item-sliding *ngFor="let question of process?.rounds[roundIndex].questions; let questionIndex = index">
+    <ion-item-sliding *ngFor="let question of process?.currentRound.questions; let questionIndex = index">
       <ion-item-options side="start">
         <ion-item-option color="danger" (click)="deleteQuestion(questionIndex)">Eliminar</ion-item-option>
       </ion-item-options>
       <ion-item
-        [routerLink]="['/logged-in/home/menu/processes/modify_question_content']"
-        [state]="{ process: process, roundIndex: roundIndex, questionIndex: questionIndex}">
+        [routerLink]="['/logged-in/home/menu/processes/modify_question_content']">
         {{question.name}}
         <ion-reorder slot="start"></ion-reorder>
       </ion-item>

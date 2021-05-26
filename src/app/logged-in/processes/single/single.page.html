@@ -31,8 +31,7 @@
   <span>
       <ion-button *ngIf="!this.process.processFinished && this.currentRound !== null && this.currentUserCanVote()"
                   expand="block" color="secondary"
-                  [routerLink]="['/logged-in/home/menu/processes/participate']"
-                  [state]="{ process: process, currentUser: loggedInUser}">
+                  [routerLink]="['/logged-in/home/menu/processes/participate']">
         {{'home.processes.single.participate.initiate' | translate}}
       </ion-button>
     </span>
@@ -65,7 +64,7 @@
       </span>
     </ion-list-header>
     <ion-item
-              [routerLink]="['/logged-in/home/menu/processes/view_rounds']" [state]="{ process: process}">
+              [routerLink]="['/logged-in/home/menu/processes/view_rounds']">
       <ion-label>{{ 'home.processes.single.rounds' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.pastRounds === undefined ? 0 : process?.pastRounds?.length}}</ion-badge>
     </ion-item>
@@ -109,8 +108,7 @@
 <ion-footer>
   <ion-toolbar *ngIf="!process?.processFinished">
     <ion-button expand="block"
-                [routerLink]="['/logged-in/home/menu/processes/modify']"
-                [state]="{ process: process}">
+                [routerLink]="['/logged-in/home/menu/processes/modify']">
       {{'home.processes.single.modify.title' | translate}}
     </ion-button>
   </ion-toolbar>

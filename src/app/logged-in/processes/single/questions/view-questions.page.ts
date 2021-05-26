@@ -22,7 +22,7 @@ export class ViewQuestionsPage {
   }
 
   sortQuestions() {
-    this.process.pastRounds[this.roundIndex]?.questions.sort((a, b) => {
+    this.process.currentRound.questions.sort((a, b) => {
       if (a.orderPosition < b.orderPosition) {
         return -1;
       }
