@@ -12,7 +12,6 @@ import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
 import {ModifyPage} from './modify/modify.page';
 import {UserPickerPage} from './modify/user-picker/user-picker.page';
-import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/rounds/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/rounds/questions/content/modify-questions-content.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
@@ -23,6 +22,7 @@ import {ClosePage} from './modify/close/close.page';
 import {LoadingPage} from './list/loading/loading.page';
 import {EmptyProcessesPage} from './list/empty/empty-processes.page';
 import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
+import {EditingProcessResolver} from '../../core/router/resolver/editing-process.resolver';
 
 @NgModule({
   imports: [
@@ -35,7 +35,7 @@ import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
     TranslateModule,
     ReactiveFormsModule
   ],
-  declarations: [ProcessesPage, SinglePage, ModifyPage, UserPickerPage, ModifyRoundsPage, ModifyQuestionsPage,
+  declarations: [ProcessesPage, SinglePage, ModifyPage, UserPickerPage, ModifyQuestionsPage,
     ModifyQuestionsContentPage,
     ViewRoundsPage,
     ViewQuestionsPage,
@@ -47,7 +47,8 @@ import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
   ],
   providers: [
     Geolocation,
-    ProcessesResolver
+    ProcessesResolver,
+    EditingProcessResolver
   ],
 
 })

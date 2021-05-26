@@ -6,7 +6,7 @@ import {CompatibilityService} from './devices/compatibility.service';
 import {UserConsumer} from './consumer/user/user.consumer';
 import {ProcessConsumer} from './consumer/process/process.consumer';
 import {ChatConsumer} from './consumer/chat/chat.consumer';
-import {ModifyingProcessConsumer} from './consumer/process/modifying-process.consumer';
+import {EditingProcessConsumer} from './consumer/process/editing-process.consumer';
 
 
 @NgModule({
@@ -29,7 +29,7 @@ export class DelphiCoreModule {
         UserConsumer,
         ProcessConsumer,
         ChatConsumer,
-        ModifyingProcessConsumer
+        EditingProcessConsumer
       ]
     };
   }

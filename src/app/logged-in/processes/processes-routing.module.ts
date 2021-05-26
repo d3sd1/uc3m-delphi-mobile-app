@@ -4,7 +4,6 @@ import {ProcessesPage} from './list/processes.page';
 import {SinglePage} from './single/single.page';
 import {ModifyPage} from './modify/modify.page';
 import {UserPickerPage} from './modify/user-picker/user-picker.page';
-import {ModifyRoundsPage} from './modify/rounds/modify-rounds.page';
 import {ModifyQuestionsPage} from './modify/rounds/questions/modify-questions.page';
 import {ModifyQuestionsContentPage} from './modify/rounds/questions/content/modify-questions-content.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
@@ -16,6 +15,7 @@ import {LoadingPage} from './list/loading/loading.page';
 import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
 import {UserResolver} from '../../core/router/resolver/user.resolver';
 import {WsResolver} from '../../core/router/resolver/ws.resolver';
+import {EditingProcessResolver} from '../../core/router/resolver/editing-process.resolver';
 
 const routes: Routes = [
   {
@@ -32,28 +32,55 @@ const routes: Routes = [
   },
   {
     path: 'modify',
-    component: ModifyPage,
-    resolve: {
-      user: UserResolver,
-    },
     children: [
       {
-        path: 'rounds',
-        component: ModifyRoundsPage,
+        path: '',
+        redirectTo: 'basic',
+        pathMatch: 'full'
+      },
+      {
+        path: 'basic',
+        component: ModifyPage,
+        resolve: {
+          user: UserResolver,
+          process: EditingProcessResolver,
+        },
+      },
+      {
+        path: 'user-picker',
+        component: UserPickerPage,
+        resolve: {
+          process: EditingProcessResolver
+        }
+      },
+      {
+        path: 'round',
         children: [
           {
+            path: '',
+            redirectTo: 'questions',
+            pathMatch: 'full'
+          },
+          {
             path: 'questions',
-            component: ModifyQuestionsPage,
             children: [
+              {
+                path: '',
+                redirectTo: 'list',
+                pathMatch: 'full'
+              },
+              {
+                path: 'list',
+                component: ModifyQuestionsPage,
+                resolve: {
+                  user: UserResolver,
+                },
+              },
               {
                 path: 'content',
                 component: ModifyQuestionsContentPage
               },
             ]
-          },
-          {
-            path: 'user-picker',
-            component: UserPickerPage
           },
         ]
       },

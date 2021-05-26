@@ -49,7 +49,7 @@
         {{ 'home.processes.modify.rounds.title'  | translate }}
       </ion-label>
     </ion-list-header>
-    <ion-item [routerLink]="['/logged-in/home/menu/processes/modify_rounds']" [state]="{ process: process}">
+    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/rounds">
       <ion-label>{{ 'home.processes.modify.rounds.enter' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.rounds === undefined ? 0 : process?.rounds?.length}}</ion-badge>
     </ion-item>
@@ -62,13 +62,13 @@
     </ion-list-header>
 
     <!-- Toggles in a List -->
-    <ion-item [routerLink]="['/logged-in/menu/processes/user-picker']">
+    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/user-picker">
       <ion-badge slot="end">{{process?.coordinators?.length}}</ion-badge>
       <ion-label>{{'home.processes.role.coordinator' | translate}}</ion-label>
     </ion-item>
 
     <!-- Toggles in a List -->
-    <ion-item  [routerLink]="['/logged-in/menu/processes/user-picker']">
+    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/user-picker">
       <ion-badge slot="end">{{process?.experts?.length}}</ion-badge>
       <ion-label>{{'home.processes.role.expert' | translate}}</ion-label>
     </ion-item>

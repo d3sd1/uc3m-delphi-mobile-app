@@ -14,28 +14,13 @@ export class ProcessesPage {
   processesUpdater: BehaviorSubject<Process[]>;
   processes: Process[] = null;
   filteredProcesses: Process[] = null;
-  processesSubscription: Subscription;
 
   constructor(private processService: ProcessConsumer,
               private route: ActivatedRoute) {
-    this.processesUpdater = this.route.snapshot.data['processes'];
-  }
-
-  async ionViewWillEnter() {
-    await this.loadProcesses();
-  }
-
-  async ionViewWillLeave() {
-    this.processesSubscription.unsubscribe();
-  }
-
-  async loadProcesses() {
-    this.processesUpdater = await this.processService.all();
-    this.processesUpdater.subscribe((processes: Process[]) => {
-      this.processes = processes;
+    this.route.snapshot.data['processes'].subscribe((processesUpdater) => {
+      this.processesUpdater = processesUpdater;
     });
   }
-
 
   async ngOnInit() {
     this.filterProcesses();

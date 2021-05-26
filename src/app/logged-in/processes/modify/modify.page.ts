@@ -12,7 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Media} from './media';
 import {TranslateService} from '@ngx-translate/core';
-import {ModifyingProcessConsumer} from '../../../core/consumer/process/modifying-process.consumer';
+import {EditingProcessConsumer} from '../../../core/consumer/process/editing-process.consumer';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 
@@ -24,8 +24,6 @@ import {Subscription} from 'rxjs';
 export class ModifyPage implements OnInit {
   process: Process = new Process(); // todo handle via router
   user: User;
-  private userSubscription: Subscription;
-
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
 
   constructor(private httpClient: HttpClient,
@@ -34,41 +32,41 @@ export class ModifyPage implements OnInit {
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
               private translate: TranslateService,
-              private modifyingProcessConsumer:ModifyingProcessConsumer,
-              private router: Router) {
-    this.userSubscription = this.route.snapshot.data['user'].subscribe((user) => {
+              private modifyingProcessConsumer: EditingProcessConsumer) {
+    this.route.snapshot.data['user'].subscribe((user) => {
       this.user = user;
     });
-    console.log('ruta -----', this.router.url)
-  }
-  async ionViewWillLeave() {
-    this.userSubscription.unsubscribe();
+    this.route.snapshot.data['process'].subscribe((process) => {
+      this.process = process;
+    });
   }
 
   public async ngOnInit(): Promise<void> {
     this.sanitizeProcess();
     this.forceCurrentUserAdmin();
-   /* this.process = (await this.modifyingProcessConsumer.currentProcess()).getValue();
-   ;*/
+    /* this.process = (await this.modifyingProcessConsumer.currentProcess()).getValue();
+    ;*/
   }
+
   syncProcess() {
     this.modifyingProcessConsumer.saveCurrentprocess(this.process);
   }
+
   sanitizeProcess() {
-    if(this.process?.coordinators === undefined ||
+    if (this.process?.coordinators === undefined ||
       this.process?.coordinators === null) {
       this.process.coordinators = [];
     }
-    if(this.process?.experts === undefined ||
+    if (this.process?.experts === undefined ||
       this.process?.experts === null) {
       this.process.experts = [];
     }
   }
 
   forceCurrentUserAdmin() {
-   /* if(this.process?.coordinators?.filter(user => user.id === ).length  === 0) {
+    /* if(this.process?.coordinators?.filter(user => user.id === ).length  === 0) {
 
-    }*/
+     }*/
   }
 
   async uploadImage() {
@@ -89,15 +87,15 @@ export class ModifyPage implements OnInit {
   }
 
   validateForm(): boolean {
-    if(this.process.name === '' ||
+    if (this.process.name === '' ||
       this.process.name === null ||
       this.process.name === undefined) {
       this.showToast('home.processes.modify.errors.no_name');
       return false;
     }
-    if(this.process.description === '' ||
-    this.process.description === null ||
-    this.process.description === undefined) {
+    if (this.process.description === '' ||
+      this.process.description === null ||
+      this.process.description === undefined) {
       this.showToast('home.processes.modify.errors.no_description');
       return false;
     }
@@ -118,8 +116,8 @@ export class ModifyPage implements OnInit {
 
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
       await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
-     //TODO await this.router.navigateByUrl('/logged-in/home/menu/processes', {
-       // state: {process: this.process}
+      //TODO await this.router.navigateByUrl('/logged-in/home/menu/processes', {
+      // state: {process: this.process}
       //});
     }).catch(async (errMessage: string) => {
       await this.showToast(await this.translate.get('home.processes.single.modify.saved').toPromise());
@@ -153,7 +151,7 @@ export class ModifyPage implements OnInit {
       return iRound.id === round.id;
     });
     const question = new Question();
-    question.name = await this.translate.get('home.processes.single.modify.question', {question: (this.process.rounds[roundIndex].questions.length + 1)}).toPromise()
+    question.name = await this.translate.get('home.processes.single.modify.question', {question: (this.process.rounds[roundIndex].questions.length + 1)}).toPromise();
     this.process.rounds[roundIndex].questions.push(question);
     await this.createProcess.scrollToBottom(300);
   }

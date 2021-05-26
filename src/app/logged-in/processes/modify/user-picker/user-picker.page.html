@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/home/menu/processes" (click)="goBack()" [text]="'home.processes.user_picker.back' | translate"></ion-back-button>
+      <ion-back-button routerDirection="back" defaultHref="/logged-in/menu/processes/modify" routerLink="/logged-in/menu/processes/modify" [text]="'home.processes.user_picker.back' | translate"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'home.processes.role.expert' | translate}}</ion-title>
   </ion-toolbar>
@@ -49,6 +49,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" (click)="saveUsers()">{{'home.processes.user_picker.save' | translate}}</ion-button>
+    <ion-button expand="block" routerDirection="back" routerLink="/logged-in/menu/processes/modify">{{'home.processes.user_picker.save' | translate}}</ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -11,7 +11,7 @@ import {NavController} from '@ionic/angular';
   templateUrl: './user-picker.page.html',
   styleUrls: ['./user-picker.page.scss'],
 })
-export class UserPickerPage implements OnInit {
+export class UserPickerPage {
   process: Process;
   filterCriterial: string = '';
   usersFiltered: User[] = [];
@@ -41,9 +41,6 @@ export class UserPickerPage implements OnInit {
     // TODO handle err
   }
 
-  public async ngOnInit(): Promise<void> {
-  }
-
   async filterExperts() {
     if (this.filterCriterial === '' || this.filterCriterial === null) {
       return;
@@ -60,25 +57,5 @@ export class UserPickerPage implements OnInit {
   removeExpert() {
 
   }
-
-  async saveUsers() {
-    //TODO determine logic to add to it's role (pass role by routing)
-    //TODO aqui al editar un proceso que ya tiene uysuarios los borra yt solo añade los nuevos
-    // deberia combinar los antiguos y los nuevos, y actualizar roles (sin duplicados)
-    await this.router.navigateByUrl('/logged-in/home/menu/processes/modify', {
-      state: {
-        process: this.process
-      }
-    });
-  }
-
-  async goBack() {
-    await this.router.navigateByUrl('/logged-in/home/menu/processes/modify', {
-      state: {
-        process: this.process
-      }
-    });
-  }
-
 
 }

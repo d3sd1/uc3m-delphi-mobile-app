@@ -11,9 +11,9 @@ import {Round} from '../../../logged-in/processes/modify/rounds/round';
 @Injectable({
   providedIn: 'root'
 })
-export class ModifyingProcessConsumer {
+export class EditingProcessConsumer {
 
-  private processUpdater: BehaviorSubject<Process> = null;
+  private processUpdater: BehaviorSubject<Process> = new BehaviorSubject<Process>(new Process());
 
   private processCache: Process;
 
@@ -35,7 +35,6 @@ export class ModifyingProcessConsumer {
       this.processCache.finalComment = dbRow?.final_comment;
       this.processCache.modifiedDate = dbRow?.modified_date;
       /*
-
       TODO: missing:
   experts: User[] = [];
   coordinators: User[] = [];
@@ -43,6 +42,10 @@ export class ModifyingProcessConsumer {
        */
       this.processUpdater.next(this.processCache);
     }
+  }
+
+  processEditSync() {
+
   }
 
   async createTable() {
@@ -63,9 +66,8 @@ export class ModifyingProcessConsumer {
 
   }
 
-  async currentProcess(): Promise<BehaviorSubject<Process>> {
+  async getProcess(): Promise<BehaviorSubject<Process>> {
     if (this.processUpdater === null) {
-      this.processUpdater = new BehaviorSubject<Process>(new Process());
       await this.fetchDatabaseCache();
     }
     return this.processUpdater;
