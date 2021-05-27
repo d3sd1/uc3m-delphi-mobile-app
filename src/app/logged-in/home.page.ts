@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ChatService} from './chat/chat.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {User} from '../core/model/user';
 import {WsService} from '../core/ws/ws.service';
@@ -34,14 +34,17 @@ export class HomePage implements ViewDidEnter {
               private translate: TranslateService,
               private langService: LangService,
               private chatConsumer: ChatConsumer,
-              private navCtrl: NavController) {
+              private navCtrl: NavController,
+              private route: ActivatedRoute) {
+
+    this.route.snapshot.data['user'].subscribe((user) => {
+      this.user = user;
+    });
   }
 
   async ionViewDidEnter() {
-    (await this.userConsumer.getUser()).subscribe((user) => {
-      this.user = user;
-      this.langService.changeLanguage(this.user.language);
-    });
+    console.log('usr is ', this.user)
+    this.langService.changeLanguage(this.user.language);
     await this.needsOnboard();
     this.listenUserNotifications();
     this.listenChatNotifications();
@@ -49,7 +52,9 @@ export class HomePage implements ViewDidEnter {
   }
 
   async needsOnboard() {
-    if (this.user.needsOnboard) {
+    // Somtrimes needsOnboard is threated as string.
+    // @ts-ignore
+    if (this.user.needsOnboard == 'true' || this.user.needsOnboard == true) {
       await this.navCtrl.navigateForward('/logged-in/onboarding');
     }
   }

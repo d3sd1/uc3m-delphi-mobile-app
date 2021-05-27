@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {IonSlides, NavController, ToastController} from '@ionic/angular';
-import {Router} from '@angular/router';
+import {IonSlides, NavController, ToastController, ViewDidEnter} from '@ionic/angular';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../core/model/user';
@@ -12,8 +12,8 @@ import {UserConsumer} from '../../core/consumer/user/user.consumer';
   templateUrl: './onboarding.page.html',
   styleUrls: ['./onboarding.page.scss'],
 })
-export class OnboardingPage implements OnInit {
-  user: User = new User();
+export class OnboardingPage implements ViewDidEnter {
+  user: User;
 
   reset = {
     currentPass: '',
@@ -28,12 +28,16 @@ export class OnboardingPage implements OnInit {
               private toastController: ToastController,
               private translate: TranslateService,
               private userConsumer: UserConsumer,
-              private navCtrl: NavController) {
+              private navCtrl: NavController,
+              private route: ActivatedRoute) {
+    this.route.snapshot.data['user'].subscribe((user) => {
+      this.user = user;
+    });
   }
 
-  async ngOnInit() {
-    this.user = (await this.userConsumer.getUser()).getValue();
-    await this.onBoardingFinished();
+  async ionViewDidEnter() {
+    console.log('usr is', this.user)
+    this.onBoardingFinished();
   }
 
   async setupAccount() {
@@ -80,9 +84,11 @@ export class OnboardingPage implements OnInit {
     await this.router.navigateByUrl('/logged-in/menu');
   }
 
-  async onBoardingFinished() {
-    if (!this.user.needsOnboard) {
-      await this.navCtrl.navigateForward('/logged-in/menu');
+  onBoardingFinished() {
+    //SOMETIMES IT IS THREATED AS STRING FOR SOME REASON.
+    // @ts-ignore
+    if (this.user.needsOnboard == 'false' || this.user.needsOnboard == false) {
+      this.navCtrl.navigateForward('/logged-in/menu');
     }
   }
 
