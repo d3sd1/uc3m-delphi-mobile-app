@@ -40,9 +40,11 @@ export class UserConsumer {
     }
     await this.wsService.publish(`profile/${this.userConsumerCache.user.id}`, this.userConsumerCache.user);
   }
+
   async recoverPassword(email) {
     await this.http.post(environment.apiUrl + '/v1/session/password/recover', {email: email}).toPromise();
   }
+
   async resetPassword(email, code): Promise<any> {
     return this.http.post(environment.apiUrl + '/v1/session/password/reset', {email: email, code: code}).toPromise();
   }

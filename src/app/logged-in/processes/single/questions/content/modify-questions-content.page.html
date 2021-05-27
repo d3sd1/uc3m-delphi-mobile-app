@@ -94,7 +94,8 @@
 
   <div *ngIf="this.process?.currentRound.questions[questionIndex]?.type == 'CATMULTI'">
     <ion-item>
-      <ion-range [(ngModel)]="responseRange" [max]="this.process?.currentRound.questions[this.questionIndex]?.categories.length + 1"
+      <ion-range [(ngModel)]="responseRange"
+                 [max]="this.process?.currentRound.questions[this.questionIndex]?.categories.length + 1"
                  color="primary" min="1" snaps step="1">
         <ion-icon color="primary" name="aperture-outline" size="small" slot="start"></ion-icon>
         <ion-icon color="success" name="aperture" slot="end"></ion-icon>

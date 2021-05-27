@@ -18,7 +18,8 @@
          [class.left]=" msg.sentBy.id !== user.id "
          [class.right]=" msg.sentBy.id === user.id "
          class="message">
-      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="msg.sentBy?.photo !== undefined" [src]="msg.sentBy?.photo"
+      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
+           *ngIf="msg.sentBy?.photo !== undefined" [src]="msg.sentBy?.photo"
            class="user-img"/>
       <img *ngIf="msg.sentBy?.photo === undefined" class="user-img" src="assets/images/no-process-image.jpeg"/>
       <!--<ion-spinner name="dots" ></ion-spinner> *ngIf="msg.status === 'pending'" -->

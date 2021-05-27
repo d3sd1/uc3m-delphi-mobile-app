@@ -5,7 +5,8 @@
   <ion-item-sliding #slidingItem *ngFor="let chat of userChats">
     <ion-item [routerLink]="'chat/' + chat.id">
       <ion-avatar slot="start">
-        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="selfChatPicture(chat) !== undefined"
+        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
+             *ngIf="selfChatPicture(chat) !== undefined"
              [src]="selfChatPicture(chat)"/>
         <img *ngIf="selfChatPicture(chat) === undefined" src="assets/images/no-process-image.jpeg"/>
       </ion-avatar>

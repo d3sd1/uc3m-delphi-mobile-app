@@ -46,14 +46,11 @@ export class ChatListComponent implements OnInit {
   }
 
   async ngOnInit() {
-
     this.chatService.getCurrentUserChats().subscribe((currentUserChats: UserChat[]) => {
-      console.log(currentUserChats);
       this.userChats = currentUserChats;
       this.userChatsOriginal = [...this.userChats];
       this.loading = false;
     });
-    console.log(this.userChats);
   }
 
   async filterList(evt) {
@@ -68,7 +65,6 @@ export class ChatListComponent implements OnInit {
       currentChat.users.forEach((user: User) => {
         const fullName = user.name + ' ' + user.surnames + ' ' + user.email;
         if (fullName && searchTerm) {
-          console.log(fullName.toLowerCase().indexOf(searchTerm.toLowerCase()));
           return (fullName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
         }
       });

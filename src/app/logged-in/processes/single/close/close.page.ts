@@ -42,7 +42,6 @@ export class ClosePage {
       await this.showToast(await this.translate.get('home.processes.single.end.success').toPromise());
       await this.goBack();
     }).catch(async (errMessage: string) => {
-      console.log(errMessage);
       await this.showToast(await this.translate.get('home.processes.single.end.err').toPromise());
       await this.goBack();
     });

@@ -43,7 +43,6 @@ export class HomePage implements ViewDidEnter {
   }
 
   async ionViewDidEnter() {
-    console.log('usr is ', this.user)
     this.langService.changeLanguage(this.user.language);
     await this.needsOnboard();
     this.listenUserNotifications();

@@ -23,7 +23,8 @@
     </ion-list-header>
     <ion-item *ngFor="let process of filteredProcesses" [routerLink]="['view']">
       <ion-thumbnail slot="start">
-        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="process?.pictureUrl !== undefined"
+        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
+             *ngIf="process?.pictureUrl !== undefined"
              [src]="process.pictureUrl"/>
         <img *ngIf="process?.pictureUrl === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-thumbnail>

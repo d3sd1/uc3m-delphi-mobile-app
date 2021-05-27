@@ -14,7 +14,8 @@
   <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden multiple="multiple" type="file">
   <ion-card color="light">
     <div (click)="triggerUploadImage()" class="img-wrapper">
-      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="process?.pictureUrl !== undefined"
+      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
+           *ngIf="process?.pictureUrl !== undefined"
            [src]="process.pictureUrl"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
       <ion-button color="light">

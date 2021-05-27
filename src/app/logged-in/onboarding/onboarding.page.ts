@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonSlides, NavController, ToastController, ViewDidEnter} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
@@ -36,7 +36,6 @@ export class OnboardingPage implements ViewDidEnter {
   }
 
   async ionViewDidEnter() {
-    console.log('usr is', this.user)
     this.onBoardingFinished();
   }
 

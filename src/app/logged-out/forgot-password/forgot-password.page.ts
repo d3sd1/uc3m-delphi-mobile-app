@@ -67,6 +67,7 @@ export class ForgotPasswordPage {
       await this.endLoading();
     });
   }
+
   async displaySuccess() {
     const alert = await this.alertController.create({
       header: 'Contraseña reseteada',
@@ -76,6 +77,7 @@ export class ForgotPasswordPage {
     await alert.present();
     await this.navCtrl.navigateBack('/logged-out/login');
   }
+
   async displayError() {
     const alert = await this.alertController.create({
       header: 'Fallo en el reseteo',

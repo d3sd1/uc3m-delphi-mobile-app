@@ -97,7 +97,6 @@ export class ParticipatePage {
         }
       });
     }).catch(async (errMessage: string) => {
-      console.log(errMessage);
       await this.showToast('home.processes.single.round.participate.err');
       await this.router.navigateByUrl('/logged-in/home/menu/processes/single', {
         state: {
