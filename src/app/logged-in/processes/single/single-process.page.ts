@@ -12,19 +12,19 @@ import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Media} from '../../../core/model/media';
 import {TranslateService} from '@ngx-translate/core';
-import {EditingProcessConsumer} from '../../../core/consumer/process/editing-process.consumer';
+import {CurrentProcessConsumer} from '../../../core/consumer/process/current-process.consumer';
 
 @Component({
   selector: 'delphi-create',
   templateUrl: './single-process.page.html',
   styleUrls: ['./single-process.page.scss'],
 })
-export class SingleProcessPage implements OnInit {
-  process: Process = new Process(); // todo handle via router
+export class SingleProcessPage {
+  process: Process;
+  createMode = false;
   user: User;
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
-  expandedQuestion: Question;
   @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
 
   constructor(private httpClient: HttpClient,
@@ -33,41 +33,14 @@ export class SingleProcessPage implements OnInit {
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
               private translate: TranslateService,
-              private modifyingProcessConsumer: EditingProcessConsumer) {
+              private modifyingProcessConsumer: CurrentProcessConsumer) {
     this.route.snapshot.data['user'].subscribe((user) => {
       this.user = user;
     });
     this.route.snapshot.data['process'].subscribe((process) => {
+      console.log('process is', process)
       this.process = process;
     });
-  }
-
-  public async ngOnInit(): Promise<void> {
-    this.sanitizeProcess();
-    this.forceCurrentUserAdmin();
-    /* this.process = (await this.modifyingProcessConsumer.currentProcess()).getValue();
-    ;*/
-  }
-
-  syncProcess() {
-    this.modifyingProcessConsumer.saveCurrentprocess(this.process);
-  }
-
-  sanitizeProcess() {
-    if (this.process?.coordinators === undefined ||
-      this.process?.coordinators === null) {
-      this.process.coordinators = [];
-    }
-    if (this.process?.experts === undefined ||
-      this.process?.experts === null) {
-      this.process.experts = [];
-    }
-  }
-
-  forceCurrentUserAdmin() {
-    /* if(this.process?.coordinators?.filter(user => user.id === ).length  === 0) {
-
-     }*/
   }
 
   async uploadImage() {
@@ -122,35 +95,6 @@ export class SingleProcessPage implements OnInit {
     }).finally(async () => {
       await loading.dismiss();
     });
-  }
-
-  async addQuestion(round: Round) {
-    const question = new Question();
-    question.name = await this.translate.get('home.processes.single.single.question').toPromise();
-    this.process.currentRound.questions.push(question);
-    await this.createProcess.scrollToBottom(300);
-  }
-
-  expandQuestion(question: Question) {
-    this.expandedQuestion = question;
-    if (this.expandedQuestion.type === null) {
-      this.expandedQuestion.type = QuestionType.QUALITATIVE;
-    }
-  }
-
-  compressQuestion(round: Round) {
-    this.process.currentRound.questions.find((question: Question) => {
-      return question.id === this.expandedQuestion.id;
-    });
-    this.expandedQuestion = null;
-  }
-
-  doReorder(ev: CustomEvent<ItemReorderEventDetail>) {
-    ev.detail.complete();
-  }
-
-  toggleReorderGroup() {
-    this.reorderGroup.disabled = !this.reorderGroup.disabled;
   }
 
   private async showToast(transKey: string) {

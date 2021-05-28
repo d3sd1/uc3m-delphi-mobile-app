@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()" defaultHref="/logged-in/home/menu/processes" text="Volver"></ion-back-button>
+      <ion-back-button defaultHref="/logged-in/menu/processes/single/question/list"
+                       routerDirection="back"
+                       routerLink="/logged-in/menu/processes/single/question/list"
+                       text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Modificar preguntas</ion-title>
   </ion-toolbar>
@@ -10,13 +13,8 @@
 <ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
 
   <ion-item>
-    <ion-label>Nombre</ion-label>
-    <ion-input [(ngModel)]="this.process?.currentRound.questions[questionIndex].name"></ion-input>
-  </ion-item>
-
-  <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
-    <ion-select [(ngModel)]="this.process?.currentRound.questions[questionIndex].type">
+    <ion-select>
       <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
       <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
       <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
@@ -26,7 +24,7 @@
       <ion-select-option value="CATPOND">Categorías ponderadas</ion-select-option>
       <!-- este permite reordenar respuesta de categorías-->
     </ion-select>
-  </ion-item>
+  </ion-item><!--
   <ion-item>
     <ion-textarea [(ngModel)]="this.process.currentRound.questions[questionIndex].question"
                   placeholder="Introduce tu pregunta aquí"></ion-textarea>
@@ -147,9 +145,4 @@
   </div>
 </ion-content>
 
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-button (click)="saveQuestionContent()" expand="block">Guardar contenido</ion-button>
-  </ion-toolbar>
-</ion-footer>
+-->

@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/menu/processes/modify"
+      <ion-back-button defaultHref="/logged-in/menu/processes/single"
                        routerDirection="back"
-                       routerLink="/logged-in/menu/processes/modify"
+                       routerLink="/logged-in/menu/processes/single"
                        text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>Modificar preguntas</ion-title>
+    <ion-title>Planificar ronda</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -35,8 +35,8 @@
         <ion-item-option (click)="deleteQuestion(questionIndex)" color="danger">Eliminar</ion-item-option>
       </ion-item-options>
       <ion-item
-        [routerLink]="['/logged-in/menu/processes/single/questions/single']">
-        {{question.name}}
+        [routerLink]="['/logged-in/menu/processes/single/question/single']">
+        {{question.question}}
         <ion-reorder slot="start"></ion-reorder>
       </ion-item>
     </ion-item-sliding>
@@ -51,10 +51,3 @@
   </ion-fab>
 
 </ion-content>
-
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-button (click)="saveQuestions()" expand="block">Guardar preguntas</ion-button>
-  </ion-toolbar>
-</ion-footer>

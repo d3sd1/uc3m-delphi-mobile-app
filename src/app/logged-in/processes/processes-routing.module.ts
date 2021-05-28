@@ -3,11 +3,11 @@ import {RouterModule, Routes} from '@angular/router';
 import {ProcessesPage} from './list/processes.page';
 import {SingleProcessPage} from './single/single-process.page';
 import {UserPickerPage} from './single/user-picker/user-picker.page';
-import {ModifyQuestionsPage} from './single/questions/list/modify-questions.page';
-import {ModifyQuestionsContentPage} from './single/questions/content/modify-questions-content.page';
+import {QuestionListPage} from './single/questions/list/question-list.page';
+import {ModifyQuestionsContentPage} from './single/questions/single/modify-questions-content.page';
 import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
 import {UserResolver} from '../../core/router/resolver/user.resolver';
-import {EditingProcessResolver} from '../../core/router/resolver/editing-process.resolver';
+import {CurrentProcessResolver} from '../../core/router/resolver/current-process.resolver';
 
 const routes: Routes = [
   {
@@ -35,18 +35,19 @@ const routes: Routes = [
         component: SingleProcessPage,
         resolve: {
           user: UserResolver,
-          process: EditingProcessResolver,
+          process: CurrentProcessResolver,
         },
       },
       {
-        path: 'user-picker',
+        path: 'user-picker/:type',
         component: UserPickerPage,
         resolve: {
-          process: EditingProcessResolver
+          user: UserResolver,
+          process: CurrentProcessResolver
         }
       },
       {
-        path: 'questions',
+        path: 'question',
         children: [
           {
             path: '',
@@ -55,15 +56,19 @@ const routes: Routes = [
           },
           {
             path: 'list',
-            component: ModifyQuestionsPage,
+            component: QuestionListPage,
             resolve: {
               user: UserResolver,
-              process: EditingProcessResolver
+              process: CurrentProcessResolver
             },
           },
           {
             path: 'single',
-            component: ModifyQuestionsContentPage
+            component: ModifyQuestionsContentPage,
+            resolve: {
+              user: UserResolver,
+              process: CurrentProcessResolver
+            }
           },
         ]
       },

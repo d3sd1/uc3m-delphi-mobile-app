@@ -2,15 +2,16 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 import {Process} from '../../model/process';
-import {EditingProcessConsumer} from '../../consumer/process/editing-process.consumer';
+import {CurrentProcessConsumer} from '../../consumer/process/current-process.consumer';
 
 @Injectable()
-export class EditingProcessResolver implements Resolve<BehaviorSubject<Process>> {
+export class CurrentProcessResolver implements Resolve<BehaviorSubject<Process>> {
 
-  constructor(private editingProcessConsumer: EditingProcessConsumer) {
+  constructor(private editingProcessConsumer: CurrentProcessConsumer) {
   }
 
   resolve(route: ActivatedRouteSnapshot): Promise<BehaviorSubject<Process>> {
     return this.editingProcessConsumer.getProcess();
   }
 }
+

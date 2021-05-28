@@ -10,19 +10,25 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class ProcessConsumer {
 
-  private userProcesses: BehaviorSubject<Process[]> = null;
+  private userProcesses: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([]);
+  private userProcessesCache: Process[] = null;
 
   constructor(private httpClient: HttpClient, private wsService: WsService) {
   }
 
   async all(): Promise<BehaviorSubject<Process[]>> {
-    if (this.userProcesses === null) {
-      this.userProcesses = new BehaviorSubject<Process[]>(
-        (await this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list').toPromise())
-      );
-      this.listenUpdates();
+    if (this.userProcessesCache === null) {
+      this.userProcessesCache = (await this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list').toPromise());
+      this.userProcesses.next(this.userProcessesCache);
     }
     return this.userProcesses;
+  }
+
+  async createProcess(name: string, description: string) {
+    const process = new Process();
+    process.name = name;
+    process.description = description;
+    (await this.httpClient.put<Process>(environment.apiUrl + '/v1/process', process).toPromise());
   }
 
   private listenUpdates() {

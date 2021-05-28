@@ -3,6 +3,8 @@ import {Process} from '../../../core/model/process';
 import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
 import {BehaviorSubject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
+import {AlertController, NavController} from '@ionic/angular';
+import {CurrentProcessConsumer} from '../../../core/consumer/process/current-process.consumer';
 
 @Component({
   selector: 'delphi-processes',
@@ -16,36 +18,24 @@ export class ProcessesPage {
   filteredProcesses: Process[] = null;
 
   constructor(private processService: ProcessConsumer,
-              private route: ActivatedRoute) {
-    this.route.snapshot.data['processes'].subscribe((processesUpdater) => {
-      this.processesUpdater = processesUpdater;
+              private route: ActivatedRoute,
+              private alertController: AlertController,
+              private processConsumer: ProcessConsumer,
+              private currentProcessConsumer: CurrentProcessConsumer,
+              private navCtrl: NavController) {
+    this.route.snapshot.data['processes'].subscribe((processes) => {
+      console.log('rcvd',processes)
+      this.processes = processes;
     });
   }
 
   async ngOnInit() {
     this.filterProcesses();
-    //TODO this.user = await this.authService.getUser();
-    // Listen to new generated process that needs current user
-
-    /* TODO
-        this.wsService.subscribe('process/new', true).subscribe(async (process: Process) => {
-          if (process === null) {
-            return;
-          }
-          const pIndex = this.processes.findIndex((pProcess) => {
-            return process?.id === pProcess?.id;
-          });
-          if (pIndex === -1) {
-            this.processes.push(process);
-          } else {
-            this.processes[pIndex] = process;
-          }
-          this.filterProcesses();
-        }); */
   }
 
-  parseDate(date: string): Date {
-    return new Date(date);
+  async editProcess(process) {
+    await this.currentProcessConsumer.setCurrentProcess(process);
+    await this.navCtrl.navigateForward('/logged-in/menu/processes/single');
   }
 
   filterProcesses(ev?: Event) {
@@ -67,6 +57,45 @@ export class ProcessesPage {
       }
       return 0;
     });
+  }
+
+  async addProcess() {
+    const alert = await this.alertController.create({
+      header: 'Crear proceso',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Nombre del proceso',
+          attributes: {
+            maxlength: 50,
+            autoFocus: true,
+          }
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          placeholder: 'Descripción del proceso',
+          attributes: {
+            maxlength: 5000,
+          }
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Ok',
+          handler: (alertData) => {
+            this.processConsumer.createProcess(alertData.name, alertData.description);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 

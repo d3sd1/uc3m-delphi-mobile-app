@@ -2,27 +2,27 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [text]="'home.processes.user_picker.back' | translate"
-                       defaultHref="/logged-in/menu/processes/modify"
+                       defaultHref="'/logged-in/menu/processes/single"
                        routerDirection="back"
-                       routerLink="/logged-in/menu/processes/modify"></ion-back-button>
+                       routerLink="'/logged-in/menu/processes/single"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'home.processes.role.expert' | translate}}</ion-title>
+    <ion-title>{{'home.processes.role.' + type | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-searchbar (ionChange)="filterExperts()" [(ngModel)]="filterCriterial"
-                 [placeholder]="'home.processes.user_picker.search.title' | translate:{role: 'home.processes.role.expert' | translate}"
+                 [placeholder]="'home.processes.user_picker.search.title' | translate:{role: 'home.processes.role.' + type | translate}"
                  animated debounce="500"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
-    <ion-item (click)="pushExpert(expert)"
-              *ngFor="let expert of usersFiltered">
+    <ion-item (click)="pushUser(user)"
+              *ngFor="let user of usersFiltered">
       <ion-avatar slot="start">
-        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="expert?.photo !== undefined"
-             [src]="expert?.photo"/>
-        <img *ngIf="expert?.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
+        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="user?.photo !== undefined"
+             [src]="user?.photo"/>
+        <img *ngIf="user?.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-avatar>
-      {{ expert.name }} {{ expert.surnames }} <{{ expert.email }}>
+      {{ user.name }} {{ user.surnames }} <{{ user.email }}>
     </ion-item>
   </ion-list>
   <ion-item
@@ -35,28 +35,20 @@
     <ion-button (click)="inviteUser(this.filterCriterial)" expand="block">Invitar a <{{this.filterCriterial}}>
     </ion-button>
   </ion-item>
-  <ion-item *ngIf="process?.experts.length == 0">
+  <ion-item *ngIf="this.getUsers().length == 0">
     <ion-title>{{'home.processes.user_picker.no_experts' | translate}}</ion-title>
   </ion-item>
 
-  <div *ngFor="let userWithRole of process?.experts">
-    <!--<ion-chip *ngIf="userWithRole.role.id === role.id"  [color]="userWithRole?.user.id === currentUser?.id?'primary':'secondary'">
+  <div *ngFor="let user of this.getUsers()">
+    <ion-chip [color]="user.id === currentUser?.id?'primary':'secondary'">
       <ion-avatar>
-        <img *ngIf="userWithRole.user.photo !== undefined" [src]="userWithRole?.user.photo"
+        <img *ngIf="user.photo !== undefined" [src]="user.photo"
              (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
-        <img *ngIf="userWithRole.user.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
+        <img *ngIf="user.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-avatar>
-      <ion-label>{{userWithRole?.user.name}} {{userWithRole?.user.surnames}} <{{ userWithRole?.user.email }}></ion-label>
-      <ion-icon *ngIf="userWithRole?.user.id !== currentUser?.id" name="close-circle" (click)="removeExpert(userWithRole)"></ion-icon>
-    </ion-chip>-->
+      <ion-label>{{user.name}} {{user.surnames}} <{{ user.email }}></ion-label>
+      <ion-icon *ngIf="user.id !== currentUser?.id" name="close-circle" (click)="removeUser(user)"></ion-icon>
+    </ion-chip>
   </div>
 
 </ion-content>
-
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-button expand="block" routerDirection="back"
-                routerLink="/logged-in/menu/processes/modify">{{'home.processes.user_picker.save' | translate}}</ion-button>
-  </ion-toolbar>
-</ion-footer>

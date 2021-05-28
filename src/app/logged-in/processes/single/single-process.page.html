@@ -50,7 +50,7 @@
         {{ 'home.processes.single.rounds.title'  | translate }}
       </ion-label>
     </ion-list-header>
-    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/questions/list">
+    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/single/question/list">
       <ion-label>{{ 'home.processes.single.rounds.enter' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.pastRounds === undefined ? 0 : process?.pastRounds?.length}}Preguntas
       </ion-badge>
@@ -64,13 +64,15 @@
     </ion-list-header>
 
     <!-- Toggles in a List -->
-    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/user-picker">
+    <ion-item routerDirection="forward"
+              routerLink="'/logged-in/menu/processes/single/user-picker/coordinator'">
       <ion-badge slot="end">{{process?.coordinators?.length}}</ion-badge>
       <ion-label>{{'home.processes.role.coordinator' | translate}}</ion-label>
     </ion-item>
 
     <!-- Toggles in a List -->
-    <ion-item routerDirection="forward" routerLink="/logged-in/menu/processes/modify/user-picker">
+    <ion-item routerDirection="forward"
+              routerLink="/logged-in/menu/processes/single/user-picker/expert">
       <ion-badge slot="end">{{process?.experts?.length}}</ion-badge>
       <ion-label>{{'home.processes.role.expert' | translate}}</ion-label>
     </ion-item>

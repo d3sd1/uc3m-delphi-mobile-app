@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {User} from '../../../../core/model/user';
 import {environment} from '../../../../../environments/environment';
 import {Process} from '../../../../core/model/process';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
 
@@ -14,15 +14,24 @@ import {NavController} from '@ionic/angular';
 export class UserPickerPage {
   process: Process;
   filterCriterial: string = '';
-  usersFiltered: User[] = [];
   currentUser: User;
+  type;
+  usersFiltered = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private httpClient: HttpClient,
     public navCtrl: NavController) {
-
+    this.route.params.subscribe(params => {
+      this.type = params['type'];
+    });
+    this.route.snapshot.data['user'].subscribe((user) => {
+      this.currentUser = user;
+    });
+    this.route.snapshot.data['process'].subscribe((process) => {
+      this.process = process;
+    });
   }
 
   validateEmail(email) {
@@ -32,7 +41,7 @@ export class UserPickerPage {
 
   inviteUser(email: string) {
     this.httpClient.put<User>(environment.apiUrl + '/v1/process/invite?email=' + email, {}).subscribe((user: User) => {
-      this.pushExpert(user);
+      this.pushUser(user);
     }, (err) => {
       console.error(err);
     }, () => {
@@ -49,13 +58,26 @@ export class UserPickerPage {
 
   }
 
-  pushExpert(newUser: User) {
-
+  pushUser(newUser: User) {
+    if(this.type.toLowerCase() == 'coordinator') {
+      this.process.coordinators.push(newUser);
+    }
+    else if(this.type.toLowerCase() == 'expert') {
+      this.process.experts.push(newUser);
+    }
     this.filterCriterial = '';
   }
+  removeUser(user: User) {
+    console.log('remove user')
+  }
 
-  removeExpert() {
-
+  getUsers() {
+    if(this.type.toLowerCase() == 'coordinator') {
+      return this.process.coordinators;
+    }
+    else if(this.type.toLowerCase() == 'expert') {
+      return this.process.experts;
+    }
   }
 
 }

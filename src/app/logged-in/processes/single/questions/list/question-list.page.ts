@@ -8,10 +8,10 @@ import {QuestionType} from '../../../../../core/model/question-type';
 
 @Component({
   selector: 'delphi-rounds',
-  templateUrl: './modify-questions.page.html',
-  styleUrls: ['./modify-questions.page.scss'],
+  templateUrl: './question-list.page.html',
+  styleUrls: ['./question-list.page.scss'],
 })
-export class ModifyQuestionsPage {
+export class QuestionListPage {
 
   process: Process;
   user: User;
@@ -34,11 +34,11 @@ export class ModifyQuestionsPage {
        detail.complete(false);
        return;
      }
-     detail.complete(true);
      const aux = this.process?.rounds[detail.to];
      this.process.rounds[detail.to] = this.process?.rounds[detail.from];
      this.process.rounds[detail.from] = aux;
      this.reAssignOrder();*/
+    detail.complete(true);
   }
 
   sortQuestions() {
@@ -55,7 +55,6 @@ export class ModifyQuestionsPage {
 
   addQuestion() {
     const question = new Question();
-    question.name = 'Pregunta ' + this.process.currentRound.questions.length;
     question.type = QuestionType.QUALITATIVE;
     this.process.currentRound.questions.push(
       question
