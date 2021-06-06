@@ -42,15 +42,17 @@ export class WsService {
         const wsMsg = JSON.parse(message.body);
         const mode = wsMsg.mode;
         const data = wsMsg.data;
+        let arr = [];
         if(mode == 'ADD') {
           channel.subject.getValue().push(data);
+          arr = channel.subject.getValue();
         } else if(mode == 'MODIFY') {
-          channel.subject.getValue().filter(iData => iData.id !== data.id);
-          channel.subject.getValue().push(data);
+          arr = channel.subject.getValue().filter(iData => iData.id !== data.id);
+          arr.push(data);
         } else if(mode == 'REMOVE') {
-          channel.subject.getValue().filter(iData => iData.id !== data.id);
+          arr = channel.subject.getValue().filter(iData => iData.id !== data.id);
         }
-        channel.subject.next(channel.subject.getValue());
+        channel.subject.next(arr);
       });
     });
   }

@@ -48,13 +48,13 @@ export class SingleProcessPage {
   async uploadImage() {
     const formData = new FormData();
     formData.append('image', this.uploadPicture.nativeElement.files[0]);
-    this.httpClient.post<Media>(environment.apiUrl + '/v1/media/upload', formData, {headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})}).subscribe(
+    this.httpClient.post<Media>(environment.apiUrl + '/v1/process/photo?process_id=' + this.process.id, formData, {headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})}).subscribe(
       async (res) => {
         this.process.pictureUrl = environment.apiUrl + '/v1/media/fetch/' + res.id;
       },
       (err) => console.log(err)
     );
-  }
+  } 
 
   triggerUploadImage() {
     this.uploadPicture.nativeElement.click();
