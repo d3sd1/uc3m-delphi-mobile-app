@@ -4,7 +4,6 @@ import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
 import {BehaviorSubject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AlertController, NavController} from '@ionic/angular';
-import {CurrentProcessConsumer} from '../../../core/consumer/process/current-process.consumer';
 
 @Component({
   selector: 'delphi-processes',
@@ -21,7 +20,6 @@ export class ProcessesPage {
               private route: ActivatedRoute,
               private alertController: AlertController,
               private processConsumer: ProcessConsumer,
-              private currentProcessConsumer: CurrentProcessConsumer,
               private navCtrl: NavController) {
     this.route.snapshot.data['processes'].subscribe((processes) => {
       this.processes = processes;
@@ -30,8 +28,7 @@ export class ProcessesPage {
   }
 
   async editProcess(process) {
-    this.currentProcessConsumer.setCurrentProcess(process);
-    await this.navCtrl.navigateForward('/logged-in/menu/processes/single');
+    await this.navCtrl.navigateForward('/logged-in/menu/processes/single/' + process.id);
   }
 
   filterProcesses(ev?: Event) {

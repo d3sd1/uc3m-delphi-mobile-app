@@ -12,7 +12,6 @@ import {ActivatedRoute} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Media} from '../../../core/model/media';
 import {TranslateService} from '@ngx-translate/core';
-import {CurrentProcessConsumer} from '../../../core/consumer/process/current-process.consumer';
 
 @Component({
   selector: 'delphi-create',
@@ -32,8 +31,7 @@ export class SingleProcessPage {
               public loadingController: LoadingController,
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
-              private translate: TranslateService,
-              private modifyingProcessConsumer: CurrentProcessConsumer) {
+              private translate: TranslateService) {
     this.route.snapshot.data['user'].subscribe((user) => {
       this.user = user;
     });
