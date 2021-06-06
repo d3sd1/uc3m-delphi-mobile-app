@@ -17,6 +17,7 @@
     <ion-datetime [(ngModel)]="this.process?.currentRound.endTime" display-format="MMM DD, YYYY HH:mm"
                   (ngModelChange)="updateBasicData()"
                   picker-format="MMM DD, YYYY HH:mm"
+                  [min]="currentTime"
                   placeholder="Introduce fecha límite"></ion-datetime>
   </ion-item>
 
@@ -54,3 +55,10 @@
   </ion-fab>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="primary" expand="block" *ngIf="!process.currentRound.started" (click)="saveQuestions()">Comenzar ronda</ion-button>
+    <ion-button color="danger" expand="block" *ngIf="process.currentRound.started">Forzar fin de ronda</ion-button>
+  </ion-toolbar>
+</ion-footer>

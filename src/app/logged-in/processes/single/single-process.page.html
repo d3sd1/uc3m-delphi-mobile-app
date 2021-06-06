@@ -64,8 +64,14 @@
     </ion-list-header>
     <ion-item routerDirection="forward"
               [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/question/list'">
-      <ion-label>{{ 'home.processes.single.rounds.enter' | translate }}</ion-label>
-      <ion-badge slot="end">{{process?.pastRounds === undefined ? 0 : process?.pastRounds?.length}}Preguntas
+      <ion-label>{{ 'home.processes.single.rounds.current' | translate }}</ion-label>
+      <ion-badge slot="end">{{process?.currentRound?.questions?.length}} Preguntas
+      </ion-badge>
+    </ion-item>
+    <ion-item routerDirection="forward"
+              [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/rounds'">
+      <ion-label>{{ 'home.processes.single.rounds.past' | translate }}</ion-label>
+      <ion-badge slot="end">{{process?.rounds?.length}} Rondas
       </ion-badge>
     </ion-item>
   </ion-list>

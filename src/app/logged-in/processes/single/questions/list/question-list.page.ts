@@ -18,7 +18,7 @@ export class QuestionListPage {
 
   process: Process;
   user: User;
-
+  currentTime = (new Date()).toISOString();
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,

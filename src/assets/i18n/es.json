@@ -70,22 +70,6 @@
       "finished": {
         "view_results": "Ver resultados"
       },
-      "modify": {
-        "title": "Editar proceso",
-        "base": "Datos básicos",
-        "name": "Nombre del proceso",
-        "desc": "Descripción del proceso",
-        "rounds": {
-          "title": "Datos de rondas",
-          "enter": "Siguiente ronda",
-          "users": "Usuarios"
-        },
-        "save": "Guardar",
-        "errors": {
-          "no_description": "Debes introducir una descripción.",
-          "no_name": "Debes introducir un nombre para el proceso."
-        }
-      },
       "role": {
         "coordinator": "Coordinador",
         "expert": "Experto"
@@ -109,7 +93,11 @@
         "invitation": {
           "sent": "Invitación enviada"
         },
-        "rounds": "Rondas",
+        "rounds": {
+          "title": "Rondas",
+          "current": "Ver ronda actual",
+          "past": "Finalizadas"
+        },
         "users": "Participantes",
         "end": {
           "title": "Finalizar proceso",
@@ -165,12 +153,14 @@
             "desc": "No existen respuestas asociadas a la pregunta de este proceso."
           },
           "rounds": {
-            "title": "Ver rondas",
             "back": "Volver",
             "empty": {
               "title": "Sin rondas",
               "desc": "No existen rondas asociadas a este proceso."
-            }
+            },
+            "title": "Datos de rondas",
+            "enter": "Siguiente ronda",
+            "users": "Usuarios"
           },
           "questions": {
             "title": "Ver preguntas",
@@ -180,6 +170,15 @@
               "desc": "No existen rondas asociadas a este proceso."
             }
           }
+        },
+
+        "base": "Datos básicos",
+        "name": "Nombre del proceso",
+        "desc": "Descripción del proceso",
+        "save": "Guardar",
+        "errors": {
+          "no_description": "Debes introducir una descripción.",
+          "no_name": "Debes introducir un nombre para el proceso."
         }
       }
     },

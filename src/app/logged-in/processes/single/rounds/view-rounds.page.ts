@@ -27,7 +27,7 @@ export class ViewRoundsPage {
   }
 
   sortRounds() {
-    this.process.pastRounds.sort((a, b) => {
+    this.process.rounds.sort((a, b) => {
       // check if some1 is finished
       if (!a.finished && b.finished) {
         return -1;

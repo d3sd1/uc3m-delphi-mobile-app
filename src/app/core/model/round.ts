@@ -8,7 +8,8 @@ export class Round {
   endTime: Date;
   finished: boolean = false;
   orderPosition: number;
-  current: boolean = false;
+  started: boolean = false;
   expertsVoted: User[] = [];
 }
+
 
