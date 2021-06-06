@@ -5,6 +5,7 @@ export class Process {
   id: number;
   name: string;
   description: string;
+  objectives: string;
   pictureUrl: string;
   experts: User[] = [];
   coordinators: User[] = [];

@@ -44,6 +44,13 @@ export class SingleProcessPage {
   isCoordinator(): boolean {
     return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
+  async updateBasicFields() {
+    await this.httpClient.post(environment.apiUrl + '/v1/process/basic?process_id=' + this.process.id, {
+      name: this.process.name,
+      description: this.process.description,
+      objectives: this.process.objectives
+    }).toPromise();
+  }
 
   async uploadImage() {
     const formData = new FormData();
@@ -54,7 +61,7 @@ export class SingleProcessPage {
       },
       (err) => console.log(err)
     );
-  } 
+  }
 
   triggerUploadImage() {
     this.uploadPicture.nativeElement.click();

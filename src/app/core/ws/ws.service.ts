@@ -50,6 +50,7 @@ export class WsService {
           arr = channel.subject.getValue().filter(iData => iData.id !== data.id);
           arr.push(data);
         } else if(mode == 'REMOVE') {
+          console.log("REMOVE", data)
           arr = channel.subject.getValue().filter(iData => iData.id !== data.id);
         }
         channel.subject.next(arr);

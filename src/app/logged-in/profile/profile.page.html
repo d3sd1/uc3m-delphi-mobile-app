@@ -7,7 +7,7 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <ion-card color="light">
-    <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden multiple="multiple" type="file">
+    <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden type="file">
 
     <div (click)="triggerUploadImage()" class="img-wrapper">
       <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="user?.photo !== undefined"
@@ -41,7 +41,7 @@
       <ion-label>{{ 'home.profile.password.menu' | translate }}</ion-label>
     </ion-item>
 
-    <input #uploadCvRef (change)="uploadCv()" hidden multiple="multiple" type="file">
+    <input #uploadCvRef (change)="uploadCv()" hidden type="file">
     <ion-item (click)="triggerUploadCv()">
       <ion-label>{{ 'home.profile.cv.menu' | translate }}</ion-label>
     </ion-item>

@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content fullscreen="true">
-  <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden multiple="multiple" type="file">
+  <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden type="file">
   <ion-card color="light">
     <div (click)="triggerUploadImage()" class="img-wrapper">
       <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
@@ -34,11 +34,21 @@
 
     <ion-item>
       <ion-input [(ngModel)]="process.name"
+                 debounce="200"
+                 (ngModelChange)="updateBasicFields()"
                  [placeholder]="'home.processes.single.name' | translate"></ion-input>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.description"
+                    debounce="200"
+                    (ngModelChange)="updateBasicFields()"
                     [placeholder]="'home.processes.single.desc'  | translate"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-textarea [(ngModel)]="process.objectives"
+                    debounce="200"
+                    (ngModelChange)="updateBasicFields()"
+                    [placeholder]="'home.processes.single.desc'  | translate">Objetivos del proceso</ion-textarea>
     </ion-item>
   </ion-list>
 
