@@ -18,7 +18,7 @@
            *ngIf="process?.pictureUrl !== undefined"
            [src]="process.pictureUrl"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
-      <ion-button color="light" *ngIf="isCoordinator()">
+      <ion-button color="light" *ngIf="isCoordinator() && !process.processFinished">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">
         </ion-icon>
       </ion-button>
@@ -37,21 +37,21 @@
                  debounce="200"
                  (ngModelChange)="updateBasicFields()"
                  [placeholder]="'home.processes.single.name' | translate"
-                 [readonly]="!isCoordinator()"></ion-input>
+                 [readonly]="!isCoordinator() || process.processFinished"></ion-input>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.description"
                     debounce="200"
                     (ngModelChange)="updateBasicFields()"
                     [placeholder]="'home.processes.single.desc'  | translate"
-                    [readonly]="!isCoordinator()"></ion-textarea>
+                    [readonly]="!isCoordinator() || process.processFinished"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.objectives"
                     debounce="200"
                     (ngModelChange)="updateBasicFields()"
                     [placeholder]="'home.processes.single.desc'  | translate"
-                    [readonly]="!isCoordinator()">Objetivos del proceso
+                    [readonly]="!isCoordinator() || process.processFinished">Objetivos del proceso
       </ion-textarea>
     </ion-item>
   </ion-list>
@@ -106,7 +106,7 @@
 
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="!process.processFinished">
   <ion-toolbar>
     <ion-button color="warning" expand="block" (click)="finishProcess()">Finalizar proceso</ion-button>
   </ion-toolbar>
