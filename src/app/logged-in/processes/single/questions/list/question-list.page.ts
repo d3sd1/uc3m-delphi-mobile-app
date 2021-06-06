@@ -46,6 +46,9 @@ export class QuestionListPage {
 
   public async onItemReorder({detail}) {
     detail.complete(true);
+    if(this.process.currentRound.questions[detail.to] === undefined) {
+      return;
+    }
     await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/questions/reorder?process_id=' + this.process.id, {
       fromId: this.process.currentRound.questions[detail.from].id,
       fromPosition: detail.from,
