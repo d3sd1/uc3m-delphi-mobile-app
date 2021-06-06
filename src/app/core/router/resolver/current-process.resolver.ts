@@ -11,7 +11,5 @@ export class CurrentProcessResolver implements Resolve<BehaviorSubject<Process>>
   resolve(route: ActivatedRouteSnapshot): Promise<BehaviorSubject<Process>> {
     return this.processService.getById(route.params['id']);
   }
-
-
 }
 

@@ -3,7 +3,7 @@ import {User} from './user';
 
 export class Round {
   id: number;
-  name: string;
+  name: string = '';
   questions: Question[] = [];
   endTime: Date;
   finished: boolean = false;
@@ -11,3 +11,4 @@ export class Round {
   current: boolean = false;
   expertsVoted: User[] = [];
 }
+

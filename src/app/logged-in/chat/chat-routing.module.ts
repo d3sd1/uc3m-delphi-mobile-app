@@ -6,10 +6,15 @@ import {ChatConversationComponent} from './chat-conversation/chat-conversation.c
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'list',
+    pathMatch: 'full'
+  },
+  {
+    path: 'list',
     component: ChatPage,
   },
   {
-    path: 'chat/:chatId',
+    path: 'conversation/:chatId',
     component: ChatConversationComponent,
   }
 ];

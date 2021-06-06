@@ -41,12 +41,12 @@
 
   <div *ngFor="let user of this.getUsers()">
     <ion-chip [color]="user.id === user?.id?'primary':'secondary'">
-      <ion-avatar>
+      <ion-avatar [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">
         <img *ngIf="user.photo !== undefined" [src]="user.photo"
              (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
         <img *ngIf="user.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-avatar>
-      <ion-label>{{user.name}} {{user.surnames}} <{{ user.email }}></ion-label>
+      <ion-label [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">{{user.name}} {{user.surnames}} <{{ user.email }}></ion-label>
       <ion-icon *ngIf="user.id !== currentUser?.id && isCoordinator()" name="close-circle" (click)="removeUser(user)"></ion-icon>
     </ion-chip>
   </div>

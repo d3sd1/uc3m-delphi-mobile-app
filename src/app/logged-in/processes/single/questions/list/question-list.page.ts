@@ -5,6 +5,9 @@ import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {Question} from '../../../../../core/model/question';
 import {QuestionType} from '../../../../../core/model/question-type';
+import {Round} from '../../../../../core/model/round';
+import {environment} from '../../../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'delphi-rounds',
@@ -19,11 +22,15 @@ export class QuestionListPage {
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    public alertController: AlertController) {
+    public alertController: AlertController,
+    private httpClient: HttpClient) {
     this.route.snapshot.data['user'].subscribe((user) => {
       this.user = user;
     });
-    this.route.snapshot.data['process'].subscribe((process) => {
+    this.route.snapshot.data['process'].subscribe((process: Process) => {
+      if (process.currentRound === undefined || process.currentRound === null) {
+        process.currentRound = new Round();
+      }
       this.process = process;
     });
   }
@@ -67,6 +74,13 @@ export class QuestionListPage {
 
   async goBack() {
     await this.saveQuestions();
+  }
+
+  async updateBasicData() {
+    await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/basic?process_id=' + this.process.id, {
+      name: this.process.currentRound.name,
+      endTime: this.process.currentRound.endTime
+    }).toPromise();
   }
 
   async saveQuestions() {
