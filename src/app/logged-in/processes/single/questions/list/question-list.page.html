@@ -41,7 +41,7 @@
         <ion-item-option (click)="deleteQuestion(questionIndex)" color="danger">Eliminar</ion-item-option>
       </ion-item-options>
       <ion-item
-        [routerLink]="['/logged-in/menu/processes/single/' + process.id + '/question/single']">
+        [routerLink]="['/logged-in/menu/processes/single/' + process.id + '/question/single/' + question.id]">
         {{question.name}}
         <ion-reorder slot="start" *ngIf="!process.currentRound.started"></ion-reorder>
       </ion-item>

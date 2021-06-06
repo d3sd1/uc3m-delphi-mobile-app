@@ -1,0 +1,21 @@
+
+<ion-item>
+  <ion-input [(ngModel)]="currentCategory" placeholder="Nombre categoría..."></ion-input>
+  <ion-button (click)="addCategory()" size="small">Añadir categoría</ion-button>
+</ion-item>
+
+<ion-list>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Categorías</ion-label>
+      <ion-badge
+        slot="end">{{question.categories.length}}</ion-badge>
+    </ion-item-divider>
+
+    <ion-item
+      *ngFor="let category of question.categories; let i = index">
+      <ion-label>{{category.catName}}</ion-label>
+      <ion-icon (click)="delCategory(category)" name="trash" slot="end"></ion-icon>
+    </ion-item>
+  </ion-item-group>
+</ion-list>

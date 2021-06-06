@@ -1,4 +1,5 @@
 export enum QuestionType {
   QUALITATIVE,
-  QUANTITATIVE
+  QUANTITATIVE,
+  BOOLTYPE
 }

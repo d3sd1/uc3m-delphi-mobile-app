@@ -20,6 +20,12 @@ import {LoadingPage} from './list/loading/loading.page';
 import {EmptyProcessesPage} from './list/empty/empty-processes.page';
 import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
 import {CurrentProcessResolver} from '../../core/router/resolver/current-process.resolver';
+import {QuestionBooltypePage} from './single/questions/types/booltype/question-booltype.page';
+import {QuestionQuantitativePage} from './single/questions/types/quantitative/question-quantitative.page';
+import {QuestionCatlikertPage} from './single/questions/types/catlikert/question-catlikert.page';
+import {QuestionCatcustomPage} from './single/questions/types/catcustom/question-catcustom.page';
+import {QuestionCatmultiPage} from './single/questions/types/catmulti/question-catmulti.page';
+import {QuestionCatpondPage} from './single/questions/types/catpond/question-catpond.page';
 
 @NgModule({
   imports: [
@@ -43,6 +49,12 @@ import {CurrentProcessResolver} from '../../core/router/resolver/current-process
     ClosePage,
     LoadingPage,
     EmptyProcessesPage,
+    QuestionBooltypePage,
+    QuestionQuantitativePage,
+    QuestionCatlikertPage,
+    QuestionCatcustomPage,
+    QuestionCatmultiPage,
+    QuestionCatpondPage
   ],
   providers: [
     Geolocation,

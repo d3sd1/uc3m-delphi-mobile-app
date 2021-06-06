@@ -82,7 +82,7 @@ const routes: Routes = [
             },
           },
           {
-            path: 'single',
+            path: 'single/:questionid',
             component: ModifyQuestionsContentPage,
             resolve: {
               user: UserResolver,
