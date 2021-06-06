@@ -31,20 +31,30 @@ export class QuestionListPage {
         process.currentRound = new Round();
       }
       this.process = process;
+      this.orderQuestions();
     });
   }
 
-  public onItemReorder({detail}) {
-    /* if(detail.from > this.process.rounds.length - 1
-       || detail.to > this.process.rounds.length - 1) {
-       detail.complete(false);
-       return;
-     }
-     const aux = this.process?.rounds[detail.to];
-     this.process.rounds[detail.to] = this.process?.rounds[detail.from];
-     this.process.rounds[detail.from] = aux;
-     this.reAssignOrder();*/
+  private orderQuestions() {
+    this.process.currentRound.questions.sort((n1, n2) => {
+      if (n1.orderPosition < n2.orderPosition) {
+        return -1;
+      }
+      if (n1.orderPosition > n2.orderPosition) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  public async onItemReorder({detail}) {
     detail.complete(true);
+    await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/questions/reorder?process_id=' + this.process.id, {
+      fromId: this.process.currentRound.questions[detail.from].id,
+      fromPosition: detail.from,
+      toId: this.process.currentRound.questions[detail.to].id,
+      toPosition: detail.to
+    }).toPromise();
   }
 
   sortQuestions() {
@@ -113,12 +123,13 @@ export class QuestionListPage {
 
       await alert.present();
     } else {
-      await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id,{}).toPromise();
+      await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, {}).toPromise();
       await this.navCtrl.navigateBack('/logged-in/menu/processes/single/' + this.process.id);
     }
   }
+
   async closeRound() {
-    await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id,{}).toPromise();
+    await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, {}).toPromise();
     await this.navCtrl.navigateBack('/logged-in/menu/processes/single/' + this.process.id);
   }
 

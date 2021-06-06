@@ -44,7 +44,7 @@ export class ClosePage {
       this.process = delphiProcess;
       await this.showToast(await this.translate.get('home.processes.single.end.success').toPromise());
       await this.router.navigateByUrl('/logged-in/menu/processes');
-    }).catch(async (errMessage: string) => {
+    }).catch(async (errMessage: string) => { 
       await this.showToast(await this.translate.get('home.processes.single.end.err').toPromise());
     });
   }
