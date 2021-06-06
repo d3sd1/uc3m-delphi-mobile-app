@@ -27,9 +27,6 @@ export class QuestionListPage {
       this.user = user;
     });
     this.route.snapshot.data['process'].subscribe((process: Process) => {
-      if (process.currentRound === undefined || process.currentRound === null) {
-        process.currentRound = new Round();
-      }
       this.process = process;
       this.orderQuestions();
     });

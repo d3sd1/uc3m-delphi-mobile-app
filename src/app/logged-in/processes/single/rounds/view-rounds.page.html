@@ -1,8 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()" [text]="'home.processes.single.single.rounds.back' | translate"
-                       defaultHref="/logged-in/home/menu/processes"></ion-back-button>
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single/' + process.id"
+                       routerDirection="back"
+                       [routerLink]="'/logged-in/menu/processes/single/' + process.id"
+                       text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'home.processes.single.single.rounds.title' | translate}}</ion-title>
   </ion-toolbar>
@@ -17,8 +19,7 @@
   <ion-list *ngFor="let round of process?.rounds; let roundIndex = index">
     <!-- Default reorder icon, end aligned items -->
     <ion-item
-      [color]="round.finished ? 'success':''"
-      [routerLink]="['/logged-in/home/menu/processes/view_questions']">
+      [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/rounds/' + round.id">
       <ion-label>{{round?.name}}</ion-label>
       <ion-reorder slot="start"></ion-reorder>
     </ion-item>

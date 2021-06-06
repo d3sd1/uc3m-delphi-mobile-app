@@ -4,6 +4,7 @@ import {WsService} from '../../ws/ws.service';
 import {Process} from '../../model/process';
 import {environment} from '../../../../environments/environment';
 import {BehaviorSubject} from 'rxjs';
+import {Round} from '../../model/round';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,13 @@ export class ProcessConsumer {
     // Bubble single from websocket updated data (single-channel-simplicity)
     this.userProcesses.subscribe((processes) => {
       processes.forEach((process) => {
+
+        if (process.currentRound === undefined || process.currentRound === null) {
+          process.currentRound = new Round();
+        }
+        if(process.currentRound.questions === undefined || process.currentRound.questions === null) {
+          process.currentRound.questions = [];
+        }
         if (!(process.id in this.userSingleProcesses)) {
           this.userSingleProcesses[process.id] = new BehaviorSubject<Process>(process);
         } else {

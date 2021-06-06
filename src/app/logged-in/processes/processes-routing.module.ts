@@ -9,6 +9,7 @@ import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
 import {UserResolver} from '../../core/router/resolver/user.resolver';
 import {CurrentProcessResolver} from '../../core/router/resolver/current-process.resolver';
 import {ClosePage} from './single/close/close.page';
+import {ViewRoundsPage} from './single/rounds/view-rounds.page';
 
 const routes: Routes = [
   {
@@ -43,6 +44,14 @@ const routes: Routes = [
       {
         path: 'close',
         component: ClosePage,
+        resolve: {
+          user: UserResolver,
+          process: CurrentProcessResolver,
+        },
+      },
+      {
+        path: 'rounds',
+        component: ViewRoundsPage,
         resolve: {
           user: UserResolver,
           process: CurrentProcessResolver,

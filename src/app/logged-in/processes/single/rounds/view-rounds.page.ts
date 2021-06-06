@@ -12,30 +12,21 @@ import {User} from '../../../../core/model/user';
 export class ViewRoundsPage {
 
   process: Process;
-  currentUser: User;
+  user: User;
 
   constructor(
     private navCtrl: NavController,
-    private route: ActivatedRoute,
-    private router: Router) {
-  }
-
-  async goBack() {
-    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
-      state: {process: this.process, currentUser: this.currentUser}
+    private route: ActivatedRoute) {
+    this.route.snapshot.data['user'].subscribe((user) => {
+      this.user = user;
+    });
+    this.route.snapshot.data['process'].subscribe((process) => {
+      this.process = process;
     });
   }
 
   sortRounds() {
-    this.process.rounds.sort((a, b) => {
-      // check if some1 is finished
-      if (!a.finished && b.finished) {
-        return -1;
-      } else if (a.finished && !b.finished) {
-        return 1;
-      }
-
-      // normal ordering
+    this.process.currentRound.questions.sort((a, b) => {
       if (a.orderPosition < b.orderPosition) {
         return -1;
       }
