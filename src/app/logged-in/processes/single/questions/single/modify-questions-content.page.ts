@@ -26,5 +26,7 @@ export class ModifyQuestionsContentPage {
       this.process = process;
     });
   }
+  //TODO:
+  // IF CURRENT ROUND STARTED, DO NOT ALLOW TO EDIT VALUES!!
 
 }

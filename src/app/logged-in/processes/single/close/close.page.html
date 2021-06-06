@@ -1,9 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()"
-                       [routerLink]="['/logged-in/home/menu/processes/single']"
-                       [text]="'home.processes.single.end.back' | translate"></ion-back-button>
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single/' + this.process.id"
+                       routerDirection="back"
+                       [routerLink]="'/logged-in/menu/processes/single/' + this.process.id"
+                       text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'home.processes.single.end.title' | translate}}</ion-title>
   </ion-toolbar>
@@ -22,6 +23,6 @@
 <ion-footer>
   <ion-toolbar>
     <ion-button (click)="closeProcess()"
-                expand="block">{{'home.processes.single.participate.send' | translate}}</ion-button>
+                expand="block">{{'home.processes.single.close.button' | translate}}</ion-button>
   </ion-toolbar>
 </ion-footer>

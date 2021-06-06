@@ -93,12 +93,15 @@
         "invitation": {
           "sent": "Invitación enviada"
         },
+        "close": {
+          "button": "Finalizar proceso"
+        },
         "rounds": {
           "title": "Rondas",
           "current": "Ver ronda actual",
-          "past": "Finalizadas"
+          "past": "Finalizadas",
+          "users": "Participantes"
         },
-        "users": "Participantes",
         "end": {
           "title": "Finalizar proceso",
           "back": "Cancelar",
@@ -142,6 +145,11 @@
           "title": "Editar proceso",
           "saving": "Guardando...",
           "saved": "Proceso guardado correctamente",
+          "finish": {
+            "error": {
+              "round_started": "No se puede cerrar un proceso si tiene una ronda activa."
+            }
+          },
           "round": "Ronda {{round}}",
           "question": "Pregunta {{questionquestion}}"
         },

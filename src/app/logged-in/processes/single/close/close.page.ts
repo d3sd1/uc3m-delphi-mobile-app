@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
+import {User} from '../../../../core/model/user';
 
 @Component({
   selector: 'delphi-close',
@@ -14,6 +15,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class ClosePage {
 
   process: Process;
+  user: User;
   conclusion: string;
 
   constructor(
@@ -23,27 +25,27 @@ export class ClosePage {
     private httpClient: HttpClient,
     private toastController: ToastController,
     private translate: TranslateService) {
-  }
-
-  async goBack() {
-    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single', {
-      state: {process: this.process}
+    this.route.snapshot.data['user'].subscribe((user) => {
+      this.user = user;
+    });
+    this.route.snapshot.data['process'].subscribe((process) => {
+      this.process = process;
     });
   }
+
 
   public async closeProcess() {
     if (this.conclusion === '' || this.conclusion === undefined || this.conclusion === null) {
       await this.showToast(await this.translate.get('home.processes.single.end.form.err_empty').toPromise());
       return;
     }
-    this.process.finalComment = 'acabar esta parte plsss'; // TODO <---
+    this.process.finalComment = this.conclusion;
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/end?process_id=' + this.process.id, this.process).toPromise().then(async (delphiProcess: Process) => {
       this.process = delphiProcess;
       await this.showToast(await this.translate.get('home.processes.single.end.success').toPromise());
-      await this.goBack();
+      await this.router.navigateByUrl('/logged-in/menu/processes');
     }).catch(async (errMessage: string) => {
       await this.showToast(await this.translate.get('home.processes.single.end.err').toPromise());
-      await this.goBack();
     });
   }
 

@@ -8,7 +8,7 @@ import {Question} from '../../../core/model/question';
 import {QuestionType} from '../../../core/model/question-type';
 import {ItemReorderEventDetail} from '@ionic/core';
 import {Round} from '../../../core/model/round';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Media} from '../../../core/model/media';
 import {TranslateService} from '@ngx-translate/core';
@@ -31,12 +31,12 @@ export class SingleProcessPage {
               public loadingController: LoadingController,
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private router: Router) {
     this.route.snapshot.data['user'].subscribe((user) => {
       this.user = user;
     });
     this.route.snapshot.data['process'].subscribe((process) => {
-      console.log('process is', process)
       this.process = process;
     });
   }
@@ -119,6 +119,14 @@ export class SingleProcessPage {
       toast.dismiss();
     }, 3000);
     return toast;
+  }
+
+  async finishProcess() {
+    if(this.process?.currentRound?.started){
+      await this.showToast('home.processes.single.single.finish.error.round_started');
+      return;
+    }
+    await this.router.navigateByUrl('/logged-in/menu/processes/single/' + this.process.id + '/close');
   }
 
 }

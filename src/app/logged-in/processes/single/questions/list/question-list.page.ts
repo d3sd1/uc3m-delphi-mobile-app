@@ -3,8 +3,6 @@ import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {Question} from '../../../../../core/model/question';
-import {QuestionType} from '../../../../../core/model/question-type';
 import {Round} from '../../../../../core/model/round';
 import {environment} from '../../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
@@ -19,6 +17,7 @@ export class QuestionListPage {
   process: Process;
   user: User;
   currentTime = (new Date()).toISOString();
+
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
@@ -60,20 +59,8 @@ export class QuestionListPage {
     });
   }
 
-  addQuestion() {
-    const question = new Question();
-    question.type = QuestionType.QUALITATIVE;
-    this.process.currentRound.questions.push(
-      question
-    );
-  }
-
   deleteQuestion(questionIndex: number) {
     this.process?.currentRound.questions.splice(questionIndex, 1);
-  }
-
-  async goBack() {
-    await this.saveQuestions();
   }
 
   async updateBasicData() {
@@ -83,12 +70,12 @@ export class QuestionListPage {
     }).toPromise();
   }
 
-  async saveQuestions() {
+  async startRound() {
     let questionsMissing = false;
     this.process?.currentRound.questions?.forEach((question) => {
-      if (question.question === null ||
-        question.question === '' ||
-        question.question === undefined) {
+      if (question.name === null ||
+        question.name === '' ||
+        question.name === undefined) {
         questionsMissing = true;
       }
     });
@@ -126,8 +113,130 @@ export class QuestionListPage {
 
       await alert.present();
     } else {
-      await this.navCtrl.navigateBack('/logged-in/home/menu/processes/modify_rounds');
+      await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id,{}).toPromise();
+      await this.navCtrl.navigateBack('/logged-in/menu/processes/single/' + this.process.id);
     }
+  }
+  async closeRound() {
+    await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id,{}).toPromise();
+    await this.navCtrl.navigateBack('/logged-in/menu/processes/single/' + this.process.id);
+  }
+
+
+  async addQuestionStep1() {
+    const alert = await this.alertController.create({
+      header: 'Crear pregunta',
+      inputs: [
+        {
+          name: 'question',
+          type: 'textarea',
+          placeholder: 'Pregunta',
+          attributes: {
+            maxlength: 5000,
+          }
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Siguiente',
+          handler: (alertData) => {
+            this.addQuestionStep2(alertData.question);
+            alert.dismiss();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async addQuestionStep2(name: string) {
+    let selectedQuestionType = 'QUALITATIVE';
+    const alert = await this.alertController.create({
+      header: 'Tipo de pregunta',
+      inputs: [
+        {
+          type: 'radio',
+          label: 'Cualitativa',
+          cssClass: 'item-text-wrap',
+          checked: true,
+          handler: () => {
+            selectedQuestionType = 'QUALITATIVE';
+          }
+        },
+        {
+          type: 'radio',
+          label: 'Cuantitativa',
+          cssClass: 'item-text-wrap',
+          handler: () => {
+            selectedQuestionType = 'QUANTITATIVE';
+          }
+        },
+        {
+          type: 'radio',
+          label: 'Booleana',
+          cssClass: 'item-text-wrap',
+          handler: () => {
+            selectedQuestionType = 'BOOLTYPE';
+          }
+        },
+        {
+          type: 'radio',
+          label: 'Categorías',
+          cssClass: 'item-text-wrap',
+          handler: () => {
+            selectedQuestionType = 'CATCUSTOM';
+          }
+        },
+        {
+          type: 'radio',
+          label: 'Escala de Likert',
+          cssClass: 'item-text-wrap',
+          handler: () => {
+            selectedQuestionType = 'CATLIKERT';
+          }
+        },
+        {
+          type: 'radio',
+          label: 'Selección múltiple',
+          cssClass: 'item-text-wrap',
+          handler: () => {
+            selectedQuestionType = 'CATMULTI';
+          }
+        },
+        {
+          type: 'radio',
+          label: 'Categorías ponderadas',
+          cssClass: 'item-text-wrap',
+          handler: () => {
+            selectedQuestionType = 'CATPOND';
+          }
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary'
+        },
+        {
+          text: 'Crear',
+          handler: async (alertData) => {
+            await alert.dismiss();
+            await this.httpClient.post(environment.apiUrl + '/v1/process/questions/add?process_id=' + this.process.id, {
+              name: name,
+              type: selectedQuestionType
+            }).toPromise();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

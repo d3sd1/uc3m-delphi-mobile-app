@@ -21,6 +21,7 @@
         </ion-segment>
       </ion-toolbar>
     </ion-list-header>
+    <delphi-empty *ngIf="filteredProcesses?.length == 0"></delphi-empty>
     <ion-item *ngFor="let process of filteredProcesses" (click)="editProcess(process)" color="">
       <ion-thumbnail slot="start">
         <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"

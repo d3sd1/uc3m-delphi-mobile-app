@@ -15,7 +15,7 @@
   <ion-list>
     <ion-item-group *ngFor="let answer of answers; let questionIndex = index">
       <ion-item-divider>
-        <ion-label>{{answer.question.question}}</ion-label>
+        <ion-label>{{answer.question.name}}</ion-label>
       </ion-item-divider>
 
       <ion-item *ngIf="answer.question?.type === 'QUALITATIVE'">

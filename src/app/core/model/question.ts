@@ -5,7 +5,7 @@ export class Question {
   id: number;
   minVal: number = 0;
   maxVal: number = 10;
-  question: string;
+  name: string;
   type: QuestionType;
   orderPosition: number;
   categories: Category[] = [];

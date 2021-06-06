@@ -8,6 +8,7 @@ import {ModifyQuestionsContentPage} from './single/questions/single/modify-quest
 import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
 import {UserResolver} from '../../core/router/resolver/user.resolver';
 import {CurrentProcessResolver} from '../../core/router/resolver/current-process.resolver';
+import {ClosePage} from './single/close/close.page';
 
 const routes: Routes = [
   {
@@ -34,6 +35,14 @@ const routes: Routes = [
       {
         path: 'basic',
         component: SingleProcessPage,
+        resolve: {
+          user: UserResolver,
+          process: CurrentProcessResolver,
+        },
+      },
+      {
+        path: 'close',
+        component: ClosePage,
         resolve: {
           user: UserResolver,
           process: CurrentProcessResolver,
