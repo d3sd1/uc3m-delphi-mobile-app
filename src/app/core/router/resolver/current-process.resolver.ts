@@ -1,5 +1,5 @@
-import {Injectable, OnDestroy} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, Router} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 import {Process} from '../../model/process';
 import {ProcessConsumer} from '../../consumer/process/process.consumer';

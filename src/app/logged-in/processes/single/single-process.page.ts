@@ -1,13 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {IonContent, IonReorderGroup, LoadingController, ToastController} from '@ionic/angular';
 import {Process} from '../../../core/model/process';
 import {User} from '../../../core/model/user';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {Question} from '../../../core/model/question';
-import {QuestionType} from '../../../core/model/question-type';
-import {ItemReorderEventDetail} from '@ionic/core';
-import {Round} from '../../../core/model/round';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Media} from '../../../core/model/media';

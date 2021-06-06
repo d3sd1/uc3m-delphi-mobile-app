@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {User} from '../../../../core/model/user';
 import {environment} from '../../../../../environments/environment';
 import {Process} from '../../../../core/model/process';
-import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
 

@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {BehaviorSubject, ReplaySubject, Subject} from 'rxjs';
+import {BehaviorSubject, ReplaySubject} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {WsChannel} from './ws-channel';
-import {QueueScheduler} from 'rxjs/internal/scheduler/QueueScheduler';
-import {QueueAction} from 'rxjs/internal/scheduler/QueueAction';
 
 @Injectable({
   providedIn: 'root'

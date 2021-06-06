@@ -1,10 +1,8 @@
 import {Component} from '@angular/core';
-import {NavController, ToastController} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
-import {Category} from '../../../../../core/model/category';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-rounds',

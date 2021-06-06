@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
 

@@ -3,7 +3,6 @@ import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {Round} from '../../../../../core/model/round';
 import {environment} from '../../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 
@@ -46,7 +45,7 @@ export class QuestionListPage {
 
   public async onItemReorder({detail}) {
     detail.complete(true);
-    if(this.process.currentRound.questions[detail.to] === undefined) {
+    if (this.process.currentRound.questions[detail.to] === undefined) {
       return;
     }
     await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/questions/reorder?process_id=' + this.process.id, {
