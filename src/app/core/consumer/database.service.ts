@@ -26,8 +26,7 @@ export class DatabaseService {
     await this.createDatabase();
   }
 
-  getDatabase(): Promise<SQLiteObject> {
-    return new Promise<SQLiteObject>((resolve) => {
+  getDatabase(): Promise<SQLiteObject> {    return new Promise<SQLiteObject>((resolve) => {
       if (this.database === null) {
         setTimeout(() => {
           resolve(this.getDatabase());

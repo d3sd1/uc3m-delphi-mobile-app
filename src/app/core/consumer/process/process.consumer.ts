@@ -20,6 +20,7 @@ export class ProcessConsumer {
     if (this.userProcessesCache === null) {
       this.userProcessesCache = (await this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list').toPromise());
       this.userProcesses.next(this.userProcessesCache);
+      this.listenUpdates();
     }
     return this.userProcesses;
   }
@@ -32,6 +33,6 @@ export class ProcessConsumer {
   }
 
   private listenUpdates() {
-    this.wsService.subscribe('process/all', true, this.userProcesses);
+    this.wsService.subscribe('process/list', true, this.userProcesses);
   }
 }

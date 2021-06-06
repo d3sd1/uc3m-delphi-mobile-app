@@ -24,17 +24,13 @@ export class ProcessesPage {
               private currentProcessConsumer: CurrentProcessConsumer,
               private navCtrl: NavController) {
     this.route.snapshot.data['processes'].subscribe((processes) => {
-      console.log('rcvd',processes)
       this.processes = processes;
+      this.filterProcesses();
     });
   }
 
-  async ngOnInit() {
-    this.filterProcesses();
-  }
-
   async editProcess(process) {
-    await this.currentProcessConsumer.setCurrentProcess(process);
+    this.currentProcessConsumer.setCurrentProcess(process);
     await this.navCtrl.navigateForward('/logged-in/menu/processes/single');
   }
 

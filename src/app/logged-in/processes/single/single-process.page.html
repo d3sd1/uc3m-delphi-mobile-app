@@ -33,13 +33,11 @@
 
 
     <ion-item>
-      <ion-input (ngModelChange)="syncProcess()"
-                 [(ngModel)]="process.name"
+      <ion-input [(ngModel)]="process.name"
                  [placeholder]="'home.processes.single.name' | translate"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-textarea (ngModelChange)="syncProcess()"
-                    [(ngModel)]="process.description"
+      <ion-textarea [(ngModel)]="process.description"
                     [placeholder]="'home.processes.single.desc'  | translate"></ion-textarea>
     </ion-item>
   </ion-list>
@@ -82,9 +80,3 @@
   </ion-list>
 
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-button (click)="saveProcess()" expand="block">{{ 'home.processes.single.save'  | translate }}</ion-button>
-  </ion-toolbar>
-</ion-footer>

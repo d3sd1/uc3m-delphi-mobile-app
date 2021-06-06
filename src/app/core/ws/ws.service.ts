@@ -1,21 +1,18 @@
 import {Injectable} from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, ReplaySubject, Subject} from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {WsChannel} from './ws-channel';
+import {QueueScheduler} from 'rxjs/internal/scheduler/QueueScheduler';
+import {QueueAction} from 'rxjs/internal/scheduler/QueueAction';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WsService {
-  channels = [];
+  pendingConnectionChannels = new ReplaySubject();
   private stompClient: Stomp = null;
-
-  //TODO -> store subscribed channels and handle reconnect with 'em
-
-  // if socket fails
-  constructor() {
-  }
 
   async connectWs(jwt: string) {
     if (jwt === null || jwt === '' || jwt === undefined) {
@@ -24,7 +21,7 @@ export class WsService {
     let ws = new SockJS(environment.apiUrl + '/ws');
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({jwt: jwt}, (frame) => {
-      this.reconnectChannels();
+      this.channelConnector();
     }, (e) => {
       console.error(e);
       setTimeout(() => {
@@ -39,23 +36,27 @@ export class WsService {
     this.stompClient.send('/ws/publisher/' + channel, {}, JSON.stringify(body));
   }
 
-  reconnectChannels() {
-    this.channels.forEach((channel) => {
-      this.subscribe(channel.channel, channel.privateChannel, channel.subject);
+  channelConnector() {
+    this.pendingConnectionChannels.subscribe((channel: WsChannel) => {
+      this.stompClient.subscribe((channel.privateChannel ? '/private' : '') + '/ws/subscribe/' + channel.channel, (message) => {
+        const wsMsg = JSON.parse(message.body);
+        const mode = wsMsg.mode;
+        const data = wsMsg.data;
+        if(mode == 'ADD') {
+          channel.subject.getValue().push(data);
+        } else if(mode == 'MODIFY') {
+          channel.subject.getValue().filter(iData => iData.id !== data.id);
+          channel.subject.getValue().push(data);
+        } else if(mode == 'REMOVE') {
+          channel.subject.getValue().filter(iData => iData.id !== data.id);
+        }
+        channel.subject.next(channel.subject.getValue());
+      });
     });
   }
 
   subscribe(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
-    //TODO verify not connected before
-    if (this.stompClient.status === 'CONNECTED') {
-      this.stompClient.subscribe((privateChannel ? '/private' : '') + '/ws/subscribe/' + channel, (message) => {
-        subject.next(JSON.parse(message.body));
-      });
-    } else {
-      this.channels.push({
-        channel: channel, privateChannel: privateChannel, subject: subject
-      });
-    }
+    this.pendingConnectionChannels.next(new WsChannel(channel, privateChannel, subject));
   }
 
   async disconnectWs() {

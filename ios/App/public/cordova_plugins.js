@@ -10,6 +10,14 @@
         ]
         },
       {
+          "id": "cordova-plugin-app-version.AppVersionPlugin",
+          "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+          "pluginId": "cordova-plugin-app-version",
+        "clobbers": [
+          "cordova.getAppVersion"
+        ]
+        },
+      {
           "id": "cordova-plugin-geolocation.geolocation",
           "file": "plugins/cordova-plugin-geolocation/www/geolocation.js",
           "pluginId": "cordova-plugin-geolocation",
@@ -218,6 +226,7 @@
     module.exports.metadata =
     // TOP OF METADATA
     {
+      "cordova-plugin-app-version": "0.1.12",
       "cordova-plugin-file": "6.0.2",
       "cordova-plugin-geolocation": "4.0.2",
       "cordova-sqlite-storage": "6.0.0"
