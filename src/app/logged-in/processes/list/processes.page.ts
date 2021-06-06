@@ -4,6 +4,7 @@ import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
 import {BehaviorSubject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AlertController, NavController} from '@ionic/angular';
+import {User} from '../../../core/model/user';
 
 @Component({
   selector: 'delphi-processes',
@@ -15,6 +16,7 @@ export class ProcessesPage {
   processesUpdater: BehaviorSubject<Process[]>;
   processes: Process[] = null;
   filteredProcesses: Process[] = null;
+  user: User;
 
   constructor(private processService: ProcessConsumer,
               private route: ActivatedRoute,
@@ -24,6 +26,9 @@ export class ProcessesPage {
     this.route.snapshot.data['processes'].subscribe((processes) => {
       this.processes = processes;
       this.filterProcesses();
+    });
+    this.route.snapshot.data['user'].subscribe((user) => {
+      this.user = user;
     });
   }
 
@@ -50,6 +55,9 @@ export class ProcessesPage {
       }
       return 0;
     });
+  }
+  isCoordinator(process: Process): boolean {
+    return process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
   async addProcess() {

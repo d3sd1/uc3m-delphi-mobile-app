@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/menu/processes/single/question/list"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single/' + process.id + '/question/list'"
                        routerDirection="back"
-                       routerLink="/logged-in/menu/processes/single/question/list"
+                       [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/question/list'"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Modificar preguntas</ion-title>

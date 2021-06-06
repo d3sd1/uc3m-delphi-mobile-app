@@ -2,20 +2,20 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [text]="'home.processes.user_picker.back' | translate"
-                       defaultHref="'/logged-in/menu/processes/single"
+                       [defaultHref]="'/logged-in/menu/processes/single/' + process.id"
                        routerDirection="back"
-                       routerLink="'/logged-in/menu/processes/single"></ion-back-button>
+                       [routerLink]="'/logged-in/menu/processes/single/' + process.id"></ion-back-button>
     </ion-buttons>
     <ion-title>{{'home.processes.role.' + type | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar (ionChange)="filterExperts()" [(ngModel)]="filterCriterial"
+  <ion-searchbar *ngIf="isCoordinator()" (ionChange)="filter()" [(ngModel)]="filterCriterial"
                  [placeholder]="'home.processes.user_picker.search.title' | translate:{role: 'home.processes.role.' + type | translate}"
                  animated debounce="500"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
-    <ion-item (click)="pushUser(user)"
+    <ion-item (click)="addUser(user.email)"
               *ngFor="let user of usersFiltered">
       <ion-avatar slot="start">
         <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="user?.photo !== undefined"
@@ -26,13 +26,13 @@
     </ion-item>
   </ion-list>
   <ion-item
-    *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && !this.validateEmail(this.filterCriterial)">
+    *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && !this.isEmail(this.filterCriterial)">
     <ion-title>{{'home.processes.user_picker.search.no_results' | translate}}</ion-title>
   </ion-item>
   <ion-item
-    *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && this.validateEmail(this.filterCriterial)">
+    *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && this.isEmail(this.filterCriterial) && this.isNewUser(this.filterCriterial)">
     <ion-title></ion-title>
-    <ion-button (click)="inviteUser(this.filterCriterial)" expand="block">Invitar a <{{this.filterCriterial}}>
+    <ion-button (click)="addUser(this.filterCriterial)" expand="block">Invitar a <{{this.filterCriterial}}>
     </ion-button>
   </ion-item>
   <ion-item *ngIf="this.getUsers().length == 0">
@@ -40,14 +40,14 @@
   </ion-item>
 
   <div *ngFor="let user of this.getUsers()">
-    <ion-chip [color]="user.id === currentUser?.id?'primary':'secondary'">
+    <ion-chip [color]="user.id === user?.id?'primary':'secondary'">
       <ion-avatar>
         <img *ngIf="user.photo !== undefined" [src]="user.photo"
              (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
         <img *ngIf="user.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-avatar>
       <ion-label>{{user.name}} {{user.surnames}} <{{ user.email }}></ion-label>
-      <ion-icon *ngIf="user.id !== currentUser?.id" name="close-circle" (click)="removeUser(user)"></ion-icon>
+      <ion-icon *ngIf="user.id !== currentUser?.id && isCoordinator()" name="close-circle" (click)="removeUser(user)"></ion-icon>
     </ion-chip>
   </div>
 

@@ -16,7 +16,7 @@ export class UserPickerPage {
   filterCriterial: string = '';
   currentUser: User;
   type;
-  usersFiltered = [];
+  usersFiltered: User[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -34,14 +34,21 @@ export class UserPickerPage {
     });
   }
 
-  validateEmail(email) {
+  isEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   }
+  isNewUser(email) {
+    return this.usersFiltered.findIndex((user) => {
+      return user.email === email;
+    }) === -1;
+  }
 
-  inviteUser(email: string) {
-    this.httpClient.put<User>(environment.apiUrl + '/v1/process/invite?email=' + email, {}).subscribe((user: User) => {
-      this.pushUser(user);
+  addUser(email: string) {
+    this.httpClient.put<User>(environment.apiUrl + '/v1/process/add_user?email=' + email + '&process_id=' + this.process.id +
+      '&type=' + this.type.toLowerCase(), {}).subscribe((user: User) => {
+      this.filterCriterial = '';
+
     }, (err) => {
       console.error(err);
     }, () => {
@@ -49,26 +56,30 @@ export class UserPickerPage {
     });
     // TODO handle err
   }
+  isCoordinator(): boolean {
+    return this.process.coordinators.findIndex((user) => user.id === this.currentUser.id) !== -1;
+  }
 
-  async filterExperts() {
+
+  async filter() {
     if (this.filterCriterial === '' || this.filterCriterial === null) {
       return;
     }
-    const users = await this.httpClient.get<User[]>(environment.apiUrl + '/v1/process/filter/expert?criteria=' + this.filterCriterial).toPromise();
-
+    await this.httpClient.get<User[]>(environment.apiUrl + '/v1/process/filter?criteria=' + this.filterCriterial + '&process_id='
+    + this.process.id).subscribe((users) => {
+      this.usersFiltered = users;
+    }, (err) => {
+      console.error(err)
+    });
   }
+  async removeUser(user: User) {
+    this.httpClient.delete<User>(environment.apiUrl + '/v1/process/rm_user?user_id=' + user.id + '&process_id=' + this.process.id, {}).subscribe((user: User) => {
 
-  pushUser(newUser: User) {
-    if(this.type.toLowerCase() == 'coordinator') {
-      this.process.coordinators.push(newUser);
-    }
-    else if(this.type.toLowerCase() == 'expert') {
-      this.process.experts.push(newUser);
-    }
-    this.filterCriterial = '';
-  }
-  removeUser(user: User) {
-    console.log('remove user')
+    }, (err) => {
+      console.error(err);
+    }, () => {
+
+    });
   }
 
   getUsers() {

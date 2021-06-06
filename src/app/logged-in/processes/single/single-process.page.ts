@@ -41,6 +41,10 @@ export class SingleProcessPage {
     });
   }
 
+  isCoordinator(): boolean {
+    return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
+  }
+
   async uploadImage() {
     const formData = new FormData();
     formData.append('image', this.uploadPicture.nativeElement.files[0]);

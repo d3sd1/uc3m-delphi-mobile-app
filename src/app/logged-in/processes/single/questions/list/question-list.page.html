@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/logged-in/menu/processes/single"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single/' + process.id"
                        routerDirection="back"
-                       routerLink="/logged-in/menu/processes/single"
+                       [routerLink]="'/logged-in/menu/processes/single/' + process.id"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Planificar ronda</ion-title>
@@ -35,7 +35,7 @@
         <ion-item-option (click)="deleteQuestion(questionIndex)" color="danger">Eliminar</ion-item-option>
       </ion-item-options>
       <ion-item
-        [routerLink]="['/logged-in/menu/processes/single/question/single']">
+        [routerLink]="['/logged-in/menu/processes/single' + process.id + '/question/single']">
         {{question.question}}
         <ion-reorder slot="start"></ion-reorder>
       </ion-item>

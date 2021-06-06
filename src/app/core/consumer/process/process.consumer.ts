@@ -17,17 +17,22 @@ export class ProcessConsumer {
   constructor(private httpClient: HttpClient, private wsService: WsService) {
   }
 
-  async all(): Promise<BehaviorSubject<Process[]>> {
+  private async initializeLoaders() {
     if (this.userProcessesCache === null) {
       this.userProcessesCache = (await this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list').toPromise());
       this.userProcesses.next(this.userProcessesCache);
       this.listenUpdates();
     }
+  }
+
+  async all(): Promise<BehaviorSubject<Process[]>> {
+    await this.initializeLoaders();
     return this.userProcesses;
   }
 
   async getById(id: number): Promise<BehaviorSubject<Process>> {
-    return new Promise(((resolve, reject) => {
+    return new Promise((async (resolve, reject) => {
+      await this.initializeLoaders();
       if (!(id in this.userSingleProcesses)) {
         reject("Id not found for id " + id);
       }
