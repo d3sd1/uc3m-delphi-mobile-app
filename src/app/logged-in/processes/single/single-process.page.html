@@ -18,7 +18,7 @@
            *ngIf="process?.pictureUrl !== undefined"
            [src]="process.pictureUrl"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
-      <ion-button color="light">
+      <ion-button color="light" *ngIf="isCoordinator()">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">
         </ion-icon>
       </ion-button>
@@ -36,19 +36,23 @@
       <ion-input [(ngModel)]="process.name"
                  debounce="200"
                  (ngModelChange)="updateBasicFields()"
-                 [placeholder]="'home.processes.single.name' | translate"></ion-input>
+                 [placeholder]="'home.processes.single.name' | translate"
+                 [readonly]="!isCoordinator()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.description"
                     debounce="200"
                     (ngModelChange)="updateBasicFields()"
-                    [placeholder]="'home.processes.single.desc'  | translate"></ion-textarea>
+                    [placeholder]="'home.processes.single.desc'  | translate"
+                    [readonly]="!isCoordinator()"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.objectives"
                     debounce="200"
                     (ngModelChange)="updateBasicFields()"
-                    [placeholder]="'home.processes.single.desc'  | translate">Objetivos del proceso</ion-textarea>
+                    [placeholder]="'home.processes.single.desc'  | translate"
+                    [readonly]="!isCoordinator()">Objetivos del proceso
+      </ion-textarea>
     </ion-item>
   </ion-list>
 
@@ -58,7 +62,8 @@
         {{ 'home.processes.single.rounds.title'  | translate }}
       </ion-label>
     </ion-list-header>
-    <ion-item routerDirection="forward" [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/question/list'">
+    <ion-item routerDirection="forward"
+              [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/question/list'">
       <ion-label>{{ 'home.processes.single.rounds.enter' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.pastRounds === undefined ? 0 : process?.pastRounds?.length}}Preguntas
       </ion-badge>

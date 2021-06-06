@@ -51,6 +51,7 @@ export class HomePage implements ViewDidEnter {
   }
 
   async needsOnboard() {
+    console.log("NEEDS ONBOARD? => ",this.user.needsOnboard)
     // Somtrimes needsOnboard is threated as string.
     // @ts-ignore
     if (this.user.needsOnboard == 'true' || this.user.needsOnboard == true) {
