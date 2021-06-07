@@ -9,11 +9,11 @@
     <ion-item-divider>
       <ion-label>Categorías</ion-label>
       <ion-badge
-        slot="end">{{process.currentRound[questionIdx].categories.length}}</ion-badge>
+        slot="end">{{process.currentRound.questions[questionIdx]?.categories?.length}}</ion-badge>
     </ion-item-divider>
 
     <ion-item
-      *ngFor="let category of process.currentRound[questionIdx].categories; let i = index">
+      *ngFor="let category of process.currentRound.questions[questionIdx]?.categories; let i = index">
       <ion-label>{{category.catName}}</ion-label>
       <ion-icon *ngIf="!process.currentRound.started" (click)="delCategory(category)" name="trash" slot="end"></ion-icon>
     </ion-item>
