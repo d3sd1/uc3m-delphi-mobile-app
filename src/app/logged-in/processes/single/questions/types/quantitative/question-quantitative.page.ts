@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Question} from '../../../../../../core/model/question';
 import {Process} from '../../../../../../core/model/process';
 
@@ -9,7 +9,8 @@ import {Process} from '../../../../../../core/model/process';
 })
 export class QuestionQuantitativePage {
   @Input()
-  question: Question;
+  questionIdx: number;
   @Input()
   process: Process;
+
 }

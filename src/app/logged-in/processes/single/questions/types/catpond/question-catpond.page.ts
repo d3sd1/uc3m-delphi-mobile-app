@@ -10,17 +10,17 @@ import {Process} from '../../../../../../core/model/process';
 })
 export class QuestionCatpondPage {
   @Input()
-  question: Question;
+  questionIdx: number;
   @Input()
   process: Process;
   currentCategory = '';
   responseRange = 0;
   addCategory() {
-    this.question.categories.push(new Category(this.currentCategory));
+    this.process.currentRound[this.questionIdx].categories.push(new Category(this.currentCategory));
     this.currentCategory = '';
   }
   delCategory(category: Category) {
-    this.question.categories = this.question.categories.filter((cat) => {
+    this.process.currentRound[this.questionIdx].categories = this.process.currentRound[this.questionIdx].categories.filter((cat) => {
       return category.catName !== cat.catName;
     });
   }

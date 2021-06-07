@@ -9,7 +9,7 @@ import {Process} from '../../../../../../core/model/process';
 })
 export class QuestionCatlikertPage {
   @Input()
-  question: Question;
+  questionIdx: number;
   @Input()
   process: Process;
 }

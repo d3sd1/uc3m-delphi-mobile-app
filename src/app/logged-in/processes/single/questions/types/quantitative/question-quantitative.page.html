@@ -1,15 +1,17 @@
 <ion-item>
-  <ion-input [value]="question.minVal"
+  <ion-input [(ngModel)]="process.currentRound.questions[questionIdx].minVal"
              placeholder="Valor mínimo"
-             [readonly]="process.currentRound.started"></ion-input>
-  <ion-input [value]="question.maxVal"
+             [readonly]="process.currentRound.started"
+  ></ion-input>
+  <ion-input [ngModel]="process.currentRound.questions[questionIdx].maxVal"
              placeholder="Valor máximo"
              [readonly]="process.currentRound.started"></ion-input>
 </ion-item>
-<ion-range [max]="10"
-           [min]="0"
+<ion-range [max]="process.currentRound.questions[questionIdx].maxVal"
+           [min]="process.currentRound.questions[questionIdx].minVal"
            color="primary"
-           disabled="true" snaps step="1" value="5" [disabled]="process.currentRound.started">
+           disabled="true" snaps step="1" [value]="process.currentRound.questions[questionIdx].maxVal / 2" [disabled]="process.currentRound.started">
   <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
   <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
 </ion-range>
+
