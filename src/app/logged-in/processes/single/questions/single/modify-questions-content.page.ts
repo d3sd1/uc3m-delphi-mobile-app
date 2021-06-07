@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {NavController, ToastController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {Question} from '../../../../../core/model/question';
+import {environment} from '../../../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'delphi-rounds',
@@ -18,7 +20,8 @@ export class ModifyQuestionsContentPage {
 
   constructor(
     private navCtrl: NavController,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private httpClient: HttpClient,
+    private toastController: ToastController) {
     this.route.snapshot.data['user'].subscribe((user) => {
       this.currentUser = user;
     });
@@ -33,7 +36,23 @@ export class ModifyQuestionsContentPage {
   }
 
 
-  //TODO:
-  // IF CURRENT ROUND STARTED, DO NOT ALLOW TO EDIT VALUES!!
-
+  async updateQuestion() {
+    if (this.process.currentRound.questions[this.questionIdx].name == '') {
+      await this.showToast('Debes introducir una pregunta.');
+      return;
+    }
+    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
+      this.process.currentRound.questions[this.questionIdx]).toPromise();
+  }
+  private async showToast(msg: string) {
+    const toast = await this.toastController.create({
+      position: 'top',
+      message: msg,
+    });
+    await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
+    return toast;
+  }
 }
