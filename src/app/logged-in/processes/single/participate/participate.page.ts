@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
-import {AlertController, IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
+import {AlertController, IonReorderGroup, IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
@@ -111,6 +111,7 @@ export class ParticipatePage {
       duration: 2000
     });
     await loading.present();
+    console.log(this.answers)
     await this.httpClient.post(environment.apiUrl + '/v1/process/question/answers?process_id=' + this.process.id, this.answers).toPromise();
     await loading.dismiss();
     await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id); // In case round closes
@@ -169,6 +170,29 @@ export class ParticipatePage {
 
   async updateAnswer(currentQuestion, $event) {
     this.answers[currentQuestion].response = $event.target.value;
+  }
+  async addCatAnswer(currentQuestion, $event) {
+    if(Array.isArray($event.target.value)) {
+      if($event.target.value.length > this.answers[currentQuestion].question.maxSelectable) {
+        $event.target.value = '';
+        await this.showToast('Debes seleccionar menos del máximo de seleccionables para esta ronda: ' + this.answers[currentQuestion].question.maxSelectable);
+        return;
+      }
+      this.answers[currentQuestion].response = JSON.stringify($event.target.value);
+    } else {
+      this.answers[currentQuestion].response = 'cat_id:' + $event.target.value;
+    }
+  }
+
+  async addCatPondAnswer(currentQuestion, $event, categoryId) {
+    let obj = {};
+    try {
+      obj = JSON.parse(this.answers[currentQuestion].response);
+    } catch(e) {
+      obj = {};
+    }
+    obj[categoryId] = $event.target.value;
+    this.answers[currentQuestion].response = JSON.stringify(obj);
   }
 
 }
