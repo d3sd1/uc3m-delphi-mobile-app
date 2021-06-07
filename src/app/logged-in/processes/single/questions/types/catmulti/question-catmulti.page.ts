@@ -45,17 +45,13 @@ export class QuestionCatmultiPage implements OnInit{
     }
     this.process.currentRound.questions[this.questionIdx].categories.push(new Category(this.currentCategory));
     this.currentCategory = '';
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.process.currentRound.questions[this.questionIdx]).toPromise();
-    this.reorderCategories();
+    await this.updateQuestion();
   }
   async delCategory(category: Category) {
     this.process.currentRound.questions[this.questionIdx].categories = this.process.currentRound.questions[this.questionIdx].categories.filter((cat) => {
       return category.catName !== cat.catName;
     });
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.process.currentRound.questions[this.questionIdx]).toPromise();
-    this.reorderCategories();
+    await this.updateQuestion();
   }
   private reorderCategories() {
     this.process.currentRound.questions[this.questionIdx].categories.sort((n1, n2) => {
@@ -67,6 +63,21 @@ export class QuestionCatmultiPage implements OnInit{
       }
       return 0;
     });
+  }
+  async updateQuestion() {
+    if(this.process.currentRound.questions[this.questionIdx].maxSelectable > this.process.currentRound.questions[this.questionIdx].categories.length) {
+      this.showToast('El máximo seleccionable debe ser igual o menor que el número de categorías (' + this.process.currentRound.questions[this.questionIdx].categories.length + ')');
+      this.process.currentRound.questions[this.questionIdx].maxSelectable = this.process.currentRound.questions[this.questionIdx].categories.length;
+    } else
+    if(this.process.currentRound.questions[this.questionIdx].maxSelectable == 0
+    || this.process.currentRound.questions[this.questionIdx].maxSelectable === null
+    || this.process.currentRound.questions[this.questionIdx].maxSelectable === undefined) {
+      this.showToast('El máximo seleccionable debe ser igual o mayor a 1');
+      this.process.currentRound.questions[this.questionIdx].maxSelectable = 1;
+    }
+    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
+      this.process.currentRound.questions[this.questionIdx]).toPromise();
+    this.reorderCategories();
   }
   private async showToast(msg: string) {
     const toast = await this.toastController.create({

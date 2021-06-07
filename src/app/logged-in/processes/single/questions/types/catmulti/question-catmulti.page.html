@@ -1,5 +1,12 @@
 
 <ion-item>
+  <ion-label>Máximas selecciones</ion-label>
+  <ion-input type="number" [(ngModel)]="process.currentRound.questions[questionIdx].maxSelectable"
+             debounce="1000"
+             [readonly]="process.currentRound.started"
+             (ngModelChange)="updateQuestion()"></ion-input>
+</ion-item>
+<ion-item>
   <ion-input [readonly]="process.currentRound.started" [(ngModel)]="currentCategory" placeholder="Nombre categoría..."></ion-input>
   <ion-button [disabled]="process.currentRound.started" (click)="addCategory()" size="small">Añadir categoría</ion-button>
 </ion-item>
