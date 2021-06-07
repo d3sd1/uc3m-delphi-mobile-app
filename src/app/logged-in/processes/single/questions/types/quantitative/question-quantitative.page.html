@@ -1,13 +1,15 @@
 <ion-item>
   <ion-input [value]="question.minVal"
-             placeholder="Valor mínimo"></ion-input>
+             placeholder="Valor mínimo"
+             [readonly]="process.currentRound.started"></ion-input>
   <ion-input [value]="question.maxVal"
-             placeholder="Valor máximo"></ion-input>
+             placeholder="Valor máximo"
+             [readonly]="process.currentRound.started"></ion-input>
 </ion-item>
 <ion-range [max]="10"
            [min]="0"
            color="primary"
-           disabled="true" snaps step="1" value="5">
+           disabled="true" snaps step="1" value="5" [disabled]="process.currentRound.started">
   <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
   <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
 </ion-range>

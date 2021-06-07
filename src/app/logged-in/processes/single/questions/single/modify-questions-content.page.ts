@@ -14,7 +14,7 @@ export class ModifyQuestionsContentPage {
 
   process: Process;
   currentUser: User;
-  question: Question;
+  questionIdx: number;
 
   constructor(
     private navCtrl: NavController,
@@ -26,7 +26,9 @@ export class ModifyQuestionsContentPage {
       this.process = process;
     });
     this.route.params.subscribe(params => {
-      this.question = this.process.currentRound.questions[this.process.currentRound.questions.findIndex(q => q.id === +params['questionid'])];
+      // TODO this system may fail if there's another coordinator and edits questions  order
+      // fix it ASAP
+      this.questionIdx = this.process.currentRound.questions.findIndex(q => q.id === +params['questionid']);
     });
   }
 

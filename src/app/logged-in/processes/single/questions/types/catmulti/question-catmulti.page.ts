@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Question} from '../../../../../../core/model/question';
 import {Category} from '../../../../../../core/model/category';
+import {Process} from '../../../../../../core/model/process';
 
 @Component({
   selector: 'delphi-question-catmulti',
@@ -10,6 +11,8 @@ import {Category} from '../../../../../../core/model/category';
 export class QuestionCatmultiPage {
   @Input()
   question: Question;
+  @Input()
+  process: Process;
   currentCategory = '';
   responseRange = 0;
   addCategory() {

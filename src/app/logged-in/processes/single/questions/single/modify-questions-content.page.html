@@ -14,7 +14,7 @@
 
   <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
-    <ion-select [(ngModel)]="question.type">
+    <ion-select [(ngModel)]="this.process.currentRound.questions[questionIdx].type" [disabled]="process.currentRound.started">
       <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
       <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
       <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
@@ -26,12 +26,13 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-textarea [(ngModel)]="question.name"
-                  placeholder="Introduce tu pregunta aquí"></ion-textarea>
+    <ion-textarea [(ngModel)]="this.process.currentRound.questions[questionIdx].name"
+                  placeholder="Introduce tu pregunta aquí"
+    [readonly]="process.currentRound.started"></ion-textarea>
   </ion-item>
-  <delphi-question-booltype *ngIf="question.type == 'BOOLTYPE'" [question]="question"></delphi-question-booltype>
-  <delphi-question-quantitative *ngIf="question.type == 'QUANTITATIVE'" [question]="question"></delphi-question-quantitative>
-  <delphi-question-catlikert *ngIf="question.type == 'CATLIKERT'" [question]="question"></delphi-question-catlikert>
-  <delphi-question-catcustom *ngIf="question.type == 'CATCUSTOM'" [question]="question"></delphi-question-catcustom>
-  <delphi-question-catmulti *ngIf="question.type == 'CATMULTI'" [question]="question"></delphi-question-catmulti>
-  <delphi-question-catpond *ngIf="question.type == 'CATPOND'" [question]="question"></delphi-question-catpond>
+  <delphi-question-booltype *ngIf="this.process.currentRound.questions[questionIdx].type == 'BOOLTYPE'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-booltype>
+  <delphi-question-quantitative *ngIf="this.process.currentRound.questions[questionIdx].type == 'QUANTITATIVE'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-quantitative>
+  <delphi-question-catlikert *ngIf="this.process.currentRound.questions[questionIdx].type == 'CATLIKERT'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catlikert>
+  <delphi-question-catcustom *ngIf="this.process.currentRound.questions[questionIdx].type == 'CATCUSTOM'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catcustom>
+  <delphi-question-catmulti *ngIf="this.process.currentRound.questions[questionIdx].type == 'CATMULTI'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catmulti>
+  <delphi-question-catpond *ngIf="this.process.currentRound.questions[questionIdx].type == 'CATPOND'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catpond>

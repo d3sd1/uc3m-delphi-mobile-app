@@ -1,14 +1,15 @@
 <ion-item>
   <ion-range [(ngModel)]="responseRange"
              [max]="question.categories.length + 1"
-             color="primary" min="1" snaps step="1">
+             color="primary" min="1" snaps step="1"
+             [disabled]="process.currentRound.started">
     <ion-icon color="primary" name="aperture-outline" size="small" slot="start"></ion-icon>
     <ion-icon color="success" name="aperture" slot="end"></ion-icon>
   </ion-range>
 </ion-item>
 <ion-item>
-  <ion-input [(ngModel)]="currentCategory" placeholder="Nombre categoría..."></ion-input>
-  <ion-button (click)="addCategory()" size="small">Añadir categoría</ion-button>
+  <ion-input [readonly]="process.currentRound.started" [(ngModel)]="currentCategory" placeholder="Nombre categoría..."></ion-input>
+  <ion-button [disabled]="process.currentRound.started" (click)="addCategory()" size="small">Añadir categoría</ion-button>
 </ion-item>
 
 <ion-list>
@@ -22,7 +23,7 @@
     <ion-item
       *ngFor="let category of question.categories; let i = index">
       <ion-label>{{category.catName}}</ion-label>
-      <ion-icon (click)="delCategory(category)" name="trash" slot="end"></ion-icon>
+      <ion-icon *ngIf="!process.currentRound.started" (click)="delCategory(category)" name="trash" slot="end"></ion-icon>
     </ion-item>
   </ion-item-group>
 </ion-list>
