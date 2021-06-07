@@ -17,17 +17,33 @@
         <h2>{{question.name}}</h2>
         <!-- Textarea in an item with a placeholder -->
         <ion-item *ngIf="question.type.toString() === 'QUALITATIVE'">
-          <ion-textarea placeholder="Introduce aquí tu respuesta"></ion-textarea>
+          <ion-textarea inputmode="text" placeholder="Introduce aquí tu respuesta" (ionChange)="updateAnswer(currentQuestion, $event)"></ion-textarea>
         </ion-item>
         <div *ngIf="question.type.toString() === 'QUANTITATIVE'">
           <ion-item>
             <ion-range [max]="question.maxVal"
                        [min]="question.minVal"
-                       color="primary" snaps step="1" [value]="(question.maxVal / 2)">
+                       color="primary" snaps step="1"
+                       (ionChange)="updateAnswer(currentQuestion, $event)">
               <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
               <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
             </ion-range>
           </ion-item>
+        </div>
+        <div *ngIf="question.type.toString() === 'BOOLTYPE'">
+          <ion-list>
+            <ion-radio-group (ionChange)="updateAnswer(currentQuestion, $event)">
+              <ion-item>
+                <ion-label>Sí</ion-label>
+                <ion-radio slot="start" value="1"></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>No</ion-label>
+                <ion-radio slot="start" value="0"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
         </div>
 
       </div>
