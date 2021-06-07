@@ -1,10 +1,12 @@
 import {Component, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
-import {IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
+import {AlertController, IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'delphi-participate',
@@ -25,7 +27,9 @@ export class ParticipatePage {
     private toastController: ToastController,
     private translate: TranslateService,
     private loadingCtrl: LoadingController,
-    private router: Router) {
+    private router: Router,
+    private alertController: AlertController,
+    private httpClient: HttpClient) {
     this.route.snapshot.data['user'].subscribe((user) => {
       this.currentUser = user;
     });
@@ -57,6 +61,12 @@ export class ParticipatePage {
   }
 
   async advance() {
+    const val = this.answers[this.currentQuestion].response;
+    console.log('cal is ', val)
+    if( val === null || val == "null" || val == -1 || val == '') {
+      await this.showToast('Por favor responde la pregunta.');
+      return;
+    }
     this.currentQuestion++;
     await this.participateSlides.slideNext();
   }
@@ -67,40 +77,43 @@ export class ParticipatePage {
   }
 
   async finish() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar participación',
+      message: '¿Estás seguro de que deseas enviar la participación?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            alert.dismiss();
+          }
+        }, {
+          text: 'Enviar',
+          handler: () => {
+            alert.dismiss();
+            this.saveParticipation();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  private async saveParticipation() {
+
     const loading = await this.loadingCtrl.create({
       cssClass: 'my-custom-class',
       message: 'Cargando...',
       duration: 2000
     });
     await loading.present();
-    console.log(this.answers);
+    await this.httpClient.post(environment.apiUrl + '/v1/process/question/answers?process_id=' + this.process.id, this.answers).toPromise();
+    await loading.dismiss();
+    await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id); // In case round closes
   }
 
   /*
-    public async confirmParticipation() {
-      const alert = await this.alertController.create({
-        header: 'Confirmar participación',
-        message: '¿Estás seguro de que deseas enviar la participación?',
-        buttons: [
-          {
-            text: 'Cancelar',
-            cssClass: 'secondary',
-            handler: (blah) => {
-              alert.dismiss();
-            }
-          }, {
-            text: 'Enviar',
-            handler: () => {
-              alert.dismiss();
-              this.saveParticipation();
-            }
-          }
-        ]
-      });
-
-      await alert.present();
-    }
-
     public async saveParticipation() { // ñapa temporal
       await this.httpClient.post(environment.apiUrl + '/v1/process/tmp_json_upl', this.answers).toPromise().then(async (delphiProcess: Process) => {
         await this.showToast('home.processes.single-round.round.participate.success');
@@ -129,7 +142,7 @@ export class ParticipatePage {
   private async showToast(transKey: string) {
     const toast = await this.toastController.create({
       position: 'top',
-      message: await this.translate.get(transKey).toPromise(),
+      message: transKey,
     });
     await toast.present();
     setTimeout(() => {
@@ -138,7 +151,7 @@ export class ParticipatePage {
     return toast;
   }
 
-  updateAnswer(currentQuestion, $event) {
+  async updateAnswer(currentQuestion, $event) {
     this.answers[currentQuestion].response = $event.target.value;
   }
 

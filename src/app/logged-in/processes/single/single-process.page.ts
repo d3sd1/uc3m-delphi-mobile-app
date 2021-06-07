@@ -40,6 +40,14 @@ export class SingleProcessPage {
   isCoordinator(): boolean {
     return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
+
+  expertCanVote(): boolean {
+    if(this.process.currentRound?.expertsRemaining === undefined) {
+      return false;
+    }
+    return this.process.currentRound?.expertsRemaining?.findIndex((user) => user.id === this.user.id) !== -1;
+  }
+
   async updateBasicFields() {
     await this.httpClient.post(environment.apiUrl + '/v1/process/basic?process_id=' + this.process.id, {
       name: this.process.name,
@@ -127,6 +135,10 @@ export class SingleProcessPage {
   async participate() {
     if(!this.process.currentRound?.started) {
       await this.showToast('home.processes.single.participate.err.round_not_open');
+      return;
+    }
+    if(!this.expertCanVote()) {
+      await this.showToast('home.processes.single.participate.err.already_voted');
       return;
     }
     await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/participate');

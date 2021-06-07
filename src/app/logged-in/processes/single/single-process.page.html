@@ -109,6 +109,6 @@
 <ion-footer *ngIf="!process.processFinished">
   <ion-toolbar>
     <ion-button *ngIf="isCoordinator()" color="danger" expand="block" (click)="finishProcess()">Finalizar proceso</ion-button>
-    <ion-button *ngIf="!isCoordinator()" [color]="this.process.currentRound.started ? 'success':'warning'" expand="block" (click)="participate()">Participar</ion-button>
+    <ion-button *ngIf="!isCoordinator()" [color]="this.process.currentRound.started && expertCanVote() ? 'success':'warning'" expand="block" (click)="participate()">Participar</ion-button>
   </ion-toolbar>
 </ion-footer>

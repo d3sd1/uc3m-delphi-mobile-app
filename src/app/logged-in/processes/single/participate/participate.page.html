@@ -17,13 +17,14 @@
         <h2>{{question.name}}</h2>
         <!-- Textarea in an item with a placeholder -->
         <ion-item *ngIf="question.type.toString() === 'QUALITATIVE'">
-          <ion-textarea inputmode="text" placeholder="Introduce aquí tu respuesta" (ionChange)="updateAnswer(currentQuestion, $event)"></ion-textarea>
+          <ion-textarea value="" inputmode="text" placeholder="Introduce aquí tu respuesta" (ionChange)="updateAnswer(currentQuestion, $event)"></ion-textarea>
         </ion-item>
         <div *ngIf="question.type.toString() === 'QUANTITATIVE'">
           <ion-item>
             <ion-range [max]="question.maxVal"
                        [min]="question.minVal"
                        color="primary" snaps step="1"
+                       value="null"
                        (ionChange)="updateAnswer(currentQuestion, $event)">
               <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
               <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
@@ -32,7 +33,7 @@
         </div>
         <div *ngIf="question.type.toString() === 'BOOLTYPE'">
           <ion-list>
-            <ion-radio-group (ionChange)="updateAnswer(currentQuestion, $event)">
+            <ion-radio-group value="null" (ionChange)="updateAnswer(currentQuestion, $event)">
               <ion-item>
                 <ion-label>Sí</ion-label>
                 <ion-radio slot="start" value="1"></ion-radio>
@@ -41,6 +42,64 @@
               <ion-item>
                 <ion-label>No</ion-label>
                 <ion-radio slot="start" value="0"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+        <div *ngIf="question.type.toString() === 'CATLIKERT'">
+          <ion-list>
+            <ion-radio-group value="null" (ionChange)="updateAnswer(currentQuestion, $event)">
+              <ion-item>
+                <ion-label>Totalmente en desacuerdo</ion-label>
+                <ion-radio slot="start" value="1"></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>En desacuerdo</ion-label>
+                <ion-radio slot="start" value="2"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Indiferente</ion-label>
+                <ion-radio slot="start" value="3" ></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>De acuerdo</ion-label>
+                <ion-radio slot="start" value="4" ></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Totalmente de acuerdo</ion-label>
+                <ion-radio slot="start" value="5" ></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+        <div *ngIf="question.type.toString() === 'CATCUSTOM'">
+          <ion-list>
+            <ion-radio-group (ionChange)="updateAnswer(currentQuestion, $event)" value="null">
+              <ion-item *ngFor="let category of question.categories">
+                <ion-label>{{category.catName}}</ion-label>
+                <ion-radio slot="start" [value]="category.id"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+        <div *ngIf="question.type.toString() === 'CATMULTI'">
+          <ion-list>
+            <ion-radio-group (ionChange)="updateAnswer(currentQuestion, $event)" value="null">
+              <ion-item *ngFor="let category of question.categories">
+                <ion-label>{{category.catName}}</ion-label>
+                <ion-radio  slot="start" [value]="category.id"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+        <div *ngIf="question.type.toString() === 'CATPOND'">
+          <ion-title>Introduzca su ponderación entre 0 (puntuación más baja) y 10 (puntuación más alta).</ion-title>
+          <ion-list>
+            <ion-radio-group  (ionChange)="updateAnswer(currentQuestion, $event)">
+              <ion-item *ngFor="let category of question.categories">
+                <ion-label>{{category.catName}}</ion-label>
+                <ion-input placeholder="Ponderación entre 0 y 10" type="number" min="0" max="10"  value="null"></ion-input>
               </ion-item>
             </ion-radio-group>
           </ion-list>

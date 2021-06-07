@@ -143,7 +143,8 @@
           "answer": "Introduce tu respuesta aquí",
           "send": "Enviar participación",
           "err": {
-            "round_not_open": "La ronda no está iniciada."
+            "round_not_open": "La ronda no está iniciada.",
+            "already_voted": "No puedes votar sobre la ronda actual. Puede que se te añadiese al proceso después de activar la ronda o que ya hayas votado."
           }
         },
         "modify": {

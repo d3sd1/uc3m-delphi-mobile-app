@@ -126,6 +126,16 @@ export class QuestionListPage {
       });
 
       await alert.present();
+    } else if (this.process?.currentRound.name == '') {
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Error',
+        subHeader: 'No se pudo comenzar la ronda',
+        message: 'Debes introducir un nombre para la ronda',
+        buttons: ['Resolver']
+      });
+
+      await alert.present();
     } else {
       await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, {}).toPromise();
       await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
