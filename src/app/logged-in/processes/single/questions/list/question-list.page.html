@@ -19,7 +19,7 @@
                   picker-format="MMM DD, YYYY HH:mm"
                   [min]="currentTime"
                   placeholder="Introduce fecha límite"
-                [readonly]="process.currentRound.started || process.processFinished"></ion-datetime>
+                [readonly]="process.currentRound.started || process.processFinished || !isCoordinator()"></ion-datetime>
   </ion-item>
 
   <ion-item>
@@ -27,7 +27,7 @@
     <ion-input [(ngModel)]="this.process?.currentRound.name" placeholder="Nombre de la ronda"
                debounce="200"
                (ngModelChange)="updateBasicData()"
-               [readonly]="process.currentRound.started || process.processFinished"></ion-input>
+               [readonly]="process.currentRound.started || process.processFinished || !isCoordinator()"></ion-input>
   </ion-item>
   <ion-item-divider></ion-item-divider>
   <div *ngIf="process?.currentRound.questions.length == 0" id="container">
@@ -43,14 +43,14 @@
       <ion-item
         [routerLink]="['/logged-in/menu/processes/single-round/' + process.id + '/question/single-round/' + question.id]">
         {{question.name}}
-        <ion-reorder slot="start" *ngIf="!process.currentRound.started"></ion-reorder>
+        <ion-reorder slot="start" *ngIf="!process.currentRound.started && isCoordinator()"></ion-reorder>
       </ion-item>
     </ion-item-sliding>
 
   </ion-reorder-group>
 
   <!-- fab placed to the (vertical) center and end -->
-  <ion-fab *ngIf="!process.currentRound.started && !process.processFinished" (click)="addQuestionStep1()" horizontal="end" slot="fixed" vertical="bottom">
+  <ion-fab *ngIf="!process.currentRound.started && !process.processFinished && isCoordinator()" (click)="addQuestionStep1()" horizontal="end" slot="fixed" vertical="bottom">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
@@ -58,7 +58,7 @@
 
 </ion-content>
 
-<ion-footer  *ngIf="!process.processFinished">
+<ion-footer  *ngIf="!process.processFinished && isCoordinator()">
   <ion-toolbar>
     <ion-button color="primary" expand="block" *ngIf="!process.currentRound.started" (click)="startRound()">Comenzar ronda</ion-button>
     <ion-button color="danger" expand="block" *ngIf="process.currentRound.started" (click)="closeRound()">Forzar fin de ronda</ion-button>

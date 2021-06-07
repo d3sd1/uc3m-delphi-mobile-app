@@ -62,7 +62,7 @@
         {{ 'home.processes.single.rounds.title'  | translate }}
       </ion-label>
     </ion-list-header>
-    <ion-item *ngIf="!process.processFinished" routerDirection="forward"
+    <ion-item *ngIf="!process.processFinished && isCoordinator()" routerDirection="forward"
               [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'">
       <ion-label>{{ 'home.processes.single.rounds.current' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.currentRound?.questions?.length}} Preguntas

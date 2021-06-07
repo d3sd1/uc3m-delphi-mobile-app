@@ -11,6 +11,7 @@ import {CurrentProcessResolver} from '../../core/router/resolver/current-process
 import {ClosePage} from './single/close/close.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
 import {ViewSingleOldRoundPage} from './single/rounds/single-round/view-single-old-round.page';
+import {ParticipatePage} from './single/participate/participate.page';
 
 const routes: Routes = [
   {
@@ -45,6 +46,14 @@ const routes: Routes = [
       {
         path: 'close',
         component: ClosePage,
+        resolve: {
+          user: UserResolver,
+          process: CurrentProcessResolver,
+        },
+      },
+      {
+        path: 'participate',
+        component: ParticipatePage,
         resolve: {
           user: UserResolver,
           process: CurrentProcessResolver,

@@ -1,15 +1,51 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()"
-                       [routerLink]="['/logged-in/home/menu/processes/single-round']"
-                       [text]="'home.processes.single-round.participate.back' | translate"></ion-back-button>
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id"
+                       routerDirection="back"
+                       [routerLink]="'/logged-in/menu/processes/single-round/' + process.id"
+                       text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'home.processes.single-round.participate.title' | translate}}</ion-title>
+    <ion-title>Participar</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<ion-content>
+  <ion-slides #participate [options]="{ allowTouchMove: false }" class="swiper-no-swiping">
+    <ion-slide *ngFor="let question of process.currentRound.questions">
+      <div class="slide">
+        <h2>{{question.name}}</h2>
+        <!-- Textarea in an item with a placeholder -->
+        <ion-item *ngIf="question.type.toString() === 'QUALITATIVE'">
+          <ion-textarea placeholder="Introduce aquí tu respuesta"></ion-textarea>
+        </ion-item>
+        <div *ngIf="question.type.toString() === 'QUANTITATIVE'">
+          <ion-item>
+            <ion-range [max]="question.maxVal"
+                       [min]="question.minVal"
+                       color="primary" snaps step="1" [value]="(question.maxVal / 2)">
+              <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
+              <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
+            </ion-range>
+          </ion-item>
+        </div>
 
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="full" [disabled]="currentQuestion == 0" (click)="back()">Anterior</ion-button>
+    <ion-button expand="full" *ngIf="currentQuestion < process.currentRound.questions.length - 1" (click)="advance()">
+      Siguiente
+    </ion-button>
+    <ion-button expand="full" *ngIf="currentQuestion >= process.currentRound.questions.length - 1" (click)="finish()">
+      Finalizar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+<!--
 <ion-content>
 
   <ion-list>
@@ -72,3 +108,4 @@
                 expand="block">{{'home.processes.single-round.participate.send' | translate}}</ion-button>
   </ion-toolbar>
 </ion-footer>
+-->

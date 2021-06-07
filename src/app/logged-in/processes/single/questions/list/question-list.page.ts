@@ -31,6 +31,11 @@ export class QuestionListPage {
     });
   }
 
+
+  isCoordinator(): boolean {
+    return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
+  }
+
   private orderQuestions() {
     this.process.currentRound.questions.sort((n1, n2) => {
       if (n1.orderPosition < n2.orderPosition) {

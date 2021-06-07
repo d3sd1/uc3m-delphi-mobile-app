@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
-import {AlertController, NavController, ToastController} from '@ionic/angular';
+import {AlertController, IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {environment} from '../../../../../environments/environment';
@@ -15,50 +15,55 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class ParticipatePage {
 
+  currentQuestion = 0;
   process: Process;
   currentUser: User;
-  answers: Answer[] = [];
+  @ViewChild('participate') participateSlides: IonSlides;
 
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    private router: Router,
-    public alertController: AlertController,
-    private httpClient: HttpClient,
     private toastController: ToastController,
-    private translate: TranslateService) {
-  }
-
-  async goBack() {
-    await this.navCtrl.navigateBack('/logged-in/home/menu/processes/single-round', {
-      state: {process: this.process, currentUser: this.currentUser}
+    private translate: TranslateService,
+    private loadingCtrl: LoadingController) {
+    this.route.snapshot.data['user'].subscribe((user) => {
+      this.currentUser = user;
+    });
+    this.route.snapshot.data['process'].subscribe((process) => {
+      this.process = process;
+      this.orderQuestions();
     });
   }
 
-  sortAnswers() {
-    this.answers?.sort((a, b) => {
-      if (a.question.orderPosition < b.question.orderPosition) {
+  private orderQuestions() {
+    this.process.currentRound.questions.sort((n1, n2) => {
+      if (n1.orderPosition < n2.orderPosition) {
         return -1;
       }
-      if (a.question.orderPosition > b.question.orderPosition) {
+      if (n1.orderPosition > n2.orderPosition) {
         return 1;
       }
       return 0;
     });
   }
-
-  sortCurRoundQuestions() {
-    this.process.currentRound.questions?.sort((a, b) => {
-      if (a.orderPosition < b.orderPosition) {
-        return -1;
-      }
-      if (a.orderPosition > b.orderPosition) {
-        return 1;
-      }
-      return 0;
-    });
+  async advance() {
+    this.currentQuestion++;
+    await this.participateSlides.slideNext();
   }
+  async back() {
+    this.currentQuestion--;
+    await this.participateSlides.slidePrev();
+  }
+  async finish() {
+    const loading = await this.loadingCtrl.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando...',
+      duration: 2000
+    });
+    await loading.present();
 
+  }
+/*
   public async confirmParticipation() {
     const alert = await this.alertController.create({
       header: 'Confirmar participación',
@@ -107,7 +112,7 @@ export class ParticipatePage {
     });
 
   }
-
+*/
   private async showToast(transKey: string) {
     const toast = await this.toastController.create({
       position: 'top',
