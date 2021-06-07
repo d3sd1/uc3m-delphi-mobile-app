@@ -119,7 +119,7 @@ export class SingleProcessPage {
 
   async finishProcess() {
     if(this.process?.currentRound?.started){
-      await this.showToast('home.processes.single.finished');
+      await this.showToast('home.processes.single.finish_round_in_course');
       return;
     }
     await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/close');

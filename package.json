@@ -6,6 +6,7 @@
   "scripts": {
     "setup": "ionic capacitor add ios || true && ionic capacitor add android || true",
     "ios": " npx cap sync && ng build --prod && ionic capacitor run ios -l --external --public-host",
+    "ios:prod": " npx cap sync && ng build --prod && ionic capacitor run ios -l --external --public-host --prod",
     "android": "npx cap sync && ng build --prod && ionic capacitor run android -l --external --public-host",
     "markets": "ionic build --prod && ionic cap copy && ionic cap add android || true && ionic cap add ios || true && ionic cap sync && ionic cap open android && ionic cap open ios"
   },

@@ -89,6 +89,7 @@
       },
       "single": {
         "finished": "Proceso cerrado correctamente",
+        "finish_round_in_course": "El proceso no pudo ser cerrado debido a que una ronda se encuentra en curso.",
         "title": "Vista de proceso",
         "back": "Volver",
         "invitation": {
