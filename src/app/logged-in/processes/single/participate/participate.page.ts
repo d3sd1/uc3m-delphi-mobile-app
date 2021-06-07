@@ -45,6 +45,7 @@ export class ParticipatePage {
         this.answers[idx].response = '';
       });
       this.orderQuestions();
+      this.sortCategories(0);
     });
   }
 
@@ -61,6 +62,7 @@ export class ParticipatePage {
   }
 
   async advance() {
+    this.sortCategories(this.currentQuestion + 1);
     const val = this.answers[this.currentQuestion].response;
     console.log('cal is ', val)
     if( val === null || val == "null" || val == -1 || val == '') {
@@ -72,6 +74,7 @@ export class ParticipatePage {
   }
 
   async back() {
+    this.sortCategories(this.currentQuestion - 1);
     this.currentQuestion--;
     await this.participateSlides.slidePrev();
   }
@@ -112,6 +115,19 @@ export class ParticipatePage {
     await loading.dismiss();
     await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id); // In case round closes
   }
+
+  sortCategories(idx) {
+    this.process.currentRound.questions[idx].categories.sort((a, b) => {
+      if (a.id < b.id) {
+        return -1;
+      }
+      if (a.id > b.id) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
 
   /*
     public async saveParticipation() { // ñapa temporal
