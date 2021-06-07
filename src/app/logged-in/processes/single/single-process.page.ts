@@ -119,10 +119,18 @@ export class SingleProcessPage {
 
   async finishProcess() {
     if(this.process?.currentRound?.started){
-      await this.showToast('home.processes.single-round.single-round.finish.error.round_started');
+      await this.showToast('home.processes.single.finished');
       return;
     }
     await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/close');
   }
+  async participate() {
+    if(!this.process.currentRound?.started) {
+      await this.showToast('home.processes.single.participate.err.round_not_open');
+      return;
+    }
+    await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/participate');
+  }
+
 
 }
