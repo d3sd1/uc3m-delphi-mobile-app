@@ -27,7 +27,7 @@
   <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
       <ion-label>
-        {{ 'home.processes.single.base' | translate }}
+        {{ 'home.processes.single-round.base' | translate }}
       </ion-label>
     </ion-list-header>
 
@@ -36,21 +36,21 @@
       <ion-input [(ngModel)]="process.name"
                  debounce="200"
                  (ngModelChange)="updateBasicFields()"
-                 [placeholder]="'home.processes.single.name' | translate"
+                 [placeholder]="'home.processes.single-round.name' | translate"
                  [readonly]="!isCoordinator() || process.processFinished"></ion-input>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.description"
                     debounce="200"
                     (ngModelChange)="updateBasicFields()"
-                    [placeholder]="'home.processes.single.desc'  | translate"
+                    [placeholder]="'home.processes.single-round.desc'  | translate"
                     [readonly]="!isCoordinator() || process.processFinished"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.objectives"
                     debounce="200"
                     (ngModelChange)="updateBasicFields()"
-                    [placeholder]="'home.processes.single.desc'  | translate"
+                    [placeholder]="'home.processes.single-round.desc'  | translate"
                     [readonly]="!isCoordinator() || process.processFinished">Objetivos del proceso
       </ion-textarea>
     </ion-item>
@@ -59,18 +59,18 @@
   <ion-list class="ion-no-margin" lines="inset">
     <ion-list-header>
       <ion-label>
-        {{ 'home.processes.single.rounds.title'  | translate }}
+        {{ 'home.processes.single-round.rounds.title'  | translate }}
       </ion-label>
     </ion-list-header>
-    <ion-item routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/question/list'">
-      <ion-label>{{ 'home.processes.single.rounds.current' | translate }}</ion-label>
+    <ion-item *ngIf="!process.processFinished" routerDirection="forward"
+              [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'">
+      <ion-label>{{ 'home.processes.single-round.rounds.current' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.currentRound?.questions?.length}} Preguntas
       </ion-badge>
     </ion-item>
     <ion-item routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/rounds'">
-      <ion-label>{{ 'home.processes.single.rounds.past' | translate }}</ion-label>
+              [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/rounds'">
+      <ion-label>{{ 'home.processes.single-round.rounds.past' | translate }}</ion-label>
       <ion-badge slot="end">{{process?.rounds?.length}} Rondas
       </ion-badge>
     </ion-item>
@@ -78,20 +78,20 @@
   <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
       <ion-label>
-        {{ 'home.processes.single.rounds.users'  | translate }}
+        {{ 'home.processes.single-round.rounds.users'  | translate }}
       </ion-label>
     </ion-list-header>
 
     <!-- Toggles in a List -->
     <ion-item routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/user-picker/coordinator'">
+              [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/user-picker/coordinator'">
       <ion-badge slot="end">{{process?.coordinators?.length}}</ion-badge>
       <ion-label>{{'home.processes.role.coordinator' | translate}}</ion-label>
     </ion-item>
 
     <!-- Toggles in a List -->
     <ion-item *ngIf="isCoordinator()" routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single/' + process.id + '/user-picker/expert'">
+              [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/user-picker/expert'">
       <ion-badge slot="end">{{process?.experts?.length}}</ion-badge>
       <ion-label>{{'home.processes.role.expert' | translate}}</ion-label>
     </ion-item>

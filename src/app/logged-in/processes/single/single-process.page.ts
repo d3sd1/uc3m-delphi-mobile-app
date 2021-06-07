@@ -70,13 +70,13 @@ export class SingleProcessPage {
     if (this.process.name === '' ||
       this.process.name === null ||
       this.process.name === undefined) {
-      this.showToast('home.processes.single.errors.no_name');
+      this.showToast('home.processes.single-round.errors.no_name');
       return false;
     }
     if (this.process.description === '' ||
       this.process.description === null ||
       this.process.description === undefined) {
-      this.showToast('home.processes.single.errors.no_description');
+      this.showToast('home.processes.single-round.errors.no_description');
       return false;
     }
     return true;
@@ -88,18 +88,18 @@ export class SingleProcessPage {
     }
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: await this.translate.get('home.processes.single.single.saving').toPromise(),
+      message: await this.translate.get('home.processes.single-round.single-round.saving').toPromise(),
       duration: 0
     });
     await loading.present();
 
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/save', this.process).toPromise().then(async (delphiProcess: Process) => {
-      await this.showToast(await this.translate.get('home.processes.single.single.saved').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single-round.single-round.saved').toPromise());
       //TODO await this.router.navigateByUrl('/logged-in/home/menu/processes', {
       // state: {process: this.process}
       //});
     }).catch(async (errMessage: string) => {
-      await this.showToast(await this.translate.get('home.processes.single.single.saved').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single-round.single-round.saved').toPromise());
     }).finally(async () => {
       await loading.dismiss();
     });
@@ -119,10 +119,10 @@ export class SingleProcessPage {
 
   async finishProcess() {
     if(this.process?.currentRound?.started){
-      await this.showToast('home.processes.single.single.finish.error.round_started');
+      await this.showToast('home.processes.single-round.single-round.finish.error.round_started');
       return;
     }
-    await this.router.navigateByUrl('/logged-in/menu/processes/single/' + this.process.id + '/close');
+    await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/close');
   }
 
 }

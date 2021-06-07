@@ -26,6 +26,7 @@ import {QuestionCatlikertPage} from './single/questions/types/catlikert/question
 import {QuestionCatcustomPage} from './single/questions/types/catcustom/question-catcustom.page';
 import {QuestionCatmultiPage} from './single/questions/types/catmulti/question-catmulti.page';
 import {QuestionCatpondPage} from './single/questions/types/catpond/question-catpond.page';
+import {ViewSingleOldRoundPage} from './single/rounds/single-round/view-single-old-round.page';
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import {QuestionCatpondPage} from './single/questions/types/catpond/question-cat
     QuestionCatlikertPage,
     QuestionCatcustomPage,
     QuestionCatmultiPage,
-    QuestionCatpondPage
+    QuestionCatpondPage,
+    ViewSingleOldRoundPage
   ],
   providers: [
     Geolocation,

@@ -54,7 +54,7 @@ export class ProcessConsumer {
     // Bubble all with websocket
     this.wsService.subscribe('process/list', true, this.userProcesses);
 
-    // Bubble single from websocket updated data (single-channel-simplicity)
+    // Bubble single-round from websocket updated data (single-round-channel-simplicity)
     this.userProcesses.subscribe((processes) => {
       processes.forEach((process) => {
 

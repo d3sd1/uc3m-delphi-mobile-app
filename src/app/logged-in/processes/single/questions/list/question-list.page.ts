@@ -123,13 +123,13 @@ export class QuestionListPage {
       await alert.present();
     } else {
       await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, {}).toPromise();
-      await this.navCtrl.navigateBack('/logged-in/menu/processes/single/' + this.process.id);
+      await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
     }
   }
 
   async closeRound() {
     await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, {}).toPromise();
-    await this.navCtrl.navigateBack('/logged-in/menu/processes/single/' + this.process.id);
+    await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
   }
 
 

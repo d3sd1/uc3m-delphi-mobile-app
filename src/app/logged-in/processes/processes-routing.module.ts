@@ -10,6 +10,7 @@ import {UserResolver} from '../../core/router/resolver/user.resolver';
 import {CurrentProcessResolver} from '../../core/router/resolver/current-process.resolver';
 import {ClosePage} from './single/close/close.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
+import {ViewSingleOldRoundPage} from './single/rounds/single-round/view-single-old-round.page';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'single/:id',
+    path: 'single-round/:id',
     children: [
       {
         path: '',
@@ -51,11 +52,39 @@ const routes: Routes = [
       },
       {
         path: 'rounds',
-        component: ViewRoundsPage,
-        resolve: {
-          user: UserResolver,
-          process: CurrentProcessResolver,
-        },
+        children: [
+          {
+            path: '',
+            redirectTo: 'list',
+            pathMatch: 'full'
+          },
+          {
+            path: 'list',
+            component: ViewRoundsPage,
+            resolve: {
+              user: UserResolver,
+              process: CurrentProcessResolver
+            },
+          },
+          {
+            path: 'single-round/:roundid',
+            children: [
+              {
+                path: '',
+                redirectTo: 'view',
+                pathMatch: 'full'
+              },
+              {
+                path: 'view',
+                component: ViewSingleOldRoundPage,
+                resolve: {
+                  user: UserResolver,
+                  process: CurrentProcessResolver
+                },
+              },
+            ]
+          },
+        ]
       },
       {
         path: 'user-picker/:type',
@@ -82,7 +111,7 @@ const routes: Routes = [
             },
           },
           {
-            path: 'single/:questionid',
+            path: 'single-round/:questionid',
             component: ModifyQuestionsContentPage,
             resolve: {
               user: UserResolver,

@@ -36,16 +36,16 @@ export class ClosePage {
 
   public async closeProcess() {
     if (this.conclusion === '' || this.conclusion === undefined || this.conclusion === null) {
-      await this.showToast(await this.translate.get('home.processes.single.end.form.err_empty').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single-round.end.form.err_empty').toPromise());
       return;
     }
     this.process.finalComment = this.conclusion;
     await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/end?process_id=' + this.process.id, this.process).toPromise().then(async (delphiProcess: Process) => {
       this.process = delphiProcess;
-      await this.showToast(await this.translate.get('home.processes.single.end.success').toPromise());
+      await this.showToast(await this.translate.get('home.processes.single-round.end.success').toPromise());
       await this.router.navigateByUrl('/logged-in/menu/processes');
-    }).catch(async (errMessage: string) => { 
-      await this.showToast(await this.translate.get('home.processes.single.end.err').toPromise());
+    }).catch(async (errMessage: string) => {
+      await this.showToast(await this.translate.get('home.processes.single-round.end.err').toPromise());
     });
   }
 

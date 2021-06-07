@@ -33,7 +33,7 @@ export class ProcessesPage {
   }
 
   async editProcess(process) {
-    await this.navCtrl.navigateForward('/logged-in/menu/processes/single/' + process.id);
+    await this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id);
   }
 
   filterProcesses(ev?: Event) {
