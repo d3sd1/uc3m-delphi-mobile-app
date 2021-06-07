@@ -30,9 +30,9 @@
                   placeholder="Introduce tu pregunta aquí"
     [readonly]="process.currentRound.started"></ion-textarea>
   </ion-item>
-  <delphi-question-booltype *ngIf="this.process.currentRound.questions[questionIdx].type == 'BOOLTYPE'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-booltype>
-  <delphi-question-quantitative *ngIf="this.process.currentRound.questions[questionIdx].type == 'QUANTITATIVE'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-quantitative>
-  <delphi-question-catlikert *ngIf="this.process.currentRound.questions[questionIdx].type == 'CATLIKERT'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catlikert>
-  <delphi-question-catcustom *ngIf="this.process.currentRound.questions[questionIdx].type == 'CATCUSTOM'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catcustom>
-  <delphi-question-catmulti *ngIf="this.process.currentRound.questions[questionIdx].type == 'CATMULTI'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catmulti>
-  <delphi-question-catpond *ngIf="this.process.currentRound.questions[questionIdx].type == 'CATPOND'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catpond>
+  <delphi-question-booltype *ngIf="this.process.currentRound.questions[questionIdx].type.toString() == 'BOOLTYPE'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-booltype>
+  <delphi-question-quantitative *ngIf="this.process.currentRound.questions[questionIdx].type.toString() == 'QUANTITATIVE'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-quantitative>
+  <delphi-question-catlikert *ngIf="this.process.currentRound.questions[questionIdx].type.toString() == 'CATLIKERT'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catlikert>
+  <delphi-question-catcustom *ngIf="this.process.currentRound.questions[questionIdx].type.toString() == 'CATCUSTOM'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catcustom>
+  <delphi-question-catmulti *ngIf="this.process.currentRound.questions[questionIdx].type.toString() == 'CATMULTI'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catmulti>
+  <delphi-question-catpond *ngIf="this.process.currentRound.questions[questionIdx].type.toString() == 'CATPOND'" [question]="this.process.currentRound.questions[questionIdx]" [process]="process"></delphi-question-catpond>
