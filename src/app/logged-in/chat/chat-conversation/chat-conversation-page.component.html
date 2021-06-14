@@ -1,10 +1,12 @@
-<ion-header>
+<!--<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()" [text]="'home.chat.conversation.back' | translate"
-                       defaultHref=""></ion-back-button>
+      <ion-back-button [defaultHref]="'/logged-in/menu/chat'"
+                       routerDirection="back"
+                       [routerLink]="'/logged-in/menu/chat'"
+                       text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{selfChat()?.name}}</ion-title>
+    <ion-title>{{chat.toUser}}</ion-title>
     <ion-buttons slot="end">
       <img [src]="selfChat()?.photo" alt="" class="user-img-header">
     </ion-buttons>
@@ -22,12 +24,12 @@
            *ngIf="msg.sentBy?.photo !== undefined" [src]="msg.sentBy?.photo"
            class="user-img"/>
       <img *ngIf="msg.sentBy?.photo === undefined" class="user-img" src="assets/images/no-process-image.jpeg"/>
-      <!--<ion-spinner name="dots" ></ion-spinner> *ngIf="msg.status === 'pending'" -->
+      --<ion-spinner name="dots" ></ion-spinner> *ngIf="msg.status === 'pending'" -
       <div class="msg-detail">
         <div class="msg-info">
           <p>
             {{msg.sentBy?.name === undefined ? msg.sentBy?.email : msg.sentBy?.name}}&nbsp;&nbsp;&nbsp;{{msg.sentDate | relativeTime}}</p>
-          <!-- relativeTime -->
+          -- relativeTime -
         </div>
         <div class="msg-content">
           <span class="triangle"></span>
@@ -59,3 +61,4 @@
   </div>
   <emoji-picker [(ngModel)]="editorMsg"></emoji-picker>
 </ion-footer>
+-->

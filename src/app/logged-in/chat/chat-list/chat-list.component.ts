@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChatService} from '../chat.service';
 import {User} from '../../../core/model/user';
-import {getChatInfo, getChatPicture, getChatUnreadMessages, getUserChatStatus, UserChat} from '../../../core/model/user-chat';
+import {UserChat} from '../../../core/model/user-chat';
 
 @Component({
   selector: 'delphi-chat-list',
@@ -22,28 +22,6 @@ export class ChatListComponent implements OnInit {
   constructor(private chatService: ChatService) {
   }
 
-  selfChatUnreadMessages(userChat: UserChat, currentUserId: number): number {
-    return getChatUnreadMessages(userChat, currentUserId);
-  }
-
-  selfChatName(chat: UserChat) {
-    const userChat = getChatInfo(chat, this.user.id);
-    let chatName = userChat.name;
-    if (chatName === '' ||
-      chatName === undefined ||
-      chatName === null) {
-      chatName = userChat.email;
-    }
-    return chatName;
-  }
-
-  selfChatPicture(chat: UserChat): string {
-    return getChatPicture(chat, this.user.id);
-  }
-
-  selfUserChatStatus(chat: UserChat): string {
-    return getUserChatStatus(chat, this.user.id).toLowerCase();
-  }
 
   async ngOnInit() {
     this.chatService.getCurrentUserChats().subscribe((currentUserChats: UserChat[]) => {
@@ -60,15 +38,6 @@ export class ChatListComponent implements OnInit {
       return;
     }
 
-    // this crash the app if setting variable. todo on refactor
-    this.userChatsOriginal.filter(currentChat => {
-      currentChat.users.forEach((user: User) => {
-        const fullName = user.name + ' ' + user.surnames + ' ' + user.email;
-        if (fullName && searchTerm) {
-          return (fullName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-        }
-      });
-    });
   }
 
   markChatAsRead(chatId, slidingItem) {

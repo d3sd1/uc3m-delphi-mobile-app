@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'"
+                       routerDirection="back"
+                       [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'"
+                       text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Estado expertos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Expertos pendientes de voto</ion-label>
+      </ion-item-divider>
+
+      <ion-item *ngFor="let expert of process.currentRound.expertsRemaining">
+        <ion-label>{{expert.needsOnboard ? expert.email : expert.name + ' ' + expert.surnames}}</ion-label>
+      </ion-item>
+      <div *ngIf="process.currentRound.expertsRemaining.length == 0" class="container">
+        <strong>Sin expertos pendientes</strong>
+        <p>Todos los expertos han votado en esta ronda.</p>
+      </div>
+
+
+      <ion-item-divider>
+        <ion-label>Expertos que han votado</ion-label>
+      </ion-item-divider>
+
+      <ion-item *ngFor="let expert of process.currentRound.expertsVoted">
+        <ion-label>{{expert.needsOnboard ? expert.email : expert.name + ' ' + expert.surnames}}</ion-label>
+      </ion-item>
+      <div *ngIf="process.currentRound.expertsVoted.length == 0" class="container">
+        <strong>Sin expertos que han votado</strong>
+        <p>No ha votado ningún experto en esta ronda.</p>
+      </div>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

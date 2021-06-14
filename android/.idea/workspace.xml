@@ -10,41 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="712fda4c-82e8-4f5a-9a37-a1c923b941f0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/xml/network_security_config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/.npmkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/R.jar" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/R.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex_archive_input_jar_hashes/debug/out" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/dex_archive_input_jar_hashes/debug/out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug-mergeJavaRes/merge-state" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/debug-mergeJavaRes/merge-state" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/debug-mergeNativeLibs/merge-state" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/debug-mergeNativeLibs/merge-state" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merger.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_assets/debug/out/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/processed_res/debug/out/resources-debug.ap_" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/processed_res/debug/out/resources-debug.ap_" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values_values.arsc.flat" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values_values.arsc.flat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/runtime_symbol_list/debug/R.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/runtime_symbol_list/debug/R.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/symbol_list_with_package_name/debug/package-aware-r.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/capacitor.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/capacitor.config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-01-30-18-37-02-854.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-01-30-18-37-02-854.rawproto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-01-30-19-34-50-973.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-01-30-19-34-50-973.rawproto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../capacitor.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../capacitor.config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/App.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/App.xcodeproj/project.pbxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/App.xcworkspace/xcuserdata/andreigarcia.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/App.xcworkspace/xcuserdata/andreigarcia.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/App/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/App/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/core/ws/ws.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/core/ws/ws.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/environments/environment.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,25 +178,25 @@
     </state>
     <state x="138" y="135" width="1517" height="876" key="AVDManager/-1302.25.1302.999/0.25.1792.1095@0.25.1792.1095" timestamp="1623138907100" />
     <state x="1892" y="125" width="1102" height="799" key="AVDManager/1792.25.1302.999/0.25.1792.1095@1792.25.1302.999" timestamp="1616750813483" />
-    <state width="1260" height="269" key="GridCell.Tab.0.bottom" timestamp="1623139153397">
+    <state width="1260" height="269" key="GridCell.Tab.0.bottom" timestamp="1623139787466">
       <screen x="0" y="25" width="1792" height="1095" />
     </state>
-    <state width="1260" height="269" key="GridCell.Tab.0.bottom/-1302.25.1302.999/0.25.1792.1095@0.25.1792.1095" timestamp="1623139153397" />
+    <state width="1260" height="269" key="GridCell.Tab.0.bottom/-1302.25.1302.999/0.25.1792.1095@0.25.1792.1095" timestamp="1623139787466" />
     <state width="1258" height="269" key="GridCell.Tab.0.bottom/1792.25.1302.999/0.25.1792.1095@1792.25.1302.999" timestamp="1618585277346" />
-    <state width="1260" height="269" key="GridCell.Tab.0.center" timestamp="1623139153392">
+    <state width="1260" height="269" key="GridCell.Tab.0.center" timestamp="1623139787463">
       <screen x="0" y="25" width="1792" height="1095" />
     </state>
-    <state width="1260" height="269" key="GridCell.Tab.0.center/-1302.25.1302.999/0.25.1792.1095@0.25.1792.1095" timestamp="1623139153392" />
+    <state width="1260" height="269" key="GridCell.Tab.0.center/-1302.25.1302.999/0.25.1792.1095@0.25.1792.1095" timestamp="1623139787463" />
     <state width="1258" height="269" key="GridCell.Tab.0.center/1792.25.1302.999/0.25.1792.1095@1792.25.1302.999" timestamp="1618585277345" />
-    <state width="1260" height="269" key="GridCell.Tab.0.left" timestamp="1623139153390">
+    <state width="1260" height="269" key="GridCell.Tab.0.left" timestamp="1623139787462">
       <screen x="0" y="25" width="1792" height="1095" />
     </state>
-    <state width="1260" height="269" key="GridCell.Tab.0.left/-1302.25.1302.999/0.25.1792.1095@0.25.1792.1095" timestamp="1623139153390" />
+    <state width="1260" height="269" key="GridCell.Tab.0.left/-1302.25.1302.999/0.25.1792.1095@0.25.1792.1095" timestamp="1623139787462" />
     <state width="1258" height="269" key="GridCell.Tab.0.left/1792.25.1302.999/0.25.1792.1095@1792.25.1302.999" timestamp="1618585277345" />
-    <state width="1260" height="269" key="GridCell.Tab.0.right" timestamp="1623139153394">
+    <state width="1260" height="269" key="GridCell.Tab.0.right" timestamp="1623139787465">
       <screen x="0" y="25" width="1792" height="1095" />
     </state>
-    <state width="1260" height="269" key="GridCell.Tab.0.right/-1302.25.1302.999/0.25.1792.1095@0.25.1792.1095" timestamp="1623139153394" />
+    <state width="1260" height="269" key="GridCell.Tab.0.right/-1302.25.1302.999/0.25.1792.1095@0.25.1792.1095" timestamp="1623139787465" />
     <state width="1258" height="269" key="GridCell.Tab.0.right/1792.25.1302.999/0.25.1792.1095@1792.25.1302.999" timestamp="1618585277346" />
     <state x="650" y="195" key="SettingsEditor" timestamp="1623137713862">
       <screen x="0" y="25" width="1792" height="1095" />

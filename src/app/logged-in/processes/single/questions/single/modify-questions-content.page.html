@@ -29,7 +29,7 @@
   <ion-item>
     <ion-textarea [(ngModel)]="this.process.currentRound.questions[questionIdx].name"
                   placeholder="Introduce tu pregunta aquí"
-    [readonly]="process.currentRound.started" (ngModelChange)="updateQuestion()" debounce="500"></ion-textarea>
+    [readonly]="process.currentRound.started" (ngModelChange)="updateQuestion()" debounce="500" maxlength="150"></ion-textarea>
   </ion-item>
   <delphi-question-booltype *ngIf="this.process.currentRound.questions[questionIdx].type.toString() == 'BOOLTYPE'" [questionIdx]="questionIdx" [process]="process"></delphi-question-booltype>
   <delphi-question-quantitative *ngIf="this.process.currentRound.questions[questionIdx].type.toString() == 'QUANTITATIVE'" [questionIdx]="questionIdx" [process]="process"></delphi-question-quantitative>

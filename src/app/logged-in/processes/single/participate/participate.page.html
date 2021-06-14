@@ -6,7 +6,8 @@
                        [routerLink]="'/logged-in/menu/processes/single-round/' + process.id"
                        text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>Participar</ion-title>
+    <ion-title>Pregunta {{this.currentQuestion + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
+    <ion-progress-bar value="{{progress}}" [buffer]="progress"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +15,7 @@
   <ion-slides #participate [options]="{ allowTouchMove: false }" class="swiper-no-swiping">
     <ion-slide *ngFor="let question of process.currentRound.questions">
       <div class="slide">
-        <h2>{{question.name}}</h2>
+        <p>{{question.name}}</p>
         <!-- Textarea in an item with a placeholder -->
         <ion-item *ngIf="question.type.toString() === 'QUALITATIVE'">
           <ion-textarea value="" inputmode="text" placeholder="Introduce aquí tu respuesta"
@@ -36,12 +37,12 @@
           <ion-list>
             <ion-radio-group value="null" (ionChange)="updateAnswer(currentQuestion, $event)">
               <ion-item>
-                <ion-label>Sí</ion-label>
+                <ion-label class="ion-text-wrap">Sí</ion-label>
                 <ion-radio slot="start" value="1"></ion-radio>
               </ion-item>
 
               <ion-item>
-                <ion-label>No</ion-label>
+                <ion-label class="ion-text-wrap">No</ion-label>
                 <ion-radio slot="start" value="0"></ion-radio>
               </ion-item>
             </ion-radio-group>
@@ -51,24 +52,24 @@
           <ion-list>
             <ion-radio-group value="null" (ionChange)="updateAnswer(currentQuestion, $event)">
               <ion-item>
-                <ion-label>Totalmente en desacuerdo</ion-label>
+                <ion-label class="ion-text-wrap">Totalmente en desacuerdo</ion-label>
                 <ion-radio slot="start" value="1"></ion-radio>
               </ion-item>
 
               <ion-item>
-                <ion-label>En desacuerdo</ion-label>
+                <ion-label class="ion-text-wrap">En desacuerdo</ion-label>
                 <ion-radio slot="start" value="2"></ion-radio>
               </ion-item>
               <ion-item>
-                <ion-label>Indiferente</ion-label>
+                <ion-label class="ion-text-wrap">Indiferente</ion-label>
                 <ion-radio slot="start" value="3"></ion-radio>
               </ion-item>
               <ion-item>
-                <ion-label>De acuerdo</ion-label>
+                <ion-label class="ion-text-wrap">De acuerdo</ion-label>
                 <ion-radio slot="start" value="4"></ion-radio>
               </ion-item>
               <ion-item>
-                <ion-label>Totalmente de acuerdo</ion-label>
+                <ion-label class="ion-text-wrap">Totalmente de acuerdo</ion-label>
                 <ion-radio slot="start" value="5"></ion-radio>
               </ion-item>
             </ion-radio-group>
@@ -78,7 +79,7 @@
           <ion-list>
             <ion-radio-group (ionChange)="addCatAnswer(currentQuestion, $event)" value="null">
               <ion-item *ngFor="let category of question.categories">
-                <ion-label>{{category.catName}}</ion-label>
+                <ion-label class="ion-text-wrap">{{category.catName}}</ion-label>
                 <ion-radio slot="start" [value]="category.id"></ion-radio>
               </ion-item>
             </ion-radio-group>
@@ -88,9 +89,9 @@
 
           <p>Máximas selecciones habilitadas: {{this.answers[currentQuestion].question.maxSelectable}}</p>
           <ion-item>
-            <ion-label>Categorías</ion-label>
+            <ion-label class="ion-text-wrap">Categorías</ion-label>
             <ion-select multiple="true" (ionChange)="addCatAnswer(currentQuestion, $event)">
-              <ion-select-option *ngFor="let category of question.categories"
+              <ion-select-option class="show-text" *ngFor="let category of question.categories"
                                  [value]="category.id">{{category.catName}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -101,7 +102,7 @@
           <p>Introduzca su ponderación entre 0 (puntuación más baja) y 10 (puntuación más alta).</p>
           <ion-list>
             <ion-item *ngFor="let category of question.categories">
-              <ion-label>{{category.catName}}</ion-label>
+              <ion-label class="ion-text-wrap">{{category.catName}}</ion-label>
               <ion-input (ionChange)="addCatPondAnswer(currentQuestion, $event, category.id)" placeholder="Ponderación entre 0 y 10" type="number" min="0" max="10" value="null"></ion-input>
             </ion-item>
           </ion-list>

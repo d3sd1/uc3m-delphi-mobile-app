@@ -12,6 +12,7 @@ import {ClosePage} from './single/close/close.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
 import {ViewSingleOldRoundPage} from './single/rounds/single-round/view-single-old-round.page';
 import {ParticipatePage} from './single/participate/participate.page';
+import {RemainingExpertsPage} from './single/questions/remaining_experts/remaining-experts.page';
 
 const routes: Routes = [
   {
@@ -114,6 +115,14 @@ const routes: Routes = [
           {
             path: 'list',
             component: QuestionListPage,
+            resolve: {
+              user: UserResolver,
+              process: CurrentProcessResolver
+            },
+          },
+          {
+            path: 'remaining_experts',
+            component: RemainingExpertsPage,
             resolve: {
               user: UserResolver,
               process: CurrentProcessResolver

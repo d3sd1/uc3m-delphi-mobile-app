@@ -8,12 +8,13 @@ import {ChatPageRoutingModule} from './chat-routing.module';
 import {ChatListComponent} from './chat-list/chat-list.component';
 import {ChatEmptyPage} from './chat-empty/chat-empty.page';
 import {ChatConversationLoadingPage} from './chat-conversation/chat-conversation-loading/chat-conversation-loading.page';
-import {ChatConversationComponent} from './chat-conversation/chat-conversation.component';
+import {ChatConversationPage} from './chat-conversation/chat-conversation-page.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {RelativeTime} from './relative-time.pipe';
 import {EmojiPickerComponent} from './chat-conversation/emoji-picker/emoji-picker';
 import {EmojiProvider} from './chat-conversation/emoji-picker/emoji-provider';
 import {ChatLoadingPage} from './chat-loading/chat-loading.page';
+import {CurrentChatResolver} from '../../core/router/resolver/current-chat.resolver';
 
 @NgModule({
   imports: [
@@ -26,14 +27,14 @@ import {ChatLoadingPage} from './chat-loading/chat-loading.page';
   providers: [
     NavParams,
     EmojiProvider,
-
+    CurrentChatResolver
   ],
   declarations: [
     ChatPage,
     ChatListComponent,
     ChatEmptyPage,
     ChatConversationLoadingPage,
-    ChatConversationComponent,
+    ChatConversationPage,
     RelativeTime,
     EmojiPickerComponent,
     ChatLoadingPage

@@ -17,6 +17,7 @@ export class ParticipatePage {
   answers: Answer[] = [];
 
   currentQuestion = 0;
+  progress = 0;
   process: Process;
   currentUser: User;
   @ViewChild('participate') participateSlides: IonSlides;
@@ -64,12 +65,12 @@ export class ParticipatePage {
   async advance() {
     this.sortCategories(this.currentQuestion + 1);
     const val = this.answers[this.currentQuestion].response;
-    console.log('cal is ', val)
     if( val === null || val == "null" || val == -1 || val == '') {
       await this.showToast('Por favor responde la pregunta.');
       return;
     }
     this.currentQuestion++;
+    this.calculateProgress();
     await this.participateSlides.slideNext();
   }
 
@@ -79,7 +80,12 @@ export class ParticipatePage {
     await this.participateSlides.slidePrev();
   }
 
+  private calculateProgress() {
+    this.progress = this.currentQuestion/ this.process.currentRound.questions.length;
+  }
+
   async finish() {
+    this.progress = 1;
     const alert = await this.alertController.create({
       header: 'Confirmar participación',
       message: '¿Estás seguro de que deseas enviar la participación?',
@@ -87,7 +93,8 @@ export class ParticipatePage {
         {
           text: 'Cancelar',
           cssClass: 'secondary',
-          handler: (blah) => {
+          handler: () => {
+            this.calculateProgress();
             alert.dismiss();
           }
         }, {

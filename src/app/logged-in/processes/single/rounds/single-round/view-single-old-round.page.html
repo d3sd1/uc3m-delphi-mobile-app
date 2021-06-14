@@ -27,7 +27,7 @@
                [readonly]="process.rounds[roundIdx].started || process.processFinished"></ion-input>
   </ion-item>
   <ion-item-divider></ion-item-divider>
-  <div *ngIf="process?.rounds[roundIdx].questions.length == 0" id="container">
+  <div *ngIf="process?.rounds[roundIdx].questions.length == 0" class="container">
     <strong>Sin preguntas</strong>
     <p>No existen preguntas asociadas a esta ronda.</p>
   </div>

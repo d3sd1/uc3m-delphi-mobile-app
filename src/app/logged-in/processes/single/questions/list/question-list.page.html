@@ -29,8 +29,15 @@
                (ngModelChange)="updateBasicData()"
                [readonly]="process.currentRound.started || process.processFinished || !isCoordinator()"></ion-input>
   </ion-item>
+
+  <ion-item [disabled]="!process.currentRound.started" routerDirection="forward"
+            [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/question/remaining_experts'">
+    <ion-label>Estado de la votación</ion-label>
+    <ion-badge slot="end">{{process.currentRound.expertsRemaining.length}} expertos por votar
+    </ion-badge>
+  </ion-item>
   <ion-item-divider></ion-item-divider>
-  <div *ngIf="process?.currentRound.questions.length == 0" id="container">
+  <div *ngIf="process?.currentRound.questions.length == 0" class="container">
     <strong>Sin preguntas</strong>
     <p>No existen preguntas asociadas a esta ronda.</p>
   </div>
