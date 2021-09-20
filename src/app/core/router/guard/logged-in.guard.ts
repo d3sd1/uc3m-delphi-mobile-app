@@ -11,10 +11,10 @@ export class LoggedInGuard implements CanActivateChild {
   }
 
   async canActivateChild(): Promise<boolean | UrlTree> {
-    const canActivate = await this.userConsumer.isLoggedIn();
+   /* TODO const canActivate = await this.userConsumer.isLoggedIn();
     if (!canActivate) {
       return this.router.parseUrl('/logged-out');
-    }
+    }*/
     return true;
   }
 

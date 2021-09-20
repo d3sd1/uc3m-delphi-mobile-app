@@ -16,7 +16,7 @@ export class WsService {
     if (jwt === null || jwt === '' || jwt === undefined) {
       return;
     }
-    let ws = new SockJS(environment.apiUrl + '/ws', {transports: ['websocket']});
+    const ws = new SockJS(environment.apiUrl + '/ws', {transports: ['websocket']});
     this.stompClient = Stomp.over(ws);
     this.stompClient.connect({jwt: jwt}, (frame) => {
       this.channelConnector();

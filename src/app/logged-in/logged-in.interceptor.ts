@@ -15,8 +15,7 @@ export class LoggedInInterceptor implements HttpInterceptor {
   async handle(req: HttpRequest<any>, next: HttpHandler) {
     const authReq = req.clone({
       headers: new HttpHeaders({
-        //'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + (await (await this.userConsumer.getJwt()).getValue())
+        Authorization: 'Bearer ' + (await (await this.userConsumer.getJwt()))
       })
     });
     return next.handle(authReq).toPromise();

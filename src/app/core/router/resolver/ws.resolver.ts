@@ -10,6 +10,6 @@ export class WsResolver implements Resolve<any> {
   }
 
   async resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    return this.ws.connectWs((await this.userConsumer.getJwt()).getValue());
+    return this.ws.connectWs(await this.userConsumer.getJwt());
   }
 }

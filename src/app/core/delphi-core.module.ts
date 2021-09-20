@@ -1,6 +1,5 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {LangService} from './lang/lang.service';
-import {SQLite} from '@ionic-native/sqlite/ngx';
 import {DatabaseService} from './consumer/database.service';
 import {CompatibilityService} from './devices/compatibility.service';
 import {UserConsumer} from './consumer/user/user.consumer';
@@ -14,7 +13,6 @@ import {ChatConsumer} from './consumer/chat/chat.consumer';
   providers: [
     DatabaseService,
     LangService,
-    SQLite,
     CompatibilityService,
   ],
 })

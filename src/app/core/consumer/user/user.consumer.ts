@@ -6,7 +6,6 @@ import {LoginUser} from './login.user';
 import {Storage} from '@ionic/storage';
 import {WsService} from '../../ws/ws.service';
 import {TranslateService} from '@ngx-translate/core';
-import {SQLite} from '@ionic-native/sqlite/ngx';
 import {DatabaseService} from '../database.service';
 import {User} from '../../model/user';
 import {JwtHelperService} from '@auth0/angular-jwt';
@@ -28,7 +27,6 @@ export class UserConsumer {
               private storage: Storage,
               private wsService: WsService,
               private translate: TranslateService,
-              private sqlite: SQLite,
               private databaseService: DatabaseService,
               private langService: LangService) {
     this.reset();
@@ -48,12 +46,8 @@ export class UserConsumer {
   async resetPassword(email, code): Promise<any> {
     return this.http.post(environment.apiUrl + '/v1/session/password/reset', {email: email, code: code}).toPromise();
   }
-
-  async getJwt(): Promise<BehaviorSubject<string>> {
-    if (this.jwtUpdater.getValue() === null || this.userUpdater.getValue() == null) {
-      await this.init();
-    }
-    return this.jwtUpdater;
+  async getJwt(): Promise<string> {
+    return localStorage.getItem('jwt');
   }
 
   async getUser(): Promise<BehaviorSubject<User>> {
@@ -66,10 +60,7 @@ export class UserConsumer {
   async updatePicture(newPhoto: FormData) {
     const res = await this.http.post<Media>(environment.apiUrl + '/v1/media/upload', newPhoto, {headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})}).toPromise();
     this.userConsumerCache.user.photo = environment.apiUrl + '/v1/media/fetch/' + res.id;
-
-    const db = await this.databaseService.getDatabase();
-    await db.executeSql('UPDATE current_session SET photo=?', [this.userConsumerCache.user.photo]);
-    await this.http.post(environment.apiUrl + '/v1/profile/photo', this.userConsumerCache.user).toPromise();
+await this.http.post(environment.apiUrl + '/v1/profile/photo', this.userConsumerCache.user).toPromise();
     await this.publishChanges();
   }
 
@@ -89,25 +80,19 @@ export class UserConsumer {
   async updateNotificationPreferences(enabled: boolean) {
     await this.http.post(environment.apiUrl + '/v1/profile/notifications?enabled=' + enabled, {}).toPromise();
     this.userConsumerCache.user.notificationStatus = enabled;
-    const db = await this.databaseService.getDatabase();
-    await db.executeSql('UPDATE current_session SET notification_status=?', [this.userConsumerCache.user.notificationStatus]);
     await this.publishChanges();
   }
 
   async updateOnboard(needsOnboard: boolean) {
     await this.http.post(environment.apiUrl + '/v1/profile/onboard?status=' + needsOnboard, {}).toPromise();
     this.userConsumerCache.user.needsOnboard = needsOnboard;
-    const db = await this.databaseService.getDatabase();
-    await db.executeSql('UPDATE current_session SET needs_onboard=0', []);
     await this.publishChanges();
   }
 
   async updateLanguage(lang: Language) {
-    lang.keyName = lang.keyName.toLowerCase();
+    lang.name = lang.name.toLowerCase();
     this.userConsumerCache.user.language = lang;
     this.langService.changeLanguage(lang);
-    const db = await this.databaseService.getDatabase();
-    await db.executeSql('UPDATE current_session SET language=?', [JSON.stringify(this.userConsumerCache.user.language)]);
     await this.http.post(environment.apiUrl + '/v1/profile/lang?language_id=' + lang.id, {}).toPromise();
     await this.publishChanges();
   }
@@ -115,84 +100,24 @@ export class UserConsumer {
   async updateNameSurnames(name: string, surnames: string) {
     this.userConsumerCache.user.name = name;
     this.userConsumerCache.user.surnames = surnames;
-    const db = await this.databaseService.getDatabase();
-    await db.executeSql('UPDATE current_session SET name=?, surnames=?', [name, surnames]);
     await this.http.post(environment.apiUrl + '/v1/profile/setup', this.userConsumerCache.user).toPromise();
     await this.publishChanges();
   }
 
   async fetchDatabaseCache() {
-    await this.createTable();
-    const db = await this.databaseService.getDatabase();
-    const data = await db.executeSql('SELECT * FROM current_session LIMIT 1', []);
-    if (data.rows.length > 0) {
-      const dbRow = data.rows.item(0);
-      this.userConsumerCache.jwt = dbRow.jwt;
-      this.userConsumerCache.user.id = dbRow.user_id;
-      this.userConsumerCache.user.email = dbRow.email;
-      this.userConsumerCache.user.name = dbRow.name;
-      this.userConsumerCache.user.surnames = dbRow.surnames;
-      this.userConsumerCache.user.photo = dbRow.photo;
-      this.userConsumerCache.user.enabled = dbRow.enabled;
-      this.userConsumerCache.user.blocked = dbRow.blocked;
-      this.userConsumerCache.user.chatStatus = dbRow.chat_status;
-      this.userConsumerCache.user.needsOnboard = dbRow.needs_onboard;
-      this.userConsumerCache.user.language = JSON.parse(dbRow.language);
-      this.userConsumerCache.user.notificationStatus = dbRow.notification_status;
-      this.userUpdater.next(this.userConsumerCache.user);
-      this.jwtUpdater.next(this.userConsumerCache.jwt);
-    }
+
   }
 
   async createTable() {
-    const db = await this.databaseService.getDatabase();
-    await db.executeSql(
-      'create table IF NOT EXISTS current_session(' +
-      'jwt TEXT PRIMARY KEY,' +
-      'user_id INTEGER,' +
-      'email TEXT,' +
-      'name TEXT,' +
-      'surnames TEXT,' +
-      'photo TEXT,' +
-      'enabled BOOLEAN,' +
-      'blocked BOOLEAN,' +
-      'chat_status TEXT,' +
-      'needs_onboard BOOLEAN,' +
-      'language TEXT,' +
-      'notification_status BOOLEAN' +
-      ');', []);
+
   }
 
   async dropSession() {
-    const db = await this.databaseService.getDatabase();
-    await db.executeSql('DELETE FROM current_session;', []);
     this.jwtUpdater.next(null);
   }
 
   async storeSession(userLogin: LoginResponse) {
-    await this.createTable();
-    const db = await this.databaseService.getDatabase();
-    await this.dropSession();
-    await db.executeSql(
-      'INSERT INTO current_session (jwt, user_id, email, name, surnames, photo, enabled, blocked, chat_status,' +
-      'needs_onboard,language,notification_status)' +
-      ' values (?,?,?,?,?,?,?,?,?,?,?,?)', [
-        userLogin.jwt,
-        userLogin.user.id,
-        userLogin.user.email,
-        userLogin.user.name,
-        userLogin.user.surnames,
-        userLogin.user.photo,
-        userLogin.user.enabled,
-        userLogin.user.blocked,
-        userLogin.user.chatStatus,
-        userLogin.user.needsOnboard,
-        JSON.stringify(userLogin.user.language),
-        userLogin.user.notificationStatus,
-      ]);
-    this.userUpdater.next(this.userConsumerCache.user);
-    this.jwtUpdater.next(this.userConsumerCache.jwt);
-    await this.fetchDatabaseCache();
+    await localStorage.setItem('jwt', userLogin.jwt);
   }
 
   doLogin(user: LoginUser): Promise<string> {

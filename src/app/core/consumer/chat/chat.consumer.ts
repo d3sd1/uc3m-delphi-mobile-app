@@ -19,8 +19,8 @@ export class ChatConsumer {
 
   private async initializeLoaders() {
     if (this.userChatsCache === null) {
-      this.userChatsCache = (await this.httpClient.get<UserChat[]>(environment.apiUrl + '/v1/chat/list').toPromise());
-      this.userChats.next(this.userChatsCache);
+      // this.userChatsCache = (await this.httpClient.get<UserChat[]>(environment.apiUrl + '/v1/chat/list').toPromise());
+      // this.userChats.next(this.userChatsCache);
       this.listenUpdates();
     }
   }

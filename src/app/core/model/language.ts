@@ -1,12 +1,12 @@
 export class Language {
   id: number;
-  keyName: string;
+  name: string;
   available: boolean;
 
 
-  constructor(id: number, keyName: string, available: boolean) {
+  constructor(id: number, name: string, available: boolean) {
     this.id = id;
-    this.keyName = keyName;
+    this.name = name;
     this.available = available;
   }
 }

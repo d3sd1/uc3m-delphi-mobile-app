@@ -20,8 +20,8 @@ export class ProcessConsumer {
 
   private async initializeLoaders() {
     if (this.userProcessesCache === null) {
-      this.userProcessesCache = (await this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list').toPromise());
-      this.userProcesses.next(this.userProcessesCache);
+      // this.userProcessesCache = (await this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list').toPromise());
+      // this.userProcesses.next(this.userProcessesCache);
       this.listenUpdates();
     }
   }

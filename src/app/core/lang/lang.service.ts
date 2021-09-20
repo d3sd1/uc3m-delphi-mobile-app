@@ -27,14 +27,14 @@ export class LangService {
   registerLanguages(langs: Language[]) {
     const keyLangs = [];
     langs?.forEach((lang: Language) => {
-      keyLangs.push(lang?.keyName.toLowerCase());
+      keyLangs.push(lang?.name.toLowerCase());
     });
     this.translate.addLangs(keyLangs);
   }
 
   changeLanguage(lang: Language) {
-    this.translate.setDefaultLang(lang?.keyName.toLowerCase());
-    this.translate.use(lang?.keyName.toLowerCase());
+    this.translate.setDefaultLang(lang?.name.toLowerCase());
+    this.translate.use(lang?.name.toLowerCase());
   }
 
   async getAvailableLangs(): Promise<Language[]> {

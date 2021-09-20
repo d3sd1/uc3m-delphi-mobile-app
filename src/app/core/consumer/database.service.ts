@@ -1,6 +1,5 @@
 import {Platform} from '@ionic/angular';
 import {Injectable} from '@angular/core';
-import {SQLite, SQLiteObject} from '@ionic-native/sqlite/ngx';
 
 export interface Dev {
   id: number,
@@ -13,11 +12,9 @@ export interface Dev {
   providedIn: 'root'
 })
 export class DatabaseService {
-  private database: SQLiteObject = null;
 
-  constructor(private plt: Platform, private sqlite: SQLite) {
+  constructor(private plt: Platform) {
     this.plt.ready().then(async () => {
-      this.database = await this.createDatabase();
     });
   }
 
@@ -26,29 +23,12 @@ export class DatabaseService {
     await this.createDatabase();
   }
 
-  getDatabase(): Promise<SQLiteObject> {    return new Promise<SQLiteObject>((resolve) => {
-      if (this.database === null) {
-        setTimeout(() => {
-          resolve(this.getDatabase());
-        }, 100);
-      } else {
-        resolve(this.database);
-      }
-    });
-  }
-
-  private async createDatabase(): Promise<SQLiteObject> {
-    return await this.sqlite.create({
-      name: 'delphi.db',
-      location: 'default'
-    });
+  private async createDatabase(): Promise<void> {
+    return null;
   }
 
   private async deleteDatabase() {
-    await this.sqlite.deleteDatabase({
-      name: 'delphi.db',
-      location: 'default'
-    });
+    await null;
   }
 
 }

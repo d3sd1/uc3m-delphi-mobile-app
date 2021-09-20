@@ -65,7 +65,7 @@ export class ProfilePage {
     const sheets = [];
     for (const lang of langs) {
       sheets.push({
-        text: await this.translate.get(`language.${lang.keyName.toLowerCase()}`).toPromise(),
+        text: await this.translate.get(`language.${lang.name.toLowerCase()}`).toPromise(),
         cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',
         handler: async () => {
           await this.userConsumer.updateLanguage(lang);
