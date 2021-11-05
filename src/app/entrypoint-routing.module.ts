@@ -24,9 +24,9 @@ const routes: Routes = [
   },
   {
     path: 'logged-in',
-    canActivateChild: [
+    /*canActivateChild: [
       LoggedInGuard,
-    ],
+    ],*/
     resolve: {
       user: UserResolver,
       ws: WsResolver,

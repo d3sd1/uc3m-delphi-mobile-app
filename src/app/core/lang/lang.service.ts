@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {Language} from '../model/language';
-import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -38,11 +37,11 @@ export class LangService {
   }
 
   async getAvailableLangs(): Promise<Language[]> {
-    if (this.langs === undefined ||
-      this.langs === null ||
-      this.langs?.length === 0) {
-      this.langs = await this.httpClient.get<Language[]>(environment.apiUrl + '/v1/delphi/langs').toPromise();
-    }
-    return this.langs;
+
+    //TODO remove hardcoding
+    return new Promise(((resolve, reject) => resolve([
+      new Language(1,'es',true),
+      new Language(2,'en',true)
+    ])));
   }
 }

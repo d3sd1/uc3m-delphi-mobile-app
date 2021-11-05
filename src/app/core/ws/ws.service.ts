@@ -37,21 +37,9 @@ export class WsService {
   channelConnector() {
     this.pendingConnectionChannels.subscribe((channel: WsChannel) => {
       this.stompClient.subscribe((channel.privateChannel ? '/private' : '') + '/ws/subscribe/' + channel.channel, (message) => {
-        const wsMsg = JSON.parse(message.body);
-        const mode = wsMsg.mode;
-        const data = wsMsg.data;
-        let arr = [];
-        if(mode == 'ADD') {
-          channel.subject.getValue().push(data);
-          arr = channel.subject.getValue();
-        } else if(mode == 'MODIFY') {
-          arr = channel.subject.getValue().filter(iData => iData.id !== data.id);
-          arr.push(data);
-        } else if(mode == 'REMOVE') {
-          console.log("REMOVE", data)
-          arr = channel.subject.getValue().filter(iData => iData.id !== data.id);
-        }
-        channel.subject.next(arr);
+        const data = JSON.parse(message.body);
+        channel.subject.getValue().push(data);
+        channel.subject.next(data); // should thid be managed?
       });
     });
   }

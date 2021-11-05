@@ -20,12 +20,9 @@ export class ProcessConsumer {
 
   private async initializeLoaders() {
     if (this.userProcessesCache === null) {
-      // this.userProcessesCache = (await this.httpClient.get<Process[]>(environment.apiUrl + '/v1/process/list').toPromise());
-      // this.userProcesses.next(this.userProcessesCache);
       this.listenUpdates();
     }
   }
-
 
 
   async all(): Promise<BehaviorSubject<Process[]>> {
@@ -47,7 +44,8 @@ export class ProcessConsumer {
     const process = new Process();
     process.name = name;
     process.description = description;
-    (await this.httpClient.put<Process>(environment.apiUrl + '/v1/process', process).toPromise());
+   // (await this.httpClient.put<Process>(environment.apiUrl + '/v1/process', process).toPromise());
+    await this.wsService.publish('process/list', process);
   }
 
   private listenUpdates() {
@@ -56,12 +54,13 @@ export class ProcessConsumer {
 
     // Bubble single-round from websocket updated data (single-round-channel-simplicity)
     this.userProcesses.subscribe((processes) => {
+      console.log('processes are:', processes);
       processes.forEach((process) => {
 
         if (process.currentRound === undefined || process.currentRound === null) {
           process.currentRound = new Round();
         }
-        if(process.currentRound.questions === undefined || process.currentRound.questions === null) {
+        if (process.currentRound.questions === undefined || process.currentRound.questions === null) {
           process.currentRound.questions = [];
         }
         if (!(process.id in this.userSingleProcesses)) {

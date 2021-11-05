@@ -122,7 +122,7 @@ await this.http.post(environment.apiUrl + '/v1/profile/photo', this.userConsumer
 
   doLogin(user: LoginUser): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.http.post<LoginResponse>(environment.apiUrl + '/v1/session/login', user).subscribe(async (loginResponse: LoginResponse) => {
+      this.http.post<LoginResponse>(environment.apiUrl + '/login', user).subscribe(async (loginResponse: LoginResponse) => {
         await this.storeSession(loginResponse);
         await this.wsService.disconnectWs();
         await this.wsService.connectWs(loginResponse.jwt);
