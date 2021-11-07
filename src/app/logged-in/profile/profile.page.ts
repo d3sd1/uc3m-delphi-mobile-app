@@ -43,13 +43,13 @@ export class ProfilePage {
   async uploadImage() {
     const newPhoto = new FormData();
     newPhoto.append('image', this.uploadPicture.nativeElement.files[0]);
-    await this.userConsumer.updatePicture(newPhoto);
+  //todo  await this.userConsumer.updatePicture(newPhoto);
   }
 
   async uploadCv() {
     const cv = new FormData();
     cv.append('cv', this.uploadCvRef.nativeElement.files[0]);
-    await this.userConsumer.updateCv(cv);
+   //todo  await this.userConsumer.updateCv(cv);
   }
 
   async triggerStatusChatHandler() {
@@ -57,7 +57,7 @@ export class ProfilePage {
   }
 
   async updateNotificationPreferences(enabled: boolean) {
-    await this.userConsumer.updateNotificationPreferences(enabled);
+   // todo await this.userConsumer.updateNotificationPreferences(enabled);
   }
 
   async changeLanguage() {
@@ -68,7 +68,7 @@ export class ProfilePage {
         text: await this.translate.get(`language.${lang.name.toLowerCase()}`).toPromise(),
         cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',
         handler: async () => {
-          await this.userConsumer.updateLanguage(lang);
+        // todo  await this.userConsumer.updateLanguage(lang);
         }
       });
     }

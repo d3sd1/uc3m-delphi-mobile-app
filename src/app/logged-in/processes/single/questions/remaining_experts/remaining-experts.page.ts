@@ -5,6 +5,7 @@ import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -21,8 +22,9 @@ export class RemainingExpertsPage {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     public alertController: AlertController,
-    private httpClient: HttpClient) {
-    this.route.snapshot.data['user'].subscribe((user) => {
+    private httpClient: HttpClient,
+    private userConsumer: UserConsumer) {
+    this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
     this.route.snapshot.data['process'].subscribe((process: Process) => {

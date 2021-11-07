@@ -22,17 +22,9 @@
 
     <ion-slide>
       <img alt="" src="../../../assets/images/onboarding/slide-2.png"/>
-      <h2>Disponible offline</h2>
-      <p>La aplicación está disponible offline.</p>
-      <ion-item>
-        <ion-label>Nueva contraseña</ion-label>
-        <ion-input [(ngModel)]="reset.newPass" placeholder="Introduce tu nueva contraseña" type="password"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Repite contraseña</ion-label>
-        <ion-input [(ngModel)]="reset.newPassRep" placeholder="Repite tu nueva contraseña" type="password"></ion-input>
-      </ion-item>
-      <ion-button (click)="setupPassword()" fill="clear">Siguiente
+      <h2>Segura</h2>
+      <p>Podrás cambiar tu contraseña desde tu perfil.</p>
+      <ion-button (click)="swipeNext()"  fill="clear">Siguiente
         <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-button>
     </ion-slide>

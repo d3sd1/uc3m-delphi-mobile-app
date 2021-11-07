@@ -9,8 +9,7 @@ import {UserConsumer} from '../../../core/consumer/user/user.consumer';
 })
 export class LogoutPage implements OnInit {
 
-  constructor(private userConsumer: UserConsumer, private navCtrl: NavController
-    , private toastController: ToastController) {
+  constructor(private userConsumer: UserConsumer, private navCtrl: NavController, private toastController: ToastController) {
   }
 
 
@@ -28,12 +27,9 @@ export class LogoutPage implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.userConsumer.doLogout().then(() => {
-        this.navCtrl.navigateBack('/logged-out/login').then(() => {
-          this.sendToast('Desconexión satisfactoria').then();
-        });
-      }).catch((e) => {
-        console.error(e);
+      this.userConsumer.doLogout();
+      this.navCtrl.navigateBack('/logged-out/login').then(() => {
+        this.sendToast('Desconexión satisfactoria').then();
       });
     }, 2000);
   }

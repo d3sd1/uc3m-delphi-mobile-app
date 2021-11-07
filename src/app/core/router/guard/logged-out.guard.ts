@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CanActivateChild, Router, UrlTree} from '@angular/router';
 import {UserConsumer} from '../../consumer/user/user.consumer';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,8 @@ export class LoggedOutGuard implements CanActivateChild {
   constructor(public userConsumer: UserConsumer, private router: Router) {
   }
 
-  async canActivateChild(): Promise<boolean | UrlTree> {
-    const canActivate = !(await this.userConsumer.isLoggedIn());
-    if (!canActivate) {
-      return this.router.parseUrl('/logged-in');
-    }
-    return true;
+  canActivateChild(): boolean {// BehaviorSubject<boolean | UrlTree> {
+    return true; // TODO this.userConsumer.isLoggedIn();
   }
 
 

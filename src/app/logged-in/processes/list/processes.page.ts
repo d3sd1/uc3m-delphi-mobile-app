@@ -24,19 +24,20 @@ export class ProcessesPage {
               private processConsumer: ProcessConsumer,
               private navCtrl: NavController) {
     this.route.snapshot.data['processes'].subscribe((processes) => {
+      console.log('oprocesses: ', processes);
       this.processes = processes;
       this.filterProcesses();
-    });
+    });/*
     this.route.snapshot.data['user'].subscribe((user) => {
       this.user = user;
-    });
+    });*/
   }
 
   async editProcess(process) {
-    await this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id);
+    // await this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id);
   }
 
-  filterProcesses(ev?: Event) {
+  filterProcesses(ev?: Event) {/*
     this.filteredProcesses = [];
     const wantsFinished = ev?.target['value'] === 'finished';
     this.processes?.forEach((process: Process) => {
@@ -46,6 +47,7 @@ export class ProcessesPage {
         this.filteredProcesses.push(process);
       }
     });
+    this.filteredProcesses = [...this.processes];
     this.filteredProcesses.sort((a, b) => {
       if (a.modifiedDate < b.modifiedDate) {
         return 1;
@@ -54,14 +56,15 @@ export class ProcessesPage {
         return -1;
       }
       return 0;
-    });
+    });*/
   }
   isCoordinator(process: Process): boolean {
-    return process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
+    // return process.coordinators.findIndex((user) => user?.id === this.user?.id) !== -1;
+    return false;
   }
 
   async addProcess() {
-    const alert = await this.alertController.create({
+    /*const alert = await this.alertController.create({
       header: 'Crear proceso',
       inputs: [
         {
@@ -96,7 +99,7 @@ export class ProcessesPage {
       ]
     });
 
-    await alert.present();
+    await alert.present();*/
   }
 
 

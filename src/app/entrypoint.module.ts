@@ -16,10 +16,7 @@ import {LoggedOutModule} from './logged-out/logged-out.module';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {LoggedInGuard} from './core/router/guard/logged-in.guard';
 import {LoggedOutGuard} from './core/router/guard/logged-out.guard';
-import {WsResolver} from './core/router/resolver/ws.resolver';
-import {LangResolver} from './core/router/resolver/lang.resolver';
 import {PushNotificationResolver} from './core/router/resolver/push-notification.resolver';
-import {UserResolver} from './core/router/resolver/user.resolver';
 import {CompatibilityResolver} from './core/router/resolver/compatibility.resolver';
 import {SplashScreenPage} from './splash-screen/splash-screen.page';
 
@@ -52,10 +49,7 @@ import {SplashScreenPage} from './splash-screen/splash-screen.page';
     TranslateStore,
     LoggedInGuard,
     LoggedOutGuard,
-    WsResolver,
-    LangResolver,
     PushNotificationResolver,
-    UserResolver,
     CompatibilityResolver
   ],
   bootstrap: [EntrypointComponent],

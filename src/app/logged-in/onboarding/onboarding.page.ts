@@ -30,7 +30,7 @@ export class OnboardingPage implements ViewDidEnter {
               private userConsumer: UserConsumer,
               private navCtrl: NavController,
               private route: ActivatedRoute) {
-    this.route.snapshot.data['user'].subscribe((user) => {
+    this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
   }
@@ -49,28 +49,6 @@ export class OnboardingPage implements ViewDidEnter {
       await this.showToast('home.onboarding.setup.error.name');
       return;
     }
-    await this.userConsumer.updateNameSurnames(
-      this.user.name,
-      this.user.surnames
-    );
-    await this.slides.slideNext();
-  }
-
-  async setupPassword() {
-    if (this.reset.newPass === null ||
-      this.reset.newPassRep === null ||
-      this.reset.newPass === '' ||
-      this.reset.newPassRep === '' ||
-      this.reset.newPass === undefined ||
-      this.reset.newPassRep === undefined) {
-      await this.showToast('home.onboarding.setup.error.password_empty');
-      return;
-    } else if (this.reset.newPass !== this.reset.newPassRep) {
-      await this.showToast('home.onboarding.setup.error.password_matching');
-      return;
-    }
-
-    await this.userConsumer.changePass(this.reset);
     await this.slides.slideNext();
   }
 
@@ -78,16 +56,15 @@ export class OnboardingPage implements ViewDidEnter {
     await this.slides.slideNext();
   }
 
-  async endSwiper() {
-    await this.userConsumer.updateOnboard(false);
-    await this.router.navigateByUrl('/logged-in/menu');
+  endSwiper() {
+    this.userConsumer.updateUserOnboarding(this.user);
+    this.router.navigateByUrl('/logged-in/menu').then(r => null);
   }
 
   onBoardingFinished() {
-    //SOMETIMES IT IS THREATED AS STRING FOR SOME REASON.
     // @ts-ignore
-    if (this.user.needsOnboard == 'false' || this.user.needsOnboard == false) {
-      this.navCtrl.navigateForward('/logged-in/menu');
+    if (this.user.needsOnboard === 'false' || this.user.needsOnboard === false) {
+      this.navCtrl.navigateForward('/logged-in/menu').then(r => null);
     }
   }
 

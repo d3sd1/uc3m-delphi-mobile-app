@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {WsService} from '../../ws/ws.service';
+import {WsService} from '../../service/ws.service';
 import {BehaviorSubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
@@ -47,7 +47,7 @@ export class ChatConsumer {
   */
   private listenUpdates() {
     // Bubble all with websocket
-    this.wsService.subscribe('process/list', true, this.userChats);
+    this.wsService.subscribe('process', true, this.userChats);
 
     // Bubble single-round from websocket updated data (single-round-channel-simplicity)
     this.userChats.subscribe((userChats) => {

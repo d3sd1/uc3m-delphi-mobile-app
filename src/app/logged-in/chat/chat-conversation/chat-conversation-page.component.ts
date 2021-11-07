@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserChat} from '../../../core/model/user-chat';
 import {User} from '../../../core/model/user';
 import {ChatMessage} from '../../../core/model/chat-message';
-import {WsService} from '../../../core/ws/ws.service';
+import {WsService} from '../../../core/service/ws.service';
 import {ChatConsumer} from '../../../core/consumer/chat/chat.consumer';
 
 @Component({

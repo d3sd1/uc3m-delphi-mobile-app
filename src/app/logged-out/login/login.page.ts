@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {LoadingController, NavController, ToastController} from '@ionic/angular';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 import {LoginUser} from '../../core/consumer/user/login.user';
-import {WsService} from '../../core/ws/ws.service';
+import {WsService} from '../../core/service/ws.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -28,6 +28,7 @@ export class LoginPage {
     this.userConsumer.doLogin(this.loginUser).then(async (sucMessage: string) => {
       await this.showToast(sucMessage);
       this.navCtrl.navigateForward('/logged-in').then(() => {
+        console.log('navigated success')
         this.loginUser = new LoginUser();
       });
     }).catch(async (errMessage: string) => {
