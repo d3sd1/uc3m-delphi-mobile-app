@@ -68,7 +68,7 @@ export class SingleProcessPage {
   }
 
   triggerUploadImage() {
-    if(!this.isCoordinator() || this.process.processFinished) {
+    if(!this.isCoordinator() || this.process.finished) {
       return;
     }
     this.uploadPicture.nativeElement.click();

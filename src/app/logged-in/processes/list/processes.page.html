@@ -1,22 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      {{ 'home.processes.title' | translate }}
+      Procesos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <delphi-empty *ngIf="processes?.length == 0"></delphi-empty>
-  <ion-list *ngIf="processes != null && processes.length > 0">
+  <delphi-empty *ngIf="filteredProcesses?.length == 0 && !loadingProcesses"></delphi-empty>
+  <ion-list *ngIf="filteredProcesses != null && filteredProcesses.length > 0 && !loadingProcesses">
     <ion-list-header>
       <ion-toolbar>
         <ion-segment (ionChange)="filterProcesses($event)" value="active">
           <ion-segment-button value="active">
-            <ion-label>{{ 'home.processes.filter.in_progress' | translate }}</ion-label>
+            <ion-label>En progreso</ion-label>
           </ion-segment-button>
           <ion-segment-button value="finished">
-            <ion-label>{{ 'home.processes.filter.finished' | translate }}</ion-label>
+            <ion-label>Finalizados</ion-label>
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>
@@ -35,9 +35,9 @@
         </h3>
         <p>
         <span
-          *ngIf="!process.processFinished">
+          *ngIf="!process.finished">
           {{process.description}}</span>
-          <a *ngIf="process.processFinished">{{ 'home.processes.finished.view_results' | translate }}</a>
+          <a *ngIf="process.finished">Ver resultados</a>
         </p>
       </ion-label>
       <ion-note slot="end" color="primary">{{isCoordinator(process) ? 'Coordinador': 'Experto'}}</ion-note>
@@ -49,5 +49,5 @@
     </ion-fab-button>
   </ion-fab>
 
-  <delphi-loading *ngIf="processes == null"></delphi-loading>
+  <delphi-loading *ngIf="loadingProcesses"></delphi-loading>
 </ion-content>

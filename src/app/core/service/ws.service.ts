@@ -13,7 +13,7 @@ import {WsCommand} from '../ws/ws-command.model';
 })
 export class WsService {
   private wsConnection: BehaviorSubject<Stomp> = new BehaviorSubject<Stomp>(null);
-  private commands: WsCommand[] = [];
+  private commands: BehaviorSubject<WsCommand[]> = new BehaviorSubject<Stomp>([]);
   private commandSubscriptions: Subscription[] = [];
 
   constructor(private jwtService: JwtService) {
@@ -40,25 +40,35 @@ export class WsService {
 
   private handleActions(): void {
     this.getConnection().subscribe((con) => {
-      this.commands.forEach((cmd) => {
-        if (con === null) {
-          return;
-        }
+      console.log('received connection:', con);
 
-        // Execute actions
-        if (WsCommand[cmd.wsAction] === 'PUBLISH') {
-          con.send('/ws/' + cmd.channel + '/' + WsMode[cmd.mode].toLowerCase(), {}, JSON.stringify(cmd.body));
-          this.commands = this.commands.filter((cmd2) => cmd !== cmd2);
-        } else if (WsCommand[cmd.wsAction] === 'SUBSCRIBE') {
-          console.log('subscirbed to channel:' , cmd.channel);
-          this.commandSubscriptions.push(con.subscribe((cmd.privateChannel ? '/private' : '') + '/ws/subscribe/' + cmd.channel, (message) => {
-            console.log('subscirbed finally to channel:' , cmd.channel);
-            const data = JSON.parse(message.body);
-            cmd.subject.getValue().push(data);
-            cmd.subject.next(data);
-          }));
-        }
-      });
+      if (con === null) {
+        return;
+      }
+      console.log('having commands', this.commands);
+      this.commands.subscribe((commands) => {
+        commands.forEach((cmd) => {
+          console.log('itaretae comands');
+
+          if (cmd.connected) {
+            return;
+          }
+          console.log('received comand:', WsAction[cmd.wsAction])
+          // Execute actions
+          if (WsAction[cmd.wsAction] === 'PUBLISH') {
+            con.send('/ws/' + cmd.channel + '/' + WsMode[cmd.mode].toLowerCase(), {}, JSON.stringify(cmd.body));
+            cmd.connected = true;
+            this.commands.next(commands.filter((cmd2) => cmd !== cmd2));
+          } else if (WsAction[cmd.wsAction] === 'SUBSCRIBE') {
+            console.log('subscirbed to channel:', cmd.channel);
+            this.commandSubscriptions.push(con.subscribe((cmd.privateChannel ? '/private' : '') + '/ws/subscribe/' + cmd.channel, (message) => {
+              console.log('subscirbed finally to channel:', cmd.channel);
+              const data = JSON.parse(message.body);
+              cmd.subject.next(data);
+            }));
+          }
+        });
+      })
     });
   }
 
@@ -73,7 +83,9 @@ export class WsService {
     wsCommand.channel = channel;
     wsCommand.body = body;
     wsCommand.mode = mode;
-    this.commands.push(wsCommand);
+    const a = this.commands.getValue();
+    a.push(wsCommand);
+    this.commands.next(a);
   }
 
   subscribe(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
@@ -82,12 +94,18 @@ export class WsService {
     wsCommand.channel = channel;
     wsCommand.privateChannel = privateChannel;
     wsCommand.subject = subject;
-    this.commands.push(wsCommand);
+    console.log('send subscription to channel:', channel);
+    const a = this.commands.getValue();
+    a.push(wsCommand);
+    this.commands.next(a);
   }
 
   disconnectWs() {
     this.commandSubscriptions.forEach((sub: Subscription) => {
       sub.unsubscribe();
+    });
+    this.commands.getValue().forEach((cmd) => {
+      cmd.connected = false;
     });
     if (this.getConnection().getValue() !== null) {
       this.getConnection().getValue().disconnect();

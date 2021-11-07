@@ -17,14 +17,14 @@
     <ion-datetime [(ngModel)]="this.process?.rounds[roundIdx].endTime" display-format="MMM DD, YYYY HH:mm"
                   picker-format="MMM DD, YYYY HH:mm"
                   placeholder="Introduce fecha límite"
-                  [readonly]="process.rounds[roundIdx].started || process.processFinished"></ion-datetime>
+                  [readonly]="process.rounds[roundIdx].started || process.finished"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>Nombre</ion-label>
     <ion-input [(ngModel)]="this.process?.rounds[roundIdx].name" placeholder="Nombre de la ronda"
                debounce="200"
-               [readonly]="process.rounds[roundIdx].started || process.processFinished"></ion-input>
+               [readonly]="process.rounds[roundIdx].started || process.finished"></ion-input>
   </ion-item>
   <ion-item-divider></ion-item-divider>
   <div *ngIf="process?.rounds[roundIdx].questions.length == 0" class="container">
@@ -46,7 +46,7 @@
   </ion-reorder-group>
 
   <!-- fab placed to the (vertical) center and end -->
-  <ion-fab *ngIf="!process.rounds[roundIdx].started && !process.processFinished"  horizontal="end" slot="fixed" vertical="bottom">
+  <ion-fab *ngIf="!process.rounds[roundIdx].started && !process.finished" horizontal="end" slot="fixed" vertical="bottom">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

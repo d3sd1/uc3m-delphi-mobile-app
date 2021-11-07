@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar *ngIf="isCoordinator() && !process.processFinished" (ionChange)="filter()" [(ngModel)]="filterCriterial"
+  <ion-searchbar *ngIf="isCoordinator() && !process.finished" (ionChange)="filter()" [(ngModel)]="filterCriterial"
                  [placeholder]="'home.processes.user_picker.search.title' | translate:{role: 'home.processes.role.' + type | translate}"
                  animated debounce="500"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
@@ -47,7 +47,7 @@
         <img *ngIf="user.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-avatar>
       <ion-label [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">{{user.name}} {{user.surnames}} <{{ user.email }}></ion-label>
-      <ion-icon *ngIf="user.id !== currentUser?.id && isCoordinator() && !process.processFinished" name="close-circle" (click)="removeUser(user)"></ion-icon>
+      <ion-icon *ngIf="user.id !== currentUser?.id && isCoordinator() && !process.finished" name="close-circle" (click)="removeUser(user)"></ion-icon>
     </ion-chip>
   </div>
 

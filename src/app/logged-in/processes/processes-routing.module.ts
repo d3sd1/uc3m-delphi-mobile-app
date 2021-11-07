@@ -5,7 +5,6 @@ import {SingleProcessPage} from './single/single-process.page';
 import {UserPickerPage} from './single/user-picker/user-picker.page';
 import {QuestionListPage} from './single/questions/list/question-list.page';
 import {ModifyQuestionsContentPage} from './single/questions/single/modify-questions-content.page';
-import {ProcessesResolver} from '../../core/router/resolver/processes.resolver';
 import {CurrentProcessResolver} from '../../core/router/resolver/current-process.resolver';
 import {ClosePage} from './single/close/close.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
@@ -24,7 +23,6 @@ const routes: Routes = [
     component: ProcessesPage,
     resolve: {
      // user: UserResolver,
-      processes: ProcessesResolver
     }
   },
   {

@@ -11,7 +11,7 @@ export class Process {
   coordinators: User[] = [];
   rounds: Round[] = [];
   currentRound: Round = new Round();
-  processFinished: boolean;
+  finished: boolean;
   finalComment: string;
   modifiedDate: Date;
 }

@@ -57,7 +57,7 @@ export class OnboardingPage implements ViewDidEnter {
   }
 
   endSwiper() {
-    this.userConsumer.updateUserOnboarding(this.user);
+    this.userConsumer.updateUserOnboarding(this.user.name, this.user.surnames);
     this.router.navigateByUrl('/logged-in/menu').then(r => null);
   }
 

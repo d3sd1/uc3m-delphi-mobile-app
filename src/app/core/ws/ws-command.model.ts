@@ -9,4 +9,5 @@ export class WsCommand {
   privateChannel: boolean;
   mode: WsMode;
   subject: BehaviorSubject<any>;
+  connected = false;
 }

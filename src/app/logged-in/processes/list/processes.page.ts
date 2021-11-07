@@ -5,6 +5,7 @@ import {BehaviorSubject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AlertController, NavController} from '@ionic/angular';
 import {User} from '../../../core/model/user';
+import {UserConsumer} from '../../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-processes',
@@ -17,33 +18,35 @@ export class ProcessesPage {
   processes: Process[] = null;
   filteredProcesses: Process[] = null;
   user: User;
+  loadingProcesses = false;
 
   constructor(private processService: ProcessConsumer,
               private route: ActivatedRoute,
               private alertController: AlertController,
+              private userConsumer: UserConsumer,
               private processConsumer: ProcessConsumer,
               private navCtrl: NavController) {
-    this.route.snapshot.data['processes'].subscribe((processes) => {
-      console.log('oprocesses: ', processes);
+    this.processConsumer.getProcesses().subscribe((processes) => {
+      this.loadingProcesses = true;
       this.processes = processes;
       this.filterProcesses();
-    });/*
-    this.route.snapshot.data['user'].subscribe((user) => {
+      this.loadingProcesses = false;
+    });
+    this.userConsumer.getUser().subscribe((user) => {
+      console.log('received user:', user);
       this.user = user;
-    });*/
+    });
   }
 
-  async editProcess(process) {
-    // await this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id);
+  editProcess(process) {
+    this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id).then(r => null);
   }
 
-  filterProcesses(ev?: Event) {/*
+  filterProcesses(ev?: any) {
     this.filteredProcesses = [];
-    const wantsFinished = ev?.target['value'] === 'finished';
+    const wantsFinished = ev?.target.value === 'finished';
     this.processes?.forEach((process: Process) => {
-      if (wantsFinished && process?.processFinished) {
-        this.filteredProcesses.push(process);
-      } else if (!wantsFinished && !process?.processFinished) {
+      if ((wantsFinished && process?.finished) || !wantsFinished && !process?.finished) {
         this.filteredProcesses.push(process);
       }
     });
@@ -56,15 +59,15 @@ export class ProcessesPage {
         return -1;
       }
       return 0;
-    });*/
+    });
   }
+
   isCoordinator(process: Process): boolean {
-    // return process.coordinators.findIndex((user) => user?.id === this.user?.id) !== -1;
-    return false;
+    return process.coordinators.findIndex((user) => user?.id === this.user?.id) !== -1;
   }
 
   async addProcess() {
-    /*const alert = await this.alertController.create({
+    const alert = await this.alertController.create({
       header: 'Crear proceso',
       inputs: [
         {
@@ -99,7 +102,7 @@ export class ProcessesPage {
       ]
     });
 
-    await alert.present();*/
+    await alert.present();
   }
 
 

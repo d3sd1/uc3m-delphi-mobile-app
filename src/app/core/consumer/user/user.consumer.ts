@@ -20,7 +20,6 @@ import {WsMode} from '../../ws/ws-mode.model';
 export class UserConsumer {
 
   private connectedUser = new BehaviorSubject<User>(null);
-  private loggedIn = new BehaviorSubject<boolean | UrlTree>(this.router.parseUrl('/logged-in'));
 
   constructor(private http: HttpClient,
               private storage: Storage,
@@ -33,13 +32,7 @@ export class UserConsumer {
   }
 
   private handleUser() {
-    this.jwtService.getJwt().subscribe((jwt) => {
-      if (jwt === null) {
-        this.loggedIn.next(false);
-      }
-      this.connectedUser.next(new JwtHelperService().decodeToken(jwt)['user']);
-      this.loggedIn.next(true);
-    });
+    this.wsService.subscribe('profile', true, this.connectedUser);
   }
 
   async recoverPassword(email) {
@@ -50,12 +43,8 @@ export class UserConsumer {
     return this.http.post(environment.apiUrl + '/password/reset', {email, code}).toPromise();
   }
 
-  updateUserOnboarding(user: User) {
-    // name, surnames, newPass,
-    const updatedUser = this.connectedUser.value;
-    updatedUser.needsOnboard = false;
-    this.connectedUser.next(updatedUser);
-    this.wsService.publish('profile', {}, WsMode.UPDATE);
+  updateUserOnboarding(name: string, surnames: string) {
+    this.wsService.publish('profile', {name, surnames, needsOnboard: false}, WsMode.UPDATE);
   }
 
   getUser(): BehaviorSubject<User> {
@@ -81,10 +70,6 @@ export class UserConsumer {
         reject(await this.translate.get('login.response.err.desc').toPromise());
       });
     });
-  }
-
-  isLoggedIn(): BehaviorSubject<boolean | UrlTree> {
-    return this.loggedIn;
   }
 
   doLogout() {

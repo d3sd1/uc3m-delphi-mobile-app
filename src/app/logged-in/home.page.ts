@@ -42,18 +42,16 @@ export class HomePage implements ViewDidEnter, ViewDidLeave {
 
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
-      this.notifications.profile = 0;
-      if (user.photo === '' || user.photo === null || user.photo === undefined) {
-        this.notifications.profile++;
-      }
+      this.langService.changeLanguage(this.user?.language);
+      this.needsOnboard();
+      this.listenChatNotifications();
+      this.listenProcessesNotifications();
+      this.listenProfileNotifications();
     });
   }
 
   ionViewDidEnter(): void {
-    // TODO this.langService.changeLanguage(this.user.language);
-    this.needsOnboard();
-    this.listenChatNotifications();
-    this.listenProcessesNotifications();
+    // TODO
   }
 
   ionViewDidLeave(): void {
@@ -63,7 +61,7 @@ export class HomePage implements ViewDidEnter, ViewDidLeave {
 
   needsOnboard() {
     // @ts-ignore
-    if (this.user.needsOnboard === 'true' || this.user.needsOnboard === true) {
+    if (this.user?.needsOnboard === 'true' || this.user?.needsOnboard === true) {
       this.navCtrl.navigateForward('/logged-in/onboarding').then(r => null);
     }
   }
@@ -74,5 +72,11 @@ export class HomePage implements ViewDidEnter, ViewDidLeave {
 
   listenProcessesNotifications() {
     // TODO
+  }
+  listenProfileNotifications() {
+    this.notifications.profile = 0;
+    if (this.user?.photo === '' || this.user?.photo === null || this.user?.photo === undefined) {
+      this.notifications.profile++;
+    }
   }
 }

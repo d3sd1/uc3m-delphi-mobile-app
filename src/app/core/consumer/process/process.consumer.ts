@@ -12,7 +12,6 @@ import {WsMode} from '../../ws/ws-mode.model';
 export class ProcessConsumer {
 
   private userProcesses: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([]);
-  private userProcessesCache: Process[] = null;
   private userSingleProcesses: BehaviorSubject<Process>[] = [];
 
   constructor(private httpClient: HttpClient, private wsService: WsService) {
@@ -20,7 +19,7 @@ export class ProcessConsumer {
   }
 
 
-  async all(): Promise<BehaviorSubject<Process[]>> {
+  getProcesses(): BehaviorSubject<Process[]> {
     return this.userProcesses;
   }
 
