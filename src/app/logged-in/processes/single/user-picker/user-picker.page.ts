@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
 import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
+import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
 
 @Component({
   selector: 'delphi-user-picker',
@@ -14,7 +15,7 @@ import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
 })
 export class UserPickerPage {
   process: Process;
-  filterCriterial: string = '';
+  filterCriterial = '';
   currentUser: User;
   type;
   usersFiltered: User[] = [];
@@ -24,6 +25,7 @@ export class UserPickerPage {
     private router: Router,
     private userConsumer: UserConsumer,
     private httpClient: HttpClient,
+    private processConsumer: ProcessConsumer,
     public navCtrl: NavController) {
     this.route.params.subscribe(params => {
       this.type = params['type'];
@@ -31,10 +33,13 @@ export class UserPickerPage {
     this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
-    /* TODO
-    this.route.snapshot.data['process'].subscribe((process) => {
-      this.process = process;
-    }); */
+    this.route.params.subscribe(params => {
+      this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes !== null && params !== null) {
+          this.process = processes.find(p => p.id === +params.id);
+        }
+      });
+    });
   }
 
   isEmail(email) {
@@ -48,7 +53,7 @@ export class UserPickerPage {
   }
 
   addUser(email: string) {
-    this.httpClient.put<User>(environment.apiUrl + '/v1/process/add_user?email=' + email + '&process_id=' + this.process.id +
+    this.httpClient.put<User>(environment.apiUrl + '/v1/process/add_user?email=' + email + '&process_id=' + this.process?.id +
       '&type=' + this.type.toLowerCase(), {}).subscribe((user: User) => {
       this.filterCriterial = '';
 
@@ -60,7 +65,7 @@ export class UserPickerPage {
     // TODO handle err
   }
   isCoordinator(): boolean {
-    return this.process.coordinators.findIndex((user) => user.id === this.currentUser.id) !== -1;
+    return this.process?.coordinators.findIndex((user) => user.id === this.currentUser.id) !== -1;
   }
 
 
@@ -69,14 +74,14 @@ export class UserPickerPage {
       return;
     }
     await this.httpClient.get<User[]>(environment.apiUrl + '/v1/process/filter?criteria=' + this.filterCriterial + '&process_id='
-    + this.process.id).subscribe((users) => {
+    + this.process?.id).subscribe((users) => {
       this.usersFiltered = users;
     }, (err) => {
       console.error(err)
     });
   }
   async removeUser(user: User) {
-    this.httpClient.delete<User>(environment.apiUrl + '/v1/process/rm_user?user_id=' + user.id + '&process_id=' + this.process.id, {}).subscribe((user: User) => {
+    this.httpClient.delete<User>(environment.apiUrl + '/v1/process/rm_user?user_id=' + user.id + '&process_id=' + this.process?.id, {}).subscribe((user: User) => {
 
     }, (err) => {
       console.error(err);
@@ -86,11 +91,11 @@ export class UserPickerPage {
   }
 
   getUsers() {
-    if(this.type.toLowerCase() == 'coordinator') {
-      return this.process.coordinators;
+    if(this.type.toLowerCase() === 'coordinator') {
+      return this.process?.coordinators;
     }
-    else if(this.type.toLowerCase() == 'expert') {
-      return this.process.experts;
+    else if(this.type.toLowerCase() === 'expert') {
+      return this.process?.experts;
     }
   }
 

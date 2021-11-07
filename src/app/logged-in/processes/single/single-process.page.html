@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true">
+<ion-content fullscreen="true" *ngIf="process">
   <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden type="file">
   <ion-card color="light">
     <div (click)="triggerUploadImage()" class="img-wrapper">
@@ -106,9 +106,11 @@
 
 </ion-content>
 
-<ion-footer *ngIf="!process?.finished">
+<ion-footer *ngIf="process && !process?.finished">
   <ion-toolbar>
     <ion-button *ngIf="isCoordinator()" color="danger" expand="block" (click)="finishProcess()">Finalizar proceso</ion-button>
     <ion-button *ngIf="!isCoordinator()" [color]="this.process?.currentRound.started && expertCanVote() ? 'success':'warning'" expand="block" (click)="participate()">Participar</ion-button>
   </ion-toolbar>
 </ion-footer>
+
+

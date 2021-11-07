@@ -1,18 +1,18 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [text]="'home.processes.user_picker.back' | translate"
+      <ion-back-button text="Volver"
                        [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id"
                        routerDirection="back"
                        [routerLink]="'/logged-in/menu/processes/single-round/' + process.id"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'home.processes.role.' + type | translate}}</ion-title>
+    <ion-title>Selector de usuarios</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="process">
   <ion-searchbar *ngIf="isCoordinator() && !process.finished" (ionChange)="filter()" [(ngModel)]="filterCriterial"
-                 [placeholder]="'home.processes.user_picker.search.title' | translate:{role: 'home.processes.role.' + type | translate}"
+                placeholder="Buscar usuarios"
                  animated debounce="500"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
     <ion-item (click)="addUser(user.email)"
@@ -27,7 +27,7 @@
   </ion-list>
   <ion-item
     *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && !this.isEmail(this.filterCriterial)">
-    <ion-title>{{'home.processes.user_picker.search.no_results' | translate}}</ion-title>
+    <ion-title>Sin resultados en la búsqueda</ion-title>
   </ion-item>
   <ion-item
     *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && this.isEmail(this.filterCriterial) && this.isNewUser(this.filterCriterial)">
@@ -36,7 +36,7 @@
     </ion-button>
   </ion-item>
   <ion-item *ngIf="this.getUsers().length == 0">
-    <ion-title>{{'home.processes.user_picker.no_experts' | translate}}</ion-title>
+    <ion-title>Sin expertos</ion-title>
   </ion-item>
 
   <div *ngFor="let user of this.getUsers()">

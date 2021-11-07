@@ -17,9 +17,9 @@ import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
   styleUrls: ['./single-process.page.scss'],
 })
 export class SingleProcessPage {
-  process: Process;
+  process: Process = new Process();
   createMode = false;
-  user: User;
+  user: User = new User();
   @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
   @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
@@ -34,28 +34,32 @@ export class SingleProcessPage {
               private processConsumer: ProcessConsumer,
               private router: Router) {
     this.userConsumer.getUser().subscribe((user) => {
-      this.user = user;
+      if (user !== null) {
+        this.user = user;
+      }
     });
-    this.processConsumer.getProcesses().subscribe((processes) => {
-      this.route.params.subscribe(params => {
-        this.process = processes.find(p => p.id === +params.id);
+    this.route.params.subscribe(params => {
+      this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes !== null && params !== null) {
+          this.process = processes.find(p => p.id === +params.id);
+        }
       });
     });
   }
 
   isCoordinator(): boolean {
-    return this.process?.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
+    return this.process?.coordinators.findIndex((user) => user.id === this.user?.id) !== -1;
   }
 
   expertCanVote(): boolean {
     if (this.process.currentRound?.expertsRemaining === undefined) {
       return false;
     }
-    return this.process.currentRound?.expertsRemaining?.findIndex((user) => user.id === this.user.id) !== -1;
+    return this.process.currentRound?.expertsRemaining?.findIndex((user) => user.id === this.user?.id) !== -1;
   }
 
   async updateBasicFields() {
-    await this.httpClient.post(environment.apiUrl + '/v1/process/basic?process_id=' + this.process.id, {
+    await this.httpClient.post(environment.apiUrl + '/v1/process/basic?process_id=' + this.process?.id, {
       name: this.process?.name,
       description: this.process?.description,
       objectives: this.process?.objectives

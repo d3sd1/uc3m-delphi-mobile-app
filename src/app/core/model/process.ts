@@ -2,16 +2,17 @@ import {Round} from './round';
 import {User} from './user';
 
 export class Process {
-  id: number;
-  name: string;
-  description: string;
-  objectives: string;
-  pictureUrl: string;
+  id = 0;
+  name = '';
+  description = '';
+  objectives = '';
+  pictureUrl = '';
   experts: User[] = [];
   coordinators: User[] = [];
   rounds: Round[] = [];
   currentRound: Round = new Round();
-  finished: boolean;
-  finalComment: string;
+  finished = false;
+  finalComment = '';
   modifiedDate: Date;
 }
+
