@@ -28,7 +28,7 @@ export class InvitationConsumer {
   }
 
   removeFromProcess(userId: number, processId: number) {
-    this.wsService.publish('invitation', {userId}, WsMode.DELETE);
+    this.wsService.publish('invitation', {userId, processId}, WsMode.DELETE);
   }
 
   /**
