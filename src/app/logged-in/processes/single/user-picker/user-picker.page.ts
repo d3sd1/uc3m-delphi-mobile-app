@@ -14,9 +14,9 @@ import {ProcessConsumer} from '../../../../core/consumer/process/process.consume
   styleUrls: ['./user-picker.page.scss'],
 })
 export class UserPickerPage {
-  process: Process;
+  process = new Process();
   filterCriterial = '';
-  currentUser: User;
+  currentUser = new User();
   type;
   usersFiltered: User[] = [];
 

@@ -2,9 +2,9 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button text="Volver"
-                       [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id"
+                       [defaultHref]="'/logged-in/menu/processes/single-round/' + process?.id"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + process.id"></ion-back-button>
+                       [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id"></ion-back-button>
     </ion-buttons>
     <ion-title>Selector de usuarios</ion-title>
   </ion-toolbar>
