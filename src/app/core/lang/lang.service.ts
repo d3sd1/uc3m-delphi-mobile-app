@@ -40,8 +40,7 @@ export class LangService {
 
     //TODO remove hardcoding
     return new Promise(((resolve, reject) => resolve([
-      new Language(1,'es',true),
-      new Language(2,'en',true)
+      new Language(1, 'es', true),
     ])));
   }
 }

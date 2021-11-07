@@ -24,11 +24,10 @@ export class LoginPage {
 
 
   async login() {
-    const loading = await this.showToast('login.connecting');
+    const loading = await this.showToast('Conectando...');
     this.userConsumer.doLogin(this.loginUser).then(async (sucMessage: string) => {
       await this.showToast(sucMessage);
       this.navCtrl.navigateForward('/logged-in').then(() => {
-        console.log('navigated success')
         this.loginUser = new LoginUser();
       });
     }).catch(async (errMessage: string) => {
@@ -38,10 +37,10 @@ export class LoginPage {
     });
   }
 
-  private async showToast(transKey: string) {
+  private async showToast(text: string) {
     const toast = await this.toastController.create({
       position: 'top',
-      message: await this.translate.get(transKey).toPromise(),
+      message: text,
     });
     await toast.present();
     setTimeout(() => {

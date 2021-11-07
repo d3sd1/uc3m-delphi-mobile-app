@@ -3,6 +3,7 @@ import {NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
+import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -16,13 +17,14 @@ export class ViewRoundsPage {
 
   constructor(
     private navCtrl: NavController,
-    private route: ActivatedRoute) {
-    this.route.snapshot.data['user'].subscribe((user) => {
+    private route: ActivatedRoute,
+    private userConsumer: UserConsumer) {
+    this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-    this.route.snapshot.data['process'].subscribe((process) => {
+    /* todo this.route.snapshot.data['process'].subscribe((process) => {
       this.process = process;
-    });
+    });*/
   }
 
   sortRounds() {

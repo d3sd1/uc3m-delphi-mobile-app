@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {LoggedInGuard} from './core/router/guard/logged-in.guard';
 import {LoggedOutGuard} from './core/router/guard/logged-out.guard';
-import {CompatibilityResolver} from './core/router/resolver/compatibility.resolver';
 import {SplashScreenPage} from './splash-screen/splash-screen.page';
 
 const routes: Routes = [
@@ -13,9 +12,6 @@ const routes: Routes = [
   },
   {
     path: 'splash-screen',
-    resolve: {
-      compatible: CompatibilityResolver
-    },
     component: SplashScreenPage
   },
   {
@@ -23,10 +19,6 @@ const routes: Routes = [
     /*canActivateChild: [
       LoggedInGuard,
     ],*/
-    resolve: {
-    //   lang: LangResolver,
-     //  compatible: CompatibilityResolver
-    },
     loadChildren: () => import('./logged-in/logged-in.module').then(m => m.LoggedInModule)
   },
   {
@@ -34,9 +26,6 @@ const routes: Routes = [
     canActivateChild: [
       LoggedOutGuard,
     ],
-    resolve: {
-      compatible: CompatibilityResolver
-    },
     loadChildren: () => import('./logged-out/logged-out.module').then(m => m.LoggedOutModule)
   },
 ];

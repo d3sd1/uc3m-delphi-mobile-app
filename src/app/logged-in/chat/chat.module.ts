@@ -14,7 +14,6 @@ import {RelativeTime} from './relative-time.pipe';
 import {EmojiPickerComponent} from './chat-conversation/emoji-picker/emoji-picker';
 import {EmojiProvider} from './chat-conversation/emoji-picker/emoji-provider';
 import {ChatLoadingPage} from './chat-loading/chat-loading.page';
-import {CurrentChatResolver} from '../../core/router/resolver/current-chat.resolver';
 
 @NgModule({
   imports: [
@@ -26,8 +25,7 @@ import {CurrentChatResolver} from '../../core/router/resolver/current-chat.resol
   ],
   providers: [
     NavParams,
-    EmojiProvider,
-    CurrentChatResolver
+    EmojiProvider
   ],
   declarations: [
     ChatPage,

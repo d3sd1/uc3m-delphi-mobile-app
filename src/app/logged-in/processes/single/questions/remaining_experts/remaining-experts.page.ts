@@ -27,10 +27,10 @@ export class RemainingExpertsPage {
     this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-    this.route.snapshot.data['process'].subscribe((process: Process) => {
+   /* TODO this.route.snapshot.data['process'].subscribe((process: Process) => {
       this.process = process;
       this.orderQuestions();
-    });
+    }); */
   }
 
 

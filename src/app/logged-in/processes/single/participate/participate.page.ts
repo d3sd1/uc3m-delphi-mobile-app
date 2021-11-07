@@ -7,6 +7,7 @@ import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../../environments/environment';
+import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-participate',
@@ -29,12 +30,13 @@ export class ParticipatePage {
     private translate: TranslateService,
     private loadingCtrl: LoadingController,
     private router: Router,
+    private userConsumer: UserConsumer,
     private alertController: AlertController,
     private httpClient: HttpClient) {
-    this.route.snapshot.data['user'].subscribe((user) => {
+   this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
-    this.route.snapshot.data['process'].subscribe((process) => {
+  /* TODO  this.route.snapshot.data['process'].subscribe((process) => {
       if(process.currentRound.id === undefined) {
         router.navigateByUrl('/logged-in/menu/processes/single-round/' + process.id); // In case round closes
       }
@@ -47,7 +49,7 @@ export class ParticipatePage {
       });
       this.orderQuestions();
       this.sortCategories(0);
-    });
+    });*/
   }
 
   private orderQuestions() {

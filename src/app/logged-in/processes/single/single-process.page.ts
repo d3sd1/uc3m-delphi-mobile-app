@@ -8,6 +8,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Media} from '../../../core/model/media';
 import {TranslateService} from '@ngx-translate/core';
+import {UserConsumer} from '../../../core/consumer/user/user.consumer';
+import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
 
 @Component({
   selector: 'delphi-create',
@@ -25,24 +27,28 @@ export class SingleProcessPage {
   constructor(private httpClient: HttpClient,
               private route: ActivatedRoute,
               public loadingController: LoadingController,
+              public userConsumer: UserConsumer,
               private toastController: ToastController,
               private sanitizer: DomSanitizer,
               private translate: TranslateService,
+              private processConsumer: ProcessConsumer,
               private router: Router) {
-    this.route.snapshot.data['user'].subscribe((user) => {
+    this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-    this.route.snapshot.data['process'].subscribe((process) => {
-      this.process = process;
+    this.processConsumer.getProcesses().subscribe((processes) => {
+      this.route.params.subscribe(params => {
+        this.process = processes.find(p => p.id === +params.id);
+      });
     });
   }
 
   isCoordinator(): boolean {
-    return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
+    return this.process?.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
   expertCanVote(): boolean {
-    if(this.process.currentRound?.expertsRemaining === undefined) {
+    if (this.process.currentRound?.expertsRemaining === undefined) {
       return false;
     }
     return this.process.currentRound?.expertsRemaining?.findIndex((user) => user.id === this.user.id) !== -1;
@@ -50,9 +56,9 @@ export class SingleProcessPage {
 
   async updateBasicFields() {
     await this.httpClient.post(environment.apiUrl + '/v1/process/basic?process_id=' + this.process.id, {
-      name: this.process.name,
-      description: this.process.description,
-      objectives: this.process.objectives
+      name: this.process?.name,
+      description: this.process?.description,
+      objectives: this.process?.objectives
     }).toPromise();
   }
 
@@ -68,22 +74,22 @@ export class SingleProcessPage {
   }
 
   triggerUploadImage() {
-    if(!this.isCoordinator() || this.process.finished) {
+    if (!this.isCoordinator() || this.process.finished) {
       return;
     }
     this.uploadPicture.nativeElement.click();
   }
 
   validateForm(): boolean {
-    if (this.process.name === '' ||
-      this.process.name === null ||
-      this.process.name === undefined) {
+    if (this.process?.name === '' ||
+      this.process?.name === null ||
+      this.process?.name === undefined) {
       this.showToast('home.processes.single-round.errors.no_name');
       return false;
     }
-    if (this.process.description === '' ||
-      this.process.description === null ||
-      this.process.description === undefined) {
+    if (this.process?.description === '' ||
+      this.process?.description === null ||
+      this.process?.description === undefined) {
       this.showToast('home.processes.single-round.errors.no_description');
       return false;
     }
@@ -126,18 +132,19 @@ export class SingleProcessPage {
   }
 
   async finishProcess() {
-    if(this.process?.currentRound?.started){
+    if (this.process?.currentRound?.started) {
       await this.showToast('home.processes.single.finish_round_in_course');
       return;
     }
     await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/close');
   }
+
   async participate() {
-    if(!this.process.currentRound?.started) {
+    if (!this.process.currentRound?.started) {
       await this.showToast('home.processes.single.participate.err.round_not_open');
       return;
     }
-    if(!this.expertCanVote()) {
+    if (!this.expertCanVote()) {
       await this.showToast('home.processes.single.participate.err.already_voted');
       return;
     }

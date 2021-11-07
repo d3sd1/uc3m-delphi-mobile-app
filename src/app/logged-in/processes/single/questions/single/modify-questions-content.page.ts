@@ -6,6 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Question} from '../../../../../core/model/question';
 import {environment} from '../../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -20,14 +21,16 @@ export class ModifyQuestionsContentPage {
 
   constructor(
     private navCtrl: NavController,
+    private userConsumer: UserConsumer,
     private route: ActivatedRoute, private httpClient: HttpClient,
     private toastController: ToastController) {
-    this.route.snapshot.data['user'].subscribe((user) => {
+    this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
+    /* TODO
     this.route.snapshot.data['process'].subscribe((process) => {
       this.process = process;
-    });
+    }); */
     this.route.params.subscribe(params => {
       // TODO this system may fail if there's another coordinator and edits questions  order
       // fix it ASAP

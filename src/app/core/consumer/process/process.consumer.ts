@@ -12,7 +12,6 @@ import {WsMode} from '../../ws/ws-mode.model';
 export class ProcessConsumer {
 
   private userProcesses: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([]);
-  private userSingleProcesses: BehaviorSubject<Process>[] = [];
 
   constructor(private httpClient: HttpClient, private wsService: WsService) {
     this.listenUpdates();
@@ -21,15 +20,6 @@ export class ProcessConsumer {
 
   getProcesses(): BehaviorSubject<Process[]> {
     return this.userProcesses;
-  }
-
-  async getById(id: number): Promise<BehaviorSubject<Process>> {
-    return new Promise((async (resolve, reject) => {
-      if (!(id in this.userSingleProcesses)) {
-        reject("Id not found for id " + id);
-      }
-      resolve(this.userSingleProcesses[id]);
-    }));
   }
 
   createProcess(name: string, description: string) {

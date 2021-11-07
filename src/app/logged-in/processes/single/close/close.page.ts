@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../../../core/model/user';
+import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-close',
@@ -22,15 +23,17 @@ export class ClosePage {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private router: Router,
+    private userConsumer: UserConsumer,
     private httpClient: HttpClient,
     private toastController: ToastController,
     private translate: TranslateService) {
-    this.route.snapshot.data['user'].subscribe((user) => {
+    this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
+    /* TODO
     this.route.snapshot.data['process'].subscribe((process) => {
       this.process = process;
-    });
+    }); */
   }
 
 

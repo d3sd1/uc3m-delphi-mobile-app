@@ -5,7 +5,6 @@ import {SingleProcessPage} from './single/single-process.page';
 import {UserPickerPage} from './single/user-picker/user-picker.page';
 import {QuestionListPage} from './single/questions/list/question-list.page';
 import {ModifyQuestionsContentPage} from './single/questions/single/modify-questions-content.page';
-import {CurrentProcessResolver} from '../../core/router/resolver/current-process.resolver';
 import {ClosePage} from './single/close/close.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
 import {ViewSingleOldRoundPage} from './single/rounds/single-round/view-single-old-round.page';
@@ -20,10 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    component: ProcessesPage,
-    resolve: {
-     // user: UserResolver,
-    }
+    component: ProcessesPage
   },
   {
     path: 'single-round/:id',
@@ -36,23 +32,14 @@ const routes: Routes = [
       {
         path: 'basic',
         component: SingleProcessPage,
-        resolve: {
-          process: CurrentProcessResolver,
-        },
       },
       {
         path: 'close',
         component: ClosePage,
-        resolve: {
-          process: CurrentProcessResolver,
-        },
       },
       {
         path: 'participate',
         component: ParticipatePage,
-        resolve: {
-          process: CurrentProcessResolver,
-        },
       },
       {
         path: 'rounds',
@@ -65,9 +52,6 @@ const routes: Routes = [
           {
             path: 'list',
             component: ViewRoundsPage,
-            resolve: {
-              process: CurrentProcessResolver
-            },
           },
           {
             path: 'single-round/:roundid',
@@ -80,9 +64,6 @@ const routes: Routes = [
               {
                 path: 'view',
                 component: ViewSingleOldRoundPage,
-                resolve: {
-                  process: CurrentProcessResolver
-                },
               },
             ]
           },
@@ -90,10 +71,7 @@ const routes: Routes = [
       },
       {
         path: 'user-picker/:type',
-        component: UserPickerPage,
-        resolve: {
-          process: CurrentProcessResolver
-        }
+        component: UserPickerPage
       },
       {
         path: 'question',
@@ -105,24 +83,15 @@ const routes: Routes = [
           },
           {
             path: 'list',
-            component: QuestionListPage,
-            resolve: {
-              process: CurrentProcessResolver
-            },
+            component: QuestionListPage
           },
           {
             path: 'remaining_experts',
-            component: RemainingExpertsPage,
-            resolve: {
-              process: CurrentProcessResolver
-            },
+            component: RemainingExpertsPage
           },
           {
             path: 'single-round/:questionid',
-            component: ModifyQuestionsContentPage,
-            resolve: {
-              process: CurrentProcessResolver
-            }
+            component: ModifyQuestionsContentPage
           },
         ]
       },

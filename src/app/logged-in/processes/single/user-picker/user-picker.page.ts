@@ -5,6 +5,7 @@ import {Process} from '../../../../core/model/process';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
+import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-user-picker',
@@ -21,17 +22,19 @@ export class UserPickerPage {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private userConsumer: UserConsumer,
     private httpClient: HttpClient,
     public navCtrl: NavController) {
     this.route.params.subscribe(params => {
       this.type = params['type'];
     });
-    this.route.snapshot.data['user'].subscribe((user) => {
+    this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
+    /* TODO
     this.route.snapshot.data['process'].subscribe((process) => {
       this.process = process;
-    });
+    }); */
   }
 
   isEmail(email) {

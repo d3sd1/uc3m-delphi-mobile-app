@@ -1,12 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      {{ 'home.chat.title' | translate }}
+      Chats
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
   <chat-loading *ngIf="loading"></chat-loading>
   <delphi-chat-empty *ngIf="userChats.length == 0 && !loading"></delphi-chat-empty>
-  <delphi-chat-list [loading]="loading" [user]="user"></delphi-chat-list>
+  <delphi-chat-list [loading]="loading" [user]="user" [userChatsOriginal]="userChats"></delphi-chat-list>
 </ion-content>

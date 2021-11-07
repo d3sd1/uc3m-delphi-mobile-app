@@ -18,7 +18,7 @@
            *ngIf="process?.pictureUrl !== undefined"
            [src]="process.pictureUrl"/>
       <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
-      <ion-button color="light" *ngIf="isCoordinator() && !process.finished">
+      <ion-button color="light" *ngIf="isCoordinator() && !process?.finished">
         <ion-icon color="medium" name="camera-outline" slot="icon-only">
         </ion-icon>
       </ion-button>
@@ -27,7 +27,7 @@
   <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
       <ion-label>
-        {{ 'home.processes.single.base' | translate }}
+        Datos básicos
       </ion-label>
     </ion-list-header>
 
@@ -36,22 +36,22 @@
       <ion-input [(ngModel)]="process.name"
                  debounce="200"
                  (ngModelChange)="updateBasicFields()"
-                 [placeholder]="'home.processes.single.name' | translate"
-                 [readonly]="!isCoordinator() || process.finished"></ion-input>
+                 placeholder="Nombre"
+                 [readonly]="!isCoordinator() || process?.finished"></ion-input>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.description"
                     debounce="200"
                     (ngModelChange)="updateBasicFields()"
-                    [placeholder]="'home.processes.single.desc'  | translate"
-                    [readonly]="!isCoordinator() || process.finished"></ion-textarea>
+                    placeholder="Descripción"
+                    [readonly]="!isCoordinator() || process?.finished"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.objectives"
                     debounce="200"
                     (ngModelChange)="updateBasicFields()"
-                    [placeholder]="'home.processes.single.desc'  | translate"
-                    [readonly]="!isCoordinator() || process.finished">Objetivos del proceso
+                    placeholder="Objetivos del proceso"
+                    [readonly]="!isCoordinator() || process?.finished">Objetivos del proceso
       </ion-textarea>
     </ion-item>
   </ion-list>
@@ -59,18 +59,18 @@
   <ion-list class="ion-no-margin" lines="inset">
     <ion-list-header>
       <ion-label>
-        {{ 'home.processes.single.rounds.title'  | translate }}
+        Rondas
       </ion-label>
     </ion-list-header>
-    <ion-item *ngIf="!process.finished && isCoordinator()" routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'">
-      <ion-label>{{ 'home.processes.single.rounds.current' | translate }}</ion-label>
+    <ion-item *ngIf="!process?.finished && isCoordinator()" routerDirection="forward"
+              [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/question/list'">
+      <ion-label>Ronda actual</ion-label>
       <ion-badge slot="end">{{process?.currentRound?.questions?.length}} Preguntas
       </ion-badge>
     </ion-item>
     <ion-item routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/rounds'">
-      <ion-label>{{ 'home.processes.single.rounds.past' | translate }}</ion-label>
+              [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/rounds'">
+      <ion-label>Rondas finalizadas</ion-label>
       <ion-badge slot="end">{{process?.rounds?.length}} Rondas
       </ion-badge>
     </ion-item>
@@ -78,22 +78,22 @@
   <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
       <ion-label>
-        {{ 'home.processes.single.rounds.users'  | translate }}
+        Usuarios
       </ion-label>
     </ion-list-header>
 
     <!-- Toggles in a List -->
     <ion-item routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/user-picker/coordinator'">
+              [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/user-picker/coordinator'">
       <ion-badge slot="end">{{process?.coordinators?.length}}</ion-badge>
-      <ion-label>{{'home.processes.role.coordinator' | translate}}</ion-label>
+      <ion-label>Coordinadores</ion-label>
     </ion-item>
 
     <!-- Toggles in a List -->
     <ion-item *ngIf="isCoordinator()" routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/user-picker/expert'">
+              [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/user-picker/expert'">
       <ion-badge slot="end">{{process?.experts?.length}}</ion-badge>
-      <ion-label>{{'home.processes.role.expert' | translate}}</ion-label>
+      <ion-label>Expertos</ion-label>
     </ion-item>
     <ion-item *ngIf="!isCoordinator()" routerDirection="forward">
       <ion-badge slot="end">{{process?.experts?.length}}</ion-badge>
@@ -106,9 +106,9 @@
 
 </ion-content>
 
-<ion-footer *ngIf="!process.finished">
+<ion-footer *ngIf="!process?.finished">
   <ion-toolbar>
     <ion-button *ngIf="isCoordinator()" color="danger" expand="block" (click)="finishProcess()">Finalizar proceso</ion-button>
-    <ion-button *ngIf="!isCoordinator()" [color]="this.process.currentRound.started && expertCanVote() ? 'success':'warning'" expand="block" (click)="participate()">Participar</ion-button>
+    <ion-button *ngIf="!isCoordinator()" [color]="this.process?.currentRound.started && expertCanVote() ? 'success':'warning'" expand="block" (click)="participate()">Participar</ion-button>
   </ion-toolbar>
 </ion-footer>

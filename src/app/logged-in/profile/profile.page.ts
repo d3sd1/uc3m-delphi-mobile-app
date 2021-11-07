@@ -23,7 +23,7 @@ export class ProfilePage {
   constructor(private actionSheetController: ActionSheetController, private langService: LangService, private userConsumer: UserConsumer,
               private translate: TranslateService,
               private route: ActivatedRoute) {
-    this.userSubscription = this.route.snapshot.data['user'].subscribe((user) => {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
   }
@@ -65,16 +65,16 @@ export class ProfilePage {
     const sheets = [];
     for (const lang of langs) {
       sheets.push({
-        text: await this.translate.get(`language.${lang.name.toLowerCase()}`).toPromise(),
+        text: lang.name.toLowerCase(),
         cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',
         handler: async () => {
-        // todo  await this.userConsumer.updateLanguage(lang);
+        // todo  if you want to update language do it here :)
         }
       });
     }
 
     const actionSheet = await this.actionSheetController.create({
-      header: await this.translate.get('home.profile.language.header').toPromise(),
+      header: 'Cambiar idioma',
       buttons: sheets
     });
     await actionSheet.present();

@@ -2,8 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ChatPage} from './chat.page';
 import {ChatConversationPage} from './chat-conversation/chat-conversation-page.component';
-import {CurrentProcessResolver} from '../../core/router/resolver/current-process.resolver';
-import {CurrentChatResolver} from '../../core/router/resolver/current-chat.resolver';
 
 const routes: Routes = [
   {
@@ -18,9 +16,6 @@ const routes: Routes = [
   {
     path: 'conversation/:chatId',
     component: ChatConversationPage,
-    resolve: {
-      current_chat: CurrentChatResolver
-    },
   }
 ];
 

@@ -7,8 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: ProfilePage,
-    resolve: {
-    },
   },
   {
     path: 'password',

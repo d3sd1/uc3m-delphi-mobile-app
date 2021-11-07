@@ -24,7 +24,7 @@ export class WsService {
   private handleConnection() {
     this.jwtService.getJwt().subscribe((jwt) => {
       if (jwt === null) {
-        console.log('JWT is not set, not connecting to websocket.');
+        console.error('JWT is not set, not connecting to websocket.');
         return;
       }
       const ws = new SockJS(environment.apiUrl + '/ws', {transports: ['websocket']});
@@ -40,35 +40,27 @@ export class WsService {
 
   private handleActions(): void {
     this.getConnection().subscribe((con) => {
-      console.log('received connection:', con);
-
       if (con === null) {
         return;
       }
-      console.log('having commands', this.commands);
       this.commands.subscribe((commands) => {
         commands.forEach((cmd) => {
-          console.log('itaretae comands');
-
           if (cmd.connected) {
             return;
           }
-          console.log('received comand:', WsAction[cmd.wsAction])
           // Execute actions
           if (WsAction[cmd.wsAction] === 'PUBLISH') {
             con.send('/ws/' + cmd.channel + '/' + WsMode[cmd.mode].toLowerCase(), {}, JSON.stringify(cmd.body));
             cmd.connected = true;
             this.commands.next(commands.filter((cmd2) => cmd !== cmd2));
           } else if (WsAction[cmd.wsAction] === 'SUBSCRIBE') {
-            console.log('subscirbed to channel:', cmd.channel);
             this.commandSubscriptions.push(con.subscribe((cmd.privateChannel ? '/private' : '') + '/ws/subscribe/' + cmd.channel, (message) => {
-              console.log('subscirbed finally to channel:', cmd.channel);
               const data = JSON.parse(message.body);
               cmd.subject.next(data);
             }));
           }
         });
-      })
+      });
     });
   }
 

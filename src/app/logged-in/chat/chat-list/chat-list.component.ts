@@ -2,13 +2,15 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ChatService} from '../chat.service';
 import {User} from '../../../core/model/user';
 import {UserChat} from '../../../core/model/user-chat';
+import {UserConsumer} from '../../../core/consumer/user/user.consumer';
+import {ChatConsumer} from '../../../core/consumer/chat/chat.consumer';
 
 @Component({
   selector: 'delphi-chat-list',
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss'],
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent {
 
   @Input()
   user: User;
@@ -16,19 +18,14 @@ export class ChatListComponent implements OnInit {
   @Input()
   loading: boolean;
 
-  userChats: UserChat[] = [];
+  @Input()
   userChatsOriginal: UserChat[] = [];
 
-  constructor(private chatService: ChatService) {
-  }
+  userChats: UserChat[] = [];
 
 
-  async ngOnInit() {
-    this.chatService.getCurrentUserChats().subscribe((currentUserChats: UserChat[]) => {
-      this.userChats = currentUserChats;
-      this.userChatsOriginal = [...this.userChats];
-      this.loading = false;
-    });
+  constructor() {
+
   }
 
   async filterList(evt) {
@@ -41,9 +38,7 @@ export class ChatListComponent implements OnInit {
   }
 
   markChatAsRead(chatId, slidingItem) {
-    this.chatService.postReadChat(chatId).then(() => {
-      this.chatService.getCurrentUserChats();
-    });
+   //TODO
     slidingItem.close();
   }
 

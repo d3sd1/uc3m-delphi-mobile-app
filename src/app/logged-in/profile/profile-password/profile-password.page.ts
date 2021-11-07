@@ -39,19 +39,14 @@ export class ProfilePasswordPage implements OnInit {
   async resetPass() {
     this.resetForm();
     if (this.reset.newPass !== this.reset.newPassRep) {
-      await this.showToast(await this.translate.get('home.profile.password.err.differ').toPromise());
+      this.showToast('Las nueva nueva contraseña no coincide en ambos input.');
+      return;
+    }
+    if (this.reset.newPass === '' || this.reset.newPassRep === '' || this.reset.currentPass === '') {
+      this.showToast('Por favor, rellena el formulario.').then(r => null);
       return;
     }
 
-    this.httpClient.post(environment.apiUrl + '/v1/profile/change_pass', this.reset).subscribe(async () => {
-      await this.showToast(await this.translate.get('home.profile.password.changed').toPromise());
-    }, async (e) => {
-      if (e.status === 409) {
-        await this.showToast(await this.translate.get('home.profile.password.err.old_pass').toPromise());
-      } else {
-        await this.showToast(await this.translate.get('home.profile.password.err.generic').toPromise());
-      }
-    });
   }
 
   private async showToast(msg: string) {

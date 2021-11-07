@@ -4,6 +4,7 @@ import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {Question} from '../../../../../core/model/question';
+import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -18,13 +19,15 @@ export class ViewSingleOldRoundPage {
 
   constructor(
     private navCtrl: NavController,
+    private userConsumer: UserConsumer,
     private route: ActivatedRoute) {
-    this.route.snapshot.data['user'].subscribe((user) => {
+   this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
+   /* TODO
     this.route.snapshot.data['process'].subscribe((process) => {
       this.process = process;
-    });
+    }); */
     this.route.params.subscribe(params => {
       this.roundIdx = this.process.rounds.findIndex(q => q.id === +params['roundid']);
     });

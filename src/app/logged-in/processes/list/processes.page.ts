@@ -33,7 +33,6 @@ export class ProcessesPage {
       this.loadingProcesses = false;
     });
     this.userConsumer.getUser().subscribe((user) => {
-      console.log('received user:', user);
       this.user = user;
     });
   }

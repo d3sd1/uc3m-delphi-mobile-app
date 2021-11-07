@@ -18,7 +18,6 @@ import {ParticipatePage} from './single/participate/participate.page';
 import {ClosePage} from './single/close/close.page';
 import {LoadingPage} from './list/loading/loading.page';
 import {EmptyProcessesPage} from './list/empty/empty-processes.page';
-import {CurrentProcessResolver} from '../../core/router/resolver/current-process.resolver';
 import {QuestionBooltypePage} from './single/questions/types/booltype/question-booltype.page';
 import {QuestionQuantitativePage} from './single/questions/types/quantitative/question-quantitative.page';
 import {QuestionCatlikertPage} from './single/questions/types/catlikert/question-catlikert.page';
@@ -60,8 +59,7 @@ import {RemainingExpertsPage} from './single/questions/remaining_experts/remaini
     RemainingExpertsPage
   ],
   providers: [
-    Geolocation,
-    CurrentProcessResolver
+    Geolocation
   ],
 
 })

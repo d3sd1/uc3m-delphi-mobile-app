@@ -56,18 +56,18 @@ export class UserConsumer {
     return new Promise<string>((resolve, reject) => {
       this.http.post<LoginResponse>(environment.apiUrl + '/login', user).subscribe(async (loginResponse: LoginResponse) => {
         this.jwtService.setJwt(loginResponse.jwt);
-        resolve(this.translate.get('login.response.ok').toPromise());
+        resolve('Conexión satisfactoria.');
       }, async (err: HttpErrorResponse) => {
         if (err.status === 400 && err.error.message === 'INVALID_LOGIN') {
-          reject(await this.translate.get('login.response.invalid').toPromise());
+          reject('Conexión inválida.');
         } else if (err.status === 400 && err.error.message === 'USER_BLOCKED') {
-          reject(await this.translate.get('login.response.blocked').toPromise());
+          reject('Tu usuario ha sido bloqueado.');
         } else if (err.status === 400) {
-          reject(await this.translate.get('login.response.err.app').toPromise());
+          reject('Ha ocurrido un error en la aplicación.');
         } else if (err.status === 500) {
-          reject(await this.translate.get('login.response.err.server').toPromise());
+          reject('Ha ocurrido un error en el servidor.');
         }
-        reject(await this.translate.get('login.response.err.desc').toPromise());
+        reject('No se ha podido conectar con el servidor.');
       });
     });
   }

@@ -28,12 +28,12 @@ export class ChatConversationPage {
     private chatConsumer: ChatConsumer,
     private route: ActivatedRoute,
   ) {
-    console.log(this.route.snapshot.data['current_chat'])
+    /* TODO
     this.chat = this.route.snapshot.data['current_chat'];
     this.scrollToBottom();
     this.route.snapshot.data['user'].subscribe((user) => {
       this.user = user;
-    });
+    }); */
   }
 
 
