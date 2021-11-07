@@ -1,36 +1,37 @@
-<!--<ion-list *ngIf="!loading && userChats.length > 0">
+<ion-list *ngIf="!loading && userChats.length > 0">
   <ion-searchbar (ionInput)="filterList($event)" autocomplete="on" autocorrect="on"
                  cancel-button-text="Cancelar" placeholder="Buscar chat" showCancelButton="focus"></ion-searchbar>
   <ion-item-sliding #slidingItem *ngFor="let chat of userChats">
-    <ion-item [routerLink]="'chat/' + chat.id">
+    <ion-item
+      [routerLink]="'/logged-in/menu/chat/conversation/' + (chat.user1.id === user.id ? chat.user2.id:chat.user1.id)">
       <ion-avatar slot="start">
         <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
-             *ngIf="selfChatPicture(chat) !== undefined"
-             [src]="selfChatPicture(chat)"/>
-        <img *ngIf="selfChatPicture(chat) === undefined" src="assets/images/no-process-image.jpeg"/>
+             *ngIf="this.user?.photo !== undefined"
+             [src]="this.user?.photo"/>
+        <img *ngIf="this.user?.photo === undefined" src="assets/images/no-process-image.jpeg"/>
       </ion-avatar>
       <ion-label>
-        <h2>{{selfChatName(chat)}}</h2>
-        <h3>{{(chat.group ? 'home.chat.conversation.type.group' : 'home.chat.conversation.type.private') | translate}}</h3>
-        <p>{{chat.chatMessages[0]?.message}}</p>
+        <h2>{{chat.user1.id === user.id ? chat.user2.name + ' ' + chat.user2.surnames : chat.user1.name + ' ' + chat.user1.surnames}}</h2>
+        <h3>{{chat.messages[chat.messages.length - 1].content}}</h3>
       </ion-label>
-      <ion-icon *ngIf="!chat.group" [class]="'chat-' + selfUserChatStatus(chat)" name="radio-button-on-outline"
+      <ion-icon [class]="'chat-online'" name="radio-button-on-outline"
                 slot="end"></ion-icon>
-      <ion-badge *ngIf="selfChatUnreadMessages(chat,user.id) > 0"
-                 color="primary">{{selfChatUnreadMessages(chat, user.id)}}</ion-badge>
+      <!-- TODO <ion-badge *ngIf="selfChatUnreadMessages(chat,user.id) > 0"
+                  color="primary">{{selfChatUnreadMessages(chat, user.id)}}</ion-badge> -->
     </ion-item>
 
     <ion-item-options (ionSwipe)="markChatAsRead(chat.id, slidingItem)"
-                      *ngIf="selfChatUnreadMessages(chat, user.id) > 0"
                       side="start">
+      <!-- TODO *ngIf="selfChatUnreadMessages(chat, user.id) > 0" -->
       <ion-item-option (click)="markChatAsRead(chat.id, slidingItem)"
-                       color="primary">{{ 'home.chat.conversation.mark_as_read' | translate }}</ion-item-option>
+                       color="primary">Marcar como leído
+      </ion-item-option>
     </ion-item-options>
 
     <ion-item-options (ionSwipe)="deleteChat(chat.id, slidingItem)" side="end">
       <ion-item-option (click)="deleteChat(chat.id, slidingItem)"
-                       color="danger">{{ 'home.chat.conversation.delete' | translate }}</ion-item-option>
+                       color="danger">Eliminar
+      </ion-item-option>
     </ion-item-options>
   </ion-item-sliding>
 </ion-list>
--->

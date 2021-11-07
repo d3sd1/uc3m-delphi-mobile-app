@@ -3,7 +3,9 @@ import {ChatMessage} from './chat-message';
 
 
 export class UserChat {
-  chatMessages: ChatMessage[];
   id: number;
-  toUser: User;
+  name: string;
+  user1: User;
+  user2: User;
+  messages: ChatMessage[];
 }

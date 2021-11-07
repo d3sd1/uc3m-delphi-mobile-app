@@ -12,7 +12,7 @@ import {ChatConsumer} from '../../core/consumer/chat/chat.consumer';
 })
 export class ChatPage {
   loading = true;
-  userChats: UserChat[] = [];
+  userChats: UserChat[];
   user: User;
 
 

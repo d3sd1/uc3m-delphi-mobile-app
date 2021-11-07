@@ -1,9 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ChatService} from '../chat.service';
+import {Component, Input} from '@angular/core';
 import {User} from '../../../core/model/user';
 import {UserChat} from '../../../core/model/user-chat';
-import {UserConsumer} from '../../../core/consumer/user/user.consumer';
 import {ChatConsumer} from '../../../core/consumer/chat/chat.consumer';
+import {UserConsumer} from '../../../core/consumer/user/user.consumer';
 
 @Component({
   selector: 'delphi-chat-list',
@@ -11,21 +10,26 @@ import {ChatConsumer} from '../../../core/consumer/chat/chat.consumer';
   styleUrls: ['./chat-list.component.scss'],
 })
 export class ChatListComponent {
-
-  @Input()
   user: User;
 
   @Input()
   loading: boolean;
 
-  @Input()
   userChatsOriginal: UserChat[] = [];
 
   userChats: UserChat[] = [];
 
 
-  constructor() {
-
+  constructor(private chatConsumer: ChatConsumer, private userConsumer: UserConsumer) {
+    this.userConsumer.getUser().subscribe((user) => {
+      this.user = user;
+    });
+    this.chatConsumer.getChats().subscribe((userChats) => {
+      this.userChatsOriginal = userChats;
+      this.userChats = [...this.userChatsOriginal];
+      console.log('user chats:', this.userChats);
+      this.loading = false;
+    });
   }
 
   async filterList(evt) {
@@ -38,7 +42,7 @@ export class ChatListComponent {
   }
 
   markChatAsRead(chatId, slidingItem) {
-   //TODO
+    //TODO
     slidingItem.close();
   }
 

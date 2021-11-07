@@ -12,28 +12,25 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-<ion-content *ngIf="chat && oppositeUser">
+<ion-content>
   <div #chatDisplay class="message-wrap">
-
-    <div *ngFor="let msg of chat?.chatMessages"
-         [class.left]=" msg.sentBy.id !== user.id "
-         [class.right]=" msg.sentBy.id === user.id "
+    <div *ngFor="let msg of chat?.messages"
+         [class.left]=" msg.user.id !== user.id "
+         [class.right]=" msg.user.id === user.id "
          class="message">
       <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
-           *ngIf="msg.sentBy?.photo !== undefined" [src]="msg.sentBy?.photo"
+           *ngIf="msg.user?.photo !== undefined" [src]="msg.user?.photo"
            class="user-img"/>
-      <img *ngIf="msg.sentBy?.photo === undefined" class="user-img" src="assets/images/no-process-image.jpeg"/>
-      --<ion-spinner name="dots" ></ion-spinner> *ngIf="msg.status === 'pending'" -
+      <img *ngIf="msg.user?.photo === undefined" class="user-img" src="assets/images/no-process-image.jpeg"/>
+      <ion-spinner *ngIf="loading" name="dots" ></ion-spinner>
       <div class="msg-detail">
         <div class="msg-info">
           <p>
-            {{msg.sentBy?.name === undefined ? msg.sentBy?.email : msg.sentBy?.name}}&nbsp;&nbsp;&nbsp;{{msg.sentDate | relativeTime}}</p>
-          -- relativeTime -
+            {{msg.user?.name === undefined ? msg.user?.email : msg.user?.name}}&nbsp;&nbsp;&nbsp;{{msg.timestamp | relativeTime}}</p>
         </div>
         <div class="msg-content">
           <span class="triangle"></span>
-          <p class="line-breaker ">{{msg.message}}</p>
+          <p class="line-breaker ">{{msg.content}}</p>
         </div>
       </div>
     </div>

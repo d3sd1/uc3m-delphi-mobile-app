@@ -1,29 +1,31 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {IonContent, NavController} from '@ionic/angular';
-
-
-import {ChatService} from '../chat.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {IonContent} from '@ionic/angular';
+import {ActivatedRoute} from '@angular/router';
 import {UserChat} from '../../../core/model/user-chat';
 import {User} from '../../../core/model/user';
-import {ChatMessage} from '../../../core/model/chat-message';
-import {WsService} from '../../../core/service/ws.service';
 import {ChatConsumer} from '../../../core/consumer/chat/chat.consumer';
 import {UserConsumer} from '../../../core/consumer/user/user.consumer';
 import {InvitationConsumer} from '../../../core/consumer/process/invitation.consumer';
+import {Subscription} from 'rxjs';
+import {ChatMessage} from '../../../core/model/chat-message';
 
 @Component({
   selector: 'delphi-chat-conversation',
   templateUrl: './chat-conversation-page.component.html',
   styleUrls: ['./chat-conversation-page.component.scss'],
 })
-export class ChatConversationPage {
+export class ChatConversationPage implements OnInit, OnDestroy {
   chat: UserChat;
   user: User;
   oppositeUser: User;
+  loading = false;
 
   editorMsg = '';
   showEmojiPicker = false;
+
+  private chatSubscription: Subscription;
+  private userSubscription: Subscription;
+  private invitationSubscription: Subscription;
 
   @ViewChild(IonContent, {read: IonContent, static: false}) chatDisplay: IonContent;
 
@@ -33,20 +35,54 @@ export class ChatConversationPage {
     private invitationConsumer: InvitationConsumer,
     private route: ActivatedRoute,
   ) {
-    this.route.params.subscribe(params => {
-
-      this.invitationConsumer.getUsers().subscribe((users) => {
-        console.log('users to search are:', users);
-        this.oppositeUser = users.find(p => p.id === +params.oppositeUserId);;
-      });
-    });
-
-    this.userConsumer.getUser().subscribe((user) => {
-      this.user = user;
-    });
-
   }
 
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.invitationSubscription = this.invitationConsumer.getUsers().subscribe((users) => {
+        this.oppositeUser = users.find(p => p.id === +params.oppositeUserId);
+      });
+    });
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      this.user = user;
+    });
+    this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
+      this.chat = userChats.find((userChat) => {
+        if ((userChat.user1.id === this.user.id && userChat.user2.id === this.oppositeUser?.id)
+          || (userChat.user2.id === this.user.id && userChat.user1.id === this.oppositeUser?.id)) {
+          this.loading = false;
+          return true;
+        }
+      });
+      this.sortMessages();
+      this.scrollToBottom();
+    });
+  }
+
+  sortMessages() {
+    this.chat?.messages.sort((chatMessage1: ChatMessage, chatMessage2: ChatMessage) => {
+      let pos = 0;
+      if (chatMessage1.timestamp < chatMessage2.timestamp) {
+        pos = -1;
+      } else if (chatMessage1.timestamp > chatMessage2.timestamp) {
+        pos = 1;
+      }
+      return pos;
+    });
+  }
+
+
+  ngOnDestroy(): void {
+    this.chat = null;
+    this.user = null;
+    this.oppositeUser = null;
+    this.loading = false;
+    this.editorMsg = '';
+    this.showEmojiPicker = false;
+    this.invitationSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.chatSubscription.unsubscribe();
+  }
 
   scrollToBottom() {
     this.chatDisplay?.scrollToBottom(300);
@@ -67,22 +103,15 @@ export class ChatConversationPage {
   }
 
 
-  async sendMessage() {
+  sendMessage() {
     if (this.editorMsg === '') {
       return;
     }
-    const chatMessage = new ChatMessage();
-    chatMessage.sentBy = this.user;
-    chatMessage.sentTo = this.chat?.toUser;
-    chatMessage.id = 0;
-    chatMessage.message = this.editorMsg;
-    chatMessage.read = false;
-    chatMessage.sentDate = new Date();
-    this.chat?.chatMessages.push(chatMessage);
+    this.chatConsumer.writeToChat(this.oppositeUser.id, this.editorMsg);
     this.editorMsg = '';
-    //await this.chatConsumer.writeToChat(this.chat.id, chatMessage);
-    await this.scrollToBottom();
+    this.scrollToBottom();
   }
+
   async onFocus() {
     this.showEmojiPicker = false;
     await this.scrollToBottom();
