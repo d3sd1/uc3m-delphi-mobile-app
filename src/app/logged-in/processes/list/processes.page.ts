@@ -46,11 +46,10 @@ export class ProcessesPage {
     this.filteredProcesses = [];
     const wantsFinished = ev?.target.value === 'finished';
     this.processes?.forEach((process: Process) => {
-      if ((wantsFinished && process?.finished) || !wantsFinished && !process?.finished) {
+      if ((wantsFinished && process?.finished) || (!wantsFinished && !process?.finished)) {
         this.filteredProcesses.push(process);
       }
     });
-    this.filteredProcesses = [...this.processes];
     this.filteredProcesses.sort((a, b) => {
       if (a.modifiedDate < b.modifiedDate) {
         return 1;

@@ -7,8 +7,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <delphi-empty *ngIf="filteredProcesses?.length == 0 && !loadingProcesses"></delphi-empty>
-  <ion-list *ngIf="filteredProcesses != null && filteredProcesses.length > 0 && !loadingProcesses">
+  <delphi-empty *ngIf="processes?.length == 0 && !loadingProcesses"></delphi-empty>
+  <ion-list *ngIf="processes != null && processes.length > 0 && !loadingProcesses">
     <ion-list-header>
       <ion-toolbar>
         <ion-segment (ionChange)="filterProcesses($event)" value="active">
