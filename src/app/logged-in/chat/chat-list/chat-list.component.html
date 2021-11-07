@@ -1,4 +1,4 @@
-<ion-list *ngIf="!loading && userChats.length > 0">
+<ion-list *ngIf="!loading && userChatsOriginal.length > 0">
   <ion-searchbar (ionInput)="filterList($event)" autocomplete="on" autocorrect="on"
                  cancel-button-text="Cancelar" placeholder="Buscar chat" showCancelButton="focus"></ion-searchbar>
   <ion-item-sliding #slidingItem *ngFor="let chat of userChats">
@@ -16,8 +16,8 @@
       </ion-label>
       <ion-icon [class]="'chat-online'" name="radio-button-on-outline"
                 slot="end"></ion-icon>
-      <!-- TODO <ion-badge *ngIf="selfChatUnreadMessages(chat,user.id) > 0"
-                  color="primary">{{selfChatUnreadMessages(chat, user.id)}}</ion-badge> -->
+       <ion-badge *ngIf="chat.messages[chat.messages.length - 1].user.id !== user.id"
+                  color="primary">1+</ion-badge>
     </ion-item>
 
     <ion-item-options (ionSwipe)="markChatAsRead(chat.id, slidingItem)"
@@ -35,3 +35,4 @@
     </ion-item-options>
   </ion-item-sliding>
 </ion-list>
+<delphi-chat-empty *ngIf="!loading && userChats.length == 0"></delphi-chat-empty>

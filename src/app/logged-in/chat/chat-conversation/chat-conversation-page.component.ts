@@ -45,6 +45,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
     });
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
+      this.scrollToBottom();
     });
     this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
       this.chat = userChats.find((userChat) => {
@@ -69,6 +70,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
       }
       return pos;
     });
+    this.scrollToBottom();
   }
 
 
@@ -88,13 +90,6 @@ export class ChatConversationPage implements OnInit, OnDestroy {
     this.chatDisplay?.scrollToBottom(300);
   }
 
-  showKeyboard() {
-    //  this.keyboard.showMessenger(null);
-  }
-
-  hideKeyboard() {
-    // this.keyboard.hideMessenger(null);
-  }
 
   checkEnterKey(keyCode) {
     if (keyCode === 13) {
@@ -112,30 +107,14 @@ export class ChatConversationPage implements OnInit, OnDestroy {
     this.scrollToBottom();
   }
 
-  async onFocus() {
+  onFocus() {
     this.showEmojiPicker = false;
-    await this.scrollToBottom();
+    this.scrollToBottom();
   }
 
-  async switchEmojiPicker() {
+  switchEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
-    if (!this.showEmojiPicker) {
-      //this.focus();
-    } else {
-      //this.setTextareaScroll();
-    }
-    await this.scrollToBottom();
+    this.scrollToBottom();
   }
 
-  /*
-    private focus() {
-      if (this.messageInput && this.messageInput.nativeElement) {
-        this.messageInput.nativeElement.focus();
-      }
-    }
-
-    private setTextareaScroll() {
-      const textarea = this.messageInput.nativeElement;
-      textarea.scrollTop = textarea.scrollHeight;
-    }*/
 }

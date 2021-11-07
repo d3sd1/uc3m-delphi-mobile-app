@@ -39,6 +39,14 @@ export class ChatListComponent {
       return;
     }
 
+    return this.userChats = this.userChatsOriginal.filter((userChat) => {
+      return userChat.user1.name.includes(searchTerm)
+        || userChat.user1.surnames.includes(searchTerm)
+        || userChat.user1.email.includes(searchTerm)
+        || userChat.user2.name.includes(searchTerm)
+        || userChat.user2.surnames.includes(searchTerm)
+        || userChat.user2.email.includes(searchTerm);
+    });
   }
 
   markChatAsRead(chatId, slidingItem) {

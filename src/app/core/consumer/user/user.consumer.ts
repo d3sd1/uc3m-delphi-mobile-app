@@ -63,9 +63,9 @@ export class UserConsumer {
         } else if (err.status === 400 && err.error.message === 'USER_BLOCKED') {
           reject('Tu usuario ha sido bloqueado.');
         } else if (err.status === 400) {
-          reject('Ha ocurrido un error en la aplicación.');
+          reject('Conexión incorrecta.');
         } else if (err.status === 500) {
-          reject('Ha ocurrido un error en el servidor.');
+          reject('Conexión incorrecta.');
         }
         reject('No se ha podido conectar con el servidor.');
       });
