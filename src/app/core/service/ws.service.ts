@@ -86,7 +86,6 @@ export class WsService {
     wsCommand.channel = channel;
     wsCommand.privateChannel = privateChannel;
     wsCommand.subject = subject;
-    console.log('send subscription to channel:', channel);
     const a = this.commands.getValue();
     a.push(wsCommand);
     this.commands.next(a);

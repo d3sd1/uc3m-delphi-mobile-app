@@ -15,7 +15,7 @@
                 placeholder="Buscar usuarios"
                  animated debounce="500"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
-    <ion-item (click)="addUser(user.email)"
+    <ion-item (click)="addExistantUser(user)"
               *ngFor="let user of usersFiltered">
       <ion-avatar slot="start">
         <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="user?.photo !== undefined"
@@ -32,7 +32,7 @@
   <ion-item
     *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && this.isEmail(this.filterCriterial) && this.isNewUser(this.filterCriterial)">
     <ion-title></ion-title>
-    <ion-button (click)="addUser(this.filterCriterial)" expand="block">Invitar a <{{this.filterCriterial}}>
+    <ion-button (click)="addNewUser(this.filterCriterial)" expand="block">Invitar a <{{this.filterCriterial}}>
     </ion-button>
   </ion-item>
   <ion-item *ngIf="this.getUsers().length == 0">

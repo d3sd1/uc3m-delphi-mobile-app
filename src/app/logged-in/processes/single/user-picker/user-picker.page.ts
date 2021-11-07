@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {User} from '../../../../core/model/user';
-import {environment} from '../../../../../environments/environment';
 import {Process} from '../../../../core/model/process';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
 import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
 import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
+import {InvitationConsumer} from '../../../../core/consumer/process/invitation.consumer';
 
 @Component({
   selector: 'delphi-user-picker',
@@ -18,6 +18,7 @@ export class UserPickerPage {
   filterCriterial = '';
   currentUser = new User();
   type;
+  searchableUsers: User[] = [];
   usersFiltered: User[] = [];
 
   constructor(
@@ -26,9 +27,10 @@ export class UserPickerPage {
     private userConsumer: UserConsumer,
     private httpClient: HttpClient,
     private processConsumer: ProcessConsumer,
+    private invitationConsumer: InvitationConsumer,
     public navCtrl: NavController) {
     this.route.params.subscribe(params => {
-      this.type = params['type'];
+      this.type = params.type;
     });
     this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
@@ -40,61 +42,58 @@ export class UserPickerPage {
         }
       });
     });
+    this.invitationConsumer.getUsers().subscribe((users) => {
+      console.log('users to search are:', users);
+      this.searchableUsers = users;
+    });
   }
 
   isEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   }
+
   isNewUser(email) {
     return this.usersFiltered.findIndex((user) => {
       return user.email === email;
     }) === -1;
   }
 
-  addUser(email: string) {
-    this.httpClient.put<User>(environment.apiUrl + '/v1/process/add_user?email=' + email + '&process_id=' + this.process?.id +
-      '&type=' + this.type.toLowerCase(), {}).subscribe((user: User) => {
-      this.filterCriterial = '';
-
-    }, (err) => {
-      console.error(err);
-    }, () => {
-      this.filterCriterial = '';
-    });
-    // TODO handle err
+  addExistantUser(user: User) {
+    this.invitationConsumer.addExistantUserToProcess(user.id, this.process?.id, this.type);
+    this.filterCriterial = '';
   }
+
+  addNewUser(email: string) {
+    this.invitationConsumer.sendInvitation(email, this.process?.id, this.type);
+    this.filterCriterial = '';
+  }
+
   isCoordinator(): boolean {
     return this.process?.coordinators.findIndex((user) => user.id === this.currentUser.id) !== -1;
   }
 
-
   async filter() {
     if (this.filterCriterial === '' || this.filterCriterial === null) {
+      this.usersFiltered = [];
       return;
     }
-    await this.httpClient.get<User[]>(environment.apiUrl + '/v1/process/filter?criteria=' + this.filterCriterial + '&process_id='
-    + this.process?.id).subscribe((users) => {
-      this.usersFiltered = users;
-    }, (err) => {
-      console.error(err)
+
+    this.usersFiltered = this.searchableUsers.filter((u) => {
+      return u.email.includes(this.filterCriterial)
+        || u.name.includes(this.filterCriterial)
+        || u.surnames.includes(this.filterCriterial);
     });
   }
+
   async removeUser(user: User) {
-    this.httpClient.delete<User>(environment.apiUrl + '/v1/process/rm_user?user_id=' + user.id + '&process_id=' + this.process?.id, {}).subscribe((user: User) => {
-
-    }, (err) => {
-      console.error(err);
-    }, () => {
-
-    });
+    this.invitationConsumer.removeFromProcess(user.id, this.process?.id);
   }
 
   getUsers() {
-    if(this.type.toLowerCase() === 'coordinator') {
+    if (this.type.toLowerCase() === 'coordinator') {
       return this.process?.coordinators;
-    }
-    else if(this.type.toLowerCase() === 'expert') {
+    } else if (this.type.toLowerCase() === 'expert') {
       return this.process?.experts;
     }
   }
