@@ -80,9 +80,12 @@ export class UserPickerPage {
     }
 
     this.usersFiltered = this.searchableUsers.filter((u) => {
-      return u.email.includes(this.filterCriterial)
-        || u.name.includes(this.filterCriterial)
-        || u.surnames.includes(this.filterCriterial);
+      return (u.email.includes(this.filterCriterial)
+          || u.name.includes(this.filterCriterial)
+          || u.surnames.includes(this.filterCriterial))
+        && !this.process.experts.some(u2 => u.id === u2.id)
+        && !this.process.coordinators.some(u2 => u.id === u2.id)
+        && u.id !== this.currentUser.id;
     });
   }
 
