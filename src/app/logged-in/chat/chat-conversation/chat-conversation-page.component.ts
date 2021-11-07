@@ -9,6 +9,8 @@ import {User} from '../../../core/model/user';
 import {ChatMessage} from '../../../core/model/chat-message';
 import {WsService} from '../../../core/service/ws.service';
 import {ChatConsumer} from '../../../core/consumer/chat/chat.consumer';
+import {UserConsumer} from '../../../core/consumer/user/user.consumer';
+import {InvitationConsumer} from '../../../core/consumer/process/invitation.consumer';
 
 @Component({
   selector: 'delphi-chat-conversation',
@@ -16,8 +18,9 @@ import {ChatConsumer} from '../../../core/consumer/chat/chat.consumer';
   styleUrls: ['./chat-conversation-page.component.scss'],
 })
 export class ChatConversationPage {
-  chat: UserChat = null;
-  user: User = null;
+  chat: UserChat;
+  user: User;
+  oppositeUser: User;
 
   editorMsg = '';
   showEmojiPicker = false;
@@ -26,19 +29,27 @@ export class ChatConversationPage {
 
   constructor(
     private chatConsumer: ChatConsumer,
+    private userConsumer: UserConsumer,
+    private invitationConsumer: InvitationConsumer,
     private route: ActivatedRoute,
   ) {
-    /* TODO
-    this.chat = this.route.snapshot.data['current_chat'];
-    this.scrollToBottom();
-    this.route.snapshot.data['user'].subscribe((user) => {
+    this.route.params.subscribe(params => {
+
+      this.invitationConsumer.getUsers().subscribe((users) => {
+        console.log('users to search are:', users);
+        this.oppositeUser = users.find(p => p.id === +params.oppositeUserId);;
+      });
+    });
+
+    this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
-    }); */
+    });
+
   }
 
 
-  async scrollToBottom() {
-    await this.chatDisplay.scrollToBottom(300);
+  scrollToBottom() {
+    this.chatDisplay?.scrollToBottom(300);
   }
 
   showKeyboard() {
@@ -62,12 +73,12 @@ export class ChatConversationPage {
     }
     const chatMessage = new ChatMessage();
     chatMessage.sentBy = this.user;
-    chatMessage.sentTo = this.chat.toUser;
+    chatMessage.sentTo = this.chat?.toUser;
     chatMessage.id = 0;
     chatMessage.message = this.editorMsg;
     chatMessage.read = false;
     chatMessage.sentDate = new Date();
-    this.chat.chatMessages.push(chatMessage);
+    this.chat?.chatMessages.push(chatMessage);
     this.editorMsg = '';
     //await this.chatConsumer.writeToChat(this.chat.id, chatMessage);
     await this.scrollToBottom();

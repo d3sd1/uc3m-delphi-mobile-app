@@ -1,4 +1,4 @@
-<!--<ion-header>
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/chat'"
@@ -6,14 +6,14 @@
                        [routerLink]="'/logged-in/menu/chat'"
                        text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{chat.toUser}}</ion-title>
+    <ion-title>{{oppositeUser?.name}} {{oppositeUser?.surnames}}</ion-title>
     <ion-buttons slot="end">
-      <img [src]="selfChat()?.photo" alt="" class="user-img-header">
+      <img [src]="this.oppositeUser?.photo" alt="" class="user-img-header">
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="chat && oppositeUser">
   <div #chatDisplay class="message-wrap">
 
     <div *ngFor="let msg of chat?.chatMessages"
@@ -51,7 +51,7 @@
         <ion-input #chat_input
                    (focusin)="onFocus()"
                    [(ngModel)]="editorMsg"
-                   [placeholder]="'home.chat.conversation.message.placeholder' | translate"
+                   placeholder="Introduce tu mensaje..."
                    name="chat_message"></ion-input>
       </form>
     </ion-item>
@@ -61,4 +61,3 @@
   </div>
   <emoji-picker [(ngModel)]="editorMsg"></emoji-picker>
 </ion-footer>
--->

@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ChatPage,
   },
   {
-    path: 'conversation/:chatId',
+    path: 'conversation/:oppositeUserId',
     component: ChatConversationPage,
   }
 ];
