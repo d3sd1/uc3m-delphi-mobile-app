@@ -142,14 +142,14 @@ export class QuestionListPage {
 
       await alert.present();
     } else {
-      await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, {}).toPromise();
-      await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
+     // await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, {}).toPromise();
+     // await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
     }
   }
 
   async closeRound() {
-    await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, {}).toPromise();
-    await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
+  //  await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, {}).toPromise();
+   // await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
   }
 
 
@@ -257,10 +257,7 @@ export class QuestionListPage {
           text: 'Crear',
           handler: async (alertData) => {
             await alert.dismiss();
-            await this.httpClient.post(environment.apiUrl + '/v1/process/questions/add?process_id=' + this.process.id, {
-              name: name,
-              type: selectedQuestionType
-            }).toPromise();
+            this.processConsumer.addQuestion( this.process?.id, name, selectedQuestionType);
           }
         }
       ]

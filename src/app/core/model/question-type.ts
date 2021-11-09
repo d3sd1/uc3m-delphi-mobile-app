@@ -1,5 +1,4 @@
-export enum QuestionType {
-  QUALITATIVE,
-  QUANTITATIVE,
-  BOOLTYPE
+export class QuestionType {
+  id: number;
+  name: string;
 }

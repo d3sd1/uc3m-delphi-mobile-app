@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {WsService} from '../../service/ws.service';
 import {Process} from '../../model/process';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {WsMode} from '../../ws/ws-mode.model';
 
 @Injectable({
@@ -81,5 +81,13 @@ export class ProcessConsumer {
 
   updateRoundBasicData(processId: number, name: string, limitTime: Date) {
     this.wsService.publish(`process/rounds/current/basic`, {processId, name, limitTime}, WsMode.UPDATE);
+  }
+
+  addQuestion(processId: number, name: string, selectedQuestionType: string) {
+    this.wsService.publish(`process/rounds/current/question`, {processId, name, selectedQuestionType}, WsMode.CREATE);
+  }
+
+  reorderQuestion(processId: number, name: string, selectedQuestionType: string) {
+    this.wsService.publish(`process/rounds/current/question`, {processId, name, selectedQuestionType}, WsMode.CREATE);
   }
 }
