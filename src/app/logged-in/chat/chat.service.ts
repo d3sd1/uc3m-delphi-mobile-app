@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {UserChat} from '../../core/model/user-chat';
 import {ChatMessage} from '../../core/model/chat-message';
 
@@ -48,9 +48,9 @@ export class ChatService {
     });
   }
 
-  getCurrentUserChats(): Observable<UserChat[]> {
+  getCurrentUserChats(): Subject<UserChat[]> {
     this.updCurrentUserChats();
-    return this.subject.asObservable();
+    return this.subject;
   }
 
   private updCurrentUserChats() {

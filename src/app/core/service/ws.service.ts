@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {BehaviorSubject, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {WsMode} from '../ws/ws-mode.model';
 import {JwtService} from './jwt.service';

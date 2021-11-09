@@ -31,8 +31,8 @@ export class ProcessesPage implements OnInit {
 
   ngOnInit() {
     this.loadingProcesses = true;
-    this.processConsumer.getProcesses().subscribe((processes) => {
-      if(processes === null) {
+    this.processConsumer.getProcesses().subscribe(async (processes) => {
+      if (processes === null) {
         return;
       }
       this.loadingProcesses = true;
@@ -41,7 +41,7 @@ export class ProcessesPage implements OnInit {
       this.loadingProcesses = false;
     });
 
-    this.userConsumer.getUser().subscribe((user) => {
+    this.userConsumer.getUser().subscribe(async (user) => {
       this.user = user;
     });
   }

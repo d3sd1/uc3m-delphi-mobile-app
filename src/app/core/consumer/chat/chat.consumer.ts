@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {WsService} from '../../service/ws.service';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {UserChat} from '../../model/user-chat';
 import {WsMode} from '../../ws/ws-mode.model';

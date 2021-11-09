@@ -7,7 +7,7 @@ import {Storage} from '@ionic/storage';
 import {WsService} from '../../service/ws.service';
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../model/user';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {JwtService} from '../../service/jwt.service';
 import {WsMode} from '../../ws/ws-mode.model';

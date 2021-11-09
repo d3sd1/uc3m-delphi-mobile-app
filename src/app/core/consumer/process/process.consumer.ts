@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {WsService} from '../../service/ws.service';
 import {Process} from '../../model/process';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {WsMode} from '../../ws/ws-mode.model';
 
 @Injectable({
