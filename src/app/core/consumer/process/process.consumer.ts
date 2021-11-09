@@ -55,7 +55,9 @@ export class ProcessConsumer {
             this.subscribeIndividual(processId);
           }
           this.userProcessesIndividual[processId].subscribe((process) => {
-
+            if (process === null) {
+              return;
+            }
             const idx = this.userProcesses.value.findIndex((p => p.id === process.id));
             let durArr = [...this.userProcesses.value];
             if (idx === -1) {
