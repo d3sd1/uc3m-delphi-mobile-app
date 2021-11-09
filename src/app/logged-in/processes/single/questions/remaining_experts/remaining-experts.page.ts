@@ -82,7 +82,7 @@ export class RemainingExpertsPage {
   async updateBasicData() {
     await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/basic?process_id=' + this.process.id, {
       name: this.process.currentRound.name,
-      endTime: this.process.currentRound.endTime
+      endTime: this.process?.currentRound?.endTime
     }).toPromise();
   }
 
@@ -95,8 +95,8 @@ export class RemainingExpertsPage {
         questionsMissing = true;
       }
     });
-    if (this.process?.currentRound.endTime === null ||
-      this.process?.currentRound.endTime === undefined) {
+    if (this.process?.currentRound?.endTime === null ||
+      this.process?.currentRound?.endTime === undefined) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',

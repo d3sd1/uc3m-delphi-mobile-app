@@ -4,12 +4,12 @@ import {Answer} from './answer';
 
 export class Round {
   id: number;
-  name: string = '';
+  name = '';
   questions: Question[] = [];
-  endTime: Date;
-  finished: boolean = false;
+  endTime: Date = new Date();
+  finished = false;
   orderPosition: number;
-  started: boolean = false;
+  started = false;
   expertsVoted: User[] = [];
   expertsRemaining: User[] = [];
   answers: Answer[] = [];

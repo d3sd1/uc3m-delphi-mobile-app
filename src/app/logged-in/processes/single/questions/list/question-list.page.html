@@ -14,12 +14,12 @@
 
   <ion-item>
     <ion-label>Fecha de cierre</ion-label>
-    <ion-datetime [(ngModel)]="this.process?.currentRound.endTime" display-format="MMM DD, YYYY HH:mm"
+    <ion-datetime [(ngModel)]="process.currentRound.endTime" display-format="MMM DD, YYYY HH:mm"
                   (ngModelChange)="updateBasicData()"
                   picker-format="MMM DD, YYYY HH:mm"
                   [min]="currentTime"
                   placeholder="Introduce fecha límite"
-                [readonly]="process.currentRound.started || process.finished || !isCoordinator()"></ion-datetime>
+                [readonly]="process.currentRound?.started || process.finished || !isCoordinator()"></ion-datetime>
   </ion-item>
 
   <ion-item>

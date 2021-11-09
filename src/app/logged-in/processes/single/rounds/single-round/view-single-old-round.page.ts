@@ -3,8 +3,8 @@ import {NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {Question} from '../../../../../core/model/question';
 import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
+import {ProcessConsumer} from '../../../../../core/consumer/process/process.consumer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -20,16 +20,21 @@ export class ViewSingleOldRoundPage {
   constructor(
     private navCtrl: NavController,
     private userConsumer: UserConsumer,
+    private processConsumer: ProcessConsumer,
     private route: ActivatedRoute) {
-   this.userConsumer.getUser().subscribe((user) => {
+    this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
-   /* TODO
-    this.route.snapshot.data['process'].subscribe((process) => {
-      this.process = process;
-    }); */
+
     this.route.params.subscribe(params => {
-      this.roundIdx = this.process.rounds.findIndex(q => q.id === +params['roundid']);
+      this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes !== null && params !== null) {
+          this.process = processes.find(p => p.id === +params.id);
+        }
+      });
+    });
+    this.route.params.subscribe(params => {
+      this.roundIdx = this.process.pastRounds.findIndex(q => q.id === +params['roundid']);
     });
   }
 

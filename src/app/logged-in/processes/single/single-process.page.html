@@ -65,13 +65,13 @@
     <ion-item *ngIf="!process?.finished && isCoordinator()" routerDirection="forward"
               [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/question/list'">
       <ion-label>Ronda actual</ion-label>
-      <ion-badge slot="end">{{process?.currentRound?.questions?.length}} Preguntas
+      <ion-badge slot="end">{{process?.pastRounds[process?.pastRounds?.length - 1]?.questions?.length || 0}} Preguntas
       </ion-badge>
     </ion-item>
     <ion-item routerDirection="forward"
               [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/rounds'">
       <ion-label>Rondas finalizadas</ion-label>
-      <ion-badge slot="end">{{process?.rounds?.length}} Rondas
+      <ion-badge slot="end">{{process?.pastRounds?.length}} Rondas
       </ion-badge>
     </ion-item>
   </ion-list>
@@ -108,8 +108,12 @@
 
 <ion-footer *ngIf="process && !process?.finished">
   <ion-toolbar>
-    <ion-button *ngIf="isCoordinator()" color="danger" expand="block" (click)="finishProcess()">Finalizar proceso</ion-button>
-    <ion-button *ngIf="!isCoordinator()" [color]="this.process?.currentRound.started && expertCanVote() ? 'success':'warning'" expand="block" (click)="participate()">Participar</ion-button>
+    <ion-button *ngIf="isCoordinator()" color="danger" expand="block" (click)="finishProcess()">Finalizar proceso
+    </ion-button>
+    <ion-button *ngIf="!isCoordinator()"
+                [color]="this.process?.currentRound.started && expertCanVote() ? 'success':'warning'" expand="block"
+                (click)="participate()">Participar
+    </ion-button>
   </ion-toolbar>
 </ion-footer>
 

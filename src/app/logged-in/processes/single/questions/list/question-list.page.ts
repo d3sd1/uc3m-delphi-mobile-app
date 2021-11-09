@@ -6,6 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
+import {ProcessConsumer} from '../../../../../core/consumer/process/process.consumer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -23,23 +24,28 @@ export class QuestionListPage {
     private route: ActivatedRoute,
     public alertController: AlertController,
     public userConsumer: UserConsumer,
+    public processConsumer: ProcessConsumer,
     private httpClient: HttpClient) {
-   this.userConsumer.getUser().subscribe((user) => {
+    this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-    /* TODO this.route.snapshot.data['process'].subscribe((process: Process) => {
-      this.process = process;
-      this.orderQuestions();
-    }); */
+    this.route.params.subscribe(params => {
+      this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes !== null && params !== null) {
+          this.process = processes.find(p => p.id === +params.id);
+          this.orderQuestions();
+        }
+      });
+    });
   }
 
 
   isCoordinator(): boolean {
-    return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
+    return this.process?.coordinators?.findIndex((user) => user.id === this.user?.id) !== -1;
   }
 
   private orderQuestions() {
-    this.process.currentRound.questions.sort((n1, n2) => {
+    this.process?.currentRound?.questions?.sort((n1, n2) => {
       if (n1.orderPosition < n2.orderPosition) {
         return -1;
       }
@@ -55,16 +61,18 @@ export class QuestionListPage {
     if (this.process.currentRound.questions[detail.to] === undefined) {
       return;
     }
+
+    /* TODO sync data
     await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/questions/reorder?process_id=' + this.process.id, {
       fromId: this.process.currentRound.questions[detail.from].id,
       fromPosition: detail.from,
       toId: this.process.currentRound.questions[detail.to].id,
       toPosition: detail.to
-    }).toPromise();
+    }).toPromise();*/
   }
 
   sortQuestions() {
-    this.process.currentRound.questions.sort((a, b) => {
+    this.process?.currentRound.questions.sort((a, b) => {
       if (a.orderPosition < b.orderPosition) {
         return -1;
       }
@@ -80,10 +88,10 @@ export class QuestionListPage {
   }
 
   async updateBasicData() {
-    await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/basic?process_id=' + this.process.id, {
-      name: this.process.currentRound.name,
-      endTime: this.process.currentRound.endTime
-    }).toPromise();
+    /* TODO await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/basic?process_id=' + this.process.id, {
+      name: this.process?.currentRound.name,
+      endTime: this.process?.currentRound.endTime
+    }).toPromise(); */
   }
 
   async startRound() {
@@ -95,8 +103,8 @@ export class QuestionListPage {
         questionsMissing = true;
       }
     });
-    if (this.process?.currentRound.endTime === null ||
-      this.process?.currentRound.endTime === undefined) {
+    if (this.process?.currentRound?.endTime === null ||
+      this.process?.currentRound?.endTime === undefined) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',
@@ -128,7 +136,7 @@ export class QuestionListPage {
       });
 
       await alert.present();
-    } else if (this.process?.currentRound.name == '') {
+    } else if (this.process?.currentRound.name === '') {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',

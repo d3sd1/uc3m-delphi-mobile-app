@@ -9,7 +9,7 @@ export class Process {
   pictureUrl = '';
   experts: User[] = [];
   coordinators: User[] = [];
-  rounds: Round[] = [];
+  pastRounds: Round[] = [];
   currentRound: Round = new Round();
   finished = false;
   finalComment = '';
