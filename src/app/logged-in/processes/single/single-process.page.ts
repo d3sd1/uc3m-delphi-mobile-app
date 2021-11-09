@@ -59,11 +59,7 @@ export class SingleProcessPage {
   }
 
   async updateBasicFields() {
-    await this.httpClient.post(environment.apiUrl + '/v1/process/basic?process_id=' + this.process?.id, {
-      name: this.process?.name,
-      description: this.process?.description,
-      objectives: this.process?.objectives
-    }).toPromise();
+    this.processConsumer.updateProcessBasicData(this.process?.id, this.process?.name, this.process?.description, this.process?.objectives);
   }
 
   async uploadImage() {

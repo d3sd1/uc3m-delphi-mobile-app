@@ -26,6 +26,10 @@ export class ProcessConsumer {
     this.wsService.publish('process', {name, description}, WsMode.CREATE);
   }
 
+  updateProcessBasicData(processId: number, name: string, description: string, objectives: string) {
+    this.wsService.publish('process', {processId, name, description, objectives}, WsMode.UPDATE);
+  }
+
   private listenUpdates() {
     this.wsService.subscribe('process', true, this.userProcesses);
   }
