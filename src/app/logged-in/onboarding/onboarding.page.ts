@@ -46,14 +46,14 @@ export class OnboardingPage implements ViewDidEnter {
       this.user.surnames === null ||
       this.user.name === undefined ||
       this.user.surnames === undefined) {
-      await this.showToast('home.onboarding.setup.error.name');
+      this.showToast('Nombre incorrecto.');
       return;
     }
-    await this.slides.slideNext();
+    this.slides.slideNext();
   }
 
   async swipeNext() {
-    await this.slides.slideNext();
+    this.slides.slideNext();
   }
 
   endSwiper() {
@@ -71,7 +71,7 @@ export class OnboardingPage implements ViewDidEnter {
   private async showToast(transKey: string) {
     const toast = await this.toastController.create({
       position: 'top',
-      message: await this.translate.get(transKey).toPromise(),
+      message: transKey,
     });
     await toast.present();
     setTimeout(() => {

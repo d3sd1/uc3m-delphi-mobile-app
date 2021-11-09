@@ -58,14 +58,15 @@ export class ForgotPasswordPage {
   async validateCode(code: number) {
     this.confirmCodeAlert?.dismiss();
     await this.startLoading();
-    this.userConsumer.resetPassword(this.email, code).then(async () => {
-      await this.displaySuccess();
-    }).catch(async () => {
-      await this.displayError();
-    }).finally(async () => {
-      this.email = '';
-      await this.endLoading();
-    });
+    this.userConsumer.resetPassword(this.email, code, () => {
+        this.displaySuccess();
+      },
+      () => {
+        this.displayError();
+      }, () => {
+        this.email = '';
+        this.endLoading();
+      });
   }
 
   async displaySuccess() {

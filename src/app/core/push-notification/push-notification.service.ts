@@ -22,17 +22,16 @@ export class PushNotificationService {
   }
 
   requestPermission() {
-    PushNotifications.requestPermission().then(async (result) => {
+    PushNotifications.requestPermission().then((result) => {
       if (result.granted) {
-        await PushNotifications.register();
+        PushNotifications.register().then(r => null);
       } else {
-        const alert = await this.alertController.create({
+        const alert = this.alertController.create({
           header: 'Agile Delphi',
-          message: await this.translate.get('push_notifications.error').toPromise(),
+          message: 'Error de notificaciones push',
           buttons: ['OK'],
           backdropDismiss: false
         });
-        await alert.present();
       }
     });
   }

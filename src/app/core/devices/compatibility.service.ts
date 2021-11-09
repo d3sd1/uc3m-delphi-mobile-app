@@ -15,15 +15,13 @@ export class CompatibilityService {
   async checkDevice() {
     if ((!this.platform.is('ios') && !this.platform.is('android')) ||
       this.platform.is('mobileweb')) {
-      const alert = await this.alertController.create({
+      this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error de compatibilidad',
         subHeader: 'Plataforma no soportada',
         message: `Tu plataforma [${this.platform.platforms()}] no está soportada.`,
         backdropDismiss: false
-      });
-
-      await alert.present();
+      }).then((alert) => alert.present());
     }
   }
 }

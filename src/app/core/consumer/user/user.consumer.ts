@@ -6,11 +6,9 @@ import {LoginUser} from './login.user';
 import {Storage} from '@ionic/storage';
 import {WsService} from '../../service/ws.service';
 import {TranslateService} from '@ngx-translate/core';
-import {DatabaseService} from '../database.service';
 import {User} from '../../model/user';
-import {JwtHelperService} from '@auth0/angular-jwt';
 import {BehaviorSubject} from 'rxjs';
-import {Router, UrlTree} from '@angular/router';
+import {Router} from '@angular/router';
 import {JwtService} from '../../service/jwt.service';
 import {WsMode} from '../../ws/ws-mode.model';
 
@@ -25,7 +23,6 @@ export class UserConsumer {
               private storage: Storage,
               private wsService: WsService,
               private translate: TranslateService,
-              private databaseService: DatabaseService,
               private router: Router,
               private jwtService: JwtService) {
     this.handleUser();
@@ -35,12 +32,14 @@ export class UserConsumer {
     this.wsService.subscribe('profile', true, this.connectedUser);
   }
 
-  async recoverPassword(email) {
-    await this.http.put(environment.apiUrl + '/password/recover', {email}).toPromise();
+  recoverPassword(email) {
+    this.http.put(environment.apiUrl + '/password/recover', {email}).subscribe((res) => {
+      console.log('pass recover ok');
+    });
   }
 
-  async resetPassword(email, code): Promise<any> {
-    return this.http.post(environment.apiUrl + '/password/reset', {email, code}).toPromise();
+  resetPassword(email, code, then, catched, finallied) {
+    this.http.post(environment.apiUrl + '/password/reset', {email, code}).subscribe(then, catched, finallied);
   }
 
   updateUserOnboarding(name: string, surnames: string) {

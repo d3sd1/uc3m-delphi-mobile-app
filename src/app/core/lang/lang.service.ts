@@ -16,7 +16,7 @@ export class LangService {
   }
 
   async init() {
-    const langs = await this.getAvailableLangs();
+    const langs = this.getAvailableLangs();
     this.registerLanguages(langs);
     this.changeLanguage(
       new Language(0, this.translate.getBrowserLang(), true)
@@ -36,11 +36,9 @@ export class LangService {
     this.translate.use(lang?.name.toLowerCase());
   }
 
-  async getAvailableLangs(): Promise<Language[]> {
-
-    //TODO remove hardcoding
-    return new Promise(((resolve, reject) => resolve([
+  getAvailableLangs(): Language[] {
+    return [
       new Language(1, 'es', true),
-    ])));
+    ];
   }
 }

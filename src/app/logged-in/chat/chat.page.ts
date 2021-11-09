@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {ChatService} from './chat.service';
+import {Component} from '@angular/core';
 import {UserChat} from '../../core/model/user-chat';
 import {User} from '../../core/model/user';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
@@ -20,10 +19,10 @@ export class ChatPage {
     this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-   /* this.chatConsumer.getChats().subscribe((userChats) => {
+    this.chatConsumer.getChats().subscribe((userChats) => {
       this.userChats = userChats;
       this.loading = false;
-    });*/
+    });
   }
 
 }
