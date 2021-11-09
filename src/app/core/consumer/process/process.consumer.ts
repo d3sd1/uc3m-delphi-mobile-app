@@ -87,7 +87,7 @@ export class ProcessConsumer {
     this.wsService.publish(`process/rounds/current/question`, {processId, name, selectedQuestionType}, WsMode.CREATE);
   }
 
-  reorderQuestion(processId: number, name: string, selectedQuestionType: string) {
-    this.wsService.publish(`process/rounds/current/question`, {processId, name, selectedQuestionType}, WsMode.CREATE);
+  reorderQuestion(processId: number, fromId: number, fromPosition: number, toId: number, toPosition: number) {
+    this.wsService.publish(`process/rounds/current/question/reorder`, {processId, fromId, fromPosition, toId, toPosition}, WsMode.UPDATE);
   }
 }

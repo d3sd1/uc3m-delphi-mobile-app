@@ -3,7 +3,6 @@ import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {environment} from '../../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
 import {ProcessConsumer} from '../../../../../core/consumer/process/process.consumer';
@@ -59,14 +58,8 @@ export class QuestionListPage {
     if (this.process.currentRound.questions[detail.to] === undefined) {
       return;
     }
-
-    /* TODO sync data
-    await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/questions/reorder?process_id=' + this.process.id, {
-      fromId: this.process.currentRound.questions[detail.from].id,
-      fromPosition: detail.from,
-      toId: this.process.currentRound.questions[detail.to].id,
-      toPosition: detail.to
-    }).toPromise();*/
+    this.processConsumer.reorderQuestion(this.process.id, this.process.currentRound.questions[detail.from].id,
+      detail.from, this.process.currentRound.questions[detail.to].id, detail.to);
   }
 
   sortQuestions() {
@@ -142,14 +135,14 @@ export class QuestionListPage {
 
       await alert.present();
     } else {
-     // await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, {}).toPromise();
-     // await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
+      // await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, {}).toPromise();
+      // await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
     }
   }
 
   async closeRound() {
-  //  await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, {}).toPromise();
-   // await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
+    //  await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, {}).toPromise();
+    // await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
   }
 
 
@@ -257,7 +250,7 @@ export class QuestionListPage {
           text: 'Crear',
           handler: async (alertData) => {
             await alert.dismiss();
-            this.processConsumer.addQuestion( this.process?.id, name, selectedQuestionType);
+            this.processConsumer.addQuestion(this.process?.id, name, selectedQuestionType);
           }
         }
       ]
