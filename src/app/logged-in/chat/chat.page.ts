@@ -20,10 +20,10 @@ export class ChatPage {
     this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-    this.chatConsumer.getChats().subscribe((userChats) => {
+   /* this.chatConsumer.getChats().subscribe((userChats) => {
       this.userChats = userChats;
       this.loading = false;
-    });
+    });*/
   }
 
 }

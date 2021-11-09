@@ -24,12 +24,12 @@ export class ChatListComponent {
     this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-    this.chatConsumer.getChats().subscribe((userChats) => {
+   /* this.chatConsumer.getChats().subscribe((userChats) => {
       this.userChatsOriginal = userChats;
       this.userChats = [...this.userChatsOriginal];
       console.log('user chats:', this.userChats);
       this.loading = false;
-    });
+    });*/
   }
 
   async filterList(evt) {

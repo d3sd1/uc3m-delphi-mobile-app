@@ -6,6 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
+import {ProcessConsumer} from '../../../../../core/consumer/process/process.consumer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -23,14 +24,17 @@ export class RemainingExpertsPage {
     private route: ActivatedRoute,
     public alertController: AlertController,
     private httpClient: HttpClient,
+    private processConsumer: ProcessConsumer,
     private userConsumer: UserConsumer) {
     this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-   /* TODO this.route.snapshot.data['process'].subscribe((process: Process) => {
-      this.process = process;
-      this.orderQuestions();
-    }); */
+    this.route.params.subscribe(params => {
+      this.processConsumer.getProcess(+params.id).subscribe((process) => {
+        this.process = process;
+        this.orderQuestions();
+      });
+    });
   }
 
 

@@ -39,10 +39,8 @@ export class SingleProcessPage {
       }
     });
     this.route.params.subscribe(params => {
-      this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes !== null && params !== null) {
-          this.process = processes.find(p => p.id === +params.id);
-        }
+      this.processConsumer.getProcess(+params.id).subscribe((process) => {
+        this.process = process;
       });
     });
   }

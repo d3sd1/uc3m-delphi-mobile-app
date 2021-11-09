@@ -1,13 +1,14 @@
 import {Component, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
-import {AlertController, IonReorderGroup, IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
+import {AlertController, IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../../environments/environment';
 import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
+import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
 
 @Component({
   selector: 'delphi-participate',
@@ -31,25 +32,29 @@ export class ParticipatePage {
     private loadingCtrl: LoadingController,
     private router: Router,
     private userConsumer: UserConsumer,
+    private processConsumer: ProcessConsumer,
     private alertController: AlertController,
     private httpClient: HttpClient) {
    this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
-  /* TODO  this.route.snapshot.data['process'].subscribe((process) => {
-      if(process.currentRound.id === undefined) {
-        router.navigateByUrl('/logged-in/menu/processes/single-round/' + process.id); // In case round closes
-      }
-      this.process = process;
-      this.process.currentRound.questions.forEach((q, idx) => {
-        this.answers[idx] = new Answer();
-        this.answers[idx].question = q;
-        this.answers[idx].user = this.currentUser;
-        this.answers[idx].response = '';
+
+    this.route.params.subscribe(params => {
+      this.processConsumer.getProcess(+params.id).subscribe((process) => {
+        if (process.currentRound.id === undefined) {
+          router.navigateByUrl('/logged-in/menu/processes/single-round/' + process.id); // In case round closes
+        }
+        this.process = process;
+        this.process.currentRound.questions.forEach((q, idx) => {
+          this.answers[idx] = new Answer();
+          this.answers[idx].question = q;
+          this.answers[idx].user = this.currentUser;
+          this.answers[idx].response = '';
+        });
+        this.orderQuestions();
+        this.sortCategories(0);
       });
-      this.orderQuestions();
-      this.sortCategories(0);
-    });*/
+    });
   }
 
   private orderQuestions() {

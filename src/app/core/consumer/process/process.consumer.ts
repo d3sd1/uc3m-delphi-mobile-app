@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {WsService} from '../../service/ws.service';
 import {Process} from '../../model/process';
 import {BehaviorSubject} from 'rxjs';
-import {Round} from '../../model/round';
 import {WsMode} from '../../ws/ws-mode.model';
 
 @Injectable({
@@ -11,10 +10,12 @@ import {WsMode} from '../../ws/ws-mode.model';
 })
 export class ProcessConsumer {
 
+  private userProcessIds: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+  private userProcessesIndividual: BehaviorSubject<Process>[] = [];
   private userProcesses: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([]);
 
   constructor(private httpClient: HttpClient, private wsService: WsService) {
-    this.listenUpdates();
+    this.listenProcessesUpdates();
   }
 
 
@@ -22,15 +23,58 @@ export class ProcessConsumer {
     return this.userProcesses;
   }
 
+  getProcess(processId: number): BehaviorSubject<Process> {
+    if (!(processId in this.userProcessesIndividual)) {
+      this.subscribeIndividual(processId);
+    }
+    return this.userProcessesIndividual[processId];
+  }
+
   createProcess(name: string, description: string) {
     this.wsService.publish('process', {name, description}, WsMode.CREATE);
   }
 
-  updateProcessBasicData(processId: number, name: string, description: string, objectives: string) {
-    this.wsService.publish('process', {processId, name, description, objectives}, WsMode.UPDATE);
+  private listenProcessesUpdates() {
+    this.wsService.subscribe('process/all', true, this.userProcessIds);
+    this.listenIndividualChannels();
   }
 
-  private listenUpdates() {
-    this.wsService.subscribe('process', true, this.userProcesses);
+  private subscribeIndividual(processId: number) {
+    this.userProcessesIndividual[processId] = new BehaviorSubject<Process>(null);
+    this.wsService.subscribe(`process/single/${processId}`, true, this.userProcessesIndividual[processId]);
+  }
+
+  private listenIndividualChannels() {
+    this.userProcessIds.subscribe((processIds) => {
+      if (processIds === undefined) {
+        return;
+      }
+
+      processIds.forEach((processId) => {
+        if (Number.isInteger(processId)) {
+          if (!(processId in this.userProcessesIndividual)) {
+            this.subscribeIndividual(processId);
+          }
+          this.userProcessesIndividual[processId].subscribe((process) => {
+
+            const idx = this.userProcesses.value.findIndex((p => p.id === process.id));
+            let durArr = [...this.userProcesses.value];
+            if (idx === -1) {
+              durArr.push(process);
+            } else {
+              durArr[idx] = process;
+            }
+            durArr = durArr.filter((p) => p !== undefined && p !== null);
+            if (durArr.length > 0) {
+              this.userProcesses.next(durArr);
+            }
+          });
+        }
+      });
+    });
+  }
+
+  updateProcessBasicData(processId: number, name: string, description: string, objectives: string) {
+    this.wsService.publish(`process/${processId}`, {name, description, objectives}, WsMode.UPDATE);
   }
 }

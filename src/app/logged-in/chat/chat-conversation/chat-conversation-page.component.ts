@@ -47,7 +47,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
       this.user = user;
       this.scrollToBottom();
     });
-    this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
+   /* this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
       this.chat = userChats.find((userChat) => {
         if ((userChat.user1.id === this.user.id && userChat.user2.id === this.oppositeUser?.id)
           || (userChat.user2.id === this.user.id && userChat.user1.id === this.oppositeUser?.id)) {
@@ -57,7 +57,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
       });
       this.sortMessages();
       this.scrollToBottom();
-    });
+    });*/
   }
 
   sortMessages() {

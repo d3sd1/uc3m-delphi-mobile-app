@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Process} from '../../../core/model/process';
 import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
 import {BehaviorSubject} from 'rxjs';
@@ -12,9 +12,10 @@ import {UserConsumer} from '../../../core/consumer/user/user.consumer';
   templateUrl: 'processes.page.html',
   styleUrls: ['processes.page.scss']
 })
-export class ProcessesPage {
+export class ProcessesPage implements OnInit {
 
   processesUpdater: BehaviorSubject<Process[]>;
+  processUpdater: BehaviorSubject<Process>[] = null;
   processes: Process[] = null;
   filteredProcesses: Process[] = null;
   user: User;
@@ -26,12 +27,20 @@ export class ProcessesPage {
               private userConsumer: UserConsumer,
               private processConsumer: ProcessConsumer,
               private navCtrl: NavController) {
+  }
+
+  ngOnInit() {
+    this.loadingProcesses = true;
     this.processConsumer.getProcesses().subscribe((processes) => {
+      if(processes === null) {
+        return;
+      }
       this.loadingProcesses = true;
       this.processes = processes;
       this.filterProcesses();
       this.loadingProcesses = false;
     });
+
     this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });

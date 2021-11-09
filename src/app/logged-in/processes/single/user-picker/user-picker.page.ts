@@ -36,14 +36,11 @@ export class UserPickerPage {
       this.currentUser = user;
     });
     this.route.params.subscribe(params => {
-      this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes !== null && params !== null) {
-          this.process = processes.find(p => p.id === +params.id);
-        }
+      this.processConsumer.getProcess(+params.id).subscribe((process) => {
+        this.process = process;
       });
     });
     this.invitationConsumer.getUsers().subscribe((users) => {
-      console.log('users to search are:', users);
       this.searchableUsers = users;
     });
   }
