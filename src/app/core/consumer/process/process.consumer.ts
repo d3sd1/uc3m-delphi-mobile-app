@@ -18,7 +18,6 @@ export class ProcessConsumer {
     this.listenProcessesUpdates();
   }
 
-
   getProcesses(): BehaviorSubject<Process[]> {
     return this.userProcesses;
   }
@@ -75,6 +74,6 @@ export class ProcessConsumer {
   }
 
   updateProcessBasicData(processId: number, name: string, description: string, objectives: string) {
-    this.wsService.publish(`process/${processId}`, {name, description, objectives}, WsMode.UPDATE);
+    this.wsService.publish(`process`, {processId, name, description, objectives}, WsMode.UPDATE);
   }
 }

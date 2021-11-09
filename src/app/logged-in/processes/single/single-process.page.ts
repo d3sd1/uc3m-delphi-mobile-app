@@ -40,6 +40,7 @@ export class SingleProcessPage {
     });
     this.route.params.subscribe(params => {
       this.processConsumer.getProcess(+params.id).subscribe((process) => {
+        console.log('received process:', process);
         this.process = process;
       });
     });
@@ -57,6 +58,7 @@ export class SingleProcessPage {
   }
 
   async updateBasicFields() {
+    console.log('call the update!!')
     this.processConsumer.updateProcessBasicData(this.process?.id, this.process?.name, this.process?.description, this.process?.objectives);
   }
 

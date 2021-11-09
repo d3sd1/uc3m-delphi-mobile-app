@@ -34,21 +34,21 @@
 
     <ion-item>
       <ion-input [(ngModel)]="process.name"
-                 debounce="200"
+                 debounce="1000"
                  (ngModelChange)="updateBasicFields()"
                  placeholder="Nombre"
                  [readonly]="!isCoordinator() || process?.finished"></ion-input>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.description"
-                    debounce="200"
+                    debounce="1000"
                     (ngModelChange)="updateBasicFields()"
                     placeholder="Descripción"
                     [readonly]="!isCoordinator() || process?.finished"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-textarea [(ngModel)]="process.objectives"
-                    debounce="200"
+                    debounce="1000"
                     (ngModelChange)="updateBasicFields()"
                     placeholder="Objetivos del proceso"
                     [readonly]="!isCoordinator() || process?.finished">Objetivos del proceso

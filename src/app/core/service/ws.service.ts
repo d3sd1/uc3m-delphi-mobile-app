@@ -56,6 +56,7 @@ export class WsService {
           } else if (WsAction[cmd.wsAction] === 'SUBSCRIBE') {
             this.commandSubscriptions.push(con.subscribe((cmd.privateChannel ? '/private' : '') + '/ws/subscribe/' + cmd.channel, (message) => {
               const data = JSON.parse(message.body);
+              cmd.connected = true;
               cmd.subject.next(data);
             }));
           }
