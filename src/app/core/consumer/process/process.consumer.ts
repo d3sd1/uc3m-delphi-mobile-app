@@ -78,4 +78,8 @@ export class ProcessConsumer {
   updateProcessBasicData(processId: number, name: string, description: string, objectives: string) {
     this.wsService.publish(`process`, {processId, name, description, objectives}, WsMode.UPDATE);
   }
+
+  updateRoundBasicData(processId: number, name: string, limitTime: Date) {
+    this.wsService.publish(`process/rounds/current/basic`, {processId, name, limitTime}, WsMode.UPDATE);
+  }
 }

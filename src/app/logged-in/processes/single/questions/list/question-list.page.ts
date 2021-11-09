@@ -86,10 +86,7 @@ export class QuestionListPage {
   }
 
   async updateBasicData() {
-    /* TODO await this.httpClient.post(environment.apiUrl + '/v1/process/current_round/basic?process_id=' + this.process.id, {
-      name: this.process?.currentRound.name,
-      endTime: this.process?.currentRound.endTime
-    }).toPromise(); */
+    this.processConsumer.updateRoundBasicData(this.process?.id, this.process?.currentRound.name, this.process?.currentRound.limitTime);
   }
 
   async startRound() {
@@ -101,8 +98,8 @@ export class QuestionListPage {
         questionsMissing = true;
       }
     });
-    if (this.process?.currentRound?.endTime === null ||
-      this.process?.currentRound?.endTime === undefined) {
+    if (this.process?.currentRound?.limitTime === null ||
+      this.process?.currentRound?.limitTime === undefined) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',

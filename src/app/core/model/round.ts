@@ -6,7 +6,7 @@ export class Round {
   id: number;
   name = '';
   questions: Question[] = [];
-  endTime: Date = new Date();
+  limitTime: Date = new Date();
   finished = false;
   orderPosition: number;
   started = false;

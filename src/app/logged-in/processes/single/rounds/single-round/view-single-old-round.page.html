@@ -14,7 +14,7 @@
 
   <ion-item>
     <ion-label>Fecha de cierre</ion-label>
-    <ion-datetime [(ngModel)]="this.process?.pastRounds[roundIdx].endTime" display-format="MMM DD, YYYY HH:mm"
+    <ion-datetime [(ngModel)]="this.process?.pastRounds[roundIdx].limitTime" display-format="MMM DD, YYYY HH:mm"
                   picker-format="MMM DD, YYYY HH:mm"
                   placeholder="Introduce fecha límite"
                   [readonly]="process?.pastRounds[roundIdx]?.started || process?.finished"></ion-datetime>
