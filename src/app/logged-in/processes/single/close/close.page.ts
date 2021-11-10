@@ -3,7 +3,6 @@ import {Process} from '../../../../core/model/process';
 import {NavController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../../../core/model/user';
 import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
@@ -18,7 +17,6 @@ export class ClosePage {
 
   process: Process;
   user: User;
-  conclusion: string;
 
   constructor(
     private navCtrl: NavController,
@@ -34,6 +32,10 @@ export class ClosePage {
     });
     this.route.params.subscribe(params => {
       this.processConsumer.getProcess(+params.id).subscribe((process) => {
+        // If process is finished, do not allow to stay on this page
+        if (process.finished) {
+          this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
+        }
         this.process = process;
       });
     });
@@ -41,30 +43,25 @@ export class ClosePage {
 
 
   public async closeProcess() {
-    if (this.conclusion === '' || this.conclusion === undefined || this.conclusion === null) {
-      await this.showToast(await this.translate.get('home.processes.single-round.end.form.err_empty').toPromise());
+    if (this.process.conclusion === '' || this.process.conclusion === undefined || this.process.conclusion === null) {
+      this.showToast('Debes introducir una conclusión');
       return;
     }
-    this.process.finalComment = this.conclusion;
-    await this.httpClient.post<Process>(environment.apiUrl + '/v1/process/end?process_id=' + this.process.id, this.process).toPromise().then(async (delphiProcess: Process) => {
-      this.process = delphiProcess;
-      await this.showToast(await this.translate.get('home.processes.single-round.end.success').toPromise());
-      await this.router.navigateByUrl('/logged-in/menu/processes');
-    }).catch(async (errMessage: string) => {
-      await this.showToast(await this.translate.get('home.processes.single-round.end.err').toPromise());
-    });
+    this.processConsumer.closeProcess(this.process?.id);
+    this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
   }
 
 
-  private async showToast(msg: string) {
-    const toast = await this.toastController.create({
+  private showToast(msg: string) {
+    this.toastController.create({
       position: 'top',
       message: msg,
+    }).then(toast => {
+      toast.present().then(r => {
+        setTimeout(() => {
+          toast.dismiss().then(r => null);
+        }, 3000);
+      });
     });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
   }
 }

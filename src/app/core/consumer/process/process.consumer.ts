@@ -10,7 +10,6 @@ import {WsMode} from '../../ws/ws-mode.model';
 })
 export class ProcessConsumer {
 
-  private userProcessIds: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
   private userProcessesIndividual: BehaviorSubject<Process>[] = [];
   private userProcesses: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([]);
 
@@ -34,7 +33,7 @@ export class ProcessConsumer {
   }
 
   private listenProcessesUpdates() {
-    this.wsService.subscribe('process/all', true, this.userProcessIds);
+    this.wsService.subscribe('process/all', true, this.userProcesses);
     this.listenIndividualChannels();
   }
 
@@ -44,17 +43,17 @@ export class ProcessConsumer {
   }
 
   private listenIndividualChannels() {
-    this.userProcessIds.subscribe((processIds) => {
-      if (processIds === undefined) {
+    this.userProcesses.subscribe((defaultProcesses) => {
+      if (defaultProcesses === undefined) {
         return;
       }
 
-      processIds.forEach((processId) => {
-        if (Number.isInteger(processId)) {
-          if (!(processId in this.userProcessesIndividual)) {
-            this.subscribeIndividual(processId);
+      defaultProcesses.forEach((defaultProcess) => {
+        if (Number.isInteger(defaultProcess.id)) {
+          if (!(defaultProcess.id in this.userProcessesIndividual)) {
+            this.subscribeIndividual(defaultProcess.id);
           }
-          this.userProcessesIndividual[processId].subscribe((process) => {
+          this.userProcessesIndividual[defaultProcess.id].subscribe((process) => {
             if (process === null) {
               return;
             }
@@ -87,7 +86,25 @@ export class ProcessConsumer {
     this.wsService.publish(`process/rounds/current/question`, {processId, name, selectedQuestionType}, WsMode.CREATE);
   }
 
+  startCurrentRound(processId: number) {
+    this.wsService.publish(`process/rounds/current/start`, {processId}, WsMode.UPDATE);
+  }
+
+  endCurrentRound(processId: number) {
+    this.wsService.publish(`process/rounds/current/end`, {processId}, WsMode.UPDATE);
+  }
+
+  closeProcess(processId: number) {
+    this.wsService.publish(`process/finish`, {processId}, WsMode.UPDATE);
+  }
+
   reorderQuestion(processId: number, fromId: number, fromPosition: number, toId: number, toPosition: number) {
-    this.wsService.publish(`process/rounds/current/question/reorder`, {processId, fromId, fromPosition, toId, toPosition}, WsMode.UPDATE);
+    this.wsService.publish(`process/rounds/current/question/reorder`, {
+      processId,
+      fromId,
+      fromPosition,
+      toId,
+      toPosition
+    }, WsMode.UPDATE);
   }
 }

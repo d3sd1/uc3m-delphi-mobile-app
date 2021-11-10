@@ -1,20 +1,20 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + this.process.id"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + this.process?.id"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + this.process.id"
+                       [routerLink]="'/logged-in/menu/processes/single-round/' + this.process?.id"
                        text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>Cierre de ronda</ion-title>
+    <ion-title>Finalizar proceso</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
-<ion-content>
+<ion-content *ngIf="process">
   <!-- Textarea in an item with a placeholder -->
   <ion-item>
-    <ion-textarea [(ngModel)]="conclusion" placeholder="Introduce tu conclusión aquí..."></ion-textarea>
+    <ion-textarea [(ngModel)]="process.conclusion" placeholder="Introduce tu conclusión aquí..."></ion-textarea>
   </ion-item>
 
 </ion-content>
@@ -23,6 +23,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-button (click)="closeProcess()"
-                expand="block">Cerrar ronda</ion-button>
+                expand="block">Finalizar proceso</ion-button>
   </ion-toolbar>
 </ion-footer>
+

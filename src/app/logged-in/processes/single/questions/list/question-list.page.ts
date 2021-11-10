@@ -135,14 +135,14 @@ export class QuestionListPage {
 
       await alert.present();
     } else {
-      // await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, {}).toPromise();
-      // await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
+      this.processConsumer.startCurrentRound(this.process?.id);
+      this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
     }
   }
 
   async closeRound() {
-    //  await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, {}).toPromise();
-    // await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
+    this.processConsumer.endCurrentRound(this.process?.id);
+    this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
   }
 
 

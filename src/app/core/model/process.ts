@@ -12,7 +12,7 @@ export class Process {
   pastRounds: Round[] = [];
   currentRound: Round = new Round();
   finished = false;
-  finalComment = '';
+  conclusion = '';
   modifiedDate: Date;
 }
 

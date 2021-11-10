@@ -51,6 +51,7 @@ export class SingleProcessPage {
   }
 
   expertCanVote(): boolean {
+    console.log('experts remaining: , ', this.process.currentRound?.expertsRemaining)
     if (this.process.currentRound?.expertsRemaining === undefined) {
       return false;
     }
@@ -119,16 +120,17 @@ export class SingleProcessPage {
     });
   }
 
-  private async showToast(transKey: string) {
-    const toast = await this.toastController.create({
+  private showToast(transKey: string) {
+    this.toastController.create({
       position: 'top',
-      message: await this.translate.get(transKey).toPromise(),
+      message: transKey,
+    }).then((toast) => {
+      toast.present().then(r => {
+        setTimeout(() => {
+          toast.dismiss().then(r => null);
+        }, 3000);
+      });
     });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
   }
 
   async finishProcess() {
@@ -141,11 +143,11 @@ export class SingleProcessPage {
 
   async participate() {
     if (!this.process.currentRound?.started) {
-      await this.showToast('home.processes.single.participate.err.round_not_open');
+      this.showToast('El proceso no tiene la ronda actual abierta.');
       return;
     }
     if (!this.expertCanVote()) {
-      await this.showToast('home.processes.single.participate.err.already_voted');
+      this.showToast('¡Vaya! Parece que ya has votado.');
       return;
     }
     await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/participate');
