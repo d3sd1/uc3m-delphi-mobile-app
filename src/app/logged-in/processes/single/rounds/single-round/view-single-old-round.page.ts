@@ -29,6 +29,9 @@ export class ViewSingleOldRoundPage {
     this.route.params.subscribe(params => {
       this.processConsumer.getProcess(+params.id).subscribe((process) => {
         this.process = process;
+        if(this.process.currentRound === null) {
+          
+        }
       });
     });
     this.route.params.subscribe(params => {

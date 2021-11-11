@@ -35,14 +35,14 @@ export class ParticipatePage {
     private processConsumer: ProcessConsumer,
     private alertController: AlertController,
     private httpClient: HttpClient) {
-   this.userConsumer.getUser().subscribe((user) => {
+    this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
 
     this.route.params.subscribe(params => {
       this.processConsumer.getProcess(+params.id).subscribe((process) => {
         if (process.currentRound.id === undefined) {
-          router.navigateByUrl('/logged-in/menu/processes/single-round/' + process.id); // In case round closes
+          router.navigateByUrl('/logged-in/menu/processes/single-round/' + process.id).then(r => null); // In case round closes
         }
         this.process = process;
         this.process.currentRound.questions.forEach((q, idx) => {
@@ -72,7 +72,7 @@ export class ParticipatePage {
   async advance() {
     this.sortCategories(this.currentQuestion + 1);
     const val = this.answers[this.currentQuestion].response;
-    if( val === null || val == "null" || val == -1 || val == '') {
+    if (val === null || val == "null" || val == -1 || val == '') {
       await this.showToast('Por favor responde la pregunta.');
       return;
     }
@@ -88,7 +88,7 @@ export class ParticipatePage {
   }
 
   private calculateProgress() {
-    this.progress = this.currentQuestion/ this.process.currentRound.questions.length;
+    this.progress = this.currentQuestion / this.process.currentRound.questions.length;
   }
 
   async finish() {
@@ -132,7 +132,7 @@ export class ParticipatePage {
   }
 
   sortCategories(idx) {
-    this.process.currentRound.questions[idx].categories.sort((a, b) => {
+    this.process?.currentRound?.questions[idx]?.categories?.sort((a, b) => {
       if (a.id < b.id) {
         return -1;
       }
@@ -185,9 +185,10 @@ export class ParticipatePage {
   async updateAnswer(currentQuestion, $event) {
     this.answers[currentQuestion].response = $event.target.value;
   }
+
   async addCatAnswer(currentQuestion, $event) {
-    if(Array.isArray($event.target.value)) {
-      if($event.target.value.length > this.answers[currentQuestion].question.maxSelectable) {
+    if (Array.isArray($event.target.value)) {
+      if ($event.target.value.length > this.answers[currentQuestion].question.maxSelectable) {
         $event.target.value = '';
         await this.showToast('Debes seleccionar menos del máximo de seleccionables para esta ronda: ' + this.answers[currentQuestion].question.maxSelectable);
         return;
@@ -202,7 +203,7 @@ export class ParticipatePage {
     let obj = {};
     try {
       obj = JSON.parse(this.answers[currentQuestion].response);
-    } catch(e) {
+    } catch (e) {
       obj = {};
     }
     obj[categoryId] = $event.target.value;

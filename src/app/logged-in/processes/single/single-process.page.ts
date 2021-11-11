@@ -133,12 +133,12 @@ export class SingleProcessPage {
     });
   }
 
-  async finishProcess() {
+  finishProcess() {
     if (this.process?.currentRound?.started) {
-      await this.showToast('home.processes.single.finish_round_in_course');
+      this.showToast('No se puede cerrar el proceso cuando hay una ronda en curso.');
       return;
     }
-    await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/close');
+    this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/close');
   }
 
   async participate() {

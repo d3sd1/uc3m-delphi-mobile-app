@@ -98,6 +98,21 @@ export class ProcessConsumer {
     this.wsService.publish(`process/finish`, {processId}, WsMode.UPDATE);
   }
 
+  updateQuestion(processId: number, questionId: number, name: string, categoryId: number,
+                 minVal: number, maxVal: number, maxSelectable: number, orderPosition: number) {
+    // todo , q.categories
+    this.wsService.publish(`process/rounds/current/question`, {
+      processId,
+      questionId,
+      categoryId,
+      name,
+      minVal,
+      maxVal,
+      maxSelectable,
+      orderPosition
+    }, WsMode.UPDATE);
+  }
+
   reorderQuestion(processId: number, fromId: number, fromPosition: number, toId: number, toPosition: number) {
     this.wsService.publish(`process/rounds/current/question/reorder`, {
       processId,

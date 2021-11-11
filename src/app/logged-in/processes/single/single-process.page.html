@@ -65,7 +65,7 @@
     <ion-item *ngIf="!process?.finished && isCoordinator()" routerDirection="forward"
               [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/question/list'">
       <ion-label>Ronda actual</ion-label>
-      <ion-badge slot="end">{{process?.pastRounds[process?.pastRounds?.length - 1]?.questions?.length || 0}} Preguntas
+      <ion-badge slot="end">{{process?.currentRound?.questions?.length || 0}} Preguntas
       </ion-badge>
     </ion-item>
     <ion-item routerDirection="forward"

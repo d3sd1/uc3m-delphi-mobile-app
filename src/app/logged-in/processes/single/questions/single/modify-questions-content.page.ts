@@ -48,8 +48,9 @@ export class ModifyQuestionsContentPage {
       await this.showToast('Debes introducir una pregunta.');
       return;
     }
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.process.currentRound.questions[this.questionIdx]).toPromise();
+    const q = this.process.currentRound.questions[this.questionIdx];
+    console.log('update question yolo!!')
+    this.processConsumer.updateQuestion(this.process.id, q.id, q.name, q.category.id, q.minVal, q.maxVal, q.maxSelectable, q.orderPosition);
   }
   private async showToast(msg: string) {
     const toast = await this.toastController.create({

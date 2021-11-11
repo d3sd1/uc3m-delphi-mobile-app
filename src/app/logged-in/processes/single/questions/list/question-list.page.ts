@@ -79,7 +79,7 @@ export class QuestionListPage {
   }
 
   async updateBasicData() {
-    this.processConsumer.updateRoundBasicData(this.process?.id, this.process?.currentRound.name, this.process?.currentRound.limitTime);
+    this.processConsumer.updateRoundBasicData(this.process?.id, this.process?.currentRound.name, this.process?.currentRound?.limitTime);
   }
 
   async startRound() {

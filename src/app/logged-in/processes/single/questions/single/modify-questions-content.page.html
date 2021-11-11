@@ -10,19 +10,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="process"><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+<ion-content *ngIf="process && process.currentRound && process.currentRound.questions[questionIdx]"><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
 
   <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
-    <ion-select [(ngModel)]="this.process?.currentRound?.questions[questionIdx].category.name" [disabled]="process?.currentRound?.started"
-    (ngModelChange)="updateQuestion()">
-      <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
-      <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
-      <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
-      <ion-select-option value="CATCUSTOM">Categorías</ion-select-option>
-      <ion-select-option value="CATLIKERT">Escala de Likert</ion-select-option>
-      <ion-select-option value="CATMULTI">Categorías con selección múltiple</ion-select-option>
-      <ion-select-option value="CATPOND">Categorías ponderadas</ion-select-option>
+    <ion-select [(ngModel)]="this.process?.currentRound?.questions[questionIdx].category.id" [disabled]="process?.currentRound?.started"
+    (ngModelChange)="updateQuestion()"> <!-- TODO -->
+      <ion-select-option value="6">Cualitativa</ion-select-option>
+      <ion-select-option value="7">Cuantitativa</ion-select-option>
+      <ion-select-option value="5">Booleana</ion-select-option>
+      <ion-select-option value="4">Categorías</ion-select-option>
+      <ion-select-option value="3">Escala de Likert</ion-select-option>
+      <ion-select-option value="2">Categorías con selección múltiple</ion-select-option>
+      <ion-select-option value="1">Categorías ponderadas</ion-select-option>
       <!-- este permite reordenar respuesta de categorías-->
     </ion-select>
   </ion-item>
@@ -31,9 +31,11 @@
                   placeholder="Introduce tu pregunta aquí"
     [readonly]="process?.currentRound?.started" (ngModelChange)="updateQuestion()" debounce="500" maxlength="150"></ion-textarea>
   </ion-item>
-  <delphi-question-booltype *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.name?.toString() == 'BOOLTYPE'" [questionIdx]="questionIdx" [process]="process"></delphi-question-booltype>
-  <delphi-question-quantitative *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.name?.toString() == 'QUANTITATIVE'" [questionIdx]="questionIdx" [process]="process"></delphi-question-quantitative>
-  <delphi-question-catlikert *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.name?.toString() == 'CATLIKERT'" [questionIdx]="questionIdx" [process]="process"></delphi-question-catlikert>
-  <delphi-question-catcustom *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.name?.toString() == 'CATCUSTOM'" [questionIdx]="questionIdx" [process]="process"></delphi-question-catcustom>
-  <delphi-question-catmulti *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.name?.toString() == 'CATMULTI'" [questionIdx]="questionIdx" [process]="process"></delphi-question-catmulti>
-  <delphi-question-catpond *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.name?.toString() == 'CATPOND'" [questionIdx]="questionIdx" [process]="process"></delphi-question-catpond>
+  <delphi-question-booltype *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.id == 5" [questionIdx]="questionIdx" [process]="process"></delphi-question-booltype>
+  <delphi-question-quantitative *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.id == 7" [questionIdx]="questionIdx" [process]="process"></delphi-question-quantitative>
+  <delphi-question-catlikert *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.id == 3" [questionIdx]="questionIdx" [process]="process"></delphi-question-catlikert>
+  <delphi-question-catcustom *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.id == 4" [questionIdx]="questionIdx" [process]="process"></delphi-question-catcustom>
+  <delphi-question-catmulti *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.id == 2" [questionIdx]="questionIdx" [process]="process"></delphi-question-catmulti>
+  <delphi-question-catpond *ngIf="this.process?.currentRound?.questions[questionIdx]?.category?.id == 1" [questionIdx]="questionIdx" [process]="process"></delphi-question-catpond>
+</ion-content>
+
