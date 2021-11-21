@@ -7,7 +7,7 @@ export class Question {
   maxVal: number = 10;
   maxSelectable: number = 1;
   name: string;
-  category: QuestionType = new QuestionType();
+  questionType: QuestionType = new QuestionType();
   orderPosition: number;
   categories: Category[] = [];
 }

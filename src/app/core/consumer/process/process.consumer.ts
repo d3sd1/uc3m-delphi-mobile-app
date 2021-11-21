@@ -4,6 +4,7 @@ import {WsService} from '../../service/ws.service';
 import {Process} from '../../model/process';
 import {BehaviorSubject} from 'rxjs';
 import {WsMode} from '../../ws/ws-mode.model';
+import {Answer} from '../../model/answer';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,7 @@ export class ProcessConsumer {
   private subscribeIndividual(processId: number) {
     this.userProcessesIndividual[processId] = new BehaviorSubject<Process>(null);
     this.wsService.subscribe(`process/single/${processId}`, true, this.userProcessesIndividual[processId]);
+    return this.userProcessesIndividual[processId];
   }
 
   private listenIndividualChannels() {
@@ -65,7 +67,7 @@ export class ProcessConsumer {
               durArr[idx] = process;
             }
             durArr = durArr.filter((p) => p !== undefined && p !== null);
-            if (durArr.length > 0) {
+            if (durArr.length > 0 && (idx in this.userProcessesIndividual)) { // TODO <. aqui puede haber error
               this.userProcesses.next(durArr);
             }
           });
@@ -80,6 +82,9 @@ export class ProcessConsumer {
 
   updateRoundBasicData(processId: number, name: string, limitTime: Date) {
     this.wsService.publish(`process/rounds/current/basic`, {processId, name, limitTime}, WsMode.UPDATE);
+  }
+  saveParticipation(processId: number, answers: Answer[]) {
+    this.wsService.publish(`process/rounds/current/participate`, {processId, answers}, WsMode.UPDATE);
   }
 
   addQuestion(processId: number, name: string, selectedQuestionType: string) {
@@ -98,13 +103,13 @@ export class ProcessConsumer {
     this.wsService.publish(`process/finish`, {processId}, WsMode.UPDATE);
   }
 
-  updateQuestion(processId: number, questionId: number, name: string, categoryId: number,
+  updateQuestion(processId: number, questionId: number, name: string, questionTypeId: number,
                  minVal: number, maxVal: number, maxSelectable: number, orderPosition: number) {
     // todo , q.categories
     this.wsService.publish(`process/rounds/current/question`, {
       processId,
       questionId,
-      categoryId,
+      questionTypeId,
       name,
       minVal,
       maxVal,

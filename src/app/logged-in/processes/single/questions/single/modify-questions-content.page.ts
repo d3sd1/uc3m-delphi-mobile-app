@@ -18,7 +18,7 @@ export class ModifyQuestionsContentPage {
 
   process: Process;
   currentUser: User;
-  questionIdx: number;
+  question: Question;
 
   constructor(
     private navCtrl: NavController,
@@ -33,24 +33,22 @@ export class ModifyQuestionsContentPage {
     this.route.params.subscribe(params => {
       this.processConsumer.getProcess(+params.id).subscribe((process) => {
         this.process = process;
+        this.question = this.process.currentRound.questions.find(q => q.id === +params['questionid']);
+        console.log('question TYPEEE is', this.question.questionType);
       });
-    });
-    this.route.params.subscribe(params => {
-      // TODO this system may fail if there's another coordinator and edits questions  order
-      // fix it ASAP
-      this.questionIdx = this.process.currentRound.questions.findIndex(q => q.id === +params['questionid']);
     });
   }
 
 
   async updateQuestion() {
-    if (this.process.currentRound.questions[this.questionIdx].name == '') {
+    if (this.question.name == '') {
       await this.showToast('Debes introducir una pregunta.');
       return;
     }
-    const q = this.process.currentRound.questions[this.questionIdx];
     console.log('update question yolo!!')
-    this.processConsumer.updateQuestion(this.process.id, q.id, q.name, q.category.id, q.minVal, q.maxVal, q.maxSelectable, q.orderPosition);
+    this.processConsumer.updateQuestion(this.process.id, this.question.id,
+      this.question.name, this.question.questionType.id, this.question.minVal,
+      this.question.maxVal, this.question.maxSelectable, this.question.orderPosition);
   }
   private async showToast(msg: string) {
     const toast = await this.toastController.create({

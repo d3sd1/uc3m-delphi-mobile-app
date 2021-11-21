@@ -3,6 +3,7 @@ import {Process} from '../../../../../../core/model/process';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../../../../environments/environment';
 import {ToastController} from '@ionic/angular';
+import {Question} from '../../../../../../core/model/question';
 
 @Component({
   selector: 'delphi-question-quantitative',
@@ -11,7 +12,7 @@ import {ToastController} from '@ionic/angular';
 })
 export class QuestionQuantitativePage {
   @Input()
-  questionIdx: number;
+  question: Question;
   @Input()
   process: Process;
 
@@ -20,12 +21,12 @@ export class QuestionQuantitativePage {
   }
 
   async updateQuestion() {
-    if (this.process.currentRound.questions[this.questionIdx].minVal >= this.process.currentRound.questions[this.questionIdx].maxVal) {
+    if (this.question.minVal >= this.question.maxVal) {
       await this.showToast('El valor máximo debe ser mayor que el valor mínimo.');
       return;
     }
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.process.currentRound.questions[this.questionIdx]).toPromise();
+   // await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
+     // this.process.currentRound.questions[this.questionIdx]).toPromise();
   }
 
   private async showToast(msg: string) {

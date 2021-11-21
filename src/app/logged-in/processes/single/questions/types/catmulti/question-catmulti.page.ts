@@ -13,7 +13,7 @@ import {environment} from '../../../../../../../environments/environment';
 })
 export class QuestionCatmultiPage implements OnInit{
   @Input()
-  questionIdx: number;
+  question: Question;
   @Input()
   process: Process;
   currentCategory = '';
@@ -28,9 +28,9 @@ export class QuestionCatmultiPage implements OnInit{
 
 
   async addCategory() {
-    if(this.process.currentRound.questions[this.questionIdx].categories === undefined ||
-      this.process.currentRound.questions[this.questionIdx].categories === null) {
-      this.process.currentRound.questions[this.questionIdx].categories = [];
+    if(this.question.categories === undefined ||
+      this.question.categories === null) {
+      this.question.categories = [];
     }
 
     if(this.currentCategory === '') {
@@ -38,23 +38,23 @@ export class QuestionCatmultiPage implements OnInit{
       return;
     }
 
-    if(this.currentCategory !== '' && this.process.currentRound.questions[this.questionIdx].categories.findIndex(c => c.catName.toLowerCase() == this.currentCategory.toLowerCase()) !== -1) {
+    if(this.currentCategory !== '' && this.question.categories.findIndex(c => c.catName.toLowerCase() == this.currentCategory.toLowerCase()) !== -1) {
       await this.showToast('No puedes introducir categorías duplicadas');
       this.currentCategory = '';
       return;
     }
-    this.process.currentRound.questions[this.questionIdx].categories.push(new Category(this.currentCategory));
+    this.question.categories.push(new Category(this.currentCategory));
     this.currentCategory = '';
     await this.updateQuestion();
   }
   async delCategory(category: Category) {
-    this.process.currentRound.questions[this.questionIdx].categories = this.process.currentRound.questions[this.questionIdx].categories.filter((cat) => {
+    this.question.categories = this.question.categories.filter((cat) => {
       return category.catName !== cat.catName;
     });
     await this.updateQuestion();
   }
   private reorderCategories() {
-    this.process.currentRound.questions[this.questionIdx].categories.sort((n1, n2) => {
+    this.question.categories?.sort((n1, n2) => {
       if (n1.id < n2.id) {
         return -1;
       }
@@ -65,18 +65,18 @@ export class QuestionCatmultiPage implements OnInit{
     });
   }
   async updateQuestion() {
-    if(this.process.currentRound.questions[this.questionIdx].maxSelectable > this.process.currentRound.questions[this.questionIdx].categories.length) {
-      this.showToast('El máximo seleccionable debe ser igual o menor que el número de categorías (' + this.process.currentRound.questions[this.questionIdx].categories.length + ')');
-      this.process.currentRound.questions[this.questionIdx].maxSelectable = this.process.currentRound.questions[this.questionIdx].categories.length;
+    if(this.question.maxSelectable > this.question.categories.length) {
+      this.showToast('El máximo seleccionable debe ser igual o menor que el número de categorías (' + this.question.categories.length + ')');
+      this.question.maxSelectable = this.question.categories.length;
     } else
-    if(this.process.currentRound.questions[this.questionIdx].maxSelectable == 0
-    || this.process.currentRound.questions[this.questionIdx].maxSelectable === null
-    || this.process.currentRound.questions[this.questionIdx].maxSelectable === undefined) {
+    if(this.question.maxSelectable == 0
+    || this.question.maxSelectable === null
+    || this.question.maxSelectable === undefined) {
       this.showToast('El máximo seleccionable debe ser igual o mayor a 1');
-      this.process.currentRound.questions[this.questionIdx].maxSelectable = 1;
+      this.question.maxSelectable = 1;
     }
     await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.process.currentRound.questions[this.questionIdx]).toPromise();
+      this.question).toPromise();
     this.reorderCategories();
   }
   private async showToast(msg: string) {

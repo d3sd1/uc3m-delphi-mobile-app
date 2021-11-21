@@ -1,7 +1,7 @@
 
 <ion-item>
   <ion-label>Máximas selecciones</ion-label>
-  <ion-input type="number" [(ngModel)]="process.currentRound.questions[questionIdx].maxSelectable"
+  <ion-input type="number" [(ngModel)]="question.maxSelectable"
              debounce="1000"
              [readonly]="process.currentRound.started"
              (ngModelChange)="updateQuestion()"></ion-input>
@@ -16,11 +16,11 @@
     <ion-item-divider>
       <ion-label>Categorías</ion-label>
       <ion-badge
-        slot="end">{{process.currentRound.questions[questionIdx]?.categories?.length}}</ion-badge>
+        slot="end">{{question.categories?.length}}</ion-badge>
     </ion-item-divider>
 
     <ion-item
-      *ngFor="let category of process.currentRound.questions[questionIdx]?.categories; let i = index">
+      *ngFor="let category of question.categories; let i = index">
       <ion-label>{{category.catName}}</ion-label>
       <ion-icon *ngIf="!process.currentRound.started" (click)="delCategory(category)" name="trash" slot="end"></ion-icon>
     </ion-item>

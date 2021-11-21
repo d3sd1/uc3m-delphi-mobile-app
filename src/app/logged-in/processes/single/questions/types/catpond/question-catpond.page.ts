@@ -4,16 +4,15 @@ import {Category} from '../../../../../../core/model/category';
 import {Process} from '../../../../../../core/model/process';
 import {ToastController} from '@ionic/angular';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'delphi-question-catpond',
   templateUrl: './question-catpond.page.html',
   styleUrls: ['./question-catpond.page.scss'],
 })
-export class QuestionCatpondPage  implements OnInit{
+export class QuestionCatpondPage implements OnInit {
   @Input()
-  questionIdx: number;
+  question: Question;
   @Input()
   process: Process;
   currentCategory = '';
@@ -28,37 +27,39 @@ export class QuestionCatpondPage  implements OnInit{
 
 
   async addCategory() {
-    if(this.process.currentRound.questions[this.questionIdx].categories === undefined ||
-      this.process.currentRound.questions[this.questionIdx].categories === null) {
-      this.process.currentRound.questions[this.questionIdx].categories = [];
+    if (this.question.categories === undefined ||
+      this.question.categories === null) {
+      this.question.categories = [];
     }
 
-    if(this.currentCategory === '') {
+    if (this.currentCategory === '') {
       await this.showToast('Introduce el nombre de la categoría');
       return;
     }
 
-    if(this.currentCategory !== '' && this.process.currentRound.questions[this.questionIdx].categories.findIndex(c => c.catName.toLowerCase() == this.currentCategory.toLowerCase()) !== -1) {
+    if (this.currentCategory !== '' && this.question.categories.findIndex(c => c.catName.toLowerCase() == this.currentCategory.toLowerCase()) !== -1) {
       await this.showToast('No puedes introducir categorías duplicadas');
       this.currentCategory = '';
       return;
     }
-    this.process.currentRound.questions[this.questionIdx].categories.push(new Category(this.currentCategory));
+    this.question.categories.push(new Category(this.currentCategory));
     this.currentCategory = '';
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.process.currentRound.questions[this.questionIdx]).toPromise();
-    this.reorderCategories();
+    // await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
+    //  this.process.currentRound.questions[this.questionIdx]).toPromise();
+    //  this.reorderCategories();
   }
+
   async delCategory(category: Category) {
-    this.process.currentRound.questions[this.questionIdx].categories = this.process.currentRound.questions[this.questionIdx].categories.filter((cat) => {
-      return category.catName !== cat.catName;
-    });
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.process.currentRound.questions[this.questionIdx]).toPromise();
-    this.reorderCategories();
+    /* this.process.currentRound.questions[this.questionIdx].categories = this.process.currentRound.questions[this.questionIdx].categories.filter((cat) => {
+       return category.catName !== cat.catName;
+     });
+     await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
+       this.process.currentRound.questions[this.questionIdx]).toPromise();
+     this.reorderCategories();*/
   }
+
   private reorderCategories() {
-    this.process.currentRound.questions[this.questionIdx].categories.sort((n1, n2) => {
+    this.question.categories?.sort((n1, n2) => {
       if (n1.id < n2.id) {
         return -1;
       }
@@ -68,6 +69,7 @@ export class QuestionCatpondPage  implements OnInit{
       return 0;
     });
   }
+
   private async showToast(msg: string) {
     const toast = await this.toastController.create({
       position: 'top',

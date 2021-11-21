@@ -6,7 +6,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../../environments/environment';
 import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
 import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
 
@@ -41,11 +40,11 @@ export class ParticipatePage {
 
     this.route.params.subscribe(params => {
       this.processConsumer.getProcess(+params.id).subscribe((process) => {
-        if (process.currentRound.id === undefined) {
+        if (process.currentRound?.id === undefined) {
           router.navigateByUrl('/logged-in/menu/processes/single-round/' + process.id).then(r => null); // In case round closes
         }
         this.process = process;
-        this.process.currentRound.questions.forEach((q, idx) => {
+        this.process?.currentRound?.questions.forEach((q, idx) => {
           this.answers[idx] = new Answer();
           this.answers[idx].question = q;
           this.answers[idx].user = this.currentUser;
@@ -58,7 +57,7 @@ export class ParticipatePage {
   }
 
   private orderQuestions() {
-    this.process.currentRound.questions.sort((n1, n2) => {
+    this.process?.currentRound?.questions.sort((n1, n2) => {
       if (n1.orderPosition < n2.orderPosition) {
         return -1;
       }
@@ -117,18 +116,19 @@ export class ParticipatePage {
     await alert.present();
   }
 
-  private async saveParticipation() {
-
-    const loading = await this.loadingCtrl.create({
+  private saveParticipation() {
+    this.loadingCtrl.create({
       cssClass: 'my-custom-class',
       message: 'Cargando...',
       duration: 2000
+    }).then((loading) => {
+      loading.present().then(() => {
+        this.processConsumer.saveParticipation(this.process.id, this.answers);
+        loading.dismiss().then(() => {
+          this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
+        });
+      });
     });
-    await loading.present();
-    console.log(this.answers)
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/answers?process_id=' + this.process.id, this.answers).toPromise();
-    await loading.dismiss();
-    await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id); // In case round closes
   }
 
   sortCategories(idx) {

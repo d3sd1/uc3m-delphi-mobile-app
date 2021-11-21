@@ -9,7 +9,7 @@ import {Process} from '../../../../../../core/model/process';
 })
 export class QuestionBooltypePage {
   @Input()
-  questionIdx: number;
+  question: Question;
   @Input()
   process: Process;
 }

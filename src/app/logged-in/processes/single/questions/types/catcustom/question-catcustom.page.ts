@@ -13,7 +13,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class QuestionCatcustomPage implements OnInit{
   @Input()
-  questionIdx: number;
+  question: Question;
   @Input()
   process: Process;
   currentCategory = '';
@@ -28,9 +28,9 @@ export class QuestionCatcustomPage implements OnInit{
 
 
   async addCategory() {
-    if(this.process.currentRound.questions[this.questionIdx].categories === undefined ||
-      this.process.currentRound.questions[this.questionIdx].categories === null) {
-      this.process.currentRound.questions[this.questionIdx].categories = [];
+    if(this.question.categories === undefined ||
+      this.question.categories === null) {
+      this.question.categories = [];
     }
 
     if(this.currentCategory === '') {
@@ -38,27 +38,27 @@ export class QuestionCatcustomPage implements OnInit{
       return;
     }
 
-    if(this.currentCategory !== '' && this.process.currentRound.questions[this.questionIdx].categories.findIndex(c => c.catName.toLowerCase() == this.currentCategory.toLowerCase()) !== -1) {
+    if(this.currentCategory !== '' && this.question.categories.findIndex(c => c.catName.toLowerCase() == this.currentCategory.toLowerCase()) !== -1) {
       await this.showToast('No puedes introducir categorías duplicadas');
       this.currentCategory = '';
       return;
     }
-    this.process.currentRound.questions[this.questionIdx].categories.push(new Category(this.currentCategory));
+    this.question.categories.push(new Category(this.currentCategory));
     this.currentCategory = '';
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.process.currentRound.questions[this.questionIdx]).toPromise();
-    this.reorderCategories();
+  //  await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
+    //  this.process.currentRound.questions[this.questionIdx]).toPromise();
+    //this.reorderCategories();
   }
   async delCategory(category: Category) {
-    this.process.currentRound.questions[this.questionIdx].categories = this.process.currentRound.questions[this.questionIdx].categories.filter((cat) => {
-      return category.catName !== cat.catName;
-    });
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.process.currentRound.questions[this.questionIdx]).toPromise();
-    this.reorderCategories();
+  //  this.process.currentRound.questions[this.questionIdx].categories = this.process.currentRound.questions[this.questionIdx].categories.filter((cat) => {
+    //  return category.catName !== cat.catName;
+    //});
+  //  await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
+    //  this.process.currentRound.questions[this.questionIdx]).toPromise();
+    //this.reorderCategories();
   }
   private reorderCategories() {
-    this.process.currentRound.questions[this.questionIdx].categories.sort((n1, n2) => {
+    this.question.categories?.sort((n1, n2) => {
       if (n1.id < n2.id) {
         return -1;
       }
