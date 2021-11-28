@@ -7,3 +7,6 @@ export class Answer {
   question: Question;
   user: User;
 }
+
+
+
