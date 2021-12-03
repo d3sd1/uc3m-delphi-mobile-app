@@ -13,15 +13,8 @@
 <ion-content fullscreen="true" *ngIf="process">
   <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden type="file">
   <ion-card color="light">
-    <div (click)="triggerUploadImage()" class="img-wrapper">
-      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
-           *ngIf="process?.pictureUrl !== undefined"
-           [src]="process.pictureUrl"/>
-      <img *ngIf="process?.pictureUrl === undefined" src="assets/images/no-process-image.jpeg"/>
-      <ion-button color="light" *ngIf="isCoordinator() && !process?.finished">
-        <ion-icon color="medium" name="camera-outline" slot="icon-only">
-        </ion-icon>
-      </ion-button>
+    <div class="img-wrapper circle">
+        <span class="initials">{{process.name?.substring(0,2)}}</span>
     </div>
   </ion-card>
   <ion-list class="ion-no-margin" lines="full">
