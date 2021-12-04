@@ -29,13 +29,8 @@
                   [checked]="user?.notificationStatus"></ion-toggle>
     </ion-item>
 
-    <ion-item routerLink="password">
+    <ion-item (click)="showPasswordChangeHint()">
       <ion-label>Contraseña</ion-label>
-    </ion-item>
-
-    <input #uploadCvRef (change)="uploadCv()" hidden type="file">
-    <ion-item (click)="triggerUploadCv()">
-      <ion-label>Currículum Vitae</ion-label>
     </ion-item>
 
     <ion-item (click)="changeLanguage()">

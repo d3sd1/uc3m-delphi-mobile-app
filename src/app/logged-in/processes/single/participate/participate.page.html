@@ -1,4 +1,4 @@
-<ion-header *ngIf="process">
+<ion-header *ngIf="process && process.currentRound && process.currentRound.questions">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id"
@@ -6,12 +6,13 @@
                        [routerLink]="'/logged-in/menu/processes/single-round/' + process.id"
                        text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>Pregunta {{this.currentQuestion + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
-    <ion-progress-bar value="{{progress}}" [buffer]="progress"></ion-progress-bar>
+    <ion-title *ngIf="this.currentQuestion + 1 <= this.process.currentRound.questions.length">Pregunta {{this.currentQuestion + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
+    <ion-title *ngIf="this.currentQuestion + 1 > this.process.currentRound.questions.length">Finalizar participación</ion-title>
+    <ion-progress-bar value="{{this.currentQuestion / this.process.currentRound.questions.length}}" [buffer]="this.currentQuestion / this.process.currentRound.questions.length"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="process && process.currentRound">
+<ion-content *ngIf="process && process.currentRound && process.currentRound.questions">
   <ion-slides #participate [options]="{ allowTouchMove: false }" class="swiper-no-swiping">
     <ion-slide *ngFor="let question of process.currentRound.questions">
       <div class="slide">
@@ -112,7 +113,7 @@
     </ion-slide>
   </ion-slides>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="process && process.currentRound && process.currentRound.questions">
   <ion-toolbar>
     <ion-button expand="full" [disabled]="currentQuestion == 0" (click)="back()">Anterior</ion-button>
     <ion-button expand="full" *ngIf="currentQuestion < process.currentRound.questions.length - 1" (click)="advance()">

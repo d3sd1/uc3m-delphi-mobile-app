@@ -6,7 +6,6 @@ import {ProfilePage} from './profile.page';
 
 import {ProfilePageRoutingModule} from './profile-routing.module';
 import {TranslateModule} from '@ngx-translate/core';
-import {ProfilePasswordPage} from './profile-password/profile-password.page';
 import {LogoutPage} from './logout/logout.page';
 
 @NgModule({
@@ -19,7 +18,6 @@ import {LogoutPage} from './logout/logout.page';
   ],
   declarations: [
     ProfilePage,
-    ProfilePasswordPage,
     LogoutPage
   ],
 })

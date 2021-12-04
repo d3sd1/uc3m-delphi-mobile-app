@@ -5,7 +5,6 @@ import {AlertController, IonSlides, LoadingController, NavController, ToastContr
 import {ActivatedRoute, Router} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
-import {HttpClient} from '@angular/common/http';
 import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
 import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
 
@@ -18,7 +17,6 @@ export class ParticipatePage {
   answers: Answer[] = [];
 
   currentQuestion = 0;
-  progress = 0;
   process: Process;
   currentUser: User;
   @ViewChild('participate') participateSlides: IonSlides;
@@ -32,18 +30,21 @@ export class ParticipatePage {
     private router: Router,
     private userConsumer: UserConsumer,
     private processConsumer: ProcessConsumer,
-    private alertController: AlertController,
-    private httpClient: HttpClient) {
+    private alertController: AlertController) {
     this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
 
     this.route.params.subscribe(params => {
       this.processConsumer.getProcess(+params.id).subscribe((process) => {
-        if (process.currentRound?.id === undefined) {
-          router.navigateByUrl('/logged-in/menu/processes/single-round/' + process.id).then(r => null); // In case round closes
+        if (process == null) {
+          return;
+        }
+        if (process.currentRound?.id === undefined || !process.currentRound?.started) {
+          this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id).then(r => null);
         }
         this.process = process;
+        console.log('aaaaaaaaa', this.process);
         this.process?.currentRound?.questions.forEach((q, idx) => {
           this.answers[idx] = new Answer();
           this.answers[idx].question = q;
@@ -71,12 +72,11 @@ export class ParticipatePage {
   async advance() {
     this.sortCategories(this.currentQuestion + 1);
     const val = this.answers[this.currentQuestion].response;
-    if (val === null || val == "null" || val == -1 || val == '') {
+    if (val === null || val === undefined || val === -1 || val === '') {
       await this.showToast('Por favor responde la pregunta.');
       return;
     }
     this.currentQuestion++;
-    this.calculateProgress();
     await this.participateSlides.slideNext();
   }
 
@@ -86,12 +86,8 @@ export class ParticipatePage {
     await this.participateSlides.slidePrev();
   }
 
-  private calculateProgress() {
-    this.progress = this.currentQuestion / this.process.currentRound.questions.length;
-  }
-
   async finish() {
-    this.progress = 1;
+    this.currentQuestion++;
     const alert = await this.alertController.create({
       header: 'Confirmar participación',
       message: '¿Estás seguro de que deseas enviar la participación?',
@@ -100,7 +96,7 @@ export class ParticipatePage {
           text: 'Cancelar',
           cssClass: 'secondary',
           handler: () => {
-            this.calculateProgress();
+            this.currentQuestion = this.process.currentRound.questions.length - 1;
             alert.dismiss();
           }
         }, {

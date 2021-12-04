@@ -60,12 +60,15 @@ export class ProfilePage {
    // todo await this.userConsumer.updateNotificationPreferences(enabled);
   }
 
+  showPasswordChangeHint() {
+    // TODO show modal -> logout and click forgot password
+  }
   async changeLanguage() {
     const langs = await this.langService.getAvailableLangs();
     const sheets = [];
     for (const lang of langs) {
       sheets.push({
-        text: lang.name.toLowerCase(),
+        text: "Español",
         cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',
         handler: async () => {
         // todo  if you want to update language do it here :)

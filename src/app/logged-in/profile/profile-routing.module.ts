@@ -1,17 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ProfilePage} from './profile.page';
-import {ProfilePasswordPage} from './profile-password/profile-password.page';
 
 const routes: Routes = [
   {
     path: '',
     component: ProfilePage,
   },
-  {
-    path: 'password',
-    component: ProfilePasswordPage
-  }
 ];
 
 @NgModule({

@@ -14,7 +14,7 @@
   <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden type="file">
   <ion-card color="light">
     <div class="img-wrapper circle">
-        <span class="initials">{{process.name?.substring(0,2)}}</span>
+      <span class="initials">{{process.name?.substring(0, 2)}}</span>
     </div>
   </ion-card>
   <ion-list class="ion-no-margin" lines="full">
@@ -101,10 +101,15 @@
 
 <ion-footer *ngIf="process && !process?.finished">
   <ion-toolbar>
-    <ion-button *ngIf="isCoordinator()" color="danger" expand="block" (click)="finishProcess()">Finalizar proceso
+    <ion-button
+      *ngIf="isCoordinator()"
+      color="danger"
+      expand="block" (click)="finishProcess()">Finalizar proceso
     </ion-button>
-    <ion-button *ngIf="!isCoordinator()"
-                [color]="this.process?.currentRound.started && expertCanVote() ? 'success':'warning'" expand="block"
-                (click)="participate()">Participar</ion-button>
+    <ion-button
+      *ngIf="!isCoordinator()"
+      [color]="this.process?.currentRound.started && expertCanVote() ? 'success':'warning'" expand="block"
+      (click)="participate()">Participar
+    </ion-button>
   </ion-toolbar>
 </ion-footer>
