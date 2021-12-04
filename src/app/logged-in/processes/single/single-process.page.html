@@ -108,7 +108,7 @@
     </ion-button>
     <ion-button
       *ngIf="!isCoordinator()"
-      [color]="this.process?.currentRound.started && expertCanVote() ? 'success':'warning'" expand="block"
+      [color]="this.process?.currentRound.started && !alreadyVoted() ? 'secondary':'primary'" expand="block"
       (click)="participate()">Participar
     </ion-button>
   </ion-toolbar>

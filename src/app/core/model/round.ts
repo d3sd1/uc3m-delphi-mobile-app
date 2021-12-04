@@ -6,7 +6,7 @@ export class Round {
   id: number;
   name = '';
   questions: Question[] = [];
-  limitTime: Date = new Date();
+  limitTime: string = (new Date()).toISOString();
   finished = false;
   orderPosition: number;
   started = false;

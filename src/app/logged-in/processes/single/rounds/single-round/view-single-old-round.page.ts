@@ -28,19 +28,14 @@ export class ViewSingleOldRoundPage {
 
     this.route.params.subscribe(params => {
       this.processConsumer.getProcess(+params.id).subscribe((process) => {
-        this.process = process;
-        if(this.process.currentRound === null) {
-          
+        if (process === null) {
+          return;
         }
+        this.process = process;
+        console.log('pp', process);
+        this.roundIdx = process.pastRounds.findIndex(q => q.id === +params['roundid']);
       });
     });
-    this.route.params.subscribe(params => {
-      this.roundIdx = this.process.pastRounds.findIndex(q => q.id === +params['roundid']);
-    });
   }
-
-
-  //TODO:
-  // IF CURRENT ROUND STARTED, DO NOT ALLOW TO EDIT VALUES!!
-
 }
+

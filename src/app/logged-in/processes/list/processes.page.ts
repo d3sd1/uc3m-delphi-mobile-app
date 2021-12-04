@@ -50,6 +50,21 @@ export class ProcessesPage implements OnInit {
     this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id).then(r => null);
   }
 
+  /**
+   * Turn red process if the current round is open, current user has not parcitiped and there's 1 day or less to participate
+   * @param process
+   */
+  processPendingParticipationWarning(process) {
+    let pMs = 0;
+    if (process.currentRound?.limitTime !== null) {
+      pMs = new Date(process.currentRound?.limitTime).getTime();
+    }
+    return process.currentRound?.started === true
+      && process.currentRound?.expertsRemaining?.find(pu => pu.id === this.user.id)
+      && pMs !== 0
+      && pMs - 86400000 < (new Date()).getTime();
+  }
+
   filterProcesses(ev?: any) {
     this.filteredProcesses = [];
     const wantsFinished = ev?.target.value === 'finished';

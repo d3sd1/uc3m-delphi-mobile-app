@@ -1,16 +1,16 @@
-<ion-header>
+<ion-header *ngIf="process && process.pastRounds">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process?.id + '/rounds/list'"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id + '/rounds/list'"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/rounds/list'"
+                       [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/rounds/list'"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Visor ronda finalizada</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+<ion-content *ngIf="process && process.pastRounds"><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
 
   <ion-item>
     <ion-label>Fecha de cierre</ion-label>
@@ -26,30 +26,26 @@
                debounce="200"
                [readonly]="process?.pastRounds[roundIdx].started || process?.finished"></ion-input>
   </ion-item>
-  <ion-item-divider></ion-item-divider>
   <div *ngIf="process?.pastRounds[roundIdx].questions.length == 0" class="container">
     <strong>Sin preguntas</strong>
     <p>No existen preguntas asociadas a esta ronda.</p>
   </div>
-  <ion-reorder-group disabled="false">
+  <ion-item-group disabled="false">
     <!-- Default reorder icon, end aligned items -->
     <ion-item-sliding *ngFor="let question of process?.pastRounds[roundIdx].questions; let questionIndex = index">
-      <ion-item-options side="start">
-        <ion-item-option color="danger">Eliminar</ion-item-option>
-      </ion-item-options>
-      <ion-item>
-        {{question.name}}
-        <ion-reorder slot="start" *ngIf="!process?.pastRounds[roundIdx].started"></ion-reorder>
+
+      <ion-item-divider>
+        <ion-label>{{question.name}}</ion-label>
+      </ion-item-divider>
+
+      <ion-item *ngIf="process?.pastRounds[roundIdx].expertsVoted.length === 0" color="danger">
+        Ronda sin participación.
+      </ion-item>
+      <ion-item *ngFor="let expert of process?.pastRounds[roundIdx].expertsVoted">
+        {{expert.name}} {{expert.surnames}}
+        <ion-note slot="end" color="primary">En desacuerdo.</ion-note>
       </ion-item>
     </ion-item-sliding>
 
-  </ion-reorder-group>
-
-  <!-- fab placed to the (vertical) center and end -->
-  <ion-fab *ngIf="!process.pastRounds[roundIdx].started && !process.finished" horizontal="end" slot="fixed" vertical="bottom">
-    <ion-fab-button>
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
+  </ion-item-group>
 </ion-content>

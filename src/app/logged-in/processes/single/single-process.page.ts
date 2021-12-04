@@ -50,7 +50,7 @@ export class SingleProcessPage {
     return this.process?.coordinators.findIndex((user) => user.id === this.user?.id) !== -1;
   }
 
-  expertCanVote(): boolean {
+  alreadyVoted(): boolean {
     console.log('experts remaining: , ', this.process.currentRound?.expertsRemaining)
     if (this.process.currentRound?.expertsRemaining === undefined) {
       return false;
@@ -146,10 +146,7 @@ export class SingleProcessPage {
       this.showToast('El proceso no tiene la ronda actual abierta.');
       return;
     }
-    if (!this.expertCanVote()) {
-      this.showToast('¡Vaya! Parece que ya has votado.');
-      return;
-    }
+
     await this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id + '/participate');
   }
 

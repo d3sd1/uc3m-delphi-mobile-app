@@ -80,7 +80,7 @@ export class ProcessConsumer {
     this.wsService.publish(`process`, {processId, name, description, objectives}, WsMode.UPDATE);
   }
 
-  updateRoundBasicData(processId: number, name: string, limitTime: Date) {
+  updateRoundBasicData(processId: number, name: string, limitTime: string) {
     this.wsService.publish(`process/rounds/current/basic`, {processId, name, limitTime}, WsMode.UPDATE);
   }
 

@@ -44,7 +44,7 @@ export class ParticipatePage {
           this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id).then(r => null);
         }
         this.process = process;
-        console.log('aaaaaaaaa', this.process);
+        console.log('aaaaaaaaa', this.process.currentRound.answers);
         this.process?.currentRound?.questions.forEach((q, idx) => {
           this.answers[idx] = new Answer();
           this.answers[idx].question = q;

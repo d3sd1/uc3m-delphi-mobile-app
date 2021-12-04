@@ -22,10 +22,11 @@
       </ion-toolbar>
     </ion-list-header>
     <delphi-empty *ngIf="filteredProcesses?.length == 0"></delphi-empty>
-    <ion-item *ngFor="let process of filteredProcesses" (click)="editProcess(process)" color="">
+    <ion-item *ngFor="let process of filteredProcesses" (click)="editProcess(process)"
+              [color]="processPendingParticipationWarning(process) ? 'danger':''">
       <ion-thumbnail slot="start">
         <div class="img-wrapper circle">
-          <span class="initials">{{process.name?.substring(0,2)}}</span>
+          <span class="initials">{{process.name?.substring(0, 2)}}</span>
         </div>
       </ion-thumbnail>
       <ion-label>
@@ -39,7 +40,8 @@
           <a *ngIf="process.finished">Ver resultados</a>
         </p>
       </ion-label>
-      <ion-note slot="end" color="primary">{{isCoordinator(process) ? 'Coordinador': 'Experto'}}</ion-note>
+      <ion-note slot="end"
+                [color]="processPendingParticipationWarning(process) ? 'light':'primary'">{{isCoordinator(process) ? 'Coordinador' : 'Experto'}}</ion-note>
     </ion-item>
   </ion-list>
   <ion-fab class="process add" horizontal="end" slot="fixed" vertical="bottom" (click)="addProcess()">
