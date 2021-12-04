@@ -7,16 +7,8 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <ion-card color="light">
-    <input #uploadPicture (change)="uploadImage()" accept="image/*" hidden type="file">
-
-    <div (click)="triggerUploadImage()" class="img-wrapper">
-      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="user?.photo !== undefined"
-           [src]="user?.photo"/>
-      <img *ngIf="user?.photo === undefined" src="assets/images/no-process-image.jpeg"/>
-      <ion-button color="light">
-        <ion-icon color="medium" name="camera-outline" slot="icon-only">
-        </ion-icon>
-      </ion-button>
+    <div class="img-wrapper circle">
+      <span class="initials">{{user.name?.substring(0, 2)}}</span>
     </div>
     <ion-card-content class="ion-text-center">
       <h2>{{user?.name }} {{user?.surnames}}</h2>

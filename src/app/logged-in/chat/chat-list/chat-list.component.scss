@@ -1,0 +1,17 @@
+
+.circle {
+
+  background-color: #ccc;
+  border-radius: 50%;
+  height: 40px;
+  text-align: center;
+  width:  40px;
+}
+
+.initials {
+  font-size: 1em; /* 50% of parent */
+  line-height: 1;
+  position: relative;
+  top: 8px; /* 25% of parent */
+}
+

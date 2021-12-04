@@ -5,10 +5,9 @@
     <ion-item
       [routerLink]="'/logged-in/menu/chat/conversation/' + (chat.user1.id === user.id ? chat.user2.id:chat.user1.id)">
       <ion-avatar slot="start">
-        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
-             *ngIf="this.user?.photo !== undefined"
-             [src]="this.user?.photo"/>
-        <img *ngIf="this.user?.photo === undefined" src="assets/images/no-process-image.jpeg"/>
+        <div class="img-wrapper circle">
+          <span class="initials">{{chat.user1.id === user.id ? chat.user2.name.substring(0, 2): chat.user1.name.substring(0, 2)}}</span>
+        </div>
       </ion-avatar>
       <ion-label>
         <h2>{{chat.user1.id === user.id ? chat.user2.name + ' ' + chat.user2.surnames : chat.user1.name + ' ' + chat.user1.surnames}}</h2>

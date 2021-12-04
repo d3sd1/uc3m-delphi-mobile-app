@@ -8,7 +8,10 @@
     </ion-buttons>
     <ion-title>{{oppositeUser?.name}} {{oppositeUser?.surnames}}</ion-title>
     <ion-buttons slot="end">
-      <img [src]="this.oppositeUser?.photo" alt="" class="user-img-header">
+
+      <div class="user-img-header circle">
+        <span class="initials">{{this.oppositeUser?.name.substring(0, 2)}}</span>
+      </div>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -18,9 +21,9 @@
          [class.left]=" msg.user.id !== user.id "
          [class.right]=" msg.user.id === user.id "
          class="message">
-      <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"
-           *ngIf="msg.user?.photo !== undefined" [src]="msg.user?.photo"
-           class="user-img"/>
+      <div class="user-img circle">
+        <span class="initials">{{msg.user.name.substring(0, 2)}}</span>
+      </div>
       <img *ngIf="msg.user?.photo === undefined" class="user-img" src="assets/images/no-process-image.jpeg"/>
       <ion-spinner *ngIf="loading" name="dots" ></ion-spinner>
       <div class="msg-detail">
