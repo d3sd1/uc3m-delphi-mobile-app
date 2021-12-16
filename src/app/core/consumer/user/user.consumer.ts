@@ -39,7 +39,7 @@ export class UserConsumer {
   }
 
   resetPassword(email, code, then, catched, finallied) {
-    this.http.post(environment.apiUrl + '/password/reset', {email, code}).subscribe(then, catched, finallied);
+    this.http.put(environment.apiUrl + '/password/reset', {email, code}).subscribe(then, catched, finallied);
   }
 
   updateUserOnboarding(name: string, surnames: string) {
@@ -71,10 +71,10 @@ export class UserConsumer {
     });
   }
 
-  doLogout() {
-    this.connectedUser.next(null);
-    this.jwtService.setJwt(null);
-    this.wsService.disconnectWs();
+  async doLogout() {
+    await this.connectedUser.next(null);
+    await this.jwtService.setJwt(null);
+    await this.wsService.disconnectWs();
   }
 
 

@@ -1,11 +1,10 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {ActionSheetController} from '@ionic/angular';
+import {ActionSheetController, NavController} from '@ionic/angular';
 import {User} from '../../core/model/user';
 import {TranslateService} from '@ngx-translate/core';
 import {LangService} from '../../core/lang/lang.service';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 import {Subscription} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-profile',
@@ -22,7 +21,7 @@ export class ProfilePage {
 
   constructor(private actionSheetController: ActionSheetController, private langService: LangService, private userConsumer: UserConsumer,
               private translate: TranslateService,
-              private route: ActivatedRoute) {
+              private navCtrl: NavController) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
@@ -40,38 +39,29 @@ export class ProfilePage {
     this.uploadCvRef.nativeElement.click();
   }
 
-  async uploadImage() {
-    const newPhoto = new FormData();
-    newPhoto.append('image', this.uploadPicture.nativeElement.files[0]);
-  //todo  await this.userConsumer.updatePicture(newPhoto);
-  }
-
-  async uploadCv() {
-    const cv = new FormData();
-    cv.append('cv', this.uploadCvRef.nativeElement.files[0]);
-   //todo  await this.userConsumer.updateCv(cv);
-  }
-
   async triggerStatusChatHandler() {
     await this.presentActionSheet();
   }
 
   async updateNotificationPreferences(enabled: boolean) {
-   // todo await this.userConsumer.updateNotificationPreferences(enabled);
+    // todo await this.userConsumer.updateNotificationPreferences(enabled);
   }
 
-  showPasswordChangeHint() {
-    // TODO show modal -> logout and click forgot password
+  recoverPassword() {
+    this.userConsumer.doLogout().then(() => {
+      this.navCtrl.navigateBack('/logged-out/forgot-password').then(() => null);
+    });
   }
+
   async changeLanguage() {
     const langs = await this.langService.getAvailableLangs();
     const sheets = [];
     for (const lang of langs) {
       sheets.push({
-        text: "Español",
+        text: 'Español',
         cssClass: this.user?.language?.id === lang.id ? 'current-lang' : '',
         handler: async () => {
-        // todo  if you want to update language do it here :)
+          // todo  if you want to update language do it here :)
         }
       });
     }

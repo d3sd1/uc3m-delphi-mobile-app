@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LoadingController, NavController, ToastController} from '@ionic/angular';
+import {LoadingController, NavController, ToastController, ViewDidEnter} from '@ionic/angular';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 import {LoginUser} from '../../core/consumer/user/login.user';
 import {WsService} from '../../core/service/ws.service';
@@ -10,7 +10,7 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
+export class LoginPage implements ViewDidEnter {
   loginUser: LoginUser;
 
   constructor(private userConsumer: UserConsumer,
@@ -20,6 +20,16 @@ export class LoginPage {
               private wsService: WsService,
               private translate: TranslateService) {
     this.loginUser = new LoginUser();
+  }
+
+  ionViewDidEnter(): void {
+    this.userConsumer.getUser().subscribe((user) => {
+      if (user !== null && user !== undefined) {
+        this.navCtrl.navigateForward('/logged-in').then(() => {
+          this.loginUser = new LoginUser();
+        });
+      }
+    });
   }
 
 
