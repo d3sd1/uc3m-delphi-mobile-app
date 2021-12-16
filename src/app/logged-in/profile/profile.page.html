@@ -23,12 +23,6 @@
   </ion-card>
   <!-- Toggles in a List -->
   <ion-list>
-    <ion-item>
-      <ion-label>Notificaciones</ion-label>
-      <ion-toggle (ionChange)="updateNotificationPreferences($event.detail.checked)"
-                  [checked]="user?.notificationStatus"></ion-toggle>
-    </ion-item>
-
     <ion-item (click)="recoverPassword()">
       <ion-label>Contraseña</ion-label>
     </ion-item>
