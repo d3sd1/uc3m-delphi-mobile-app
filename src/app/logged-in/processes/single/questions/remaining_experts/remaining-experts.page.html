@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="process">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'"
@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="process && process.currentRound">
   <ion-list>
     <ion-item-group>
       <ion-item-divider>
@@ -20,10 +20,14 @@
       <ion-item *ngFor="let expert of process.currentRound.expertsRemaining">
         <ion-label>{{expert.needsOnboard ? expert.email : expert.name + ' ' + expert.surnames}}</ion-label>
       </ion-item>
-      <div *ngIf="process.currentRound.expertsRemaining.length == 0" class="container">
-        <strong>Sin expertos pendientes</strong>
-        <p>Todos los expertos han votado en esta ronda.</p>
-      </div>
+      <ion-item *ngIf="process.currentRound.expertsRemaining.length == 0">
+        <div  class="container">
+          <strong>Sin expertos pendientes</strong>
+          <p>Todos los expertos han votado en esta ronda.</p>
+        </div>
+      </ion-item>
+
+
 
 
       <ion-item-divider>
@@ -33,10 +37,12 @@
       <ion-item *ngFor="let expert of process.currentRound.expertsVoted">
         <ion-label>{{expert.needsOnboard ? expert.email : expert.name + ' ' + expert.surnames}}</ion-label>
       </ion-item>
-      <div *ngIf="process.currentRound.expertsVoted.length == 0" class="container">
-        <strong>Sin expertos que han votado</strong>
-        <p>No ha votado ningún experto en esta ronda.</p>
-      </div>
+      <ion-item  *ngIf="process.currentRound.expertsVoted.length == 0">
+        <div  class="container">
+          <strong>Sin expertos que han votado</strong>
+          <p>No ha votado ningún experto en esta ronda.</p>
+        </div>
+      </ion-item>
     </ion-item-group>
   </ion-list>
 </ion-content>

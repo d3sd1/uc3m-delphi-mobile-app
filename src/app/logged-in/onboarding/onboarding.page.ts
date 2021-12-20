@@ -36,7 +36,7 @@ export class OnboardingPage implements ViewDidEnter {
   }
 
   async ionViewDidEnter() {
-    this.onBoardingFinished();
+
   }
 
   async setupAccount() {

@@ -23,7 +23,7 @@ export class LoginPage implements ViewDidEnter {
   }
 
   ionViewDidEnter(): void {
-    this.userConsumer.getUser().subscribe((user) => {
+    this.userConsumer.getUser().subscribe((user) => { 
       if (user !== null && user !== undefined) {
         this.navCtrl.navigateForward('/logged-in').then(() => {
           this.loginUser = new LoginUser();
