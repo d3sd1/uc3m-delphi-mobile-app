@@ -1,3 +1,20 @@
 .lowercase {
   text-transform: lowercase;
 }
+
+
+.circle {
+  background-color: #ccc;
+  border-radius: 50%;
+  height: 75px;
+  text-align: center;
+  width: 75px;
+}
+
+.initials {
+  font-size: 1.5em; /* 50% of parent */
+  line-height: 1;
+  position: relative;
+  top: 27.5px; /* 25% of parent */
+}
+

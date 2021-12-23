@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {WsService} from '../../core/service/ws.service';
+import {WsService} from '../../core/service/ws/ws.service';
 import {Process} from '../../core/model/process';
 import {BehaviorSubject} from 'rxjs';
-import {WsMode} from '../../core/ws/ws-mode.model';
+import {WsMode} from '../../core/service/ws/ws-mode.model';
 import {Answer} from '../../core/model/answer';
 
 @Injectable({

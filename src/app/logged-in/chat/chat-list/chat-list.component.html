@@ -21,7 +21,6 @@
 
     <ion-item-options (ionSwipe)="markChatAsRead(chat.id, slidingItem)"
                       side="start">
-      <!-- TODO *ngIf="selfChatUnreadMessages(chat, user.id) > 0" -->
       <ion-item-option (click)="markChatAsRead(chat.id, slidingItem)"
                        color="primary">Marcar como leído
       </ion-item-option>

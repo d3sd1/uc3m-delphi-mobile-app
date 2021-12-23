@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {WsService} from '../../../../core/service/ws.service';
+import {WsService} from '../../../../core/service/ws/ws.service';
 import {BehaviorSubject} from 'rxjs';
-import {WsMode} from '../../../../core/ws/ws-mode.model';
+import {WsMode} from '../../../../core/service/ws/ws-mode.model';
 import {User} from '../../../../core/model/user';
 
 @Injectable({

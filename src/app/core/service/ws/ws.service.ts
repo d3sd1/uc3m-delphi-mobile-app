@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import {BehaviorSubject, Subscription} from 'rxjs';
-import {environment} from '../../../environments/environment';
-import {WsMode} from '../ws/ws-mode.model';
-import {JwtService} from './jwt.service';
-import {WsAction} from '../ws/ws-action.model';
-import {WsCommand} from '../ws/ws-command.model';
+import {environment} from '../../../../environments/environment';
+import {WsMode} from './ws-mode.model';
+import {JwtService} from '../jwt.service';
+import {WsAction} from './ws-action.model';
+import {WsCommand} from './ws-command.model';
 
 @Injectable({
   providedIn: 'root'

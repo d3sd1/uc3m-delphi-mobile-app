@@ -2,7 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {ChatService} from './chat/chat.service';
 import {Storage} from '@ionic/storage';
 import {User} from '../core/model/user';
-import {WsService} from '../core/service/ws.service';
+import {WsService} from '../core/service/ws/ws.service';
 import {NavController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from './user.consumer';

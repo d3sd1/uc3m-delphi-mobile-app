@@ -2,12 +2,12 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Storage} from '@ionic/storage';
-import {WsService} from '../core/service/ws.service';
+import {WsService} from '../core/service/ws/ws.service';
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../core/model/user';
 import {BehaviorSubject} from 'rxjs';
 import {JwtService} from '../core/service/jwt.service';
-import {WsMode} from '../core/ws/ws-mode.model';
+import {WsMode} from '../core/service/ws/ws-mode.model';
 
 @Injectable({
   providedIn: 'root'
