@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {LoadingController, NavController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
+import {Component, OnDestroy} from '@angular/core';
+import {LoadingController, NavController, ViewDidEnter} from '@ionic/angular';
 import {UserConsumer} from '../../logged-in/user.consumer';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
@@ -10,7 +10,7 @@ import {NotificationService} from '../../core/service/notification.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements ViewDidEnter, ViewDidLeave {
+export class LoginPage implements ViewDidEnter, OnDestroy {
   // Form
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -44,15 +44,14 @@ export class LoginPage implements ViewDidEnter, ViewDidLeave {
   login() {
     this.ns.showToast('Conectando...');
     this.userConsumer.doLogin(this.loginForm.value).then((sucMessage: string) => {
-      this.ns.showToast(sucMessage);
-      this.navCtrl.navigateForward('/logged-in').then(() => null);
+      this.navCtrl.navigateForward('/logged-in').then(() => this.ns.showToast(sucMessage));
     }).catch((errMessage: string) => {
       this.ns.showToast(errMessage);
     });
   }
 
 
-  ionViewDidLeave(): void {
+  ngOnDestroy(): void {
     this.loginForm.reset();
     this.userSubscription.unsubscribe();
   }

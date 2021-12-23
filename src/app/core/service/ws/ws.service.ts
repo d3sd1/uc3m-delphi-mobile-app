@@ -7,6 +7,7 @@ import {WsMode} from './ws-mode.model';
 import {JwtService} from '../jwt.service';
 import {WsAction} from './ws-action.model';
 import {WsCommand} from './ws-command.model';
+import {NavController} from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class WsService {
   private connectionSubscription: Subscription;
   private commandsSubscription: Subscription;
 
-  constructor(private jwtService: JwtService) {
+  constructor(private jwtService: JwtService, private navCtrl: NavController) {
     this.handleConnection();
     this.handleActions();
   }
@@ -51,24 +52,26 @@ export class WsService {
   }
 
   disconnectWs() {
-    this.commandSubscriptions.forEach((sub: Subscription) => {
-      if (!sub.closed) {
-        sub.unsubscribe();
-      }
-    });
+    if (this.commandSubscriptions) {
+      this.commandSubscriptions.forEach((sub: Subscription) => {
+        if (!sub.closed) {
+          sub.unsubscribe();
+        }
+      });
+    }
     this.commands.getValue().forEach((cmd) => {
       cmd.connected = false;
     });
     if (this.getConnection().getValue() !== null) {
       this.getConnection().getValue().disconnect();
     }
-    if (!this.jwtSubscription.closed) {
+    if (this.jwtSubscription && !this.jwtSubscription.closed) {
       this.jwtSubscription.unsubscribe();
     }
-    if (!this.connectionSubscription.closed) {
+    if (this.connectionSubscription && !this.connectionSubscription.closed) {
       this.connectionSubscription.unsubscribe();
     }
-    if (!this.commandsSubscription.closed) {
+    if (this.commandsSubscription && !this.commandsSubscription.closed) {
       this.commandsSubscription.unsubscribe();
     }
     this.wsConnection.next(null);
@@ -76,6 +79,7 @@ export class WsService {
 
   private handleConnection() {
     this.jwtSubscription = this.jwtService.getJwt().subscribe((jwt) => {
+      console.log('go for connection!!', jwt)
       if (jwt === null) {
         return;
       }
@@ -84,7 +88,9 @@ export class WsService {
       stompClient.connect({jwt}, () => {
         this.wsConnection.next(stompClient);
       }, (e) => {
+        console.log('force discon!!');
         console.error(e);
+        this.navCtrl.navigateBack('/logged-out').then(null);
         this.disconnectWs();
       });
     });

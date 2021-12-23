@@ -47,7 +47,7 @@
 
     <ion-item>
       <form (ngSubmit)="sendMessage()">
-        <ion-input #chat_input
+        <ion-input
                    (focusin)="onFocus()"
                    [(ngModel)]="editorMsg"
                    name="chat_message"

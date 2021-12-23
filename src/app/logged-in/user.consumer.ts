@@ -42,7 +42,8 @@ export class UserConsumer {
 
   doLogin(loginForm): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.http.post<{ jwt }>(environment.apiUrl + '/login', loginForm).toPromise().then((loginResponse: { jwt }) => {
+      this.http.post<{ jwt }>(environment.apiUrl + '/login', loginForm).toPromise().then(async (loginResponse: { jwt }) => {
+        await this.wsService.disconnectWs();
         this.jwtService.setJwt(loginResponse.jwt);
         resolve('Conexión satisfactoria.');
       }, (err: HttpErrorResponse) => {
