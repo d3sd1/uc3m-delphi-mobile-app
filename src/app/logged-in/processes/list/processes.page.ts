@@ -1,34 +1,50 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Process} from '../../../core/model/process';
 import {ProcessConsumer} from '../process.consumer';
-import {BehaviorSubject} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AlertController, NavController} from '@ionic/angular';
 import {User} from '../../../core/model/user';
 import {UserConsumer} from '../../user.consumer';
-import {ProcessesListener} from '../processes.listener';
 
 @Component({
   selector: 'delphi-processes',
   templateUrl: 'processes.page.html',
   styleUrls: ['processes.page.scss']
 })
-export class ProcessesPage extends ProcessesListener implements OnDestroy {
+export class ProcessesPage implements OnInit, OnDestroy {
 
-  filteredProcesses: Process[] = null;
-  loadingProcesses = true;
+  processes: Process[];
+  filteredProcesses: Process[];
+  user: User;
+  loadingProcesses = false;
 
-  constructor(private route: ActivatedRoute,
+  processSubscription: Subscription;
+  userSubscription: Subscription;
+
+  constructor(private processService: ProcessConsumer,
+              private route: ActivatedRoute,
               private alertController: AlertController,
-              protected userConsumer: UserConsumer,
-              protected processConsumer: ProcessConsumer,
+              private userConsumer: UserConsumer,
+              private processConsumer: ProcessConsumer,
               private navCtrl: NavController) {
-    super(processConsumer, userConsumer);
   }
 
-  onProcessesUpdate() {
-    this.filterProcesses();
-    this.loadingProcesses = false;
+  ngOnInit() {
+    this.loadingProcesses = true;
+    this.processSubscription = this.processConsumer.getProcesses().subscribe(async (processes) => {
+      if (processes === null) {
+        return;
+      }
+      this.loadingProcesses = true;
+      this.processes = processes;
+      this.filterProcesses();
+      this.loadingProcesses = false;
+    });
+
+    this.userSubscription = this.userConsumer.getUser().subscribe(async (user) => {
+      this.user = user;
+    });
   }
 
   editProcess(process) {
@@ -53,7 +69,7 @@ export class ProcessesPage extends ProcessesListener implements OnDestroy {
   filterProcesses(ev: any = undefined) {
     this.filteredProcesses = [];
     let wantsFinished = false;
-    if (ev) {
+    if(ev) {
       wantsFinished = ev.target.value === 'finished';
     }
     this.processes.forEach((process: Process) => {
@@ -115,13 +131,14 @@ export class ProcessesPage extends ProcessesListener implements OnDestroy {
     await alert.present();
   }
 
+
   ngOnDestroy(): void {
-
+    this.processSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.processes = undefined;
+    this.filteredProcesses = undefined;
+    this.loadingProcesses = false;
+    this.user = undefined;
   }
-
-  onUserUpdate() {
-  }
-
-
 
 }
