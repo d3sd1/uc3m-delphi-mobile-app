@@ -36,7 +36,7 @@ export class InvitationConsumer {
    * @private
    */
   private listenUpdates() {
-    this.wsService.subscribe('invitation', false, this.users);
-    this.wsService.subscribe('invitation', true, this.users);
+    this.wsService.listen('invitation', false, this.users);
+    this.wsService.listen('invitation', true, this.users);
   }
 }

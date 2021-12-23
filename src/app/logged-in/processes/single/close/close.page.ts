@@ -1,71 +1,50 @@
-import {Component} from '@angular/core';
-import {Process} from '../../../../core/model/process';
-import {NavController, ToastController} from '@ionic/angular';
+import {Component, OnDestroy} from '@angular/core';
+import {NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../../../core/model/user';
 import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
+import {SingleProcessListener} from '../single-process.listener';
+import {NotificationService} from '../../../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-close',
   templateUrl: './close.page.html',
   styleUrls: ['./close.page.scss'],
 })
-export class ClosePage {
+export class ClosePage extends SingleProcessListener implements OnDestroy {
 
-  process: Process;
   user: User;
 
   constructor(
     private navCtrl: NavController,
-    private route: ActivatedRoute,
-    private userConsumer: UserConsumer,
-    private httpClient: HttpClient,
-    private processConsumer: ProcessConsumer,
-    private toastController: ToastController,
-    private translate: TranslateService) {
-    this.userConsumer.getUser().subscribe((user) => {
-      this.user = user;
-    });
-    this.route.params.subscribe(params => {
-
-      this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes == null) {
-          return;
-        }
-        const process = processes.find(p2 => p2.id === +params.id);
-        // If process is finished, do not allow to stay on this page
-        if (process.finished) {
-          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
-        }
-        this.process = process;
-      });
-    });
+    private ns: NotificationService,
+    protected route: ActivatedRoute,
+    protected userConsumer: UserConsumer,
+    protected processConsumer: ProcessConsumer) {
+    super(route, processConsumer, userConsumer);
   }
 
+  onProcessUpdate() {
+    if (this.process.finished) {
+      this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+    }
+  }
 
-  public async closeProcess() {
+  ngOnDestroy(): void {
+    this.clearProcesses();
+  }
+
+  onUserUpdate() {
+  }
+
+  public closeProcess() {
     if (this.process.conclusion === '' || this.process.conclusion === undefined || this.process.conclusion === null) {
-      this.showToast('Debes introducir una conclusión');
+      this.ns.showToast('Debes introducir una conclusión');
       return;
     }
     this.processConsumer.closeProcess(this.process.id);
     this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
   }
 
-
-  private showToast(msg: string) {
-    this.toastController.create({
-      position: 'top',
-      message: msg,
-    }).then(toast => {
-      toast.present().then(r => {
-        setTimeout(() => {
-          toast.dismiss().then(r => null);
-        }, 3000);
-      });
-    });
-  }
 }

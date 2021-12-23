@@ -10,7 +10,6 @@ import {NotificationService} from '../../core/service/notification.service';
   styleUrls: ['./forgot-password.page.scss'],
 })
 export class ForgotPasswordPage implements ViewDidEnter, OnDestroy {
-  // Form
   recoverForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
   });
@@ -40,17 +39,15 @@ export class ForgotPasswordPage implements ViewDidEnter, OnDestroy {
               const code = (ev.target as HTMLInputElement).value;
               if (code.length === 6) {
                 this.ns.showLoading('Cargando...').then((loading) => {
-                  this.userConsumer.resetPassword(this.recoverForm.get('email').value, +code, () => {
-                      loading.dismiss().then(null);
-                      this.ns.removeAlert();
-                      this.displaySuccess();
-                    },
-                    () => {
-                      loading.dismiss().then(null);
-                      this.ns.removeAlert();
-                      this.displayError();
-                    }, () => {
-                    });
+                  this.userConsumer.resetPassword(this.recoverForm.get('email').value, +code).then(() => {
+                    loading.dismiss().then(null);
+                    this.ns.removeAlert();
+                    this.displaySuccess();
+                  }, () => {
+                    loading.dismiss().then(null);
+                    this.ns.removeAlert();
+                    this.displayError();
+                  });
                 });
               }
             },

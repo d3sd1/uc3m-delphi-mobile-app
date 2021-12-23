@@ -28,8 +28,8 @@ export class UserConsumer {
     return this.http.put<void>(environment.apiUrl + '/password/recover', {email}).toPromise();
   }
 
-  resetPassword(email, code, then, catched, finallied) {
-    this.http.put(environment.apiUrl + '/password/reset', {email, code}).subscribe(then, catched, finallied);
+  resetPassword(email, code) {
+    return this.http.put(environment.apiUrl + '/password/reset', {email, code}).toPromise();
   }
 
   updateUserOnboarding(name: string, surnames: string) {
@@ -42,7 +42,7 @@ export class UserConsumer {
 
   doLogin(loginForm): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.http.post<{ jwt }>(environment.apiUrl + '/login', loginForm).subscribe(async (loginResponse: { jwt }) => {
+      this.http.post<{ jwt }>(environment.apiUrl + '/login', loginForm).toPromise().then((loginResponse: { jwt }) => {
         this.jwtService.setJwt(loginResponse.jwt);
         resolve('Conexión satisfactoria.');
       }, async (err: HttpErrorResponse) => {
@@ -67,7 +67,7 @@ export class UserConsumer {
   }
 
   private handleUser() {
-    this.wsService.subscribe('profile', true, this.connectedUser);
+    this.wsService.listen('profile', true, this.connectedUser);
   }
 
 

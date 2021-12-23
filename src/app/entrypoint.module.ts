@@ -55,7 +55,10 @@ import {NotificationService} from './core/service/notification.service';
 export class EntrypointModule {
 }
 
-// required for AOT compilation
+/**
+ * Required for AOT compilation.
+ */
+
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }

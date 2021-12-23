@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
 import {AlertController, IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
@@ -8,20 +8,24 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
 import {Round} from '../../../../core/model/round';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-participate',
   templateUrl: './participate.page.html',
   styleUrls: ['./participate.page.scss'],
 })
-export class ParticipatePage {
-  answers: Answer[] = [];
+export class ParticipatePage implements OnDestroy {
+  answers: Answer[];
 
-  currentQuestion = 0;
+  currentQuestion;
   currentQuestionValue: any;
   process: Process;
   currentUser: User;
   @ViewChild('participate') participateSlides: IonSlides;
+  userSubscription: Subscription;
+  routeSubscription: Subscription;
+  processSubscription: Subscription;
 
   constructor(
     private navCtrl: NavController,
@@ -32,12 +36,12 @@ export class ParticipatePage {
     private userConsumer: UserConsumer,
     private processConsumer: ProcessConsumer,
     private alertController: AlertController) {
-    this.userConsumer.getUser().subscribe((user) => {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
 
-    this.route.params.subscribe(params => {
-      this.processConsumer.getProcesses().subscribe((processes) => {
+    this.routeSubscription = this.route.params.subscribe(params => {
+      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
         }
@@ -58,6 +62,24 @@ export class ParticipatePage {
         this.updateCurrentQuestionValue();
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
+    }
+    if (!this.routeSubscription.closed) {
+      this.routeSubscription.unsubscribe();
+    }
+    this.process = undefined;
+    this.currentUser = undefined;
+    this.answers = undefined;
+    this.currentQuestion = undefined;
+    this.currentQuestionValue = undefined;
+    this.participateSlides.slideTo(0).then(r => null);
   }
 
   updateCurrentQuestionValue() {

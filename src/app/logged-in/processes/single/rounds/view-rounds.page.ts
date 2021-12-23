@@ -1,39 +1,33 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
 import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
+import {SingleProcessListener} from '../single-process.listener';
 
 @Component({
   selector: 'delphi-rounds',
   templateUrl: './view-rounds.page.html',
   styleUrls: ['./view-rounds.page.scss'],
 })
-export class ViewRoundsPage {
+export class ViewRoundsPage extends SingleProcessListener implements OnDestroy {
 
   process: Process;
   user: User;
 
   constructor(
     private navCtrl: NavController,
-    private route: ActivatedRoute,
-    private processConsumer: ProcessConsumer,
-    private userConsumer: UserConsumer) {
-    this.userConsumer.getUser().subscribe((user) => {
-      this.user = user;
-    });
-    this.route.params.subscribe(params => {
+    protected route: ActivatedRoute,
+    protected processConsumer: ProcessConsumer,
+    protected userConsumer: UserConsumer) {
+    super(route, processConsumer, userConsumer);
+  }
 
-      this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes == null) {
-          return;
-        }
-        const process = processes.find(p2 => p2.id === +params.id);
-        this.process = process;
-      });
-    });
+
+  ngOnDestroy(): void {
+    this.clearProcesses();
   }
 
   sortRounds() {

@@ -85,6 +85,6 @@ export class ProcessConsumer {
   }
 
   private listenProcessesUpdates() {
-    this.wsService.subscribe('process/all', true, this.userProcesses);
+    this.wsService.listen('process/all', true, this.userProcesses);
   }
 }

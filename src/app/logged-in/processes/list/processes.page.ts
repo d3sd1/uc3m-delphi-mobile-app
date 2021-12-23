@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Process} from '../../../core/model/process';
 import {ProcessConsumer} from '../process.consumer';
 import {BehaviorSubject} from 'rxjs';
@@ -6,44 +6,29 @@ import {ActivatedRoute} from '@angular/router';
 import {AlertController, NavController} from '@ionic/angular';
 import {User} from '../../../core/model/user';
 import {UserConsumer} from '../../user.consumer';
+import {ProcessesListener} from '../processes.listener';
 
 @Component({
   selector: 'delphi-processes',
   templateUrl: 'processes.page.html',
   styleUrls: ['processes.page.scss']
 })
-export class ProcessesPage implements OnInit {
+export class ProcessesPage extends ProcessesListener implements OnDestroy {
 
-  processesUpdater: BehaviorSubject<Process[]>;
-  processUpdater: BehaviorSubject<Process>[] = null;
-  processes: Process[] = null;
   filteredProcesses: Process[] = null;
-  user: User;
-  loadingProcesses = false;
+  loadingProcesses = true;
 
-  constructor(private processService: ProcessConsumer,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private alertController: AlertController,
-              private userConsumer: UserConsumer,
-              private processConsumer: ProcessConsumer,
+              protected userConsumer: UserConsumer,
+              protected processConsumer: ProcessConsumer,
               private navCtrl: NavController) {
+    super(processConsumer, userConsumer);
   }
 
-  ngOnInit() {
-    this.loadingProcesses = true;
-    this.processConsumer.getProcesses().subscribe(async (processes) => {
-      if (processes === null) {
-        return;
-      }
-      this.loadingProcesses = true;
-      this.processes = processes;
-      this.filterProcesses();
-      this.loadingProcesses = false;
-    });
-
-    this.userConsumer.getUser().subscribe(async (user) => {
-      this.user = user;
-    });
+  onProcessesUpdate() {
+    this.filterProcesses();
+    this.loadingProcesses = false;
   }
 
   editProcess(process) {
@@ -56,20 +41,23 @@ export class ProcessesPage implements OnInit {
    */
   processPendingParticipationWarning(process) {
     let pMs = 0;
-    if (process.currentRound?.limitTime !== null) {
-      pMs = new Date(process.currentRound?.limitTime).getTime();
+    if (process.currentRound.limitTime !== null) {
+      pMs = new Date(process.currentRound.limitTime).getTime();
     }
-    return process.currentRound?.started === true
-      && process.currentRound?.expertsRemaining?.find(pu => pu.id === this.user.id)
+    return process.currentRound.started === true
+      && process.currentRound.expertsRemaining.find(pu => pu.id === this.user.id)
       && pMs !== 0
       && pMs - 86400000 < (new Date()).getTime();
   }
 
-  filterProcesses(ev?: any) {
+  filterProcesses(ev: any = undefined) {
     this.filteredProcesses = [];
-    const wantsFinished = ev?.target.value === 'finished';
-    this.processes?.forEach((process: Process) => {
-      if ((wantsFinished && process?.finished) || (!wantsFinished && !process?.finished)) {
+    let wantsFinished = false;
+    if (ev) {
+      wantsFinished = ev.target.value === 'finished';
+    }
+    this.processes.forEach((process: Process) => {
+      if ((wantsFinished && process.finished) || (!wantsFinished && !process.finished)) {
         this.filteredProcesses.push(process);
       }
     });
@@ -85,7 +73,7 @@ export class ProcessesPage implements OnInit {
   }
 
   isCoordinator(process: Process): boolean {
-    return process.coordinators.findIndex((user) => user?.id === this.user?.id) !== -1;
+    return process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
   async addProcess() {
@@ -126,6 +114,14 @@ export class ProcessesPage implements OnInit {
 
     await alert.present();
   }
+
+  ngOnDestroy(): void {
+    this.clearProcesses();
+  }
+
+  onUserUpdate() {
+  }
+
 
 
 }

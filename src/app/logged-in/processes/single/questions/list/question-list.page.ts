@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
@@ -6,36 +6,38 @@ import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {UserConsumer} from '../../../../user.consumer';
 import {ProcessConsumer} from '../../../process.consumer';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-rounds',
   templateUrl: './question-list.page.html',
   styleUrls: ['./question-list.page.scss'],
 })
-export class QuestionListPage {
+export class QuestionListPage implements OnDestroy {
 
   process: Process;
   user: User;
   currentTime = (new Date()).toISOString();
+  userSubscription: Subscription;
+  routeSubscription: Subscription;
+  processSubscription: Subscription;
 
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
     public alertController: AlertController,
     public userConsumer: UserConsumer,
-    public processConsumer: ProcessConsumer,
-    private httpClient: HttpClient) {
-    this.userConsumer.getUser().subscribe((user) => {
+    public processConsumer: ProcessConsumer) {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-    this.route.params.subscribe(params => {
+    this.routeSubscription = this.route.params.subscribe(params => {
 
-      this.processConsumer.getProcesses().subscribe((processes) => {
+      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
         }
-        const process = processes.find(p2 => p2.id === +params.id);
-        this.process = process;
+        this.process = processes.find(p2 => p2.id === +params.id);
         this.orderQuestions();
       });
     });
@@ -43,7 +45,7 @@ export class QuestionListPage {
 
 
   isCoordinator(): boolean {
-    return this.process?.coordinators?.findIndex((user) => user.id === this.user?.id) !== -1;
+    return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
   public onItemReorder({detail}) {
@@ -56,24 +58,24 @@ export class QuestionListPage {
   }
 
   deleteQuestion(questionIndex: number) {
-    this.process?.currentRound.questions.splice(questionIndex, 1);
+    this.process.currentRound.questions.splice(questionIndex, 1);
   }
 
   async updateBasicData() {
-    this.processConsumer.updateRoundBasicData(this.process?.id, this.process?.currentRound.name, this.process?.currentRound?.limitTime);
+    this.processConsumer.updateRoundBasicData(this.process.id, this.process.currentRound.name, this.process.currentRound.limitTime);
   }
 
   async startRound() {
     let questionsMissing = false;
-    this.process?.currentRound.questions?.forEach((question) => {
+    this.process.currentRound.questions.forEach((question) => {
       if (question.name === null ||
         question.name === '' ||
         question.name === undefined) {
         questionsMissing = true;
       }
     });
-    if (this.process?.currentRound?.limitTime === null ||
-      this.process?.currentRound?.limitTime === undefined) {
+    if (this.process.currentRound.limitTime === null ||
+      this.process.currentRound.limitTime === undefined) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',
@@ -83,9 +85,9 @@ export class QuestionListPage {
       });
 
       await alert.present();
-    } else if (this.process?.currentRound.questions === null ||
-      this.process?.currentRound.questions === undefined ||
-      this.process?.currentRound.questions.length === 0) {
+    } else if (this.process && (this.process.currentRound.questions === null ||
+      this.process.currentRound.questions === undefined ||
+      this.process.currentRound.questions.length === 0)) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',
@@ -105,7 +107,7 @@ export class QuestionListPage {
       });
 
       await alert.present();
-    } else if (this.process?.currentRound.name === '') {
+    } else if (this.process.currentRound.name === '') {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Error',
@@ -116,13 +118,13 @@ export class QuestionListPage {
 
       await alert.present();
     } else {
-      this.processConsumer.startCurrentRound(this.process?.id);
+      this.processConsumer.startCurrentRound(this.process.id);
       this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
     }
   }
 
   async closeRound() {
-    this.processConsumer.endCurrentRound(this.process?.id);
+    this.processConsumer.endCurrentRound(this.process.id);
     this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
   }
 
@@ -230,7 +232,7 @@ export class QuestionListPage {
           text: 'Crear',
           handler: async (alertData) => {
             await alert.dismiss();
-            this.processConsumer.addQuestion(this.process?.id, name, selectedQuestionType);
+            this.processConsumer.addQuestion(this.process.id, name, selectedQuestionType);
           }
         }
       ]
@@ -240,7 +242,7 @@ export class QuestionListPage {
   }
 
   private orderQuestions() {
-    this.process?.currentRound?.questions?.sort((n1, n2) => {
+    this.process.currentRound.questions.sort((n1, n2) => {
       if (n1.orderPosition < n2.orderPosition) {
         return -1;
       }
@@ -251,4 +253,18 @@ export class QuestionListPage {
     });
   }
 
+  ngOnDestroy(): void {
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
+    }
+    if (!this.routeSubscription.closed) {
+      this.routeSubscription.unsubscribe();
+    }
+    this.process = undefined;
+    this.user = undefined;
+    this.currentTime = undefined;
+  }
 }

@@ -15,6 +15,9 @@ export class WsService {
   private wsConnection: BehaviorSubject<Stomp> = new BehaviorSubject<Stomp>(null);
   private commands: BehaviorSubject<WsCommand[]> = new BehaviorSubject<Stomp>([]);
   private commandSubscriptions: Subscription[] = [];
+  private jwtSubscription: Subscription;
+  private connectionSubscription: Subscription;
+  private commandsSubscription: Subscription;
 
   constructor(private jwtService: JwtService) {
     this.handleConnection();
@@ -36,7 +39,7 @@ export class WsService {
     this.commands.next(a);
   }
 
-  subscribe(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
+  listen(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
     const wsCommand = new WsCommand();
     wsCommand.wsAction = WsAction.SUBSCRIBE;
     wsCommand.channel = channel;
@@ -49,7 +52,9 @@ export class WsService {
 
   disconnectWs() {
     this.commandSubscriptions.forEach((sub: Subscription) => {
-      sub.unsubscribe();
+      if (!sub.closed) {
+        sub.unsubscribe();
+      }
     });
     this.commands.getValue().forEach((cmd) => {
       cmd.connected = false;
@@ -57,11 +62,20 @@ export class WsService {
     if (this.getConnection().getValue() !== null) {
       this.getConnection().getValue().disconnect();
     }
+    if (!this.jwtSubscription.closed) {
+      this.jwtSubscription.unsubscribe();
+    }
+    if (!this.connectionSubscription.closed) {
+      this.connectionSubscription.unsubscribe();
+    }
+    if (!this.commandsSubscription.closed) {
+      this.commandsSubscription.unsubscribe();
+    }
     this.wsConnection.next(null);
   }
 
   private handleConnection() {
-    this.jwtService.getJwt().subscribe((jwt) => {
+    this.jwtSubscription = this.jwtService.getJwt().subscribe((jwt) => {
       if (jwt === null) {
         console.error('JWT is not set, not connecting to websocket.');
         return;
@@ -78,16 +92,15 @@ export class WsService {
   }
 
   private handleActions(): void {
-    this.getConnection().subscribe((con) => {
+    this.connectionSubscription = this.getConnection().subscribe((con) => {
       if (con === null) {
         return;
       }
-      this.commands.subscribe((commands) => {
+      this.commandsSubscription = this.commands.subscribe((commands) => {
         commands.forEach((cmd) => {
           if (cmd.connected) {
             return;
           }
-          // Execute actions
           if (WsAction[cmd.wsAction] === 'PUBLISH') {
             con.send('/ws/' + cmd.channel + '/' + WsMode[cmd.mode].toLowerCase(), {}, JSON.stringify(cmd.body));
             cmd.connected = true;

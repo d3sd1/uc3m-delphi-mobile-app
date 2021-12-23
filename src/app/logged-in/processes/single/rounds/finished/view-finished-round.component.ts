@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ActionSheetController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
@@ -7,17 +7,21 @@ import {UserConsumer} from '../../../../user.consumer';
 import {ProcessConsumer} from '../../../process.consumer';
 import {Round} from '../../../../../core/model/round';
 import {Answer} from '../../../../../core/model/answer';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-rounds',
   templateUrl: './view-finished-round.component.html',
   styleUrls: ['./view-finished-round.component.scss'],
 })
-export class ViewFinishedRoundPage {
+export class ViewFinishedRoundPage implements OnDestroy {
 
   process: Process;
   currentUser: User;
   roundIdx: number;
+  userSubscription: Subscription;
+  routeSubscription: Subscription;
+  processSubscription: Subscription;
 
   constructor(
     private navCtrl: NavController,
@@ -25,13 +29,13 @@ export class ViewFinishedRoundPage {
     private processConsumer: ProcessConsumer,
     private route: ActivatedRoute,
     public actionSheetController: ActionSheetController) {
-    this.userConsumer.getUser().subscribe((user) => {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
 
-    this.route.params.subscribe(params => {
+    this.routeSubscription = this.route.params.subscribe(params => {
 
-      this.processConsumer.getProcesses().subscribe((processes) => {
+      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
         }
@@ -40,9 +44,10 @@ export class ViewFinishedRoundPage {
           return;
         }
         this.process = process;
-        this.roundIdx = process.pastRounds.findIndex(q => q.id === +params['roundid']);
+        this.roundIdx = process.pastRounds.findIndex(q => q.id === +params.roundid);
       });
     });
+
   }
 
   getExpertAnswer(expert: User, round: Round, qId: number): Answer {
@@ -52,5 +57,19 @@ export class ViewFinishedRoundPage {
     return round.answers.find(rr => rr.user.id === expert.id && rr.question.id === qId);
   }
 
+  ngOnDestroy(): void {
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
+    }
+    if (!this.routeSubscription.closed) {
+      this.routeSubscription.unsubscribe();
+    }
+    this.process = undefined;
+    this.currentUser = undefined;
+    this.roundIdx = undefined;
+  }
 }
 

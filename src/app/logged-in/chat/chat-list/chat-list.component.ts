@@ -1,15 +1,16 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy} from '@angular/core';
 import {User} from '../../../core/model/user';
 import {UserChat} from '../../../core/model/user-chat';
 import {ChatConsumer} from '../chat.consumer';
 import {UserConsumer} from '../../user.consumer';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-chat-list',
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss'],
 })
-export class ChatListComponent {
+export class ChatListComponent implements OnDestroy {
   user: User;
 
   @Input()
@@ -18,18 +19,35 @@ export class ChatListComponent {
   userChatsOriginal: UserChat[] = [];
 
   userChats: UserChat[] = [];
+  userSubscription: Subscription;
+  chatSubscription: Subscription;
 
 
   constructor(private chatConsumer: ChatConsumer, private userConsumer: UserConsumer) {
-    this.userConsumer.getUser().subscribe((user) => {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-    this.chatConsumer.getChats().subscribe((userChats) => {
+    this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
       this.userChatsOriginal = userChats;
       this.userChats = [...this.userChatsOriginal];
       this.loading = false;
     });
   }
+
+  ngOnDestroy(): void {
+    if (!this.chatSubscription.closed) {
+      this.chatSubscription.unsubscribe();
+    }
+
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    this.user = undefined;
+    this.loading = false;
+    this.userChatsOriginal = [];
+    this.userChats = [];
+  }
+
 
   async filterList(evt) {
     const searchTerm = evt.srcElement.value;
@@ -54,9 +72,6 @@ export class ChatListComponent {
   }
 
   deleteChat(chatId, slidingItem) {
-    // TODO CALL SERVICE ON REST, also trigger kafka event to reload other user apps (?)
-    // this.currentUserChatsBackup = this.currentUserChatsBackup.filter(chat => chat.id !== chatId);
-    // this.currentUserChats = this.currentUserChatsBackup;
     this.removeNotificationsFromChat(chatId);
     slidingItem.close();
   }

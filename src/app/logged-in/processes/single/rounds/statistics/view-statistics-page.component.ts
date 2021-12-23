@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ActionSheetController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
@@ -7,13 +7,14 @@ import {UserConsumer} from '../../../../user.consumer';
 import {ProcessConsumer} from '../../../process.consumer';
 import {Question} from '../../../../../core/model/question';
 import {ChartConfiguration, ChartData, ChartType} from 'chart.js';
+import {SingleProcessListener} from '../../single-process.listener';
 
 @Component({
   selector: 'delphi-rounds',
   templateUrl: './view-statistics-page.component.html',
   styleUrls: ['./view-statistics-page.component.scss'],
 })
-export class ViewStatisticsPage {
+export class ViewStatisticsPage extends SingleProcessListener implements OnDestroy {
 
 
   public scatterChartOptions: ChartConfiguration['options'] = {
@@ -64,29 +65,20 @@ export class ViewStatisticsPage {
 
   constructor(
     private navCtrl: NavController,
-    private userConsumer: UserConsumer,
-    private processConsumer: ProcessConsumer,
-    private route: ActivatedRoute,
+    protected userConsumer: UserConsumer,
+    protected processConsumer: ProcessConsumer,
+    protected route: ActivatedRoute,
     public actionSheetController: ActionSheetController) {
-    this.userConsumer.getUser().subscribe((user) => {
-      this.currentUser = user;
-    });
-
-    this.route.params.subscribe(params => {
-
-      this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes == null) {
-          return;
-        }
-        const process = processes.find(p2 => p2.id === +params.id);
-        if (process === null) {
-          return;
-        }
-        this.process = process;
-        this.roundIdx = process.pastRounds.findIndex(q => q.id === +params['roundid']);
-      });
-    });
+    super(route, processConsumer, userConsumer);
   }
+  ngOnDestroy(): void {
+    this.clearProcesses();
+  }
+
+  onProcessUpdate() {
+    this.roundIdx = this.process.pastRounds.findIndex(q => q.id === +this.params.roundid);
+  }
+
 
   updateChart() {
     if (this.selectedStatKind !== null &&

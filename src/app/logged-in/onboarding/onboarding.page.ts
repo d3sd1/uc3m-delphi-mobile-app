@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../../core/model/user';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../user.consumer';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-onboarding',
@@ -19,6 +20,9 @@ export class OnboardingPage implements ViewDidEnter {
     newPass: '',
     newPassRep: ''
   };
+  userSubscription: Subscription;
+  routeSubscription: Subscription;
+  processSubscription: Subscription;
 
   @ViewChild('mySlider') slides: IonSlides;
 
@@ -28,7 +32,7 @@ export class OnboardingPage implements ViewDidEnter {
               private translate: TranslateService,
               private userConsumer: UserConsumer,
               private navCtrl: NavController) {
-    this.userConsumer.getUser().subscribe((user) => {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       if (user === null) {
         return;
       }

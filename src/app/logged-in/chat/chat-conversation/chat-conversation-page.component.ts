@@ -26,6 +26,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
   private chatSubscription: Subscription;
   private userSubscription: Subscription;
   private invitationSubscription: Subscription;
+  private routeParamsSubscription: Subscription;
 
   constructor(
     private chatConsumer: ChatConsumer,
@@ -39,7 +40,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
    * Promise is used to execute this block on background
    */
   async ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.routeParamsSubscription = this.route.params.subscribe(params => {
       this.invitationSubscription = this.invitationConsumer.getUsers().subscribe((users) => {
         this.oppositeUser = users.find(p => p.id === +params.oppositeUserId);
       });
@@ -82,13 +83,22 @@ export class ChatConversationPage implements OnInit, OnDestroy {
     this.loading = false;
     this.editorMsg = '';
     this.showEmojiPicker = false;
-    this.invitationSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
-    this.chatSubscription.unsubscribe();
+    if (!this.chatSubscription.closed) {
+      this.chatSubscription.unsubscribe();
+    }
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.invitationSubscription.closed) {
+      this.invitationSubscription.unsubscribe();
+    }
+    if (!this.routeParamsSubscription.closed) {
+      this.routeParamsSubscription.unsubscribe();
+    }
   }
 
   scrollToBottom() {
-    this.chatDisplay.scrollToBottom(300);
+    this.chatDisplay.scrollToBottom(300).then(r => null);
   }
 
 

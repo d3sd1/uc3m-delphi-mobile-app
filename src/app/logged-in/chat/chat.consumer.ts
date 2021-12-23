@@ -25,6 +25,6 @@ export class ChatConsumer {
   }
 
   private listenUpdates() {
-    this.wsService.subscribe('chat', true, this.userChats);
+    this.wsService.listen('chat', true, this.userChats);
   }
 }

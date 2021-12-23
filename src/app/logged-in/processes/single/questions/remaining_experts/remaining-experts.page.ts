@@ -1,23 +1,26 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {environment} from '../../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {UserConsumer} from '../../../../user.consumer';
 import {ProcessConsumer} from '../../../process.consumer';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-rounds',
   templateUrl: './remaining-experts.page.html',
   styleUrls: ['./remaining-experts.page.scss'],
 })
-export class RemainingExpertsPage {
+export class RemainingExpertsPage implements OnDestroy {
 
   process: Process;
   user: User;
   currentTime = (new Date()).toISOString();
+  userSubscription: Subscription;
+  routeSubscription: Subscription;
+  processSubscription: Subscription;
 
   constructor(
     private navCtrl: NavController,
@@ -26,22 +29,20 @@ export class RemainingExpertsPage {
     private httpClient: HttpClient,
     private processConsumer: ProcessConsumer,
     private userConsumer: UserConsumer) {
-    this.userConsumer.getUser().subscribe((user) => {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
     });
-    this.route.params.subscribe(params => {
+    this.routeSubscription = this.route.params.subscribe(params => {
 
-      this.processConsumer.getProcesses().subscribe((processes) => {
+      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
         }
-        const process = processes.find(p2 => p2.id === +params.id);
-        this.process = process;
+        this.process = processes.find(p2 => p2.id === +params.id);
         this.orderQuestions();
       });
     });
   }
-
 
 
   private orderQuestions() {
@@ -55,5 +56,21 @@ export class RemainingExpertsPage {
       return 0;
     });
   }
+
+  ngOnDestroy(): void {
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
+    }
+    if (!this.routeSubscription.closed) {
+      this.routeSubscription.unsubscribe();
+    }
+    this.process = undefined;
+    this.user = undefined;
+    this.currentTime = undefined;
+  }
+
 
 }
