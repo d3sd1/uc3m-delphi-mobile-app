@@ -2,8 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Question} from '../../../../../../core/model/question';
 import {Category} from '../../../../../../core/model/category';
 import {Process} from '../../../../../../core/model/process';
-import {ToastController} from '@ionic/angular';
-import {HttpClient} from '@angular/common/http';
+import {NotificationService} from '../../../../../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-question-catpond',
@@ -18,7 +17,7 @@ export class QuestionCatpondPage implements OnInit {
   currentCategory = '';
 
 
-  constructor(private toastController: ToastController, private httpClient: HttpClient) {
+  constructor(private ns: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -26,19 +25,19 @@ export class QuestionCatpondPage implements OnInit {
   }
 
 
-   addCategory() {
+  addCategory() {
     if (this.question.categories === undefined ||
       this.question.categories === null) {
       this.question.categories = [];
     }
 
     if (this.currentCategory === '') {
-      await this.showToast('Introduce el nombre de la categoría');
+      this.ns.showToast('Introduce el nombre de la categoría');
       return;
     }
 
     if (this.currentCategory !== '' && this.question.categories.findIndex(c => c.catName.toLowerCase() == this.currentCategory.toLowerCase()) !== -1) {
-      await this.showToast('No puedes introducir categorías duplicadas');
+      this.ns.showToast('No puedes introducir categorías duplicadas');
       this.currentCategory = '';
       return;
     }
@@ -49,7 +48,7 @@ export class QuestionCatpondPage implements OnInit {
     //  this.reorderCategories();
   }
 
-   delCategory(category: Category) {
+  delCategory(category: Category) {
     /* this.process.currentRound.questions[this.questionIdx].categories = this.process.currentRound.questions[this.questionIdx].categories.filter((cat) => {
        return category.catName !== cat.catName;
      });
@@ -68,17 +67,5 @@ export class QuestionCatpondPage implements OnInit {
       }
       return 0;
     });
-  }
-
-  private  showToast(msg: string) {
-    const toast = await this.toastController.create({
-      position: 'top',
-      message: msg,
-    });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
   }
 }
