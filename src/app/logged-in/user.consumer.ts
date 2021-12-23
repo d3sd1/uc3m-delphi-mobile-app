@@ -40,6 +40,7 @@ export class UserConsumer {
     return this.connectedUser;
   }
 
+
   doLogin(loginForm): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       this.http.post<{ jwt }>(environment.apiUrl + '/login', loginForm).toPromise().then(async (loginResponse: { jwt }) => {
@@ -62,8 +63,12 @@ export class UserConsumer {
   }
 
   doLogout() {
-    this.connectedUser.next(null);
-    this.jwtService.setJwt(null);
+    if (this.connectedUser.getValue() !== null) {
+      this.connectedUser.next(null);
+    }
+    if (this.jwtService.getJwt().getValue() !== null) {
+      this.jwtService.setJwt(null);
+    }
     this.wsService.disconnectWs();
   }
 

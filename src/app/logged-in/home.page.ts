@@ -1,15 +1,15 @@
 import {Component, OnDestroy} from '@angular/core';
-import {Storage} from '@ionic/storage';
 import {User} from '../core/model/user';
 import {WsService} from '../core/service/ws/ws.service';
 import {NavController} from '@ionic/angular';
-import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from './user.consumer';
 import {ChatConsumer} from './chat/chat.consumer';
 import {Subscription} from 'rxjs';
 import {ProcessConsumer} from './processes/process.consumer';
 import {Process} from '../core/model/process';
 import {UserChat} from '../core/model/user-chat';
+import {JwtService} from '../core/service/jwt.service';
+import {NotificationService} from '../core/service/notification.service';
 
 @Component({
   selector: 'delphi-tabs',
@@ -21,6 +21,8 @@ export class HomePage implements OnDestroy {
   userSubscription: Subscription;
   processesSubscription: Subscription;
   userChatsSubscription: Subscription;
+  jwtSubscription: Subscription;
+  wsSubscription: Subscription;
 
   notifications = {
     proccess: 0,
@@ -35,11 +37,27 @@ export class HomePage implements OnDestroy {
 
   constructor(private userConsumer: UserConsumer,
               private processConsumer: ProcessConsumer,
-              private storage: Storage,
+              private ns: NotificationService,
               private wsService: WsService,
-              private translate: TranslateService,
+              private jwtService: JwtService,
               private chatConsumer: ChatConsumer,
               private navCtrl: NavController) {
+
+    this.jwtSubscription = this.jwtService.getJwt().subscribe((jwt) => {
+      if (jwt === null) {
+        this.userConsumer.doLogout();
+        this.navCtrl.navigateBack('/logged-out').then(() => this.ns.showToast('Te has desconectado correctamente.'));
+      }
+    });
+    let lastStomp;
+    this.wsSubscription = this.wsService.getConnection().subscribe((stomp) => {
+
+      if (stomp === null && lastStomp !== undefined) {
+        this.userConsumer.doLogout();
+        this.navCtrl.navigateBack('/logged-out').then(() => this.ns.showToast('Te has desconectado correctamente.'));
+      }
+      lastStomp = stomp;
+    });
     this.userSubscription = this.userConsumer.getUser().subscribe((u: User) => {
       if (u === null) {
         return;
@@ -67,9 +85,21 @@ export class HomePage implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-    this.processesSubscription.unsubscribe();
-    this.userChatsSubscription.unsubscribe();
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.wsSubscription.closed) {
+      this.wsSubscription.unsubscribe();
+    }
+    if (!this.jwtSubscription.closed) {
+      this.jwtSubscription.unsubscribe();
+    }
+    if (!this.userChatsSubscription.closed) {
+      this.userChatsSubscription.unsubscribe();
+    }
+    if (!this.processesSubscription.closed) {
+      this.processesSubscription.unsubscribe();
+    }
     this.notifications.proccess = 0;
     this.notifications.messages = 0;
     this.notifications.profile = 0;

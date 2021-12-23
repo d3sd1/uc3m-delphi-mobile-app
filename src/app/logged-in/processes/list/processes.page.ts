@@ -44,7 +44,7 @@ export class ProcessesPage implements OnInit, OnDestroy {
     });
 
     this.userSubscription = this.userConsumer.getUser().subscribe(user => {
-      if(user === null) {
+      if (user === null) {
         return;
       }
       this.user = user;
@@ -60,6 +60,9 @@ export class ProcessesPage implements OnInit, OnDestroy {
    * @param process
    */
   processPendingParticipationWarning(process) {
+    if (!this.user) {
+      return;
+    }
     let pMs = 0;
     if (process.currentRound.limitTime !== null) {
       pMs = new Date(process.currentRound.limitTime).getTime();
@@ -93,6 +96,9 @@ export class ProcessesPage implements OnInit, OnDestroy {
   }
 
   isCoordinator(process: Process): boolean {
+    if (!this.user) {
+      return;
+    }
     return process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
@@ -125,8 +131,12 @@ export class ProcessesPage implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.processSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
+    if(!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
+    }
+    if(!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
     this.processes = undefined;
     this.filteredProcesses = undefined;
     this.loadingProcesses = false;

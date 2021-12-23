@@ -1,4 +1,6 @@
 export enum WsAction {
   PUBLISH,
-  SUBSCRIBE
+  SUBSCRIBE,
+  DISCONNECT,
+  UNSUBSCRIBE
 }

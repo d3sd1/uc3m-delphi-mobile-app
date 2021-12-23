@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {LoadingController, NavController, ViewDidEnter} from '@ionic/angular';
+import {LoadingController, NavController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {UserConsumer} from '../../logged-in/user.consumer';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
@@ -10,7 +10,7 @@ import {NotificationService} from '../../core/service/notification.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements ViewDidEnter, OnDestroy {
+export class LoginPage implements ViewDidEnter, ViewDidLeave, OnDestroy {
   // Form
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -50,6 +50,9 @@ export class LoginPage implements ViewDidEnter, OnDestroy {
     });
   }
 
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
 
   ngOnDestroy(): void {
     this.loginForm.reset();

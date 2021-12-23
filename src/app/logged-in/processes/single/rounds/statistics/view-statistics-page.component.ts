@@ -119,9 +119,15 @@ export class ViewStatisticsPage implements OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.routeSubscription.unsubscribe();
-    this.processSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
+    }
+    if (!this.routeSubscription.closed) {
+      this.routeSubscription.unsubscribe();
+    }
     this.process = undefined;
     this.currentUser = undefined;
   }

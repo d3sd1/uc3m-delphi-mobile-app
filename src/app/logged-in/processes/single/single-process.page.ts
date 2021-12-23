@@ -77,9 +77,16 @@ export class SingleProcessPage implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.routeSubscription.unsubscribe();
-    this.processesSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
+
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.processesSubscription.closed) {
+      this.processesSubscription.unsubscribe();
+    }
+    if (!this.routeSubscription.closed) {
+      this.routeSubscription.unsubscribe();
+    }
     this.process = undefined;
     this.user = undefined;
   }

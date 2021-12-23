@@ -7,7 +7,6 @@ import {WsMode} from './ws-mode.model';
 import {JwtService} from '../jwt.service';
 import {WsAction} from './ws-action.model';
 import {WsCommand} from './ws-command.model';
-import {NavController} from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +15,8 @@ export class WsService {
   private wsConnection: BehaviorSubject<Stomp> = new BehaviorSubject<Stomp>(null);
   private commands: BehaviorSubject<WsCommand[]> = new BehaviorSubject<Stomp>([]);
   private commandSubscriptions: Subscription[] = [];
-  private jwtSubscription: Subscription;
-  private connectionSubscription: Subscription;
-  private commandsSubscription: Subscription;
 
-  constructor(private jwtService: JwtService, private navCtrl: NavController) {
+  constructor(private jwtService: JwtService) {
     this.handleConnection();
     this.handleActions();
   }
@@ -52,35 +48,28 @@ export class WsService {
   }
 
   disconnectWs() {
-    if (this.commandSubscriptions) {
-      this.commandSubscriptions.forEach((sub: Subscription) => {
-        if (!sub.closed) {
-          sub.unsubscribe();
-        }
-      });
+    if (this.wsConnection.getValue() === null) {
+      return;
     }
+    this.commandSubscriptions.forEach((sub: Subscription) => {
+      if (!sub.closed) {
+        sub.unsubscribe();
+      }
+    });
     this.commands.getValue().forEach((cmd) => {
       cmd.connected = false;
     });
     if (this.getConnection().getValue() !== null) {
       this.getConnection().getValue().disconnect();
     }
-    if (this.jwtSubscription && !this.jwtSubscription.closed) {
-      this.jwtSubscription.unsubscribe();
-    }
-    if (this.connectionSubscription && !this.connectionSubscription.closed) {
-      this.connectionSubscription.unsubscribe();
-    }
-    if (this.commandsSubscription && !this.commandsSubscription.closed) {
-      this.commandsSubscription.unsubscribe();
-    }
     this.wsConnection.next(null);
   }
 
   private handleConnection() {
-    this.jwtSubscription = this.jwtService.getJwt().subscribe((jwt) => {
-      console.log('go for connection!!', jwt)
+    this.jwtService.getJwt().subscribe((jwt) => {
       if (jwt === null) {
+        console.error('JWT is not set, not connecting to websocket.');
+        this.disconnectWs();
         return;
       }
       const ws = new SockJS(environment.apiUrl + '/ws', {transports: ['websocket']});
@@ -88,27 +77,27 @@ export class WsService {
       stompClient.connect({jwt}, () => {
         this.wsConnection.next(stompClient);
       }, (e) => {
-        console.log('force discon!!');
         console.error(e);
-        this.navCtrl.navigateBack('/logged-out').then(null);
         this.disconnectWs();
       });
     });
   }
 
   private handleActions(): void {
-    this.connectionSubscription = this.getConnection().subscribe((con) => {
+    this.getConnection().subscribe((con) => {
       if (con === null) {
         return;
       }
-      this.commandsSubscription = this.commands.subscribe((commands) => {
-        if (commands === null) {
-          return;
-        }
+      this.commands.subscribe((commands) => {
         commands.forEach((cmd) => {
+          if (WsAction[cmd.wsAction] === 'DISCONNECT') {
+            this.disconnectWs();
+            return;
+          }
           if (cmd.connected) {
             return;
           }
+          // Execute actions
           if (WsAction[cmd.wsAction] === 'PUBLISH') {
             con.send('/ws/' + cmd.channel + '/' + WsMode[cmd.mode].toLowerCase(), {}, JSON.stringify(cmd.body));
             cmd.connected = true;

@@ -50,6 +50,9 @@ export class QuestionListPage implements OnDestroy {
 
 
   isCoordinator(): boolean {
+    if (!this.user) {
+      return;
+    }
     return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
