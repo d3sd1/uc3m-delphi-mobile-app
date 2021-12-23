@@ -49,7 +49,7 @@ export class ChatListComponent implements OnDestroy {
   }
 
 
-  async filterList(evt) {
+  filterList(evt) {
     const searchTerm = evt.srcElement.value;
 
     if (!searchTerm) {

@@ -21,15 +21,14 @@ export class ProfilePage {
     });
   }
 
-  async ionViewWillLeave() {
+  ionViewWillLeave() {
     this.userSubscription.unsubscribe();
     this.user = null;
   }
 
   recoverPassword() {
-    this.userConsumer.doLogout().then(() => {
-      this.navCtrl.navigateBack('/logged-out/forgot-password').then(() => null);
-    });
+    this.userConsumer.doLogout();
+    this.navCtrl.navigateBack('/logged-out/forgot-password').then(null);
   }
 
   changeLanguage() {

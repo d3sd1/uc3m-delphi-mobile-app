@@ -77,7 +77,7 @@ export class UserPickerPage implements OnDestroy {
     return this.process.coordinators.findIndex((user) => user.id === this.currentUser.id) !== -1;
   }
 
-  async filter() {
+  filter() {
     if (this.filterCriterial === '' || this.filterCriterial === null) {
       this.usersFiltered = [];
       return;
@@ -93,7 +93,7 @@ export class UserPickerPage implements OnDestroy {
     });
   }
 
-  async removeUser(user: User) {
+  removeUser(user: User) {
     this.invitationConsumer.removeFromProcess(user.id, this.process.id);
   }
 

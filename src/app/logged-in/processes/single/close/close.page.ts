@@ -49,8 +49,7 @@ export class ClosePage implements OnDestroy {
     });
   }
 
-
-  public async closeProcess() {
+  closeProcess() {
     if (this.process.conclusion === '' || this.process.conclusion === undefined || this.process.conclusion === null) {
       this.ns.showToast('Debes introducir una conclusión');
       return;

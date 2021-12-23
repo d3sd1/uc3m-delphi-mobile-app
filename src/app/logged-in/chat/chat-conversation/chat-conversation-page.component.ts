@@ -39,7 +39,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
   /**
    * Promise is used to execute this block on background
    */
-  async ngOnInit() {
+  ngOnInit() {
     this.routeParamsSubscription = this.route.params.subscribe(params => {
       this.invitationSubscription = this.invitationConsumer.getUsers().subscribe((users) => {
         this.oppositeUser = users.find(p => p.id === +params.oppositeUserId);

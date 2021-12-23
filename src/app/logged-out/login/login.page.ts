@@ -24,7 +24,7 @@ export class LoginPage implements ViewDidEnter, ViewDidLeave {
   constructor(private userConsumer: UserConsumer,
               private navCtrl: NavController,
               private loadingController: LoadingController,
-              private toastService: NotificationService,
+              private ns: NotificationService,
               private fb: FormBuilder) {
   }
 
@@ -41,12 +41,12 @@ export class LoginPage implements ViewDidEnter, ViewDidLeave {
   }
 
   login() {
-    this.toastService.showToast('Conectando...');
+    this.ns.showToast('Conectando...');
     this.userConsumer.doLogin(this.loginForm.value).then((sucMessage: string) => {
-      this.toastService.showToast(sucMessage);
+      this.ns.showToast(sucMessage);
       this.navCtrl.navigateForward('/logged-in').then(() => null);
-    }).catch(async (errMessage: string) => {
-      this.toastService.showToast(errMessage);
+    }).catch((errMessage: string) => {
+      this.ns.showToast(errMessage);
     });
   }
 

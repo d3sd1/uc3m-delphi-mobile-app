@@ -1,7 +1,7 @@
 import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
-import {AlertController, IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
+import {AlertController, IonSlides, LoadingController, NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
@@ -9,6 +9,7 @@ import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
 import {Round} from '../../../../core/model/round';
 import {Subscription} from 'rxjs';
+import {NotificationService} from '../../../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-participate',
@@ -30,7 +31,7 @@ export class ParticipatePage implements OnDestroy {
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    private toastController: ToastController,
+    private ns: NotificationService,
     private translate: TranslateService,
     private loadingCtrl: LoadingController,
     private userConsumer: UserConsumer,
@@ -86,50 +87,42 @@ export class ParticipatePage implements OnDestroy {
     this.currentQuestionValue = this.answers[this.currentQuestion].content;
   }
 
-  async advance() {
+  advance() {
     this.sortCategories(this.currentQuestion + 1);
     const val = this.answers[this.currentQuestion].content;
     if (val === null || val === undefined || val === -1 || val === '') {
-      await this.showToast('Por favor responde la pregunta.');
+      this.ns.showToast('Por favor responde la pregunta.');
       return;
     }
     this.currentQuestion++;
     this.updateCurrentQuestionValue();
-    await this.participateSlides.slideNext();
+    this.participateSlides.slideNext();
   }
 
-  async back() {
+  back() {
     this.sortCategories(this.currentQuestion - 1);
     this.currentQuestion--;
     this.updateCurrentQuestionValue();
-    await this.participateSlides.slidePrev();
+    this.participateSlides.slidePrev();
   }
 
-  async finish() {
+  finish() {
     this.currentQuestion++;
-    const alert = await this.alertController.create({
-      header: 'Confirmar participación',
-      message: '¿Estás seguro de que deseas enviar la participación?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          cssClass: 'secondary',
-          handler: () => {
-            this.currentQuestion = this.process.currentRound.questions.length - 1;
-            this.updateCurrentQuestionValue();
-            alert.dismiss();
-          }
-        }, {
-          text: 'Enviar',
-          handler: () => {
-            alert.dismiss();
-            this.saveParticipation();
-          }
-        }
-      ]
+    this.ns.showAlert('Confirmar participación', '¿Estás seguro de que deseas enviar la participación?', {
+      text: 'Cancelar',
+      cssClass: 'secondary',
+      handler: () => {
+        this.currentQuestion = this.process.currentRound.questions.length - 1;
+        this.updateCurrentQuestionValue();
+        this.ns.removeAlert();
+      }
+    }, {
+      text: 'Enviar',
+      handler: () => {
+        this.ns.removeAlert();
+        this.saveParticipation();
+      }
     });
-
-    await alert.present();
   }
 
   getExpertAnswer(expert: User, round: Round, qId: number): Answer {
@@ -151,15 +144,16 @@ export class ParticipatePage implements OnDestroy {
     });
   }
 
-  async updateAnswer(currentQuestion, $event) {
+  updateAnswer(currentQuestion, $event) {
     this.answers[currentQuestion].content = $event.target.value;
   }
 
-  async addCatAnswer(currentQuestion, $event) {
+  addCatAnswer(currentQuestion, $event) {
     if (Array.isArray($event.target.value)) {
       if ($event.target.value.length > this.answers[currentQuestion].question.maxSelectable) {
         $event.target.value = '';
-        await this.showToast('Debes seleccionar menos del máximo de seleccionables para esta ronda: ' + this.answers[currentQuestion].question.maxSelectable);
+        this.ns.showToast('Debes seleccionar menos del máximo de seleccionables para esta ronda: ' +
+          this.answers[currentQuestion].question.maxSelectable);
         return;
       }
       // TODO  this.answers[currentQuestion].content = JSON.stringify($event.target.value);
@@ -168,7 +162,7 @@ export class ParticipatePage implements OnDestroy {
     }
   }
 
-  async addCatPondAnswer(currentQuestion, $event, categoryId) {
+  addCatPondAnswer(currentQuestion, $event, categoryId) {
     let obj = {};
     try {
       obj = JSON.parse(this.answers[currentQuestion].content);
@@ -210,18 +204,6 @@ export class ParticipatePage implements OnDestroy {
         });
       });
     });
-  }
-
-  private async showToast(transKey: string) {
-    const toast = await this.toastController.create({
-      position: 'top',
-      message: transKey,
-    });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
   }
 
 }

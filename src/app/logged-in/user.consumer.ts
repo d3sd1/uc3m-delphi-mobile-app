@@ -45,7 +45,7 @@ export class UserConsumer {
       this.http.post<{ jwt }>(environment.apiUrl + '/login', loginForm).toPromise().then((loginResponse: { jwt }) => {
         this.jwtService.setJwt(loginResponse.jwt);
         resolve('Conexión satisfactoria.');
-      }, async (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         if (err.status === 400 && err.error.message === 'INVALID_LOGIN') {
           reject('Conexión inválida.');
         } else if (err.status === 400 && err.error.message === 'USER_BLOCKED') {
@@ -60,10 +60,10 @@ export class UserConsumer {
     });
   }
 
-  async doLogout() {
-    await this.connectedUser.next(null);
-    await this.jwtService.setJwt(null);
-    await this.wsService.disconnectWs();
+  doLogout() {
+    this.connectedUser.next(null);
+    this.jwtService.setJwt(null);
+    this.wsService.disconnectWs();
   }
 
   private handleUser() {

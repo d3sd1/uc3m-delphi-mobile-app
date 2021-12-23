@@ -51,7 +51,7 @@ export class SingleProcessPage implements OnDestroy {
     return this.process.currentRound.expertsRemaining.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
-  async updateBasicFields() {
+  updateBasicFields() {
     this.processConsumer.updateProcessBasicData(this.process.id, this.process.name, this.process.description, this.process.objectives);
   }
 
@@ -64,7 +64,7 @@ export class SingleProcessPage implements OnDestroy {
     this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/close').then(r => null);
   }
 
-  async participate() {
+  participate() {
     if (!this.process.currentRound.started) {
       this.ns.showToast('El proceso no tiene la ronda actual abierta.');
       return;

@@ -14,11 +14,10 @@ export class LogoutPage implements OnInit {
   }
 
   ngOnInit() {
+    this.userConsumer.doLogout();
     setTimeout(() => {
-      this.userConsumer.doLogout().then(r => {
-        this.navCtrl.navigateBack('/logged-out/login').then(() => {
-          this.ns.showToast('Desconexión satisfactoria');
-        });
+      this.navCtrl.navigateBack('/logged-out/login').then(() => {
+        this.ns.showToast('Desconexión satisfactoria');
       });
     }, 2000);
   }

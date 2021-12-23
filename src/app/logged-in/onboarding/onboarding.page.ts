@@ -6,6 +6,7 @@ import {User} from '../../core/model/user';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../user.consumer';
 import {Subscription} from 'rxjs';
+import {NotificationService} from '../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-onboarding',
@@ -27,7 +28,7 @@ export class OnboardingPage implements ViewDidEnter {
   @ViewChild('mySlider') slides: IonSlides;
 
   constructor(private storage: Storage,
-              private httpClient: HttpClient,
+              private ns: NotificationService,
               private toastController: ToastController,
               private translate: TranslateService,
               private userConsumer: UserConsumer,
@@ -43,24 +44,24 @@ export class OnboardingPage implements ViewDidEnter {
     });
   }
 
-  async ionViewDidEnter() {
+  ionViewDidEnter() {
 
   }
 
-  async setupAccount() {
+  setupAccount() {
     if (this.user.name === '' ||
       this.user.surnames === '' ||
       this.user.name === null ||
       this.user.surnames === null ||
       this.user.name === undefined ||
       this.user.surnames === undefined) {
-      this.showToast('Nombre incorrecto.');
+      this.ns.showToast('Nombre incorrecto.');
       return;
     }
     this.slides.slideNext();
   }
 
-  async swipeNext() {
+  swipeNext() {
     this.slides.slideNext();
   }
 
@@ -74,18 +75,6 @@ export class OnboardingPage implements ViewDidEnter {
     if (this.user.needsOnboard === 'false' || this.user.needsOnboard === false) {
       this.navCtrl.navigateForward('/logged-in/menu').then(r => null);
     }
-  }
-
-  private async showToast(transKey: string) {
-    const toast = await this.toastController.create({
-      position: 'top',
-      message: transKey,
-    });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
   }
 
 }

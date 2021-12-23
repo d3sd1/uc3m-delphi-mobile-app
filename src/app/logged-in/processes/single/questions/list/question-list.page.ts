@@ -61,11 +61,11 @@ export class QuestionListPage implements OnDestroy {
     this.process.currentRound.questions.splice(questionIndex, 1);
   }
 
-  async updateBasicData() {
+  updateBasicData() {
     this.processConsumer.updateRoundBasicData(this.process.id, this.process.currentRound.name, this.process.currentRound.limitTime);
   }
 
-  async startRound() {
+  startRound() {
     let questionsMissing = false;
     this.process.currentRound.questions.forEach((question) => {
       if (question.name === null ||
@@ -123,12 +123,12 @@ export class QuestionListPage implements OnDestroy {
     }
   }
 
-  async closeRound() {
+  closeRound() {
     this.processConsumer.endCurrentRound(this.process.id);
     this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
   }
 
-  async addQuestionStep1() {
+  addQuestionStep1() {
     const alert = await this.alertController.create({
       header: 'Crear pregunta',
       inputs: [
@@ -159,7 +159,7 @@ export class QuestionListPage implements OnDestroy {
     await alert.present();
   }
 
-  async addQuestionStep2(name: string) {
+  addQuestionStep2(name: string) {
     let selectedQuestionType = 'QUALITATIVE';
     const alert = await this.alertController.create({
       header: 'Tipo de pregunta',
@@ -230,8 +230,8 @@ export class QuestionListPage implements OnDestroy {
         },
         {
           text: 'Crear',
-          handler: async (alertData) => {
-            await alert.dismiss();
+          handler: (alertData) => {
+            alert.dismiss();
             this.processConsumer.addQuestion(this.process.id, name, selectedQuestionType);
           }
         }

@@ -26,7 +26,7 @@ export class QuestionCatpondPage implements OnInit {
   }
 
 
-  async addCategory() {
+   addCategory() {
     if (this.question.categories === undefined ||
       this.question.categories === null) {
       this.question.categories = [];
@@ -49,7 +49,7 @@ export class QuestionCatpondPage implements OnInit {
     //  this.reorderCategories();
   }
 
-  async delCategory(category: Category) {
+   delCategory(category: Category) {
     /* this.process.currentRound.questions[this.questionIdx].categories = this.process.currentRound.questions[this.questionIdx].categories.filter((cat) => {
        return category.catName !== cat.catName;
      });
@@ -70,7 +70,7 @@ export class QuestionCatpondPage implements OnInit {
     });
   }
 
-  private async showToast(msg: string) {
+  private  showToast(msg: string) {
     const toast = await this.toastController.create({
       position: 'top',
       message: msg,

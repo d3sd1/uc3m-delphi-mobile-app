@@ -3,9 +3,10 @@ import {Process} from '../../../core/model/process';
 import {ProcessConsumer} from '../process.consumer';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {AlertController, NavController} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {User} from '../../../core/model/user';
 import {UserConsumer} from '../../user.consumer';
+import {NotificationService} from '../../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-processes',
@@ -24,7 +25,7 @@ export class ProcessesPage implements OnInit, OnDestroy {
 
   constructor(private processService: ProcessConsumer,
               private route: ActivatedRoute,
-              private alertController: AlertController,
+              private ns: NotificationService,
               private userConsumer: UserConsumer,
               private processConsumer: ProcessConsumer,
               private navCtrl: NavController) {
@@ -32,7 +33,7 @@ export class ProcessesPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadingProcesses = true;
-    this.processSubscription = this.processConsumer.getProcesses().subscribe(async (processes) => {
+    this.processSubscription = this.processConsumer.getProcesses().subscribe(processes => {
       if (processes === null) {
         return;
       }
@@ -42,7 +43,7 @@ export class ProcessesPage implements OnInit, OnDestroy {
       this.loadingProcesses = false;
     });
 
-    this.userSubscription = this.userConsumer.getUser().subscribe(async (user) => {
+    this.userSubscription = this.userConsumer.getUser().subscribe(user => {
       this.user = user;
     });
   }
@@ -69,7 +70,7 @@ export class ProcessesPage implements OnInit, OnDestroy {
   filterProcesses(ev: any = undefined) {
     this.filteredProcesses = [];
     let wantsFinished = false;
-    if(ev) {
+    if (ev) {
       wantsFinished = ev.target.value === 'finished';
     }
     this.processes.forEach((process: Process) => {
@@ -92,43 +93,31 @@ export class ProcessesPage implements OnInit, OnDestroy {
     return process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
-  async addProcess() {
-    const alert = await this.alertController.create({
-      header: 'Crear proceso',
-      inputs: [
-        {
-          name: 'name',
-          type: 'text',
-          placeholder: 'Nombre del proceso',
-          attributes: {
-            maxlength: 50,
-            autoFocus: true,
-          }
-        },
-        {
-          name: 'description',
-          type: 'textarea',
-          placeholder: 'Descripción del proceso',
-          attributes: {
-            maxlength: 5000,
-          }
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Ok',
-          handler: (alertData) => {
-            this.processConsumer.createProcess(alertData.name, alertData.description);
-          }
+  addProcess() {
+    this.ns.showAlert('Crear proceso', null, {
+      text: 'Ok',
+      handler: (alertData) => {
+        this.processConsumer.createProcess(alertData.name, alertData.description);
+      }
+    }, 'Cancelar', [
+      {
+        name: 'name',
+        type: 'text',
+        placeholder: 'Nombre del proceso',
+        attributes: {
+          maxlength: 50,
+          autoFocus: true,
         }
-      ]
-    });
-
-    await alert.present();
+      },
+      {
+        name: 'description',
+        type: 'textarea',
+        placeholder: 'Descripción del proceso',
+        attributes: {
+          maxlength: 5000,
+        }
+      },
+    ]);
   }
 
 

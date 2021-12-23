@@ -27,9 +27,9 @@ export class NotificationService {
 
   public showAlert(header: string,
                    subHeader: string,
-                   okBtn: string,
-                   cancelBtn: string = null,
-                   inputs: [{}] = null) {
+                   okBtn: string | object,
+                   cancelBtn: string | object = null,
+                   inputs: {}[] = null) {
     const buttons = [];
     if (okBtn !== null) {
       buttons.push(okBtn);
