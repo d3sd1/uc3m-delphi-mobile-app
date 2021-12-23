@@ -1,9 +1,9 @@
 <ion-header *ngIf="process">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id + '/question/list'"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/list'"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Modificar preguntas</ion-title>
@@ -15,7 +15,7 @@
   <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
     <ion-select [(ngModel)]="question.questionType.name" [disabled]="process?.currentRound?.started"
-                (ngModelChange)="updateQuestion()"> <!-- TODO -->
+                (ngModelChange)="updateQuestion()">
       <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
       <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
       <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>

@@ -24,8 +24,10 @@ import {QuestionCatlikertPage} from './single/questions/types/catlikert/question
 import {QuestionCatcustomPage} from './single/questions/types/catcustom/question-catcustom.page';
 import {QuestionCatmultiPage} from './single/questions/types/catmulti/question-catmulti.page';
 import {QuestionCatpondPage} from './single/questions/types/catpond/question-catpond.page';
-import {ViewSingleOldRoundPage} from './single/rounds/single-round/view-single-old-round.page';
+import {ViewFinishedRoundPage} from './single/rounds/finished/view-finished-round.component';
 import {RemainingExpertsPage} from './single/questions/remaining_experts/remaining-experts.page';
+import {ViewStatisticsPage} from './single/rounds/statistics/view-statistics-page.component';
+import {NgChartsModule} from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -37,6 +39,7 @@ import {RemainingExpertsPage} from './single/questions/remaining_experts/remaini
     CountdownModule,
     TranslateModule,
     ReactiveFormsModule,
+    NgChartsModule
   ],
   declarations: [
     ProcessesPage,
@@ -55,8 +58,9 @@ import {RemainingExpertsPage} from './single/questions/remaining_experts/remaini
     QuestionCatcustomPage,
     QuestionCatmultiPage,
     QuestionCatpondPage,
-    ViewSingleOldRoundPage,
-    RemainingExpertsPage
+    ViewFinishedRoundPage,
+    RemainingExpertsPage,
+    ViewStatisticsPage
   ],
   providers: [
     Geolocation

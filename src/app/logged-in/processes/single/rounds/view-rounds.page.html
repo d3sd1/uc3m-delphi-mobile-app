@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process?.id"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process?.id"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Rondas</ion-title>
@@ -19,7 +19,7 @@
   <ion-list *ngFor="let round of process?.pastRounds; let roundIndex = index">
     <!-- Default reorder icon, end aligned items -->
     <ion-item
-      [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/rounds/single-round/' + round?.id">
+      [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/finished/' + round?.id">
       <ion-label>{{round?.name}}</ion-label>
       <ion-reorder slot="start"></ion-reorder>
     </ion-item>

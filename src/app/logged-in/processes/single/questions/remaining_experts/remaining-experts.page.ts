@@ -144,13 +144,13 @@ export class RemainingExpertsPage {
       await alert.present();
     } else {
       await this.httpClient.post(environment.apiUrl + '/v1/process/round/start?process_id=' + this.process.id, {}).toPromise();
-      await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
+      await this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id);
     }
   }
 
   async closeRound() {
     await this.httpClient.post(environment.apiUrl + '/v1/process/round/close?process_id=' + this.process.id, {}).toPromise();
-    await this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id);
+    await this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id);
   }
 
 

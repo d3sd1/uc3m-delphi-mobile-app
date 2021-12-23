@@ -45,9 +45,8 @@ export class ModifyQuestionsContentPage {
       await this.showToast('Debes introducir una pregunta.');
       return;
     }
-    console.log('update question yolo!!')
     this.processConsumer.updateQuestion(this.process.id, this.question.id,
-      this.question.name, this.question.questionType.id, this.question.minVal,
+      this.question.name, this.question.questionType.name, this.question.minVal,
       this.question.maxVal, this.question.maxSelectable, this.question.orderPosition);
   }
   private async showToast(msg: string) {

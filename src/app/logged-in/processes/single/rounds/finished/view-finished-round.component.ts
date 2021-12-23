@@ -1,17 +1,19 @@
 import {Component} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {ActionSheetController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
 import {ProcessConsumer} from '../../../../../core/consumer/process/process.consumer';
+import {Round} from '../../../../../core/model/round';
+import {Answer} from '../../../../../core/model/answer';
 
 @Component({
   selector: 'delphi-rounds',
-  templateUrl: './view-single-old-round.page.html',
-  styleUrls: ['./view-single-old-round.page.scss'],
+  templateUrl: './view-finished-round.component.html',
+  styleUrls: ['./view-finished-round.component.scss'],
 })
-export class ViewSingleOldRoundPage {
+export class ViewFinishedRoundPage {
 
   process: Process;
   currentUser: User;
@@ -21,7 +23,8 @@ export class ViewSingleOldRoundPage {
     private navCtrl: NavController,
     private userConsumer: UserConsumer,
     private processConsumer: ProcessConsumer,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    public actionSheetController: ActionSheetController) {
     this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
@@ -37,5 +40,13 @@ export class ViewSingleOldRoundPage {
       });
     });
   }
+
+  getExpertAnswer(expert: User, round: Round, qId: number): Answer {
+    if (round.answers === null || round.answers === undefined) {
+      return null;
+    }
+    return round.answers.find(rr => rr.user.id === expert.id && rr.question.id === qId);
+  }
+
 }
 

@@ -56,13 +56,13 @@
       </ion-label>
     </ion-list-header>
     <ion-item *ngIf="!process?.finished && isCoordinator()" routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/question/list'">
+              [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/question/list'">
       <ion-label>Ronda actual</ion-label>
       <ion-badge slot="end">{{process?.currentRound?.questions?.length || 0}} Preguntas
       </ion-badge>
     </ion-item>
     <ion-item routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/rounds'">
+              [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds'">
       <ion-label>Rondas finalizadas</ion-label>
       <ion-badge slot="end">{{process?.pastRounds?.length}} Rondas
       </ion-badge>
@@ -77,14 +77,14 @@
 
     <!-- Toggles in a List -->
     <ion-item routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/user-picker/coordinator'">
+              [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/user-picker/coordinator'">
       <ion-badge slot="end">{{process?.coordinators?.length}}</ion-badge>
       <ion-label>Coordinadores</ion-label>
     </ion-item>
 
     <!-- Toggles in a List -->
     <ion-item *ngIf="isCoordinator()" routerDirection="forward"
-              [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/user-picker/expert'">
+              [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/user-picker/expert'">
       <ion-badge slot="end">{{process?.experts?.length}}</ion-badge>
       <ion-label>Expertos</ion-label>
     </ion-item>

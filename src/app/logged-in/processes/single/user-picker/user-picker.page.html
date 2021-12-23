@@ -2,9 +2,9 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button text="Volver"
-                       [defaultHref]="'/logged-in/menu/processes/single-round/' + process?.id"
+                       [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id"></ion-back-button>
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process?.id"></ion-back-button>
     </ion-buttons>
     <ion-title>Selector de usuarios</ion-title>
   </ion-toolbar>
@@ -12,7 +12,7 @@
 
 <ion-content *ngIf="process">
   <ion-searchbar *ngIf="isCoordinator() && !process.finished" (ionChange)="filter()" [(ngModel)]="filterCriterial"
-                placeholder="Buscar usuarios"
+                 class="lowercase" placeholder="Buscar usuarios"
                  animated debounce="500"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
     <ion-item (click)="addExistantUser(user)"

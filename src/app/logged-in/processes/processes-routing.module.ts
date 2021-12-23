@@ -7,9 +7,10 @@ import {QuestionListPage} from './single/questions/list/question-list.page';
 import {ModifyQuestionsContentPage} from './single/questions/single/modify-questions-content.page';
 import {ClosePage} from './single/close/close.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
-import {ViewSingleOldRoundPage} from './single/rounds/single-round/view-single-old-round.page';
+import {ViewFinishedRoundPage} from './single/rounds/finished/view-finished-round.component';
 import {ParticipatePage} from './single/participate/participate.page';
 import {RemainingExpertsPage} from './single/questions/remaining_experts/remaining-experts.page';
+import {ViewStatisticsPage} from './single/rounds/statistics/view-statistics-page.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,7 @@ const routes: Routes = [
     component: ProcessesPage
   },
   {
-    path: 'single-round/:id',
+    path: 'finished/:id',
     children: [
       {
         path: '',
@@ -54,7 +55,7 @@ const routes: Routes = [
             component: ViewRoundsPage,
           },
           {
-            path: 'single-round/:roundid',
+            path: 'finished/:roundid',
             children: [
               {
                 path: '',
@@ -63,7 +64,21 @@ const routes: Routes = [
               },
               {
                 path: 'view',
-                component: ViewSingleOldRoundPage,
+                component: ViewFinishedRoundPage,
+              },
+            ]
+          },
+          {
+            path: 'statistics/:roundid',
+            children: [
+              {
+                path: '',
+                redirectTo: 'view',
+                pathMatch: 'full'
+              },
+              {
+                path: 'view',
+                component: ViewStatisticsPage,
               },
             ]
           },
@@ -90,7 +105,7 @@ const routes: Routes = [
             component: RemainingExpertsPage
           },
           {
-            path: 'single-round/:questionid',
+            path: 'finished/:questionid',
             component: ModifyQuestionsContentPage
           },
         ]

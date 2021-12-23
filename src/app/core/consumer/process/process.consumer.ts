@@ -88,7 +88,7 @@ export class ProcessConsumer {
     this.wsService.publish(`process/rounds/current/participate`, {
         processId,
         answers: answers.map((answer) => {
-          return {questionId: answer.question.id, response: answer.response};
+          return {questionId: answer.question.id, content: answer.content};
         })
       },
       WsMode.UPDATE);
@@ -103,6 +103,7 @@ export class ProcessConsumer {
   }
 
   endCurrentRound(processId: number) {
+    console.log('endround', processId)
     this.wsService.publish(`process/rounds/current/end`, {processId}, WsMode.UPDATE);
   }
 
@@ -110,13 +111,13 @@ export class ProcessConsumer {
     this.wsService.publish(`process/finish`, {processId}, WsMode.UPDATE);
   }
 
-  updateQuestion(processId: number, questionId: number, name: string, questionTypeId: number,
+  updateQuestion(processId: number, questionId: number, name: string, questionTypeName: string,
                  minVal: number, maxVal: number, maxSelectable: number, orderPosition: number) {
     // todo , q.categories
     this.wsService.publish(`process/rounds/current/question`, {
       processId,
       questionId,
-      questionTypeId,
+      questionTypeName,
       name,
       minVal,
       maxVal,

@@ -1,9 +1,9 @@
 <ion-header *ngIf="process && process.pastRounds">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id + '/rounds/list'"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id + '/rounds/list'"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/rounds/list'"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/rounds/list'"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Visor ronda finalizada</ion-title>
@@ -43,9 +43,36 @@
       </ion-item>
       <ion-item *ngFor="let expert of process?.pastRounds[roundIdx].expertsVoted">
         {{expert.name}} {{expert.surnames}}
-        <ion-note slot="end" color="primary">En desacuerdo.</ion-note>
+        <ion-note slot="end" color="primary" [ngSwitch]="question.questionType.name">
+          <span *ngSwitchCase="'QUALITATIVE'">{{getExpertAnswer(expert, process?.pastRounds[roundIdx], question.id)?.content}}</span>
+          <span *ngSwitchCase="'QUANTITATIVE'">{{getExpertAnswer(expert, process?.pastRounds[roundIdx], question.id)?.content / question.maxVal * 100}} %</span>
+          <span *ngSwitchCase="'BOOLTYPE'">{{getExpertAnswer(expert, process?.pastRounds[roundIdx], question.id)?.content == 1 ? 'Sí':'No'}}</span>
+          <span *ngSwitchCase="'CATLIKERT'" [ngSwitch]="getExpertAnswer(expert, process?.pastRounds[roundIdx], question.id)?.content">
+            <span *ngSwitchCase="1">Totalmente en desacuerdo</span>
+            <span *ngSwitchCase="2">En desacuerdo</span>
+            <span *ngSwitchCase="3">Indiferente</span>
+            <span *ngSwitchCase="4">De acuerdo</span>
+            <span *ngSwitchCase="5">Totalmente de acuerdo</span>
+          </span>
+          <span *ngSwitchCase="'CATCUSTOM'"></span>
+          <span *ngSwitchCase="'CATMULTI'"></span>
+          <span *ngSwitchCase="'CATPOND'"></span>
+
+        </ion-note>
       </ion-item>
     </ion-item-sliding>
 
   </ion-item-group>
 </ion-content>
+
+<ion-footer *ngIf="process && !process?.finished">
+  <ion-toolbar>
+    <ion-button
+      [fill]="'clear'"
+      expand="block"
+
+      routerDirection="forward"
+      [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/statistics/' +  process?.pastRounds[roundIdx].id">Estadísticas
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

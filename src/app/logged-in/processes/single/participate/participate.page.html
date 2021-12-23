@@ -1,9 +1,9 @@
 <ion-header *ngIf="process && process.currentRound && process.currentRound.questions">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + process.id"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process.id"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="this.currentQuestion + 1 <= this.process.currentRound.questions.length">Pregunta {{this.currentQuestion + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
@@ -19,7 +19,7 @@
         <p>{{question.name}}</p>
         <!-- Textarea in an item with a placeholder -->
         <ion-item *ngIf="question.questionType.name === 'QUALITATIVE'">
-          <ion-textarea value="" inputmode="text" placeholder="Introduce aquí tu respuesta"
+          <ion-textarea [value]="currentQuestionValue" inputmode="text" placeholder="Introduce aquí tu respuesta"
                         (ionChange)="updateAnswer(currentQuestion, $event)"></ion-textarea>
         </ion-item>
         <div *ngIf="question.questionType.name === 'QUANTITATIVE'">
@@ -27,7 +27,7 @@
             <ion-range [max]="question.maxVal"
                        [min]="question.minVal"
                        color="primary" snaps step="1"
-                       value="null"
+                       [value]="currentQuestionValue"
                        (ionChange)="updateAnswer(currentQuestion, $event)">
               <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
               <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
@@ -36,7 +36,9 @@
         </div>
         <div *ngIf="question.questionType.name === 'BOOLTYPE'">
           <ion-list>
-            <ion-radio-group value="null" (ionChange)="updateAnswer(currentQuestion, $event)">
+            <ion-radio-group
+              [value]="currentQuestionValue"
+              (ionChange)="updateAnswer(currentQuestion, $event)">
               <ion-item>
                 <ion-label class="ion-text-wrap">Sí</ion-label>
                 <ion-radio slot="start" value="1"></ion-radio>
@@ -51,7 +53,8 @@
         </div>
         <div *ngIf="question.questionType.name === 'CATLIKERT'">
           <ion-list>
-            <ion-radio-group value="null" (ionChange)="updateAnswer(currentQuestion, $event)">
+            <ion-radio-group [value]="currentQuestionValue"
+                             (ionChange)="updateAnswer(currentQuestion, $event)">
               <ion-item>
                 <ion-label class="ion-text-wrap">Totalmente en desacuerdo</ion-label>
                 <ion-radio slot="start" value="1"></ion-radio>
@@ -78,7 +81,8 @@
         </div>
         <div *ngIf="question.questionType.name === 'CATCUSTOM'">
           <ion-list>
-            <ion-radio-group (ionChange)="addCatAnswer(currentQuestion, $event)" value="null">
+            <ion-radio-group (ionChange)="addCatAnswer(currentQuestion, $event)"
+                             [value]="currentQuestionValue">
               <ion-item *ngFor="let category of question.categories">
                 <ion-label class="ion-text-wrap">{{category.catName}}</ion-label>
                 <ion-radio slot="start" [value]="category.id"></ion-radio>
@@ -91,7 +95,8 @@
           <p>Máximas selecciones habilitadas: {{this.answers[currentQuestion].question.maxSelectable}}</p>
           <ion-item>
             <ion-label class="ion-text-wrap">Categorías</ion-label>
-            <ion-select multiple="true" (ionChange)="addCatAnswer(currentQuestion, $event)">
+            <ion-select multiple="true" (ionChange)="addCatAnswer(currentQuestion, $event)"
+                        [value]="currentQuestionValue">
               <ion-select-option class="show-text" *ngFor="let category of question.categories"
                                  [value]="category.id">{{category.catName}}</ion-select-option>
             </ion-select>
@@ -124,67 +129,3 @@
     </ion-button>
   </ion-toolbar>
 </ion-footer>
-<!--
-<ion-content>
-
-  <ion-list>
-    <ion-item-group *ngFor="let answer of answers; let questionIndex = index">
-      <ion-item-divider>
-        <ion-label>{{answer.question.name}}</ion-label>
-      </ion-item-divider>
-
-      <ion-item *ngIf="answer.question?.type === 'QUALITATIVE'">
-        <ion-textarea
-          [(ngModel)]="answer.response"
-          [placeholder]="'home.processes.single-round.participate.answer' | translate"></ion-textarea>
-      </ion-item>
-      <ion-range *ngIf="answer.question?.type === 'QUANTITATIVE'" [(ngModel)]="answer.response"
-                 [max]="10"
-                 [min]="0"
-                 color="primary" snaps step="1">
-        <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
-        <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
-      </ion-range>
-
-      <ion-item *ngIf="answer.question?.type === 'BOOLTYPE'">
-        <ion-label>Respuesta</ion-label>
-        <ion-select [(ngModel)]="answer.response">
-          <ion-select-option value="1">Sí</ion-select-option>
-          <ion-select-option value="0">No</ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item *ngIf="answer.question?.type === 'CATCUSTOM'">
-        <ion-select [(ngModel)]="answer.response">
-          <ion-select-option *ngFor="let cat of answer.question?.categories"
-                             [value]="cat.id">{{cat.catName}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item *ngIf="answer.question?.type === 'CATLIKERT'">
-        <ion-label>Escala de Likert</ion-label>
-        <ion-select [(ngModel)]="answer.response">
-          <ion-select-option value="1">Totalmente en desacuerdo</ion-select-option>
-          <ion-select-option value="2">En desacuerdo</ion-select-option>
-          <ion-select-option value="3">Ni de acuerdo ni en desacuerdo</ion-select-option>
-          <ion-select-option value="4">De acuerdo</ion-select-option>
-          <ion-select-option value="5">Totalmente de acuerdo</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item *ngIf="answer.question?.type === 'CATMULTI'">
-        categorias multiples
-      </ion-item>
-      <ion-item *ngIf="answer.question?.type === 'CATPOND'">
-        reordenacion categorias ponderacion
-      </ion-item>
-    </ion-item-group>
-  </ion-list>
-</ion-content>
-
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-button (click)="confirmParticipation()"
-                expand="block">{{'home.processes.single-round.participate.send' | translate}}</ion-button>
-  </ion-toolbar>
-</ion-footer>
--->

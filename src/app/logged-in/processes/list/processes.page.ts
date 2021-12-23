@@ -47,7 +47,7 @@ export class ProcessesPage implements OnInit {
   }
 
   editProcess(process) {
-    this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id).then(r => null);
+    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + process.id).then(r => null);
   }
 
   /**

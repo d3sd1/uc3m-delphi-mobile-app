@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process?.id"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process?.id"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Planificar ronda</ion-title>
@@ -31,7 +31,7 @@
   </ion-item>
 
   <ion-item [disabled]="!process?.currentRound.started" routerDirection="forward"
-            [routerLink]="'/logged-in/menu/processes/single-round/' + process?.id + '/question/remaining_experts'">
+            [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/question/remaining_experts'">
     <ion-label>Estado de la votación</ion-label>
     <ion-badge slot="end">{{process?.currentRound.expertsRemaining.length}} expertos por votar
     </ion-badge>
@@ -48,7 +48,7 @@
         <ion-item-option (click)="deleteQuestion(questionIndex)" color="danger">Eliminar</ion-item-option>
       </ion-item-options>
       <ion-item
-        [routerLink]="['/logged-in/menu/processes/single-round/' + process?.id + '/question/single-round/' + question.id]">
+        [routerLink]="['/logged-in/menu/processes/finished/' + process?.id + '/question/finished/' + question.id]">
         {{question.name}}
         <ion-reorder slot="start" *ngIf="!process?.currentRound.started && isCoordinator()"></ion-reorder>
       </ion-item>

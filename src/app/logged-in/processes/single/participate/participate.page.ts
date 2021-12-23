@@ -7,6 +7,7 @@ import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
 import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
+import {Round} from '../../../../core/model/round';
 
 @Component({
   selector: 'delphi-participate',
@@ -17,6 +18,7 @@ export class ParticipatePage {
   answers: Answer[] = [];
 
   currentQuestion = 0;
+  currentQuestionValue: any;
   process: Process;
   currentUser: User;
   @ViewChild('participate') participateSlides: IonSlides;
@@ -41,24 +43,30 @@ export class ParticipatePage {
           return;
         }
         if (process.currentRound?.id === undefined || !process.currentRound?.started) {
-          this.navCtrl.navigateForward('/logged-in/menu/processes/single-round/' + process.id).then(r => null);
+          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + process.id).then(r => null);
         }
         this.process = process;
-        console.log('aaaaaaaaa', this.process.currentRound.answers);
+        this.orderQuestions();
+        this.sortCategories(0);
+
         this.process?.currentRound?.questions.forEach((q, idx) => {
+          console.log('idx is:', idx)
           this.answers[idx] = new Answer();
           this.answers[idx].question = q;
           this.answers[idx].user = this.currentUser;
-          this.answers[idx].response = '';
+          this.answers[idx].content = this.getPreviousParticipation(q.id);
         });
-        this.orderQuestions();
-        this.sortCategories(0);
+        this.updateCurrentQuestionValue();
       });
     });
   }
 
+  private getPreviousParticipation(qId: number) {
+    return this.process?.currentRound?.answers.find(rr => rr.user.id === this.currentUser.id && rr.question.id === qId)?.content;
+  }
+
   private orderQuestions() {
-    this.process?.currentRound?.questions.sort((n1, n2) => {
+    this.process.currentRound.questions.sort((n1, n2) => {
       if (n1.orderPosition < n2.orderPosition) {
         return -1;
       }
@@ -69,20 +77,26 @@ export class ParticipatePage {
     });
   }
 
+  updateCurrentQuestionValue() {
+    this.currentQuestionValue = this.answers[this.currentQuestion].content;
+  }
+
   async advance() {
     this.sortCategories(this.currentQuestion + 1);
-    const val = this.answers[this.currentQuestion].response;
+    const val = this.answers[this.currentQuestion].content;
     if (val === null || val === undefined || val === -1 || val === '') {
       await this.showToast('Por favor responde la pregunta.');
       return;
     }
     this.currentQuestion++;
+    this.updateCurrentQuestionValue();
     await this.participateSlides.slideNext();
   }
 
   async back() {
     this.sortCategories(this.currentQuestion - 1);
     this.currentQuestion--;
+    this.updateCurrentQuestionValue();
     await this.participateSlides.slidePrev();
   }
 
@@ -97,6 +111,7 @@ export class ParticipatePage {
           cssClass: 'secondary',
           handler: () => {
             this.currentQuestion = this.process.currentRound.questions.length - 1;
+            this.updateCurrentQuestionValue();
             alert.dismiss();
           }
         }, {
@@ -114,17 +129,23 @@ export class ParticipatePage {
 
   private saveParticipation() {
     this.loadingCtrl.create({
-      cssClass: 'my-custom-class',
       message: 'Cargando...',
       duration: 2000
     }).then((loading) => {
       loading.present().then(() => {
         this.processConsumer.saveParticipation(this.process.id, this.answers);
         loading.dismiss().then(() => {
-          this.router.navigateByUrl('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
+          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
         });
       });
     });
+  }
+
+  getExpertAnswer(expert: User, round: Round, qId: number): Answer {
+    if (round.answers === null || round.answers === undefined) {
+      return null;
+    }
+    return round.answers.find(rr => rr.user.id === expert.id && rr.question.id === qId);
   }
 
   sortCategories(idx) {
@@ -139,33 +160,6 @@ export class ParticipatePage {
     });
   }
 
-
-  /*
-    public async saveParticipation() { // ñapa temporal
-      await this.httpClient.post(environment.apiUrl + '/v1/process/tmp_json_upl', this.answers).toPromise().then(async (delphiProcess: Process) => {
-        await this.showToast('home.processes.single-round.round.participate.success');
-        if (this.process.currentRound.expertsVoted === null || this.process.currentRound.expertsVoted === undefined) {
-          this.process.currentRound.expertsVoted = [];
-        }
-        this.process.currentRound.expertsVoted.push(this.currentUser);
-        await this.router.navigateByUrl('/logged-in/home/menu/processes/single-round', {
-          state: {
-            process: this.process,
-            currentUser: this.currentUser
-          }
-        });
-      }).catch(async (errMessage: string) => {
-        await this.showToast('home.processes.single-round.round.participate.err');
-        await this.router.navigateByUrl('/logged-in/home/menu/processes/single-round', {
-          state: {
-            process: this.process,
-            currentUser: this.currentUser
-          }
-        });
-      });
-
-    }
-  */
   private async showToast(transKey: string) {
     const toast = await this.toastController.create({
       position: 'top',
@@ -179,7 +173,7 @@ export class ParticipatePage {
   }
 
   async updateAnswer(currentQuestion, $event) {
-    this.answers[currentQuestion].response = $event.target.value;
+    this.answers[currentQuestion].content = $event.target.value;
   }
 
   async addCatAnswer(currentQuestion, $event) {
@@ -189,21 +183,21 @@ export class ParticipatePage {
         await this.showToast('Debes seleccionar menos del máximo de seleccionables para esta ronda: ' + this.answers[currentQuestion].question.maxSelectable);
         return;
       }
-      this.answers[currentQuestion].response = JSON.stringify($event.target.value);
+      // TODO  this.answers[currentQuestion].content = JSON.stringify($event.target.value);
     } else {
-      this.answers[currentQuestion].response = 'cat_id:' + $event.target.value;
+      // TODO this.answers[currentQuestion].content = 'cat_id:' + $event.target.value;
     }
   }
 
   async addCatPondAnswer(currentQuestion, $event, categoryId) {
     let obj = {};
     try {
-      obj = JSON.parse(this.answers[currentQuestion].response);
+      obj = JSON.parse(this.answers[currentQuestion].content);
     } catch (e) {
       obj = {};
     }
     obj[categoryId] = $event.target.value;
-    this.answers[currentQuestion].response = JSON.stringify(obj);
+    // TODO  this.answers[currentQuestion].content = JSON.stringify(obj);
   }
 
 }

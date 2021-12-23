@@ -32,6 +32,9 @@ export class OnboardingPage implements ViewDidEnter {
               private route: ActivatedRoute) {
     this.userConsumer.getUser().subscribe((user) => {
       this.user = user;
+      if(!this.user.needsOnboard) {
+        this.router.navigateByUrl('/logged-in/menu/processes/list').then(r => null);
+      }
     });
   }
 
@@ -62,6 +65,7 @@ export class OnboardingPage implements ViewDidEnter {
   }
 
   onBoardingFinished() {
+    console.log('onboard finished')
     // @ts-ignore
     if (this.user.needsOnboard === 'false' || this.user.needsOnboard === false) {
       this.navCtrl.navigateForward('/logged-in/menu').then(r => null);

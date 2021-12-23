@@ -1,9 +1,9 @@
 <ion-header *ngIf="process">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id + '/question/list'"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/single-round/' + process.id + '/question/list'"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/list'"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Estado expertos</ion-title>

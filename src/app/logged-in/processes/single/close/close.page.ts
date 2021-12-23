@@ -34,7 +34,7 @@ export class ClosePage {
       this.processConsumer.getProcess(+params.id).subscribe((process) => {
         // If process is finished, do not allow to stay on this page
         if (process.finished) {
-          this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
+          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
         }
         this.process = process;
       });
@@ -48,7 +48,7 @@ export class ClosePage {
       return;
     }
     this.processConsumer.closeProcess(this.process?.id);
-    this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
+    this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
   }
 
 

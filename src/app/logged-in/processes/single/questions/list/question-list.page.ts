@@ -136,13 +136,13 @@ export class QuestionListPage {
       await alert.present();
     } else {
       this.processConsumer.startCurrentRound(this.process?.id);
-      this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
+      this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
     }
   }
 
   async closeRound() {
     this.processConsumer.endCurrentRound(this.process?.id);
-    this.navCtrl.navigateBack('/logged-in/menu/processes/single-round/' + this.process.id).then(r => null);
+    this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
   }
 
 

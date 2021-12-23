@@ -9,4 +9,12 @@ import {Component} from '@angular/core';
 })
 export class EntrypointComponent {
 
+  /*
+  TODO:
+  - unsubscriptions, y que al conectar/desconectar user funque t odo bien
+  - preguntas de categorias (multiple simple ponderada)
+  -  modificar preguntas (ahora mismo no se puede)
+  - probar votacion multiple en varios dispositivos
+  - que actualice datos al guardar participacion con datos anteriores
+   */
 }
