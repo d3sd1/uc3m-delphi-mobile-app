@@ -76,9 +76,9 @@ export class ChatConversationPage implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.chat = null;
-    this.user = null;
-    this.oppositeUser = null;
+    this.chat = undefined;
+    this.user = undefined;
+    this.oppositeUser = undefined;
     this.loading = false;
     this.editorMsg = '';
     this.showEmojiPicker = false;

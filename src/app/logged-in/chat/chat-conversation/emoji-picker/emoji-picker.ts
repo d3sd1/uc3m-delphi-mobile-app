@@ -18,31 +18,31 @@ export class EmojiPickerComponent implements ControlValueAccessor {
 
   emojiArr = [];
 
-  _content: string;
-  _onChanged: Function;
-  _onTouched: Function;
+  content: string;
+  onChanged;
+  onTouched;
 
   constructor(emojiProvider: EmojiProvider) {
     this.emojiArr = emojiProvider.getEmojis();
   }
 
   writeValue(obj: any): void {
-    this._content = obj;
+    this.content = obj;
   }
 
   registerOnChange(fn: any): void {
-    this._onChanged = fn;
-    this.setValue(this._content);
+    this.onChanged = fn;
+    this.setValue(this.content);
   }
 
   registerOnTouched(fn: any): void {
-    this._onTouched = fn;
+    this.onTouched = fn;
   }
 
   public setValue(val: any): any {
-    this._content += val;
-    if (this._content) {
-      this._onChanged(this._content);
+    this.content += val;
+    if (this.content) {
+      this.onChanged(this.content);
     }
   }
 }

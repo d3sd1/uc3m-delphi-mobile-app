@@ -1,5 +1,4 @@
 import {Component, OnDestroy} from '@angular/core';
-import {ChatService} from './chat/chat.service';
 import {Storage} from '@ionic/storage';
 import {User} from '../core/model/user';
 import {WsService} from '../core/service/ws/ws.service';
@@ -34,8 +33,7 @@ export class HomePage implements OnDestroy {
   userChats: UserChat[];
 
 
-  constructor(private chatService: ChatService,
-              private userConsumer: UserConsumer,
+  constructor(private userConsumer: UserConsumer,
               private processConsumer: ProcessConsumer,
               private storage: Storage,
               private wsService: WsService,
