@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {ActionSheetController, NavController} from '@ionic/angular';
+import {ActionSheetController, NavController, ViewDidLeave} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './view-finished-round.component.html',
   styleUrls: ['./view-finished-round.component.scss'],
 })
-export class ViewFinishedRoundPage implements OnDestroy {
+export class ViewFinishedRoundPage implements OnDestroy, ViewDidLeave {
 
   process: Process;
   currentUser: User;
@@ -61,6 +61,11 @@ export class ViewFinishedRoundPage implements OnDestroy {
     }
     return round.answers.find(rr => rr.user.id === expert.id && rr.question.id === qId);
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {

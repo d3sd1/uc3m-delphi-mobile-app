@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {IonContent} from '@ionic/angular';
+import {IonContent, ViewDidLeave} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {UserChat} from '../../../core/model/user-chat';
 import {User} from '../../../core/model/user';
@@ -14,7 +14,7 @@ import {ChatMessage} from '../../../core/model/chat-message';
   templateUrl: './chat-conversation-page.component.html',
   styleUrls: ['./chat-conversation-page.component.scss'],
 })
-export class ChatConversationPage implements OnInit, OnDestroy {
+export class ChatConversationPage implements OnInit, OnDestroy, ViewDidLeave {
   chat: UserChat;
   chats: UserChat[];
   user: User;
@@ -97,6 +97,9 @@ export class ChatConversationPage implements OnInit, OnDestroy {
     this.scrollToBottom();
   }
 
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
 
   ngOnDestroy(): void {
     this.chat = undefined;

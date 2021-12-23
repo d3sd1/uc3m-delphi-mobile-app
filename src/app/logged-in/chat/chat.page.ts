@@ -4,13 +4,14 @@ import {User} from '../../core/model/user';
 import {UserConsumer} from '../user.consumer';
 import {ChatConsumer} from './chat.consumer';
 import {Subscription} from 'rxjs';
+import {ViewDidLeave} from '@ionic/angular';
 
 @Component({
   selector: 'delphi-chat',
   templateUrl: 'chat.page.html',
   styleUrls: ['chat.page.scss']
 })
-export class ChatPage implements OnDestroy {
+export class ChatPage implements OnDestroy, ViewDidLeave {
   loading = true;
   userChats: UserChat[];
   user: User;
@@ -32,6 +33,11 @@ export class ChatPage implements OnDestroy {
       this.loading = false;
     });
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
   ngOnDestroy(): void {
     if (!this.chatSubscription.closed) {

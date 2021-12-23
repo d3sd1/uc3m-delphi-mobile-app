@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {User} from '../core/model/user';
 import {WsService} from '../core/service/ws/ws.service';
-import {NavController} from '@ionic/angular';
+import {NavController, ViewDidLeave} from '@ionic/angular';
 import {UserConsumer} from './user.consumer';
 import {ChatConsumer} from './chat/chat.consumer';
 import {Subscription} from 'rxjs';
@@ -16,7 +16,7 @@ import {NotificationService} from '../core/service/notification.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss']
 })
-export class HomePage implements OnDestroy {
+export class HomePage implements OnDestroy, ViewDidLeave {
 
   userSubscription: Subscription;
   processesSubscription: Subscription;
@@ -83,6 +83,11 @@ export class HomePage implements OnDestroy {
     });
 
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {

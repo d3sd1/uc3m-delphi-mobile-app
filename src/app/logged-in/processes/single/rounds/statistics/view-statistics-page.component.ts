@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {ActionSheetController, NavController} from '@ionic/angular';
+import {ActionSheetController, NavController, ViewDidLeave} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './view-statistics-page.component.html',
   styleUrls: ['./view-statistics-page.component.scss'],
 })
-export class ViewStatisticsPage implements OnDestroy {
+export class ViewStatisticsPage implements OnDestroy, ViewDidLeave {
 
 
   public scatterChartOptions: ChartConfiguration['options'] = {
@@ -117,6 +117,9 @@ export class ViewStatisticsPage implements OnDestroy {
 
   }
 
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
 
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {

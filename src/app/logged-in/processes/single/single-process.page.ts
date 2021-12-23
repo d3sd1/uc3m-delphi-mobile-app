@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {NavController, ViewDidLeave} from '@ionic/angular';
 import {Process} from '../../../core/model/process';
 import {User} from '../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
@@ -13,7 +13,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './single-process.page.html',
   styleUrls: ['./single-process.page.scss'],
 })
-export class SingleProcessPage implements OnDestroy {
+export class SingleProcessPage implements OnDestroy, ViewDidLeave {
   process: Process;
   user: User;
   processesSubscription: Subscription;
@@ -75,6 +75,11 @@ export class SingleProcessPage implements OnDestroy {
     }
     this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/participate').then(r => null);
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
   ngOnDestroy(): void {
 

@@ -1,7 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
-import {IonSlides, NavController, ToastController, ViewDidEnter} from '@ionic/angular';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
+import {IonSlides, NavController, ToastController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
-import {HttpClient} from '@angular/common/http';
 import {User} from '../../core/model/user';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../user.consumer';
@@ -13,7 +12,7 @@ import {NotificationService} from '../../core/service/notification.service';
   templateUrl: './onboarding.page.html',
   styleUrls: ['./onboarding.page.scss'],
 })
-export class OnboardingPage implements ViewDidEnter {
+export class OnboardingPage implements ViewDidEnter, OnDestroy, ViewDidLeave {
   user: User;
 
   reset = {
@@ -74,6 +73,28 @@ export class OnboardingPage implements ViewDidEnter {
     // @ts-ignore
     if (this.user.needsOnboard === 'false' || this.user.needsOnboard === false) {
       this.navCtrl.navigateForward('/logged-in/menu').then(r => null);
+    }
+  }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
+  ngOnDestroy(): void {
+    this.slides.slideTo(0).then(r => null);
+
+    this.user = undefined;
+    this.reset.currentPass = '';
+    this.reset.newPass = '';
+    this.reset.newPassRep = '';
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.routeSubscription.closed) {
+      this.routeSubscription.unsubscribe();
+    }
+    if (!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
     }
   }
 

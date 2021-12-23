@@ -1,7 +1,7 @@
 import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
-import {IonSlides, LoadingController, NavController} from '@ionic/angular';
+import {IonSlides, LoadingController, NavController, ViewDidLeave} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,7 +16,7 @@ import {NotificationService} from '../../../../core/service/notification.service
   templateUrl: './participate.page.html',
   styleUrls: ['./participate.page.scss'],
 })
-export class ParticipatePage implements OnDestroy {
+export class ParticipatePage implements OnDestroy, ViewDidLeave {
   answers: Answer[];
 
   currentQuestion;
@@ -69,6 +69,11 @@ export class ParticipatePage implements OnDestroy {
       });
     });
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {

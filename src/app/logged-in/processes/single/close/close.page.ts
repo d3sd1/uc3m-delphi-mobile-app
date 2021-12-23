@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {Process} from '../../../../core/model/process';
-import {NavController} from '@ionic/angular';
+import {NavController, ViewDidLeave} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../../../core/model/user';
@@ -14,7 +14,7 @@ import {NotificationService} from '../../../../core/service/notification.service
   templateUrl: './close.page.html',
   styleUrls: ['./close.page.scss'],
 })
-export class ClosePage implements OnDestroy {
+export class ClosePage implements OnDestroy, ViewDidLeave {
 
   process: Process;
   user: User;
@@ -60,6 +60,10 @@ export class ClosePage implements OnDestroy {
     }
     this.processConsumer.closeProcess(this.process.id);
     this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+  }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
   }
 
   ngOnDestroy(): void {

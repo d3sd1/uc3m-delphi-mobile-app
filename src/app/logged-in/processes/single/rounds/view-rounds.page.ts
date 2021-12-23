@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {NavController, ViewDidLeave} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './view-rounds.page.html',
   styleUrls: ['./view-rounds.page.scss'],
 })
-export class ViewRoundsPage implements OnDestroy {
+export class ViewRoundsPage implements OnDestroy, ViewDidLeave {
 
   process: Process;
   user: User;
@@ -69,5 +69,10 @@ export class ViewRoundsPage implements OnDestroy {
     this.process = undefined;
     this.user = undefined;
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
 }

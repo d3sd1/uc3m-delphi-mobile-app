@@ -2,7 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {User} from '../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {NavController} from '@ionic/angular';
+import {NavController, ViewDidLeave} from '@ionic/angular';
 import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
 import {InvitationConsumer} from './invitation.consumer';
@@ -13,7 +13,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './user-picker.page.html',
   styleUrls: ['./user-picker.page.scss'],
 })
-export class UserPickerPage implements OnDestroy {
+export class UserPickerPage implements OnDestroy, ViewDidLeave {
   process;
   filterCriterial = '';
   currentUser;
@@ -130,6 +130,11 @@ export class UserPickerPage implements OnDestroy {
       this.userSubscription.unsubscribe();
     }
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
 
 }

@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {NavController, ViewDidLeave} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
@@ -14,7 +14,7 @@ import {NotificationService} from '../../../../../core/service/notification.serv
   templateUrl: './modify-questions-content.page.html',
   styleUrls: ['./modify-questions-content.page.scss'],
 })
-export class ModifyQuestionsContentPage implements OnDestroy {
+export class ModifyQuestionsContentPage implements OnDestroy, ViewDidLeave {
 
   process: Process;
   currentUser: User;
@@ -60,6 +60,11 @@ export class ModifyQuestionsContentPage implements OnDestroy {
       this.question.name, this.question.questionType.name, this.question.minVal,
       this.question.maxVal, this.question.maxSelectable, this.question.orderPosition);
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {

@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {AlertController, NavController} from '@ionic/angular';
+import {AlertController, NavController, ViewDidLeave} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
@@ -13,7 +13,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './remaining-experts.page.html',
   styleUrls: ['./remaining-experts.page.scss'],
 })
-export class RemainingExpertsPage implements OnDestroy {
+export class RemainingExpertsPage implements OnDestroy, ViewDidLeave {
 
   process: Process;
   user: User;
@@ -61,6 +61,11 @@ export class RemainingExpertsPage implements OnDestroy {
       return 0;
     });
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {

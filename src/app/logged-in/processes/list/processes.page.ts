@@ -3,7 +3,7 @@ import {Process} from '../../../core/model/process';
 import {ProcessConsumer} from '../process.consumer';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {NavController} from '@ionic/angular';
+import {NavController, ViewDidLeave} from '@ionic/angular';
 import {User} from '../../../core/model/user';
 import {UserConsumer} from '../../user.consumer';
 import {NotificationService} from '../../../core/service/notification.service';
@@ -13,7 +13,7 @@ import {NotificationService} from '../../../core/service/notification.service';
   templateUrl: 'processes.page.html',
   styleUrls: ['processes.page.scss']
 })
-export class ProcessesPage implements OnInit, OnDestroy {
+export class ProcessesPage implements OnInit, OnDestroy, ViewDidLeave {
 
   processes: Process[];
   filteredProcesses: Process[];
@@ -128,6 +128,11 @@ export class ProcessesPage implements OnInit, OnDestroy {
       },
     ]);
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
 
   ngOnDestroy(): void {

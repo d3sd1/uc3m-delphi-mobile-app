@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {NavController, ViewDidEnter} from '@ionic/angular';
+import {NavController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {UserConsumer} from '../../logged-in/user.consumer';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NotificationService} from '../../core/service/notification.service';
@@ -9,7 +9,7 @@ import {NotificationService} from '../../core/service/notification.service';
   templateUrl: './forgot-password.page.html',
   styleUrls: ['./forgot-password.page.scss'],
 })
-export class ForgotPasswordPage implements ViewDidEnter, OnDestroy {
+export class ForgotPasswordPage implements ViewDidEnter, OnDestroy, ViewDidLeave {
   recoverForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
   });
@@ -86,6 +86,11 @@ export class ForgotPasswordPage implements ViewDidEnter, OnDestroy {
   ionViewDidEnter(): void {
 
   }
+
+  ionViewDidLeave(): void {
+    this.ngOnDestroy();
+  }
+
 
   ngOnDestroy(): void {
     this.recoverForm.reset();
