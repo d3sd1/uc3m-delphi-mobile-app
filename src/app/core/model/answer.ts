@@ -3,7 +3,7 @@ import {Question} from './question';
 
 export class Answer {
   id: number;
-  response: any;
+  content: any;
   question: Question;
   user: User;
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
 
 @Component({
@@ -6,7 +6,7 @@ import {NavController} from '@ionic/angular';
   templateUrl: './splash-screen.page.html',
   styleUrls: ['./splash-screen.page.scss'],
 })
-export class SplashScreenPage implements OnInit {
+export class SplashScreenPage implements OnInit, OnDestroy {
   loadTime = 4000;
 
 
@@ -18,4 +18,9 @@ export class SplashScreenPage implements OnInit {
       await this.navCtrl.navigateForward('/logged-out');
     }, 4000);
   }
+
+  ngOnDestroy(): void {
+
+  }
+
 }

@@ -1,61 +1,59 @@
 import {Component} from '@angular/core';
-import {LoadingController, NavController, ToastController, ViewDidEnter} from '@ionic/angular';
+import {LoadingController, NavController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
-import {LoginUser} from '../../core/consumer/user/login.user';
-import {WsService} from '../../core/service/ws.service';
-import {TranslateService} from '@ngx-translate/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {ToastService} from '../../core/service/toast.service';
 
 @Component({
   selector: 'delphi-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements ViewDidEnter {
-  loginUser: LoginUser;
+export class LoginPage implements ViewDidEnter, ViewDidLeave {
+  // Form
+  loginForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+    rememberMe: [false],
+  });
+
+  // Subscriptions
+  userSubscription: Subscription;
 
   constructor(private userConsumer: UserConsumer,
               private navCtrl: NavController,
               private loadingController: LoadingController,
-              private toastController: ToastController,
-              private wsService: WsService,
-              private translate: TranslateService) {
-    this.loginUser = new LoginUser();
+              private toastService: ToastService,
+              private fb: FormBuilder) {
   }
 
   ionViewDidEnter(): void {
-    this.userConsumer.getUser().subscribe((user) => {
+    this.redirectHomeIfConnected();
+  }
+
+  redirectHomeIfConnected() {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       if (user !== null && user !== undefined) {
-        this.navCtrl.navigateForward('/logged-in').then(() => {
-          this.loginUser = new LoginUser();
-        });
+        this.navCtrl.navigateForward('/logged-in').then(() => null);
       }
     });
   }
 
-
-  async login() {
-    const loading = await this.showToast('Conectando...');
-    this.userConsumer.doLogin(this.loginUser).then(async (sucMessage: string) => {
-      await this.showToast(sucMessage);
-      this.navCtrl.navigateForward('/logged-in').then(() => {
-        this.loginUser = new LoginUser();
-      });
+  login() {
+    this.toastService.showToast('Conectando...');
+    this.userConsumer.doLogin(this.loginForm.value).then((sucMessage: string) => {
+      this.toastService.showToast(sucMessage);
+      this.navCtrl.navigateForward('/logged-in').then(() => null);
     }).catch(async (errMessage: string) => {
-      await this.showToast(errMessage);
-    }).finally(() => {
-      loading.dismiss();
+      this.toastService.showToast(errMessage);
     });
   }
 
-  private async showToast(text: string) {
-    const toast = await this.toastController.create({
-      position: 'top',
-      message: text,
-    });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
+
+  ionViewDidLeave(): void {
+    this.loginForm.reset();
+    this.userSubscription.unsubscribe();
   }
+
 }

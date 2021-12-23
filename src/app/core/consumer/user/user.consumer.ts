@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {LoginResponse} from './login.response';
 import {environment} from '../../../../environments/environment';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {LoginUser} from './login.user';
 import {Storage} from '@ionic/storage';
 import {WsService} from '../../service/ws.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -51,9 +50,9 @@ export class UserConsumer {
   }
 
 
-  doLogin(user: LoginUser): Promise<string> {
+  doLogin(loginForm): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.http.post<LoginResponse>(environment.apiUrl + '/login', user).subscribe(async (loginResponse: LoginResponse) => {
+      this.http.post<LoginResponse>(environment.apiUrl + '/login', loginForm).subscribe(async (loginResponse: LoginResponse) => {
         this.jwtService.setJwt(loginResponse.jwt);
         resolve('Conexión satisfactoria.');
       }, async (err: HttpErrorResponse) => {

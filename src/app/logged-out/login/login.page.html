@@ -1,32 +1,29 @@
 <ion-content>
-  <ion-list lines="inset">
-    <ion-img alt="logo" class="logo" src="assets/login_logo.svg"></ion-img>
-    <ion-list-header class="ion-text-center" lines="none">
-      <ion-label>Conexión</ion-label>
-    </ion-list-header>
-    <ion-item lines="inset">
-      <ion-label position="fixed">Email</ion-label>
-      <ion-input [(ngModel)]="loginUser.email" placeholder="Introduce tu email"
-                 type="email"></ion-input>
-    </ion-item>
-    <ion-item lines="inset">
-      <ion-label position="fixed">Contraseña</ion-label>
-      <ion-input [(ngModel)]="loginUser.password" placeholder="Introduce tu contraseña"
-                 type="password"></ion-input>
-    </ion-item>
-    <ion-item lines="none">
-      <ion-label>Recuérdame</ion-label>
-      <ion-toggle [(ngModel)]="loginUser.rememberMe"></ion-toggle>
-    </ion-item>
-  </ion-list>
-  <ion-button color="secondary" expand="block" fill="outline" routerDirection="forward"
-              routerLink="/logged-out/forgot-password">¿Contraseña olvidada?
-  </ion-button>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <ion-list lines="inset">
+      <ion-img alt="logo" class="logo" src="assets/login_logo.svg"></ion-img>
+      <ion-list-header class="ion-text-center" lines="none">
+        <ion-label>Conexión</ion-label>
+      </ion-list-header>
+      <ion-item lines="inset">
+        <ion-label position="fixed">Email</ion-label>
+        <ion-input formControlName="email" placeholder="Introduce tu email"
+                   type="email"></ion-input>
+      </ion-item>
+      <ion-item lines="inset">
+        <ion-label position="fixed">Contraseña</ion-label>
+        <ion-input formControlName="password" placeholder="Introduce tu contraseña"
+                   type="password"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Recuérdame</ion-label>
+        <ion-toggle formControlName="rememberMe"></ion-toggle>
+      </ion-item>
 
+    </ion-list>
+    <ion-button color="secondary" expand="block" fill="outline" routerDirection="forward"
+                routerLink="/logged-out/forgot-password">¿Contraseña olvidada?
+    </ion-button>
+    <ion-button type="submit" expand="block" [disabled]="!loginForm.valid">Conectar</ion-button>
+  </form>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-button (click)="login()" expand="block">Conectar</ion-button>
-  </ion-toolbar>
-</ion-footer>
