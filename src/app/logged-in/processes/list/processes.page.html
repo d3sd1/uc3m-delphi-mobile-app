@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <delphi-empty *ngIf="processes?.length == 0 && !loadingProcesses"></delphi-empty>
+  <delphi-empty *ngIf="processes && processes.length == 0 && !loadingProcesses"></delphi-empty>
   <ion-list *ngIf="processes != null && processes.length > 0 && !loadingProcesses">
     <ion-list-header>
       <ion-toolbar>
@@ -21,17 +21,17 @@
         </ion-segment>
       </ion-toolbar>
     </ion-list-header>
-    <delphi-empty *ngIf="filteredProcesses?.length == 0"></delphi-empty>
+    <delphi-empty *ngIf="filteredProcesses && filteredProcesses.length == 0"></delphi-empty>
     <ion-item (click)="editProcess(process)" *ngFor="let process of filteredProcesses"
               [color]="processPendingParticipationWarning(process) ? 'danger':''">
-      <ion-thumbnail slot="start">
+      <ion-thumbnail slot="start" *ngIf="process">
         <div class="img-wrapper circle">
-          <span class="initials">{{process.name?.substring(0, 2)}}</span>
+          <span class="initials">{{process.name.substring(0, 2)}}</span>
         </div>
       </ion-thumbnail>
-      <ion-label>
+      <ion-label *ngIf="process">
         <h3>
-          {{ process?.name }}
+          {{ process.name }}
         </h3>
         <p>
         <span

@@ -24,8 +24,6 @@ export class QuestionQuantitativePage {
       await this.showToast('El valor máximo debe ser mayor que el valor mínimo.');
       return;
     }
-    // await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-    // this.process.currentRound.questions[this.questionIdx]).toPromise();
   }
 
   private async showToast(msg: string) {

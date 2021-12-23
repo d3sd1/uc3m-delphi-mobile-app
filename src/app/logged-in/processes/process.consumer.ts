@@ -11,7 +11,6 @@ import {Answer} from '../../core/model/answer';
 })
 export class ProcessConsumer {
 
-  private userProcessesIndividual: BehaviorSubject<Process>[] = [];
   private userProcesses: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([]);
 
   constructor(private httpClient: HttpClient, private wsService: WsService) {

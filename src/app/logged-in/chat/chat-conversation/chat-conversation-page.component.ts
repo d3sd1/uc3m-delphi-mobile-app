@@ -50,8 +50,8 @@ export class ChatConversationPage implements OnInit, OnDestroy {
     });
     this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
       this.chat = userChats.find((userChat) => {
-        if ((userChat.user1.id === this.user.id && userChat.user2.id === this.oppositeUser?.id)
-          || (userChat.user2.id === this.user.id && userChat.user1.id === this.oppositeUser?.id)) {
+        if (this.oppositeUser && (userChat.user1.id === this.user.id && userChat.user2.id === this.oppositeUser.id)
+          || this.oppositeUser && (userChat.user2.id === this.user.id && userChat.user1.id === this.oppositeUser.id)) {
           this.loading = false;
           return true;
         }
@@ -62,7 +62,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
   }
 
   sortMessages() {
-    this.chat?.messages.sort((chatMessage1: ChatMessage, chatMessage2: ChatMessage) => {
+    this.chat.messages.sort((chatMessage1: ChatMessage, chatMessage2: ChatMessage) => {
       let pos = 0;
       if (chatMessage1.timestamp < chatMessage2.timestamp) {
         pos = -1;
@@ -88,7 +88,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
   }
 
   scrollToBottom() {
-    this.chatDisplay?.scrollToBottom(300);
+    this.chatDisplay.scrollToBottom(300);
   }
 
 

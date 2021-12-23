@@ -1,8 +1,8 @@
-<ion-header>
+<ion-header *ngIf="process">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id"
-                       [routerLink]="'/logged-in/menu/processes/finished/' + process?.id"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process.id"
                        routerDirection="back"
                        text="Volver"></ion-back-button>
     </ion-buttons>
@@ -10,13 +10,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+<ion-content *ngIf="process"><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
 
   <ion-item>
     <ion-label>Fecha de cierre</ion-label>
-    <ion-datetime (ngModelChange)="updateBasicData()" [(ngModel)]="process?.currentRound.limitTime"
+    <ion-datetime (ngModelChange)="updateBasicData()" [(ngModel)]="process.currentRound.limitTime"
                   [min]="currentTime"
-                  [readonly]="process?.currentRound?.started || process?.finished || !isCoordinator()"
+                  [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
                   display-format="MMM DD, YYYY HH:mm"
                   picker-format="MMM DD, YYYY HH:mm"
                   placeholder="Introduce fecha límite"></ion-datetime>
@@ -24,20 +24,20 @@
 
   <ion-item>
     <ion-label>Nombre</ion-label>
-    <ion-input (ngModelChange)="updateBasicData()" [(ngModel)]="this.process?.currentRound.name"
-               [readonly]="process?.currentRound.started || process?.finished || !isCoordinator()"
+    <ion-input (ngModelChange)="updateBasicData()" [(ngModel)]="this.process.currentRound.name"
+               [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
                debounce="200"
                placeholder="Nombre de la ronda"></ion-input>
   </ion-item>
 
-  <ion-item [disabled]="!process?.currentRound.started" [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/question/remaining_experts'"
+  <ion-item [disabled]="!process.currentRound.started" [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/question/remaining_experts'"
             routerDirection="forward">
     <ion-label>Estado de la votación</ion-label>
-    <ion-badge slot="end">{{process?.currentRound.expertsRemaining.length}} expertos por votar
+    <ion-badge slot="end">{{process.currentRound.expertsRemaining.length}} expertos por votar
     </ion-badge>
   </ion-item>
   <ion-item-divider>Preguntas</ion-item-divider>
-  <div *ngIf="process?.currentRound.questions.length == 0" class="container">
+  <div *ngIf="process.currentRound.questions.length == 0" class="container">
     <strong>Sin preguntas</strong>
     <p>No existen preguntas asociadas a esta ronda.</p>
   </div>
@@ -48,16 +48,16 @@
         <ion-item-option (click)="deleteQuestion(questionIndex)" color="danger">Eliminar</ion-item-option>
       </ion-item-options>
       <ion-item
-        [routerLink]="['/logged-in/menu/processes/finished/' + process?.id + '/question/finished/' + question.id]">
+        [routerLink]="['/logged-in/menu/processes/finished/' + process.id + '/question/finished/' + question.id]">
         {{question.name}}
-        <ion-reorder *ngIf="!process?.currentRound.started && isCoordinator()" slot="start"></ion-reorder>
+        <ion-reorder *ngIf="!process.currentRound.started && isCoordinator()" slot="start"></ion-reorder>
       </ion-item>
     </ion-item-sliding>
 
   </ion-reorder-group>
 
   <!-- fab placed to the (vertical) center and end -->
-  <ion-fab (click)="addQuestionStep1()" *ngIf="!process?.currentRound.started && !process?.finished && isCoordinator()"
+  <ion-fab (click)="addQuestionStep1()" *ngIf="!process.currentRound.started && !process.finished && isCoordinator()"
            horizontal="end" slot="fixed" vertical="bottom">
     <ion-fab-button>
       <ion-icon name="add"></ion-icon>

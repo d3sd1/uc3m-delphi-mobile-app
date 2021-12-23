@@ -5,12 +5,12 @@
   </ion-button>
 </ion-item>
 
-<ion-list>
+<ion-list *ngIf="question && question.categories">
   <ion-item-group>
     <ion-item-divider>
       <ion-label>Categorías</ion-label>
       <ion-badge
-        slot="end">{{question.categories?.length}}</ion-badge>
+        slot="end">{{question.categories.length}}</ion-badge>
     </ion-item-divider>
 
     <ion-item

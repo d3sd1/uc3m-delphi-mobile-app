@@ -5,18 +5,18 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" *ngIf="user && user.name">
   <ion-card color="light">
     <div class="img-wrapper circle">
-      <span class="initials">{{user.name?.substring(0, 2)}}</span>
+      <span class="initials">{{user.name.substring(0, 2)}}</span>
     </div>
     <ion-card-content class="ion-text-center">
-      <h2>{{user?.name }} {{user?.surnames}}</h2>
+      <h2>{{user.name }} {{user.surnames}}</h2>
       <ion-text color="medium">
         <div class="ion-justify-content-center" style="display: flex;">
           <ion-icon class="user-email" color="medium" name="mail-outline">
           </ion-icon>
-          <p>{{user?.email}}</p>
+          <p>{{user.email}}</p>
         </div>
       </ion-text>
     </ion-card-content>

@@ -16,7 +16,7 @@
   <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
     <ion-select (ngModelChange)="updateQuestion()" [(ngModel)]="question.questionType.name"
-                [disabled]="process?.currentRound?.started">
+                [disabled]="process.currentRound.started">
       <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
       <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
       <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
@@ -30,7 +30,7 @@
   <ion-item>
     <ion-textarea (ngModelChange)="updateQuestion()"
                   [(ngModel)]="question.name"
-                  [readonly]="process?.currentRound?.started" debounce="500" maxlength="150"
+                  [readonly]="process.currentRound.started" debounce="500" maxlength="150"
                   placeholder="Introduce tu pregunta aquí"></ion-textarea>
   </ion-item>
   <delphi-question-booltype *ngIf="question.questionType.name == 'BOOLTYPE'" [process]="process"

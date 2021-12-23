@@ -2,8 +2,8 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button
-        [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/finished/' +  process?.pastRounds[roundIdx].id"
-        [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/finished/' +  process?.pastRounds[roundIdx].id"
+        [defaultHref]="'/logged-in/menu/processes/finished/' + process.id + '/rounds/finished/' +  process.pastRounds[roundIdx].id"
+        [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/rounds/finished/' +  process.pastRounds[roundIdx].id"
         routerDirection="back"
         text="Volver"></ion-back-button>
     </ion-buttons>
@@ -26,7 +26,7 @@
     <ion-label>Pregunta</ion-label>
     <ion-select (ngModelChange)="updateChart()" [(ngModel)]="selectedQuestion" cancel-text="Cancelar" ok-text="OK"
                 placeholder="Seleccione pregunta">
-      <ion-select-option *ngFor="let question of process?.pastRounds[roundIdx].questions; let questionIndex = index"
+      <ion-select-option *ngFor="let question of process.pastRounds[roundIdx].questions; let questionIndex = index"
                          [disabled]="question.questionType.name == 'QUALITATIVE'"
                          [value]="question.id">{{question.name}}</ion-select-option>
     </ion-select>

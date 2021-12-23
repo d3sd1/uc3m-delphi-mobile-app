@@ -40,7 +40,6 @@ export class ViewFinishedRoundPage {
           return;
         }
         this.process = process;
-        console.log('pp', process);
         this.roundIdx = process.pastRounds.findIndex(q => q.id === +params['roundid']);
       });
     });

@@ -46,25 +46,13 @@ export class QuestionListPage {
     return this.process?.coordinators?.findIndex((user) => user.id === this.user?.id) !== -1;
   }
 
-  public async onItemReorder({detail}) {
+  public onItemReorder({detail}) {
     detail.complete(true);
     if (this.process.currentRound.questions[detail.to] === undefined) {
       return;
     }
     this.processConsumer.reorderQuestion(this.process.id, this.process.currentRound.questions[detail.from].id,
       detail.from, this.process.currentRound.questions[detail.to].id, detail.to);
-  }
-
-  sortQuestions() {
-    this.process?.currentRound.questions.sort((a, b) => {
-      if (a.orderPosition < b.orderPosition) {
-        return -1;
-      }
-      if (a.orderPosition > b.orderPosition) {
-        return 1;
-      }
-      return 0;
-    });
   }
 
   deleteQuestion(questionIndex: number) {

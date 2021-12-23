@@ -1,8 +1,8 @@
-<ion-header>
+<ion-header *ngIf="process">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id"
-                       [routerLink]="'/logged-in/menu/processes/finished/' + process?.id"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process.id"
                        routerDirection="back"
                        text="Volver"></ion-back-button>
     </ion-buttons>
@@ -19,18 +19,18 @@
               *ngFor="let user of usersFiltered">
       <ion-avatar slot="start">
         <div class="img-wrapper circle">
-          <span class="initials">{{user.name?.substring(0, 2)}}</span>
+          <span class="initials">{{user.name.substring(0, 2)}}</span>
         </div>
       </ion-avatar>
       {{ user.name }} {{ user.surnames }} <{{ user.email }}>
     </ion-item>
   </ion-list>
   <ion-item
-    *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && !this.isEmail(this.filterCriterial)">
+    *ngIf="usersFiltered && usersFiltered.length == 0 && this.filterCriterial !== '' && !this.isEmail(this.filterCriterial)">
     <ion-title>Sin resultados en la búsqueda</ion-title>
   </ion-item>
   <ion-item
-    *ngIf="usersFiltered?.length == 0 && this.filterCriterial !== '' && this.isEmail(this.filterCriterial) && this.isNewUser(this.filterCriterial)">
+    *ngIf="usersFiltered && usersFiltered.length == 0 && this.filterCriterial !== '' && this.isEmail(this.filterCriterial) && this.isNewUser(this.filterCriterial)">
     <ion-title></ion-title>
     <ion-button (click)="addNewUser(this.filterCriterial)" expand="block">Invitar a <{{this.filterCriterial}}>
     </ion-button>
@@ -40,16 +40,16 @@
   </ion-item>
 
   <div *ngFor="let user of this.getUsers()">
-    <ion-chip [color]="user.id === user?.id?'primary':'secondary'">
+    <ion-chip [color]="'primary'">
       <ion-avatar [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">
         <div class="img-wrapper circle">
-          <span class="initials">{{user.name?.substring(0, 2)}}</span>
+          <span class="initials">{{user.name.substring(0, 2)}}</span>
         </div>
       </ion-avatar>
       <ion-label [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">{{user.name}} {{user.surnames}}
         <{{ user.email }}>
       </ion-label>
-      <ion-icon (click)="removeUser(user)" *ngIf="user.id !== currentUser?.id && isCoordinator() && !process.finished"
+      <ion-icon (click)="removeUser(user)" *ngIf="user.id !== currentUser.id && isCoordinator() && !process.finished"
                 name="close-circle"></ion-icon>
     </ion-chip>
   </div>

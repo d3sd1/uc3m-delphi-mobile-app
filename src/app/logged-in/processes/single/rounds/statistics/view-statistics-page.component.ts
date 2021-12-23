@@ -83,7 +83,6 @@ export class ViewStatisticsPage {
           return;
         }
         this.process = process;
-        console.log('pp', process);
         this.roundIdx = process.pastRounds.findIndex(q => q.id === +params['roundid']);
       });
     });
@@ -102,11 +101,11 @@ export class ViewStatisticsPage {
 
   // events
   public chartClicked({event, active}: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
+
   }
 
   public chartHovered({event, active}: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
+
   }
 
   private rand(max: number): number {

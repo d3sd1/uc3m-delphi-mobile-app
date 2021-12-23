@@ -38,7 +38,6 @@ export class ModifyQuestionsContentPage {
         const process = processes.find(p2 => p2.id === +params.id);
         this.process = process;
         this.question = this.process.currentRound.questions.find(q => q.id === +params['questionid']);
-        console.log('question TYPEEE is', this.question.questionType);
       });
     });
   }

@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="oppositeUser">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/chat'"
@@ -6,30 +6,29 @@
                        routerDirection="back"
                        text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{oppositeUser?.name}} {{oppositeUser?.surnames}}</ion-title>
+    <ion-title>{{oppositeUser.name}} {{oppositeUser.surnames}}</ion-title>
     <ion-buttons slot="end">
 
       <div class="user-img-header circle">
-        <span class="initials">{{this.oppositeUser?.name.substring(0, 2)}}</span>
+        <span class="initials">{{this.oppositeUser.name.substring(0, 2)}}</span>
       </div>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <div #chatDisplay class="message-wrap">
-    <div *ngFor="let msg of chat?.messages"
+<ion-content *ngIf="chat">
+  <div class="message-wrap">
+    <div *ngFor="let msg of chat.messages"
          [class.left]=" msg.user.id !== user.id "
          [class.right]=" msg.user.id === user.id "
          class="message">
       <div class="user-img circle">
         <span class="initials">{{msg.user.name.substring(0, 2)}}</span>
       </div>
-      <img *ngIf="msg.user?.photo === undefined" class="user-img" alt="profile" src="assets/images/no-process-image.jpeg"/>
       <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
       <div class="msg-detail">
         <div class="msg-info">
           <p>
-            {{msg.user?.name === undefined ? msg.user?.email : msg.user?.name}}&nbsp;&nbsp;&nbsp;{{msg.timestamp | relativeTime}}</p>
+           {{msg.timestamp | relativeTime}}</p>
         </div>
         <div class="msg-content">
           <span class="triangle"></span>

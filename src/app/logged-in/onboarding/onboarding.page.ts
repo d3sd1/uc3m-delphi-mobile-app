@@ -66,7 +66,6 @@ export class OnboardingPage implements ViewDidEnter {
   }
 
   onBoardingFinished() {
-    console.log('onboard finished');
     // @ts-ignore
     if (this.user.needsOnboard === 'false' || this.user.needsOnboard === false) {
       this.navCtrl.navigateForward('/logged-in/menu').then(r => null);

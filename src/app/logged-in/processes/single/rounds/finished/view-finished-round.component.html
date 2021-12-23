@@ -15,7 +15,7 @@
 
   <ion-item>
     <ion-label>Fecha de cierre</ion-label>
-    <ion-datetime [(ngModel)]="this.process?.pastRounds[roundIdx].limitTime" [readonly]="process?.pastRounds[roundIdx]?.started || process?.finished"
+    <ion-datetime [(ngModel)]="this.process.pastRounds[roundIdx].limitTime" [readonly]="process.pastRounds[roundIdx].started || process.finished"
                   display-format="MMM DD, YYYY HH:mm"
                   picker-format="MMM DD, YYYY HH:mm"
                   placeholder="Introduce fecha límite"></ion-datetime>
@@ -23,37 +23,37 @@
 
   <ion-item>
     <ion-label>Nombre</ion-label>
-    <ion-input [(ngModel)]="this.process?.pastRounds[roundIdx].name" [readonly]="process?.pastRounds[roundIdx].started || process?.finished"
+    <ion-input [(ngModel)]="this.process.pastRounds[roundIdx].name" [readonly]="process.pastRounds[roundIdx].started || process.finished"
                debounce="200"
                placeholder="Nombre de la ronda"></ion-input>
   </ion-item>
-  <div *ngIf="process?.pastRounds[roundIdx].questions.length == 0" class="container">
+  <div *ngIf="process.pastRounds[roundIdx].questions.length == 0" class="container">
     <strong>Sin preguntas</strong>
     <p>No existen preguntas asociadas a esta ronda.</p>
   </div>
   <ion-item-group disabled="false">
     <!-- Default reorder icon, end aligned items -->
-    <ion-item-sliding *ngFor="let question of process?.pastRounds[roundIdx].questions; let questionIndex = index">
+    <ion-item-sliding *ngFor="let question of process.pastRounds[roundIdx].questions; let questionIndex = index">
 
       <ion-item-divider>
         <ion-label>{{question.name}}</ion-label>
       </ion-item-divider>
 
-      <ion-item *ngIf="process?.pastRounds[roundIdx].expertsVoted.length === 0" color="danger">
+      <ion-item *ngIf="process.pastRounds[roundIdx].expertsVoted.length === 0" color="danger">
         Ronda sin participación.
       </ion-item>
-      <ion-item *ngFor="let expert of process?.pastRounds[roundIdx].expertsVoted">
+      <ion-item *ngFor="let expert of process.pastRounds[roundIdx].expertsVoted">
         {{expert.name}} {{expert.surnames}}
         <ion-note [ngSwitch]="question.questionType.name" color="primary" slot="end">
           <span
-            *ngSwitchCase="'QUALITATIVE'">{{getExpertAnswer(expert, process?.pastRounds[roundIdx], question.id)?.content}}</span>
+            *ngSwitchCase="'QUALITATIVE'">{{getExpertAnswer(expert, process.pastRounds[roundIdx], question.id).content}}</span>
           <span
-            *ngSwitchCase="'QUANTITATIVE'">{{getExpertAnswer(expert, process?.pastRounds[roundIdx], question.id)?.content / question.maxVal * 100}}
+            *ngSwitchCase="'QUANTITATIVE'">{{getExpertAnswer(expert, process.pastRounds[roundIdx], question.id).content / question.maxVal * 100}}
             %</span>
           <span
-            *ngSwitchCase="'BOOLTYPE'">{{getExpertAnswer(expert, process?.pastRounds[roundIdx], question.id)?.content == 1 ? 'Sí' : 'No'}}</span>
+            *ngSwitchCase="'BOOLTYPE'">{{getExpertAnswer(expert, process.pastRounds[roundIdx], question.id).content == 1 ? 'Sí' : 'No'}}</span>
           <span *ngSwitchCase="'CATLIKERT'"
-                [ngSwitch]="getExpertAnswer(expert, process?.pastRounds[roundIdx], question.id)?.content">
+                [ngSwitch]="getExpertAnswer(expert, process.pastRounds[roundIdx], question.id).content">
             <span *ngSwitchCase="1">Totalmente en desacuerdo</span>
             <span *ngSwitchCase="2">En desacuerdo</span>
             <span *ngSwitchCase="3">Indiferente</span>
@@ -71,11 +71,11 @@
   </ion-item-group>
 </ion-content>
 
-<ion-footer *ngIf="process && !process?.finished">
+<ion-footer *ngIf="process && !process.finished">
   <ion-toolbar>
     <ion-button
       [fill]="'clear'"
-      [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/statistics/' +  process?.pastRounds[roundIdx].id"
+      [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/rounds/statistics/' +  process.pastRounds[roundIdx].id"
 
       expand="block"
       routerDirection="forward">

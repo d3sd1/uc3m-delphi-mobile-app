@@ -42,15 +42,14 @@ export class ParticipatePage {
           return;
         }
         const process = processes.find(p2 => p2.id === +params.id);
-        if (process.currentRound?.id === undefined || !process.currentRound?.started) {
+        if (process.currentRound && process.currentRound.id === undefined || !process.currentRound.started) {
           this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + process.id).then(r => null);
         }
         this.process = process;
         this.orderQuestions();
         this.sortCategories(0);
 
-        this.process?.currentRound?.questions.forEach((q, idx) => {
-          console.log('idx is:', idx);
+        this.process.currentRound.questions.forEach((q, idx) => {
           this.answers[idx] = new Answer();
           this.answers[idx].question = q;
           this.answers[idx].user = this.currentUser;
@@ -119,7 +118,7 @@ export class ParticipatePage {
   }
 
   sortCategories(idx) {
-    this.process?.currentRound?.questions[idx]?.categories?.sort((a, b) => {
+    this.process.currentRound.questions[idx].categories.sort((a, b) => {
       if (a.id < b.id) {
         return -1;
       }
@@ -159,7 +158,10 @@ export class ParticipatePage {
   }
 
   private getPreviousParticipation(qId: number) {
-    return this.process?.currentRound?.answers.find(rr => rr.user.id === this.currentUser.id && rr.question.id === qId)?.content;
+    if (this.currentUser === undefined || this.currentUser === null || this.process === null || this.process === undefined) {
+      return;
+    }
+    return this.process.currentRound.answers.find(rr => rr.user.id === this.currentUser.id && rr.question.id === qId).content;
   }
 
   private orderQuestions() {

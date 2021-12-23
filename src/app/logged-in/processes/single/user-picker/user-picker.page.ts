@@ -64,17 +64,17 @@ export class UserPickerPage implements OnDestroy {
   }
 
   addExistantUser(user: User) {
-    this.invitationConsumer.addExistantUserToProcess(user.id, this.process?.id, this.type);
+    this.invitationConsumer.addExistantUserToProcess(user.id, this.process.id, this.type);
     this.filterCriterial = '';
   }
 
   addNewUser(email: string) {
-    this.invitationConsumer.sendInvitation(email, this.process?.id, this.type);
+    this.invitationConsumer.sendInvitation(email, this.process.id, this.type);
     this.filterCriterial = '';
   }
 
   isCoordinator(): boolean {
-    return this.process?.coordinators.findIndex((user) => user.id === this.currentUser.id) !== -1;
+    return this.process.coordinators.findIndex((user) => user.id === this.currentUser.id) !== -1;
   }
 
   async filter() {
@@ -94,7 +94,7 @@ export class UserPickerPage implements OnDestroy {
   }
 
   async removeUser(user: User) {
-    this.invitationConsumer.removeFromProcess(user.id, this.process?.id);
+    this.invitationConsumer.removeFromProcess(user.id, this.process.id);
   }
 
   getUsers() {

@@ -51,7 +51,7 @@ export class ClosePage {
       this.showToast('Debes introducir una conclusión');
       return;
     }
-    this.processConsumer.closeProcess(this.process?.id);
+    this.processConsumer.closeProcess(this.process.id);
     this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
   }
 

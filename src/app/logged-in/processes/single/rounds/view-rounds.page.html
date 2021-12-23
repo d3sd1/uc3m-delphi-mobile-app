@@ -1,8 +1,8 @@
-<ion-header>
+<ion-header *ngIf="process">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id"
-                       [routerLink]="'/logged-in/menu/processes/finished/' + process?.id"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process.id"
                        routerDirection="back"
                        text="Volver"></ion-back-button>
     </ion-buttons>
@@ -11,16 +11,17 @@
 </ion-header>
 
 
-<ion-content><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
-  <div *ngIf="process?.pastRounds?.length == 0" class="container">
+<ion-content *ngIf="process"><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+  <div *ngIf="process.pastRounds.length == 0" class="container">
     <strong>Sin rondas</strong>
     <p>Este proceso aún no tiene rondas asociadas.</p>
   </div>
-  <ion-list *ngFor="let round of process?.pastRounds; let roundIndex = index">
+  <ion-list *ngFor="let round of process.pastRounds; let roundIndex = index">
     <!-- Default reorder icon, end aligned items -->
     <ion-item
-      [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/finished/' + round?.id">
-      <ion-label>{{round?.name}}</ion-label>
+      *ngIf="process && round"
+      [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/rounds/finished/' + round.id">
+      <ion-label>{{round.name}}</ion-label>
       <ion-reorder slot="start"></ion-reorder>
     </ion-item>
 

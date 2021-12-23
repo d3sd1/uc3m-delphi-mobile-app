@@ -37,7 +37,7 @@ export class ViewRoundsPage {
   }
 
   sortRounds() {
-    this.process?.currentRound?.questions?.sort((a, b) => {
+    this.process.currentRound.questions.sort((a, b) => {
       if (a.orderPosition < b.orderPosition) {
         return -1;
       }
