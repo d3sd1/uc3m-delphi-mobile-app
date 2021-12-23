@@ -47,3 +47,6 @@ Thumbs.db
 
 # Ionic
 /www
+
+# Sonar
+.scannerwork

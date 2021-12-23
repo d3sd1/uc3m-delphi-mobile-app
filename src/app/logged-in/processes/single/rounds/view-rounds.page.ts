@@ -5,29 +5,38 @@ import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
 import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
-import {SingleProcessListener} from '../single-process.listener';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-rounds',
   templateUrl: './view-rounds.page.html',
   styleUrls: ['./view-rounds.page.scss'],
 })
-export class ViewRoundsPage extends SingleProcessListener implements OnDestroy {
+export class ViewRoundsPage implements OnDestroy {
 
   process: Process;
   user: User;
+  processSubscription: Subscription;
+  routeSubscription: Subscription;
+  userSubscription: Subscription;
 
   constructor(
     private navCtrl: NavController,
-    protected route: ActivatedRoute,
-    protected processConsumer: ProcessConsumer,
-    protected userConsumer: UserConsumer) {
-    super(route, processConsumer, userConsumer);
-  }
+    private route: ActivatedRoute,
+    private processConsumer: ProcessConsumer,
+    private userConsumer: UserConsumer) {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      this.user = user;
+    });
+    this.routeSubscription = this.route.params.subscribe(params => {
 
-
-  ngOnDestroy(): void {
-    this.clearProcesses();
+      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes == null) {
+          return;
+        }
+        this.process = processes.find(p2 => p2.id === +params.id);
+      });
+    });
   }
 
   sortRounds() {
@@ -40,6 +49,13 @@ export class ViewRoundsPage extends SingleProcessListener implements OnDestroy {
       }
       return 0;
     });
+  }
+  ngOnDestroy(): void {
+    this.routeSubscription.unsubscribe();
+    this.processSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.process = undefined;
+    this.user = undefined;
   }
 
 }

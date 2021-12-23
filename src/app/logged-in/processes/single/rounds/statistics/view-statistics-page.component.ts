@@ -7,14 +7,14 @@ import {UserConsumer} from '../../../../user.consumer';
 import {ProcessConsumer} from '../../../process.consumer';
 import {Question} from '../../../../../core/model/question';
 import {ChartConfiguration, ChartData, ChartType} from 'chart.js';
-import {SingleProcessListener} from '../../single-process.listener';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-rounds',
   templateUrl: './view-statistics-page.component.html',
   styleUrls: ['./view-statistics-page.component.scss'],
 })
-export class ViewStatisticsPage extends SingleProcessListener implements OnDestroy {
+export class ViewStatisticsPage implements OnDestroy {
 
 
   public scatterChartOptions: ChartConfiguration['options'] = {
@@ -58,6 +58,9 @@ export class ViewStatisticsPage extends SingleProcessListener implements OnDestr
 
   process: Process;
   currentUser: User;
+  processSubscription: Subscription;
+  routeSubscription: Subscription;
+  userSubscription: Subscription;
   roundIdx: number;
   selectedStatKind: string;
   selectedQuestion: Question;
@@ -65,20 +68,29 @@ export class ViewStatisticsPage extends SingleProcessListener implements OnDestr
 
   constructor(
     private navCtrl: NavController,
-    protected userConsumer: UserConsumer,
-    protected processConsumer: ProcessConsumer,
-    protected route: ActivatedRoute,
+    private userConsumer: UserConsumer,
+    private processConsumer: ProcessConsumer,
+    private route: ActivatedRoute,
     public actionSheetController: ActionSheetController) {
-    super(route, processConsumer, userConsumer);
-  }
-  ngOnDestroy(): void {
-    this.clearProcesses();
-  }
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      this.currentUser = user;
+    });
 
-  onProcessUpdate() {
-    this.roundIdx = this.process.pastRounds.findIndex(q => q.id === +this.params.roundid);
-  }
+    this.routeSubscription = this.route.params.subscribe(params => {
 
+      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes == null) {
+          return;
+        }
+        const process = processes.find(p2 => p2.id === +params.id);
+        if (process === null) {
+          return;
+        }
+        this.process = process;
+        this.roundIdx = process.pastRounds.findIndex(q => q.id === +params['roundid']);
+      });
+    });
+  }
 
   updateChart() {
     if (this.selectedStatKind !== null &&
@@ -109,6 +121,14 @@ export class ViewStatisticsPage extends SingleProcessListener implements OnDestr
     const y = this.rand(maxCoordinate);
     const r = this.rand(30) + 5;
     return {x, y, r};
+  }
+
+  ngOnDestroy(): void {
+    this.routeSubscription.unsubscribe();
+    this.processSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.process = undefined;
+    this.currentUser = undefined;
   }
 }
 

@@ -116,7 +116,7 @@ export class ProcessesPage extends ProcessesListener implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.clearProcesses();
+
   }
 
   onUserUpdate() {
