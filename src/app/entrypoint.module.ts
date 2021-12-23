@@ -17,7 +17,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {LoggedInGuard} from './core/router/guard/logged-in.guard';
 import {LoggedOutGuard} from './core/router/guard/logged-out.guard';
 import {SplashScreenPage} from './splash-screen/splash-screen.page';
-import {ToastService} from './core/service/toast.service';
+import {NotificationService} from './core/service/notification.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,7 @@ import {ToastService} from './core/service/toast.service';
     TranslateStore,
     LoggedInGuard,
     LoggedOutGuard,
-    ToastService
+    NotificationService
   ],
   bootstrap: [EntrypointComponent],
   exports: [

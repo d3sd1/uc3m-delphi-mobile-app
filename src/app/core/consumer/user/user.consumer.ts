@@ -31,10 +31,8 @@ export class UserConsumer {
     this.wsService.subscribe('profile', true, this.connectedUser);
   }
 
-  recoverPassword(email) {
-    this.http.put(environment.apiUrl + '/password/recover', {email}).subscribe((res) => {
-      console.log('pass recover ok');
-    });
+  recoverPassword(email): Promise<void> {
+    return this.http.put<void>(environment.apiUrl + '/password/recover', {email}).toPromise();
   }
 
   resetPassword(email, code, then, catched, finallied) {

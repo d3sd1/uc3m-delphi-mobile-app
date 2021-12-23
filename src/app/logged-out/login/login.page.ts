@@ -3,7 +3,7 @@ import {LoadingController, NavController, ViewDidEnter, ViewDidLeave} from '@ion
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {ToastService} from '../../core/service/toast.service';
+import {NotificationService} from '../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-login',
@@ -24,7 +24,7 @@ export class LoginPage implements ViewDidEnter, ViewDidLeave {
   constructor(private userConsumer: UserConsumer,
               private navCtrl: NavController,
               private loadingController: LoadingController,
-              private toastService: ToastService,
+              private toastService: NotificationService,
               private fb: FormBuilder) {
   }
 

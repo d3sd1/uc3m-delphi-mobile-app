@@ -1,31 +1,35 @@
-import {Component} from '@angular/core';
-import {AlertController, LoadingController, NavController} from '@ionic/angular';
+import {Component, OnDestroy} from '@angular/core';
+import {NavController, ViewDidEnter} from '@ionic/angular';
 import {UserConsumer} from '../../core/consumer/user/user.consumer';
+import {FormBuilder, Validators} from '@angular/forms';
+import {NotificationService} from '../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-login',
   templateUrl: './forgot-password.page.html',
   styleUrls: ['./forgot-password.page.scss'],
 })
-export class ForgotPasswordPage {
-  email: string = '';
-  confirmCodeAlert;
-  loading;
+export class ForgotPasswordPage implements ViewDidEnter, OnDestroy {
+  // Form
+  recoverForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+  });
 
   constructor(private userConsumer: UserConsumer,
-              public alertController: AlertController,
-              public loadingController: LoadingController,
-              private navCtrl: NavController) {
+              public ns: NotificationService,
+              private navCtrl: NavController,
+              private fb: FormBuilder) {
   }
 
 
-  async confirmCode() {
-    this.confirmCodeAlert = await this.alertController.create({
-      header: 'Recuperación recibida',
-      subHeader: 'Revisa tu buzón de correo electrónico',
-      inputs: [
+  confirmCode() {
+    this.ns.showAlert(
+      'Recuperación recibida',
+      'Revisa tu buzón de correo electrónico',
+      null,
+      'Cancelar',
+      [
         {
-          name: 'name1',
           type: 'text',
           placeholder: 'Código de recuperación',
           attributes: {
@@ -33,83 +37,62 @@ export class ForgotPasswordPage {
             inputmode: 'decimal',
             autoFocus: true,
             onInput: (ev) => {
-              const val = (ev.target as HTMLInputElement).value;
-              if (val.length === 6) {
-                this.validateCode(+val);
+              const code = (ev.target as HTMLInputElement).value;
+              if (code.length === 6) {
+                this.ns.showLoading('Cargando...').then((loading) => {
+                  this.userConsumer.resetPassword(this.recoverForm.get('email').value, +code, () => {
+                      loading.dismiss().then(null);
+                      this.ns.removeAlert();
+                      this.displaySuccess();
+                    },
+                    () => {
+                      loading.dismiss().then(null);
+                      this.ns.removeAlert();
+                      this.displayError();
+                    }, () => {
+                    });
+                });
               }
             },
           },
         },
-      ],
-      buttons: ['Cancelar']
-    });
-    await this.confirmCodeAlert.present();
+      ]
+    );
   }
 
-  async invalidEmailAlert() {
-    const alert = await this.alertController.create({
-      header: 'Email incorrecto',
-      subHeader: 'El email introducido no es válido.',
-      buttons: ['Entendido']
-    });
-    await alert.present();
+  displaySuccess() {
+    this.recoverForm.reset();
+    this.navCtrl.navigateBack('/logged-out/login').then(() => this.ns.showAlert('Contraseña reseteada',
+      'Se ha enviado tu nueva contraseña por correo electrónico.',
+      'Entendido',
+      null
+    ));
   }
 
-  async validateCode(code: number) {
-    this.confirmCodeAlert?.dismiss();
-    await this.startLoading();
-    this.userConsumer.resetPassword(this.email, code, () => {
-        this.displaySuccess();
-      },
-      () => {
-        this.displayError();
-      }, () => {
-        this.email = '';
-        this.endLoading();
+  displayError() {
+    this.recoverForm.reset();
+    this.ns.showAlert('Fallo en el reseteo',
+      'El código introducido no es correcto.',
+      'Entendido',
+      null
+    );
+  }
+
+  recover() {
+    this.ns.showLoading('Cargando...').then((loading) => {
+      this.userConsumer.recoverPassword(this.recoverForm.get('email').value).then(() => {
+        this.confirmCode();
       });
-  }
-
-  async displaySuccess() {
-    const alert = await this.alertController.create({
-      header: 'Contraseña reseteada',
-      subHeader: 'Se ha enviado tu nueva contraseña por correo electrónico.',
-      buttons: ['Entendido']
     });
-    await alert.present();
-    await this.navCtrl.navigateBack('/logged-out/login');
   }
 
-  async displayError() {
-    const alert = await this.alertController.create({
-      header: 'Fallo en el reseteo',
-      subHeader: 'El código introducido no es correcto.',
-      buttons: ['Entendido']
-    });
-    await alert.present();
+  ionViewDidEnter(): void {
+
   }
 
-  async recover() {
-    await this.startLoading();
-    if (this.email === '') {
-      await this.endLoading();
-      await this.invalidEmailAlert();
-      return;
-    }
-    await this.userConsumer.recoverPassword(this.email);
-    await this.endLoading();
-    await this.confirmCode();
+  ngOnDestroy(): void {
+    this.recoverForm.reset();
   }
 
-  async startLoading() {
-    this.loading = await this.loadingController.create({
-      message: 'Cargando...',
-      duration: 2000
-    });
-    await this.loading.present();
-  }
-
-  async endLoading() {
-    this.loading?.dismiss();
-  }
 
 }
