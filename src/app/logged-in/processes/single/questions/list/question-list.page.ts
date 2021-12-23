@@ -1,12 +1,12 @@
 import {Component, OnDestroy} from '@angular/core';
-import {AlertController, NavController} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
 import {UserConsumer} from '../../../../user.consumer';
 import {ProcessConsumer} from '../../../process.consumer';
 import {Subscription} from 'rxjs';
+import {NotificationService} from '../../../../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-rounds',
@@ -25,7 +25,7 @@ export class QuestionListPage implements OnDestroy {
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    public alertController: AlertController,
+    public ns: NotificationService,
     public userConsumer: UserConsumer,
     public processConsumer: ProcessConsumer) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
@@ -76,47 +76,19 @@ export class QuestionListPage implements OnDestroy {
     });
     if (this.process.currentRound.limitTime === null ||
       this.process.currentRound.limitTime === undefined) {
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'Error',
-        subHeader: 'No se pudo enviar la ronda',
-        message: 'Debes asignarles una fecha de finalización a la ronda actual.',
-        buttons: ['Resolver']
-      });
-
-      await alert.present();
+      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
+        null, 'Debes asignarles una fecha de finalización a la ronda actual.');
     } else if (this.process && (this.process.currentRound.questions === null ||
       this.process.currentRound.questions === undefined ||
       this.process.currentRound.questions.length === 0)) {
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'Error',
-        subHeader: 'No se pudo enviar la ronda',
-        message: 'Debes asignar preguntas a la ronda actual.',
-        buttons: ['Resolver']
-      });
-
-      await alert.present();
+      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
+        null, 'Debes asignar preguntas a la ronda actual.');
     } else if (questionsMissing) {
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'Error',
-        subHeader: 'No se pudo enviar la pregunta',
-        message: 'Debe introducir una pregunta en todas ellas.',
-        buttons: ['Resolver']
-      });
-
-      await alert.present();
+      this.ns.showAlert('Error', 'No se pudo enviar la pregunta', 'Resolver', null,
+        null, 'Debe introducir una pregunta en todas ellas.');
     } else if (this.process.currentRound.name === '') {
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'Error',
-        subHeader: 'No se pudo comenzar la ronda',
-        message: 'Debes introducir un nombre para la ronda',
-        buttons: ['Resolver']
-      });
-
-      await alert.present();
+      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
+        null, 'Debes introducir un nombre para la ronda');
     } else {
       this.processConsumer.startCurrentRound(this.process.id);
       this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
@@ -129,9 +101,14 @@ export class QuestionListPage implements OnDestroy {
   }
 
   addQuestionStep1() {
-    const alert = await this.alertController.create({
-      header: 'Crear pregunta',
-      inputs: [
+    this.ns.showAlert('Crear pregunta', null, {
+        text: 'Siguiente',
+        handler: (alertData) => {
+          this.addQuestionStep2(alertData.question);
+          this.ns.removeAlert();
+        }
+      }, 'Cancelar',
+      [
         {
           name: 'question',
           type: 'textarea',
@@ -140,34 +117,23 @@ export class QuestionListPage implements OnDestroy {
             maxlength: 5000,
           }
         },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary'
-        }, {
-          text: 'Siguiente',
-          handler: (alertData) => {
-            this.addQuestionStep2(alertData.question);
-            alert.dismiss();
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      ], 'Debes introducir un nombre para la ronda');
   }
 
   addQuestionStep2(name: string) {
+
     let selectedQuestionType = 'QUALITATIVE';
-    const alert = await this.alertController.create({
-      header: 'Tipo de pregunta',
-      inputs: [
+    this.ns.showAlert('Tipo de pregunta', null, {
+        text: 'Crear',
+        handler: (alertData) => {
+          this.ns.removeAlert();
+          this.processConsumer.addQuestion(this.process.id, name, selectedQuestionType);
+        }
+      }, 'Cancelar',
+      [
         {
           type: 'radio',
           label: 'Cualitativa',
-          cssClass: 'item-text-wrap',
           checked: true,
           handler: () => {
             selectedQuestionType = 'QUALITATIVE';
@@ -176,7 +142,6 @@ export class QuestionListPage implements OnDestroy {
         {
           type: 'radio',
           label: 'Cuantitativa',
-          cssClass: 'item-text-wrap',
           handler: () => {
             selectedQuestionType = 'QUANTITATIVE';
           }
@@ -184,7 +149,6 @@ export class QuestionListPage implements OnDestroy {
         {
           type: 'radio',
           label: 'Booleana',
-          cssClass: 'item-text-wrap',
           handler: () => {
             selectedQuestionType = 'BOOLTYPE';
           }
@@ -192,7 +156,6 @@ export class QuestionListPage implements OnDestroy {
         {
           type: 'radio',
           label: 'Categorías',
-          cssClass: 'item-text-wrap',
           handler: () => {
             selectedQuestionType = 'CATCUSTOM';
           }
@@ -200,7 +163,6 @@ export class QuestionListPage implements OnDestroy {
         {
           type: 'radio',
           label: 'Escala de Likert',
-          cssClass: 'item-text-wrap',
           handler: () => {
             selectedQuestionType = 'CATLIKERT';
           }
@@ -208,7 +170,6 @@ export class QuestionListPage implements OnDestroy {
         {
           type: 'radio',
           label: 'Selección múltiple',
-          cssClass: 'item-text-wrap',
           handler: () => {
             selectedQuestionType = 'CATMULTI';
           }
@@ -216,29 +177,11 @@ export class QuestionListPage implements OnDestroy {
         {
           type: 'radio',
           label: 'Categorías ponderadas',
-          cssClass: 'item-text-wrap',
           handler: () => {
             selectedQuestionType = 'CATPOND';
           }
         },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary'
-        },
-        {
-          text: 'Crear',
-          handler: (alertData) => {
-            alert.dismiss();
-            this.processConsumer.addQuestion(this.process.id, name, selectedQuestionType);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+      ]);
   }
 
   private orderQuestions() {

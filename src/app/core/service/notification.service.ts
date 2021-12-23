@@ -29,7 +29,8 @@ export class NotificationService {
                    subHeader: string,
                    okBtn: string | object,
                    cancelBtn: string | object = null,
-                   inputs: {}[] = null) {
+                   inputs: {}[] = null,
+                   message: string = null) {
     const buttons = [];
     if (okBtn !== null) {
       buttons.push(okBtn);

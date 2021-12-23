@@ -12,7 +12,7 @@ export class LoggedInInterceptor implements HttpInterceptor {
     return from(this.handle(req, next));
   }
 
-  async handle(req: HttpRequest<any>, next: HttpHandler) {
+  handle(req: HttpRequest<any>, next: HttpHandler) {
     const authReq = req.clone({
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.jwtService.getJwt().getValue()
