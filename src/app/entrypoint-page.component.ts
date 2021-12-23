@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
       <ion-router-outlet></ion-router-outlet>
     </ion-app>`
 })
-export class EntrypointComponent {
+export class EntrypointPage {
 
   /*
   TODO:

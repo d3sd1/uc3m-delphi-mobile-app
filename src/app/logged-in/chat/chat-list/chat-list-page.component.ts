@@ -8,10 +8,10 @@ import {ViewDidLeave} from '@ionic/angular';
 
 @Component({
   selector: 'delphi-chat-list',
-  templateUrl: './chat-list.component.html',
-  styleUrls: ['./chat-list.component.scss'],
+  templateUrl: './chat-list-page.component.html',
+  styleUrls: ['./chat-list-page.component.scss'],
 })
-export class ChatListComponent implements OnDestroy, ViewDidLeave {
+export class ChatListPage implements OnDestroy, ViewDidLeave {
   user: User;
 
   @Input()

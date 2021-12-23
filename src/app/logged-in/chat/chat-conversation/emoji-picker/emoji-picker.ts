@@ -4,7 +4,7 @@ import {EmojiProvider} from './emoji-provider';
 
 export const EMOJI_PICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => EmojiPickerComponent),
+  useExisting: forwardRef(() => EmojiPickerPage),
   multi: true
 };
 
@@ -14,7 +14,7 @@ export const EMOJI_PICKER_VALUE_ACCESSOR: any = {
   templateUrl: './emoji-picker.html',
   styleUrls: ['./emoji-picker.scss']
 })
-export class EmojiPickerComponent implements ControlValueAccessor {
+export class EmojiPickerPage implements ControlValueAccessor {
 
   emojiArr = [];
 

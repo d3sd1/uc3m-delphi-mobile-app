@@ -5,7 +5,7 @@ import {RouteReuseStrategy} from '@angular/router';
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 
 import {EntrypointRoutingModule} from './entrypoint-routing.module';
-import {EntrypointComponent} from './entrypoint.component';
+import {EntrypointPage} from './entrypoint-page.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IonicStorageModule} from '@ionic/storage';
 import {DelphiCoreModule} from './core/delphi-core.module';
@@ -19,7 +19,7 @@ import {NotificationService} from './core/service/notification.service';
 
 @NgModule({
   declarations: [
-    EntrypointComponent,
+    EntrypointPage,
     SplashScreenPage
   ],
   imports: [
@@ -46,7 +46,7 @@ import {NotificationService} from './core/service/notification.service';
     TranslateStore,
     NotificationService
   ],
-  bootstrap: [EntrypointComponent],
+  bootstrap: [EntrypointPage],
   exports: [
     DelphiCoreModule,
     TranslateModule
