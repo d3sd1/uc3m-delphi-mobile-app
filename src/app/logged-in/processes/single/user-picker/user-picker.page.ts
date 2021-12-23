@@ -39,7 +39,7 @@ export class UserPickerPage implements OnDestroy {
       this.type = params.type;
     });
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user) {
+      if (user === null) {
         return;
       }
       this.currentUser = user;
@@ -88,11 +88,11 @@ export class UserPickerPage implements OnDestroy {
   }
 
   isCoordinator(): boolean {
-    return this.process.coordinators.findIndex((user) => user.id === this.currentUser.id) !== -1;
+    return this.process.coordinators.some((user) => user.id === this.currentUser.id);
   }
 
   filter() {
-    if (this.filterCriterial === '' || this.filterCriterial === null) {
+    if (this.filterCriterial === '' || this.filterCriterial === null || !this.currentUser) {
       this.usersFiltered = [];
       return;
     }

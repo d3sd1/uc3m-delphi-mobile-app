@@ -70,6 +70,9 @@ export class QuestionCatmultiPage implements OnInit {
   }
 
   private reorderCategories() {
+    if(!this.question || !this.question.categories) {
+      return;
+    }
     this.question.categories.sort((n1, n2) => {
       if (n1.id < n2.id) {
         return -1;
