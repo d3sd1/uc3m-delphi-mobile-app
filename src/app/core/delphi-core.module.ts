@@ -1,18 +1,13 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {LangService} from './lang/lang.service';
-import {CompatibilityService} from './devices/compatibility.service';
-import {UserConsumer} from './consumer/user/user.consumer';
-import {ProcessConsumer} from './consumer/process/process.consumer';
-import {ChatConsumer} from './consumer/chat/chat.consumer';
+import {UserConsumer} from '../logged-in/user.consumer';
+import {ProcessConsumer} from '../logged-in/processes/process.consumer';
+import {ChatConsumer} from '../logged-in/chat/chat.consumer';
 
 
 @NgModule({
   declarations: [],
   imports: [],
-  providers: [
-    LangService,
-    CompatibilityService,
-  ],
+  providers: [],
 })
 export class DelphiCoreModule {
   static forRoot(): ModuleWithProviders<any> {

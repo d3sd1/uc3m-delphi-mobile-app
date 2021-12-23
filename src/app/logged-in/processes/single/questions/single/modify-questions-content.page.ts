@@ -4,10 +4,9 @@ import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {Question} from '../../../../../core/model/question';
-import {environment} from '../../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
-import {ProcessConsumer} from '../../../../../core/consumer/process/process.consumer';
+import {UserConsumer} from '../../../../user.consumer';
+import {ProcessConsumer} from '../../../process.consumer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -54,6 +53,7 @@ export class ModifyQuestionsContentPage {
       this.question.name, this.question.questionType.name, this.question.minVal,
       this.question.maxVal, this.question.maxSelectable, this.question.orderPosition);
   }
+
   private async showToast(msg: string) {
     const toast = await this.toastController.create({
       position: 'top',

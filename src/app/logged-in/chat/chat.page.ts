@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {UserChat} from '../../core/model/user-chat';
 import {User} from '../../core/model/user';
-import {UserConsumer} from '../../core/consumer/user/user.consumer';
-import {ChatConsumer} from '../../core/consumer/chat/chat.consumer';
+import {UserConsumer} from '../user.consumer';
+import {ChatConsumer} from './chat.consumer';
 
 @Component({
   selector: 'delphi-chat',

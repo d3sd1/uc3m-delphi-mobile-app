@@ -6,14 +6,16 @@
       [routerLink]="'/logged-in/menu/chat/conversation/' + (chat.user1.id === user.id ? chat.user2.id:chat.user1.id)">
       <ion-avatar slot="start">
         <div class="img-wrapper circle">
-          <span class="initials">{{chat.user1.id === user.id ? chat.user2.name.substring(0, 2): chat.user1.name.substring(0, 2)}}</span>
+          <span
+            class="initials">{{chat.user1.id === user.id ? chat.user2.name.substring(0, 2) : chat.user1.name.substring(0, 2)}}</span>
         </div>
       </ion-avatar>
       <ion-label>
         <h2>{{chat.user1.id === user.id ? chat.user2.name + ' ' + chat.user2.surnames : chat.user1.name + ' ' + chat.user1.surnames}}</h2>
         <h3>{{chat.messages[chat.messages.length - 1].content}}</h3>
       </ion-label>
-      <ion-icon *ngIf="chat.messages[chat.messages.length - 1].user.id !== user.id" color="danger" name="radio-button-on-outline"
+      <ion-icon *ngIf="chat.messages[chat.messages.length - 1].user.id !== user.id" color="danger"
+                name="radio-button-on-outline"
                 slot="end"></ion-icon>
     </ion-item>
 

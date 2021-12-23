@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {LoadingController, NavController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
-import {UserConsumer} from '../../core/consumer/user/user.consumer';
+import {UserConsumer} from '../../logged-in/user.consumer';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../core/service/notification.service';

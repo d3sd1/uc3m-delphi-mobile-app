@@ -1,15 +1,13 @@
 import {Injectable} from '@angular/core';
-import {LoginResponse} from './login.response';
-import {environment} from '../../../../environments/environment';
+import {environment} from '../../environments/environment';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Storage} from '@ionic/storage';
-import {WsService} from '../../service/ws.service';
+import {WsService} from '../core/service/ws.service';
 import {TranslateService} from '@ngx-translate/core';
-import {User} from '../../model/user';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {Router} from '@angular/router';
-import {JwtService} from '../../service/jwt.service';
-import {WsMode} from '../../ws/ws-mode.model';
+import {User} from '../core/model/user';
+import {BehaviorSubject} from 'rxjs';
+import {JwtService} from '../core/service/jwt.service';
+import {WsMode} from '../core/ws/ws-mode.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +22,6 @@ export class UserConsumer {
               private translate: TranslateService,
               private jwtService: JwtService) {
     this.handleUser();
-  }
-
-  private handleUser() {
-    this.wsService.subscribe('profile', true, this.connectedUser);
   }
 
   recoverPassword(email): Promise<void> {
@@ -46,10 +40,9 @@ export class UserConsumer {
     return this.connectedUser;
   }
 
-
   doLogin(loginForm): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.http.post<LoginResponse>(environment.apiUrl + '/login', loginForm).subscribe(async (loginResponse: LoginResponse) => {
+      this.http.post<{ jwt }>(environment.apiUrl + '/login', loginForm).subscribe(async (loginResponse: { jwt }) => {
         this.jwtService.setJwt(loginResponse.jwt);
         resolve('Conexión satisfactoria.');
       }, async (err: HttpErrorResponse) => {
@@ -71,6 +64,10 @@ export class UserConsumer {
     await this.connectedUser.next(null);
     await this.jwtService.setJwt(null);
     await this.wsService.disconnectWs();
+  }
+
+  private handleUser() {
+    this.wsService.subscribe('profile', true, this.connectedUser);
   }
 
 

@@ -3,9 +3,9 @@ import {IonContent} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {UserChat} from '../../../core/model/user-chat';
 import {User} from '../../../core/model/user';
-import {ChatConsumer} from '../../../core/consumer/chat/chat.consumer';
-import {UserConsumer} from '../../../core/consumer/user/user.consumer';
-import {InvitationConsumer} from '../../../core/consumer/process/invitation.consumer';
+import {ChatConsumer} from '../chat.consumer';
+import {UserConsumer} from '../../user.consumer';
+import {InvitationConsumer} from '../../processes/single/user-picker/invitation.consumer';
 import {Subscription} from 'rxjs';
 import {ChatMessage} from '../../../core/model/chat-message';
 
@@ -22,12 +22,10 @@ export class ChatConversationPage implements OnInit, OnDestroy {
 
   editorMsg = '';
   showEmojiPicker = false;
-
+  @ViewChild(IonContent, {read: IonContent, static: false}) chatDisplay: IonContent;
   private chatSubscription: Subscription;
   private userSubscription: Subscription;
   private invitationSubscription: Subscription;
-
-  @ViewChild(IonContent, {read: IonContent, static: false}) chatDisplay: IonContent;
 
   constructor(
     private chatConsumer: ChatConsumer,

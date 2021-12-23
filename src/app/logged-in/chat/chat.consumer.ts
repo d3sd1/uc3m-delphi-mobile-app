@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {WsService} from '../../service/ws.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {WsService} from '../../core/service/ws.service';
+import {BehaviorSubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {UserChat} from '../../model/user-chat';
-import {WsMode} from '../../ws/ws-mode.model';
+import {UserChat} from '../../core/model/user-chat';
+import {WsMode} from '../../core/ws/ws-mode.model';
 
 @Injectable({
   providedIn: 'root'

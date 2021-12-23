@@ -1,14 +1,10 @@
-import {Component, ViewChild} from '@angular/core';
-import {IonContent, IonReorderGroup, LoadingController, NavController, ToastController} from '@ionic/angular';
+import {Component, OnDestroy} from '@angular/core';
+import {NavController} from '@ionic/angular';
 import {Process} from '../../../core/model/process';
 import {User} from '../../../core/model/user';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
-import {DomSanitizer} from '@angular/platform-browser';
-import {TranslateService} from '@ngx-translate/core';
-import {UserConsumer} from '../../../core/consumer/user/user.consumer';
-import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
+import {UserConsumer} from '../../user.consumer';
+import {ProcessConsumer} from '../process.consumer';
 import {NotificationService} from '../../../core/service/notification.service';
 import {Subscription} from 'rxjs';
 
@@ -17,31 +13,25 @@ import {Subscription} from 'rxjs';
   templateUrl: './single-process.page.html',
   styleUrls: ['./single-process.page.scss'],
 })
-export class SingleProcessPage {
-  process: Process = new Process();
-  createMode = false;
-  user: User = new User();
-  processSubscription: Subscription;
-  @ViewChild(IonContent, {read: IonContent, static: false}) createProcess: IonContent;
-  @ViewChild(IonReorderGroup) reorderGroup: IonReorderGroup;
+export class SingleProcessPage implements OnDestroy {
+  process: Process;
+  user: User;
+  processesSubscription: Subscription;
+  routeSubscription: Subscription;
+  userSubscription: Subscription;
 
-  constructor(private httpClient: HttpClient,
-              private route: ActivatedRoute,
-              private ns: NotificationService,
-              public loadingController: LoadingController,
+  constructor(private ns: NotificationService,
               public userConsumer: UserConsumer,
-              private toastController: ToastController,
-              private sanitizer: DomSanitizer,
-              private translate: TranslateService,
+              private route: ActivatedRoute,
               private processConsumer: ProcessConsumer,
               private navCtrl: NavController) {
-    this.userConsumer.getUser().subscribe((user) => {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       if (user !== null) {
         this.user = user;
       }
     });
-    this.route.params.subscribe(params => {
-     this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+    this.routeSubscription = this.route.params.subscribe(params => {
+      this.processesSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
         }
@@ -84,5 +74,11 @@ export class SingleProcessPage {
     this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/participate').then(r => null);
   }
 
-
+  ngOnDestroy(): void {
+    this.routeSubscription.unsubscribe();
+    this.processesSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.process = undefined;
+    this.user = undefined;
+  }
 }

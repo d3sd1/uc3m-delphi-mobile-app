@@ -3,13 +3,12 @@ import {ChatService} from './chat/chat.service';
 import {Storage} from '@ionic/storage';
 import {User} from '../core/model/user';
 import {WsService} from '../core/service/ws.service';
-import {NavController, ViewDidEnter} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
-import {UserConsumer} from '../core/consumer/user/user.consumer';
-import {LangService} from '../core/lang/lang.service';
-import {ChatConsumer} from '../core/consumer/chat/chat.consumer';
+import {UserConsumer} from './user.consumer';
+import {ChatConsumer} from './chat/chat.consumer';
 import {Subscription} from 'rxjs';
-import {ProcessConsumer} from '../core/consumer/process/process.consumer';
+import {ProcessConsumer} from './processes/process.consumer';
 import {Process} from '../core/model/process';
 import {UserChat} from '../core/model/user-chat';
 
@@ -41,7 +40,6 @@ export class HomePage implements OnDestroy {
               private storage: Storage,
               private wsService: WsService,
               private translate: TranslateService,
-              private langService: LangService,
               private chatConsumer: ChatConsumer,
               private navCtrl: NavController) {
     this.userSubscription = this.userConsumer.getUser().subscribe((u: User) => {
@@ -49,7 +47,6 @@ export class HomePage implements OnDestroy {
         return;
       }
       this.user = u;
-      this.langService.changeLanguage(u.language);
       this.needsOnboard(u);
       this.setNotificationCount();
     });
@@ -71,12 +68,6 @@ export class HomePage implements OnDestroy {
 
   }
 
-  private setNotificationCount() {
-    this.setChatNotifications();
-    this.setProcessesNotifications();
-  }
-
-
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
     this.processesSubscription.unsubscribe();
@@ -85,7 +76,6 @@ export class HomePage implements OnDestroy {
     this.notifications.messages = 0;
     this.notifications.profile = 0;
   }
-
 
   needsOnboard(u: User) {
     if (u.needsOnboard === true) {
@@ -116,5 +106,10 @@ export class HomePage implements OnDestroy {
     this.notifications.proccess += this.processes.filter(process => {
       return !process.finished && process.coordinators.find(u2 => this.user.id === u2.id);
     }).length;
+  }
+
+  private setNotificationCount() {
+    this.setChatNotifications();
+    this.setProcessesNotifications();
   }
 }

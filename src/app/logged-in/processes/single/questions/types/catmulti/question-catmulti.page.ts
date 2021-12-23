@@ -11,7 +11,7 @@ import {environment} from '../../../../../../../environments/environment';
   templateUrl: './question-catmulti.page.html',
   styleUrls: ['./question-catmulti.page.scss'],
 })
-export class QuestionCatmultiPage implements OnInit{
+export class QuestionCatmultiPage implements OnInit {
   @Input()
   question: Question;
   @Input()
@@ -28,17 +28,17 @@ export class QuestionCatmultiPage implements OnInit{
 
 
   async addCategory() {
-    if(this.question.categories === undefined ||
+    if (this.question.categories === undefined ||
       this.question.categories === null) {
       this.question.categories = [];
     }
 
-    if(this.currentCategory === '') {
+    if (this.currentCategory === '') {
       await this.showToast('Introduce el nombre de la categoría');
       return;
     }
 
-    if(this.currentCategory !== '' && this.question.categories.findIndex(c => c.catName.toLowerCase() == this.currentCategory.toLowerCase()) !== -1) {
+    if (this.currentCategory !== '' && this.question.categories.findIndex(c => c.catName.toLowerCase() == this.currentCategory.toLowerCase()) !== -1) {
       await this.showToast('No puedes introducir categorías duplicadas');
       this.currentCategory = '';
       return;
@@ -47,12 +47,29 @@ export class QuestionCatmultiPage implements OnInit{
     this.currentCategory = '';
     await this.updateQuestion();
   }
+
   async delCategory(category: Category) {
     this.question.categories = this.question.categories.filter((cat) => {
       return category.catName !== cat.catName;
     });
     await this.updateQuestion();
   }
+
+  async updateQuestion() {
+    if (this.question.maxSelectable > this.question.categories.length) {
+      this.showToast('El máximo seleccionable debe ser igual o menor que el número de categorías (' + this.question.categories.length + ')');
+      this.question.maxSelectable = this.question.categories.length;
+    } else if (this.question.maxSelectable == 0
+      || this.question.maxSelectable === null
+      || this.question.maxSelectable === undefined) {
+      this.showToast('El máximo seleccionable debe ser igual o mayor a 1');
+      this.question.maxSelectable = 1;
+    }
+    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
+      this.question).toPromise();
+    this.reorderCategories();
+  }
+
   private reorderCategories() {
     this.question.categories?.sort((n1, n2) => {
       if (n1.id < n2.id) {
@@ -64,21 +81,7 @@ export class QuestionCatmultiPage implements OnInit{
       return 0;
     });
   }
-  async updateQuestion() {
-    if(this.question.maxSelectable > this.question.categories.length) {
-      this.showToast('El máximo seleccionable debe ser igual o menor que el número de categorías (' + this.question.categories.length + ')');
-      this.question.maxSelectable = this.question.categories.length;
-    } else
-    if(this.question.maxSelectable == 0
-    || this.question.maxSelectable === null
-    || this.question.maxSelectable === undefined) {
-      this.showToast('El máximo seleccionable debe ser igual o mayor a 1');
-      this.question.maxSelectable = 1;
-    }
-    await this.httpClient.post(environment.apiUrl + '/v1/process/question/update?process_id=' + this.process.id,
-      this.question).toPromise();
-    this.reorderCategories();
-  }
+
   private async showToast(msg: string) {
     const toast = await this.toastController.create({
       position: 'top',

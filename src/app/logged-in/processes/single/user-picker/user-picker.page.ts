@@ -1,25 +1,29 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {User} from '../../../../core/model/user';
-import {Process} from '../../../../core/model/process';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
-import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
-import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
-import {InvitationConsumer} from '../../../../core/consumer/process/invitation.consumer';
+import {UserConsumer} from '../../../user.consumer';
+import {ProcessConsumer} from '../../process.consumer';
+import {InvitationConsumer} from './invitation.consumer';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'delphi-user-picker',
   templateUrl: './user-picker.page.html',
   styleUrls: ['./user-picker.page.scss'],
 })
-export class UserPickerPage {
-  process = new Process();
+export class UserPickerPage implements OnDestroy {
+  process;
   filterCriterial = '';
-  currentUser = new User();
+  currentUser;
   type;
   searchableUsers: User[] = [];
   usersFiltered: User[] = [];
+
+  userSubscription: Subscription;
+  routeSubscription: Subscription;
+  processSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,17 +35,16 @@ export class UserPickerPage {
     this.route.params.subscribe(params => {
       this.type = params.type;
     });
-    this.userConsumer.getUser().subscribe((user) => {
+    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       this.currentUser = user;
     });
-    this.route.params.subscribe(params => {
+    this.routeSubscription = this.route.params.subscribe(params => {
 
-      this.processConsumer.getProcesses().subscribe((processes) => {
+      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
         }
-        const process = processes.find(p2 => p2.id === +params.id);
-        this.process = process;
+        this.process = processes.find(p2 => p2.id === +params.id);
       });
     });
     this.invitationConsumer.getUsers().subscribe((users) => {
@@ -96,10 +99,17 @@ export class UserPickerPage {
 
   getUsers() {
     if (this.type.toLowerCase() === 'coordinator') {
-      return this.process?.coordinators;
+      return this.process.coordinators;
     } else if (this.type.toLowerCase() === 'expert') {
-      return this.process?.experts;
+      return this.process.experts;
     }
   }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
+    this.processSubscription.unsubscribe();
+  }
+
 
 }

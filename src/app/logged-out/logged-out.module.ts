@@ -14,15 +14,15 @@ import {ForgotPasswordPage} from './forgot-password/forgot-password.page';
     LoginPage,
     ForgotPasswordPage
   ],
-    imports: [
-        CommonModule,
-        LoggedOutRoutingModule,
-        HttpClientModule,
-        FormsModule,
-        IonicModule,
-        TranslateModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    CommonModule,
+    LoggedOutRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    IonicModule,
+    TranslateModule,
+    ReactiveFormsModule
+  ],
   providers: []
 })
 export class LoggedOutModule {

@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {NavController, ViewDidEnter} from '@ionic/angular';
-import {UserConsumer} from '../../core/consumer/user/user.consumer';
+import {UserConsumer} from '../../logged-in/user.consumer';
 import {FormBuilder, Validators} from '@angular/forms';
 import {NotificationService} from '../../core/service/notification.service';
 

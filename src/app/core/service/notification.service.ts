@@ -30,25 +30,25 @@ export class NotificationService {
                    okBtn: string,
                    cancelBtn: string = null,
                    inputs: [{}] = null) {
-      const buttons = [];
-      if (okBtn !== null) {
-        buttons.push(okBtn);
-      }
-      if (cancelBtn !== null) {
-        buttons.push(cancelBtn);
-      }
-      const conf = {
-        header,
-        subHeader,
-        buttons,
-        inputs: []
-      };
-      if (inputs !== null) {
-        conf.inputs = inputs;
-      }
-      this.ac.create(conf).then((alert) => {
-        alert.present().then(null);
-      });
+    const buttons = [];
+    if (okBtn !== null) {
+      buttons.push(okBtn);
+    }
+    if (cancelBtn !== null) {
+      buttons.push(cancelBtn);
+    }
+    const conf = {
+      header,
+      subHeader,
+      buttons,
+      inputs: []
+    };
+    if (inputs !== null) {
+      conf.inputs = inputs;
+    }
+    this.ac.create(conf).then((alert) => {
+      alert.present().then(null);
+    });
   }
 
   public removeAlert() {

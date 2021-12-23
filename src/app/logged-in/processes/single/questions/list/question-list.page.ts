@@ -4,8 +4,8 @@ import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
-import {ProcessConsumer} from '../../../../../core/consumer/process/process.consumer';
+import {UserConsumer} from '../../../../user.consumer';
+import {ProcessConsumer} from '../../../process.consumer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -44,18 +44,6 @@ export class QuestionListPage {
 
   isCoordinator(): boolean {
     return this.process?.coordinators?.findIndex((user) => user.id === this.user?.id) !== -1;
-  }
-
-  private orderQuestions() {
-    this.process?.currentRound?.questions?.sort((n1, n2) => {
-      if (n1.orderPosition < n2.orderPosition) {
-        return -1;
-      }
-      if (n1.orderPosition > n2.orderPosition) {
-        return 1;
-      }
-      return 0;
-    });
   }
 
   public async onItemReorder({detail}) {
@@ -149,7 +137,6 @@ export class QuestionListPage {
     this.processConsumer.endCurrentRound(this.process?.id);
     this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
   }
-
 
   async addQuestionStep1() {
     const alert = await this.alertController.create({
@@ -262,6 +249,18 @@ export class QuestionListPage {
     });
 
     await alert.present();
+  }
+
+  private orderQuestions() {
+    this.process?.currentRound?.questions?.sort((n1, n2) => {
+      if (n1.orderPosition < n2.orderPosition) {
+        return -1;
+      }
+      if (n1.orderPosition > n2.orderPosition) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
 }

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ActionSheetController, NavController} from '@ionic/angular';
 import {User} from '../../core/model/user';
-import {UserConsumer} from '../../core/consumer/user/user.consumer';
+import {UserConsumer} from '../user.consumer';
 import {Subscription} from 'rxjs';
 
 @Component({

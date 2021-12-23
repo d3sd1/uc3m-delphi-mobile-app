@@ -1,17 +1,17 @@
 <ion-item>
-  <ion-input type="number" [(ngModel)]="question.minVal"
+  <ion-input (ngModelChange)="updateQuestion()" [(ngModel)]="question.minVal"
+             [readonly]="process.currentRound.started"
              placeholder="Valor mínimo"
+             type="number"></ion-input>
+  <ion-input (ngModelChange)="updateQuestion()" [(ngModel)]="question.maxVal"
              [readonly]="process.currentRound.started"
-             (ngModelChange)="updateQuestion()"></ion-input>
-  <ion-input type="number" [(ngModel)]="question.maxVal"
              placeholder="Valor máximo"
-             [readonly]="process.currentRound.started"
-             (ngModelChange)="updateQuestion()"></ion-input>
+             type="number"></ion-input>
 </ion-item>
 <ion-range [max]="question.maxVal"
            [min]="question.minVal"
-           color="primary"
-           disabled="true" snaps step="1" [value]="question.maxVal / 2">
+           [value]="question.maxVal / 2"
+           color="primary" disabled="true" snaps step="1">
   <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
   <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
 </ion-range>

@@ -1,11 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
 import {IonSlides, NavController, ToastController, ViewDidEnter} from '@ionic/angular';
-import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../core/model/user';
 import {TranslateService} from '@ngx-translate/core';
-import {UserConsumer} from '../../core/consumer/user/user.consumer';
+import {UserConsumer} from '../user.consumer';
 
 @Component({
   selector: 'delphi-onboarding',

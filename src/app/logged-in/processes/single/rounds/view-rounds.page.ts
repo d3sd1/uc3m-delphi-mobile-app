@@ -3,8 +3,8 @@ import {NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
-import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
-import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
+import {UserConsumer} from '../../../user.consumer';
+import {ProcessConsumer} from '../../process.consumer';
 
 @Component({
   selector: 'delphi-rounds',

@@ -2,13 +2,16 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id"
-                       routerDirection="back"
                        [routerLink]="'/logged-in/menu/processes/finished/' + process.id"
+                       routerDirection="back"
                        text="Volver"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="this.currentQuestion + 1 <= this.process.currentRound.questions.length">Pregunta {{this.currentQuestion + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
-    <ion-title *ngIf="this.currentQuestion + 1 > this.process.currentRound.questions.length">Finalizar participación</ion-title>
-    <ion-progress-bar value="{{this.currentQuestion / this.process.currentRound.questions.length}}" [buffer]="this.currentQuestion / this.process.currentRound.questions.length"></ion-progress-bar>
+    <ion-title *ngIf="this.currentQuestion + 1 <= this.process.currentRound.questions.length">
+      Pregunta {{this.currentQuestion + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
+    <ion-title *ngIf="this.currentQuestion + 1 > this.process.currentRound.questions.length">Finalizar participación
+    </ion-title>
+    <ion-progress-bar [buffer]="this.currentQuestion / this.process.currentRound.questions.length"
+                      value="{{this.currentQuestion / this.process.currentRound.questions.length}}"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
@@ -19,16 +22,16 @@
         <p>{{question.name}}</p>
         <!-- Textarea in an item with a placeholder -->
         <ion-item *ngIf="question.questionType.name === 'QUALITATIVE'">
-          <ion-textarea [value]="currentQuestionValue" inputmode="text" placeholder="Introduce aquí tu respuesta"
-                        (ionChange)="updateAnswer(currentQuestion, $event)"></ion-textarea>
+          <ion-textarea (ionChange)="updateAnswer(currentQuestion, $event)" [value]="currentQuestionValue" inputmode="text"
+                        placeholder="Introduce aquí tu respuesta"></ion-textarea>
         </ion-item>
         <div *ngIf="question.questionType.name === 'QUANTITATIVE'">
           <ion-item>
-            <ion-range [max]="question.maxVal"
-                       [min]="question.minVal"
-                       color="primary" snaps step="1"
-                       [value]="currentQuestionValue"
-                       (ionChange)="updateAnswer(currentQuestion, $event)">
+            <ion-range (ionChange)="updateAnswer(currentQuestion, $event)"
+                       [max]="question.maxVal"
+                       [min]="question.minVal" [value]="currentQuestionValue" color="primary"
+                       snaps
+                       step="1">
               <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
               <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
             </ion-range>
@@ -37,8 +40,8 @@
         <div *ngIf="question.questionType.name === 'BOOLTYPE'">
           <ion-list>
             <ion-radio-group
-              [value]="currentQuestionValue"
-              (ionChange)="updateAnswer(currentQuestion, $event)">
+              (ionChange)="updateAnswer(currentQuestion, $event)"
+              [value]="currentQuestionValue">
               <ion-item>
                 <ion-label class="ion-text-wrap">Sí</ion-label>
                 <ion-radio slot="start" value="1"></ion-radio>
@@ -53,8 +56,8 @@
         </div>
         <div *ngIf="question.questionType.name === 'CATLIKERT'">
           <ion-list>
-            <ion-radio-group [value]="currentQuestionValue"
-                             (ionChange)="updateAnswer(currentQuestion, $event)">
+            <ion-radio-group (ionChange)="updateAnswer(currentQuestion, $event)"
+                             [value]="currentQuestionValue">
               <ion-item>
                 <ion-label class="ion-text-wrap">Totalmente en desacuerdo</ion-label>
                 <ion-radio slot="start" value="1"></ion-radio>
@@ -85,7 +88,7 @@
                              [value]="currentQuestionValue">
               <ion-item *ngFor="let category of question.categories">
                 <ion-label class="ion-text-wrap">{{category.catName}}</ion-label>
-                <ion-radio slot="start" [value]="category.id"></ion-radio>
+                <ion-radio [value]="category.id" slot="start"></ion-radio>
               </ion-item>
             </ion-radio-group>
           </ion-list>
@@ -95,10 +98,10 @@
           <p>Máximas selecciones habilitadas: {{this.answers[currentQuestion].question.maxSelectable}}</p>
           <ion-item>
             <ion-label class="ion-text-wrap">Categorías</ion-label>
-            <ion-select multiple="true" (ionChange)="addCatAnswer(currentQuestion, $event)"
-                        [value]="currentQuestionValue">
-              <ion-select-option class="show-text" *ngFor="let category of question.categories"
-                                 [value]="category.id">{{category.catName}}</ion-select-option>
+            <ion-select (ionChange)="addCatAnswer(currentQuestion, $event)" [value]="currentQuestionValue"
+                        multiple="true">
+              <ion-select-option *ngFor="let category of question.categories" [value]="category.id"
+                                 class="show-text">{{category.catName}}</ion-select-option>
             </ion-select>
           </ion-item>
 
@@ -109,7 +112,8 @@
           <ion-list>
             <ion-item *ngFor="let category of question.categories">
               <ion-label class="ion-text-wrap">{{category.catName}}</ion-label>
-              <ion-input (ionChange)="addCatPondAnswer(currentQuestion, $event, category.id)" placeholder="Ponderación entre 0 y 10" type="number" min="0" max="10" value="null"></ion-input>
+              <ion-input (ionChange)="addCatPondAnswer(currentQuestion, $event, category.id)"
+                         max="10" min="0" placeholder="Ponderación entre 0 y 10" type="number" value="null"></ion-input>
             </ion-item>
           </ion-list>
         </div>
@@ -120,11 +124,11 @@
 </ion-content>
 <ion-footer *ngIf="process && process.currentRound && process.currentRound.questions">
   <ion-toolbar>
-    <ion-button expand="full" [disabled]="currentQuestion == 0" (click)="back()">Anterior</ion-button>
-    <ion-button expand="full" *ngIf="currentQuestion < process.currentRound.questions.length - 1" (click)="advance()">
+    <ion-button (click)="back()" [disabled]="currentQuestion == 0" expand="full">Anterior</ion-button>
+    <ion-button (click)="advance()" *ngIf="currentQuestion < process.currentRound.questions.length - 1" expand="full">
       Siguiente
     </ion-button>
-    <ion-button expand="full" *ngIf="currentQuestion >= process.currentRound.questions.length - 1" (click)="finish()">
+    <ion-button (click)="finish()" *ngIf="currentQuestion >= process.currentRound.questions.length - 1" expand="full">
       Finalizar
     </ion-button>
   </ion-toolbar>

@@ -2,8 +2,8 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + this.process?.id"
-                       routerDirection="back"
                        [routerLink]="'/logged-in/menu/processes/finished/' + this.process?.id"
+                       routerDirection="back"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Finalizar proceso</ion-title>
@@ -23,7 +23,8 @@
 <ion-footer>
   <ion-toolbar>
     <ion-button (click)="closeProcess()"
-                expand="block">Finalizar proceso</ion-button>
+                expand="block">Finalizar proceso
+    </ion-button>
   </ion-toolbar>
 </ion-footer>
 

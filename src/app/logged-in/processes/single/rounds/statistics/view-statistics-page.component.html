@@ -1,50 +1,54 @@
 <ion-header *ngIf="process && process.pastRounds">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/finished/' +  process?.pastRounds[roundIdx].id"
-                       routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/finished/' +  process?.pastRounds[roundIdx].id"
-                       text="Volver"></ion-back-button>
+      <ion-back-button
+        [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/finished/' +  process?.pastRounds[roundIdx].id"
+        [routerLink]="'/logged-in/menu/processes/finished/' + process?.id + '/rounds/finished/' +  process?.pastRounds[roundIdx].id"
+        routerDirection="back"
+        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Visor estadístico</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="process && process.pastRounds"><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+<ion-content *ngIf="process && process.pastRounds">
+  <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
 
   <ion-item>
     <ion-label>Estadístico</ion-label>
-    <ion-select ok-text="OK" cancel-text="Cancelar" placeholder="Seleccione estadístico" [(ngModel)]="selectedStatKind" (ngModelChange)="updateChart()">
+    <ion-select (ngModelChange)="updateChart()" [(ngModel)]="selectedStatKind" cancel-text="Cancelar" ok-text="OK"
+                placeholder="Seleccione estadístico">
       <ion-select-option value="squared_chi">Chi cuadrado</ion-select-option>
       <ion-select-option value="kendall">Conglomerados de Kendall</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label>Pregunta</ion-label>
-    <ion-select ok-text="OK" cancel-text="Cancelar" placeholder="Seleccione pregunta" [(ngModel)]="selectedQuestion" (ngModelChange)="updateChart()">
-      <ion-select-option *ngFor="let question of process?.pastRounds[roundIdx].questions; let questionIndex = index" [value]="question.id"
-      [disabled]="question.questionType.name == 'QUALITATIVE'">{{question.name}}</ion-select-option>
+    <ion-select (ngModelChange)="updateChart()" [(ngModel)]="selectedQuestion" cancel-text="Cancelar" ok-text="OK"
+                placeholder="Seleccione pregunta">
+      <ion-select-option *ngFor="let question of process?.pastRounds[roundIdx].questions; let questionIndex = index"
+                         [disabled]="question.questionType.name == 'QUALITATIVE'"
+                         [value]="question.id">{{question.name}}</ion-select-option>
     </ion-select>
   </ion-item>
 
-  <div class="container" *ngIf="!showChart">
+  <div *ngIf="!showChart" class="container">
     <strong>Introduce tu selección</strong>
     <p>Introduce el tipo de estadística a generar, así como la pregunta sobre la que aplicarlo en el menú superior.</p>
   </div>
-  <div class="container" *ngIf="showChart">
-    <canvas baseChart *ngIf="this.selectedStatKind == 'squared_chi'"
-            [data]="scatterChartData"
+  <div *ngIf="showChart" class="container">
+    <canvas *ngIf="this.selectedStatKind == 'squared_chi'" [data]="scatterChartData"
             [options]="scatterChartOptions"
-            [type]="scatterChartType">
+            [type]="scatterChartType"
+            baseChart>
     </canvas>
-    <canvas baseChart *ngIf="this.selectedStatKind == 'kendall'"
-            [data]="radarChartData"
+    <canvas *ngIf="this.selectedStatKind == 'kendall'" [data]="radarChartData"
             [options]="radarChartOptions"
+            [type]="radarChartType"
 
-            [type]="radarChartType">
+            baseChart>
     </canvas>
   </div>
-
 
 
 </ion-content>

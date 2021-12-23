@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {WsService} from '../../service/ws.service';
-import {Process} from '../../model/process';
+import {WsService} from '../../core/service/ws.service';
+import {Process} from '../../core/model/process';
 import {BehaviorSubject} from 'rxjs';
-import {WsMode} from '../../ws/ws-mode.model';
-import {Answer} from '../../model/answer';
+import {WsMode} from '../../core/ws/ws-mode.model';
+import {Answer} from '../../core/model/answer';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +24,6 @@ export class ProcessConsumer {
 
   createProcess(name: string, description: string) {
     this.wsService.publish('process', {name, description}, WsMode.CREATE);
-  }
-
-  private listenProcessesUpdates() {
-    this.wsService.subscribe('process/all', true, this.userProcesses);
   }
 
   updateProcessBasicData(processId: number, name: string, description: string, objectives: string) {
@@ -57,7 +53,7 @@ export class ProcessConsumer {
   }
 
   endCurrentRound(processId: number) {
-   this.wsService.publish(`process/rounds/current/end`, {processId}, WsMode.UPDATE);
+    this.wsService.publish(`process/rounds/current/end`, {processId}, WsMode.UPDATE);
   }
 
   closeProcess(processId: number) {
@@ -87,5 +83,9 @@ export class ProcessConsumer {
       toId,
       toPosition
     }, WsMode.UPDATE);
+  }
+
+  private listenProcessesUpdates() {
+    this.wsService.subscribe('process/all', true, this.userProcesses);
   }
 }

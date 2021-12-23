@@ -3,8 +3,8 @@ import {ActionSheetController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
-import {ProcessConsumer} from '../../../../../core/consumer/process/process.consumer';
+import {UserConsumer} from '../../../../user.consumer';
+import {ProcessConsumer} from '../../../process.consumer';
 import {Question} from '../../../../../core/model/question';
 import {ChartConfiguration, ChartData, ChartType} from 'chart.js';
 
@@ -19,18 +19,18 @@ export class ViewStatisticsPage {
   public scatterChartOptions: ChartConfiguration['options'] = {
     responsive: true,
   };
-  public scatterChartLabels: string[] = [ 'Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running' ];
+  public scatterChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
 
   public scatterChartData: ChartData<'scatter'> = {
     labels: this.scatterChartLabels,
     datasets: [
       {
         data: [
-          { x: 1, y: 1 },
-          { x: 2, y: 3 },
-          { x: 3, y: -2 },
-          { x: 4, y: 4 },
-          { x: 5, y: -3 },
+          {x: 1, y: 1},
+          {x: 2, y: 3},
+          {x: 3, y: -2},
+          {x: 4, y: 4},
+          {x: 5, y: -3},
         ],
         label: 'Series A',
         pointRadius: 10,
@@ -44,13 +44,13 @@ export class ViewStatisticsPage {
   public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
   };
-  public radarChartLabels: string[] = [ 'Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running' ];
+  public radarChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
 
   public radarChartData: ChartData<'radar'> = {
     labels: this.radarChartLabels,
     datasets: [
-      { data: [ 65, 59, 90, 81, 56, 55, 40 ], label: 'Series A' },
-      { data: [ 28, 48, 40, 19, 96, 27, 100 ], label: 'Series B' }
+      {data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A'},
+      {data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B'}
     ]
   };
   public radarChartType: ChartType = 'radar';
@@ -101,11 +101,11 @@ export class ViewStatisticsPage {
   }
 
   // events
-  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
+  public chartClicked({event, active}: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
   }
 
-  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
+  public chartHovered({event, active}: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
   }
 
@@ -117,7 +117,7 @@ export class ViewStatisticsPage {
     const x = this.rand(maxCoordinate);
     const y = this.rand(maxCoordinate);
     const r = this.rand(30) + 5;
-    return { x, y, r };
+    return {x, y, r};
   }
 }
 

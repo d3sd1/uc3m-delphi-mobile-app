@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {NavController, ToastController} from '@ionic/angular';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../../../core/model/user';
-import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
-import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
+import {UserConsumer} from '../../../user.consumer';
+import {ProcessConsumer} from '../../process.consumer';
 
 @Component({
   selector: 'delphi-close',

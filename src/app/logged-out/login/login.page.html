@@ -1,5 +1,5 @@
 <ion-content>
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
+  <form (ngSubmit)="login()" [formGroup]="loginForm">
     <ion-list lines="inset">
       <ion-img alt="logo" class="logo" src="assets/login_logo.svg"></ion-img>
       <ion-list-header class="ion-text-center" lines="none">
@@ -24,6 +24,6 @@
     <ion-button color="secondary" expand="block" fill="outline" routerDirection="forward"
                 routerLink="/logged-out/forgot-password">¿Contraseña olvidada?
     </ion-button>
-    <ion-button type="submit" expand="block" [disabled]="!loginForm.valid">Conectar</ion-button>
+    <ion-button [disabled]="!loginForm.valid" expand="block" type="submit">Conectar</ion-button>
   </form>
 </ion-content>

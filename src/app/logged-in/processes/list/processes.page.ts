@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Process} from '../../../core/model/process';
-import {ProcessConsumer} from '../../../core/consumer/process/process.consumer';
+import {ProcessConsumer} from '../process.consumer';
 import {BehaviorSubject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {AlertController, NavController} from '@ionic/angular';
 import {User} from '../../../core/model/user';
-import {UserConsumer} from '../../../core/consumer/user/user.consumer';
+import {UserConsumer} from '../../user.consumer';
 
 @Component({
   selector: 'delphi-processes',

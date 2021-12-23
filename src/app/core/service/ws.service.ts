@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {WsMode} from '../ws/ws-mode.model';
 import {JwtService} from './jwt.service';
@@ -19,6 +19,45 @@ export class WsService {
   constructor(private jwtService: JwtService) {
     this.handleConnection();
     this.handleActions();
+  }
+
+  getConnection(): BehaviorSubject<Stomp> {
+    return this.wsConnection;
+  }
+
+  publish(channel: string, body: any, mode: WsMode) {
+    const wsCommand = new WsCommand();
+    wsCommand.wsAction = WsAction.PUBLISH;
+    wsCommand.channel = channel;
+    wsCommand.body = body;
+    wsCommand.mode = mode;
+    const a = this.commands.getValue();
+    a.push(wsCommand);
+    this.commands.next(a);
+  }
+
+  subscribe(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
+    const wsCommand = new WsCommand();
+    wsCommand.wsAction = WsAction.SUBSCRIBE;
+    wsCommand.channel = channel;
+    wsCommand.privateChannel = privateChannel;
+    wsCommand.subject = subject;
+    const a = this.commands.getValue();
+    a.push(wsCommand);
+    this.commands.next(a);
+  }
+
+  disconnectWs() {
+    this.commandSubscriptions.forEach((sub: Subscription) => {
+      sub.unsubscribe();
+    });
+    this.commands.getValue().forEach((cmd) => {
+      cmd.connected = false;
+    });
+    if (this.getConnection().getValue() !== null) {
+      this.getConnection().getValue().disconnect();
+    }
+    this.wsConnection.next(null);
   }
 
   private handleConnection() {
@@ -63,46 +102,6 @@ export class WsService {
         });
       });
     });
-  }
-
-  getConnection(): BehaviorSubject<Stomp> {
-    return this.wsConnection;
-  }
-
-
-  publish(channel: string, body: any, mode: WsMode) {
-    const wsCommand = new WsCommand();
-    wsCommand.wsAction = WsAction.PUBLISH;
-    wsCommand.channel = channel;
-    wsCommand.body = body;
-    wsCommand.mode = mode;
-    const a = this.commands.getValue();
-    a.push(wsCommand);
-    this.commands.next(a);
-  }
-
-  subscribe(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
-    const wsCommand = new WsCommand();
-    wsCommand.wsAction = WsAction.SUBSCRIBE;
-    wsCommand.channel = channel;
-    wsCommand.privateChannel = privateChannel;
-    wsCommand.subject = subject;
-    const a = this.commands.getValue();
-    a.push(wsCommand);
-    this.commands.next(a);
-  }
-
-  disconnectWs() {
-    this.commandSubscriptions.forEach((sub: Subscription) => {
-      sub.unsubscribe();
-    });
-    this.commands.getValue().forEach((cmd) => {
-      cmd.connected = false;
-    });
-    if (this.getConnection().getValue() !== null) {
-      this.getConnection().getValue().disconnect();
-    }
-    this.wsConnection.next(null);
   }
 
 }

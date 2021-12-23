@@ -2,8 +2,8 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id + '/question/list'"
-                       routerDirection="back"
                        [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/list'"
+                       routerDirection="back"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Estado expertos</ion-title>
@@ -21,13 +21,11 @@
         <ion-label>{{expert.needsOnboard ? expert.email : expert.name + ' ' + expert.surnames}}</ion-label>
       </ion-item>
       <ion-item *ngIf="process.currentRound.expertsRemaining.length == 0">
-        <div  class="container">
+        <div class="container">
           <strong>Sin expertos pendientes</strong>
           <p>Todos los expertos han votado en esta ronda.</p>
         </div>
       </ion-item>
-
-
 
 
       <ion-item-divider>
@@ -37,8 +35,8 @@
       <ion-item *ngFor="let expert of process.currentRound.expertsVoted">
         <ion-label>{{expert.needsOnboard ? expert.email : expert.name + ' ' + expert.surnames}}</ion-label>
       </ion-item>
-      <ion-item  *ngIf="process.currentRound.expertsVoted.length == 0">
-        <div  class="container">
+      <ion-item *ngIf="process.currentRound.expertsVoted.length == 0">
+        <div class="container">
           <strong>Sin expertos que han votado</strong>
           <p>No ha votado ningún experto en esta ronda.</p>
         </div>

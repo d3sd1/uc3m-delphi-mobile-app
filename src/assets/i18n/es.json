@@ -185,7 +185,6 @@
             }
           }
         },
-
         "base": "Datos básicos",
         "name": "Nombre del proceso",
         "desc": "Descripción del proceso",

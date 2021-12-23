@@ -3,8 +3,8 @@ import {ActionSheetController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {UserConsumer} from '../../../../../core/consumer/user/user.consumer';
-import {ProcessConsumer} from '../../../../../core/consumer/process/process.consumer';
+import {UserConsumer} from '../../../../user.consumer';
+import {ProcessConsumer} from '../../../process.consumer';
 import {Round} from '../../../../../core/model/round';
 import {Answer} from '../../../../../core/model/answer';
 

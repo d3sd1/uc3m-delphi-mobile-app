@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,6 @@ export class JwtService {
     this.initialJwt();
   }
 
-  private initialJwt() {
-    this.jwt.next(localStorage.getItem('jwt'));
-  }
-
   getJwt(): BehaviorSubject<string> {
     return this.jwt;
   }
@@ -22,6 +18,10 @@ export class JwtService {
   setJwt(jwt: string): void {
     localStorage.setItem('jwt', jwt);
     this.jwt.next(jwt);
+  }
+
+  private initialJwt() {
+    this.jwt.next(localStorage.getItem('jwt'));
   }
 
 

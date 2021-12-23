@@ -2,11 +2,11 @@ import {Component, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
 import {AlertController, IonSlides, LoadingController, NavController, ToastController} from '@ionic/angular';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
-import {UserConsumer} from '../../../../core/consumer/user/user.consumer';
-import {ProcessConsumer} from '../../../../core/consumer/process/process.consumer';
+import {UserConsumer} from '../../../user.consumer';
+import {ProcessConsumer} from '../../process.consumer';
 import {Round} from '../../../../core/model/round';
 
 @Component({
@@ -50,7 +50,7 @@ export class ParticipatePage {
         this.sortCategories(0);
 
         this.process?.currentRound?.questions.forEach((q, idx) => {
-          console.log('idx is:', idx)
+          console.log('idx is:', idx);
           this.answers[idx] = new Answer();
           this.answers[idx].question = q;
           this.answers[idx].user = this.currentUser;
@@ -58,22 +58,6 @@ export class ParticipatePage {
         });
         this.updateCurrentQuestionValue();
       });
-    });
-  }
-
-  private getPreviousParticipation(qId: number) {
-    return this.process?.currentRound?.answers.find(rr => rr.user.id === this.currentUser.id && rr.question.id === qId)?.content;
-  }
-
-  private orderQuestions() {
-    this.process.currentRound.questions.sort((n1, n2) => {
-      if (n1.orderPosition < n2.orderPosition) {
-        return -1;
-      }
-      if (n1.orderPosition > n2.orderPosition) {
-        return 1;
-      }
-      return 0;
     });
   }
 
@@ -127,20 +111,6 @@ export class ParticipatePage {
     await alert.present();
   }
 
-  private saveParticipation() {
-    this.loadingCtrl.create({
-      message: 'Cargando...',
-      duration: 2000
-    }).then((loading) => {
-      loading.present().then(() => {
-        this.processConsumer.saveParticipation(this.process.id, this.answers);
-        loading.dismiss().then(() => {
-          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
-        });
-      });
-    });
-  }
-
   getExpertAnswer(expert: User, round: Round, qId: number): Answer {
     if (round.answers === null || round.answers === undefined) {
       return null;
@@ -158,18 +128,6 @@ export class ParticipatePage {
       }
       return 0;
     });
-  }
-
-  private async showToast(transKey: string) {
-    const toast = await this.toastController.create({
-      position: 'top',
-      message: transKey,
-    });
-    await toast.present();
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    return toast;
   }
 
   async updateAnswer(currentQuestion, $event) {
@@ -198,6 +156,48 @@ export class ParticipatePage {
     }
     obj[categoryId] = $event.target.value;
     // TODO  this.answers[currentQuestion].content = JSON.stringify(obj);
+  }
+
+  private getPreviousParticipation(qId: number) {
+    return this.process?.currentRound?.answers.find(rr => rr.user.id === this.currentUser.id && rr.question.id === qId)?.content;
+  }
+
+  private orderQuestions() {
+    this.process.currentRound.questions.sort((n1, n2) => {
+      if (n1.orderPosition < n2.orderPosition) {
+        return -1;
+      }
+      if (n1.orderPosition > n2.orderPosition) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  private saveParticipation() {
+    this.loadingCtrl.create({
+      message: 'Cargando...',
+      duration: 2000
+    }).then((loading) => {
+      loading.present().then(() => {
+        this.processConsumer.saveParticipation(this.process.id, this.answers);
+        loading.dismiss().then(() => {
+          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+        });
+      });
+    });
+  }
+
+  private async showToast(transKey: string) {
+    const toast = await this.toastController.create({
+      position: 'top',
+      message: transKey,
+    });
+    await toast.present();
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
+    return toast;
   }
 
 }

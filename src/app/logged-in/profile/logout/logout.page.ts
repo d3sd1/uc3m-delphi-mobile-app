@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {UserConsumer} from '../../../core/consumer/user/user.consumer';
+import {UserConsumer} from '../../user.consumer';
 import {NotificationService} from '../../../core/service/notification.service';
 
 @Component({

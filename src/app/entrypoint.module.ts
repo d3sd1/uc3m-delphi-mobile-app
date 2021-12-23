@@ -14,8 +14,6 @@ import {TranslateLoader, TranslateModule, TranslateService, TranslateStore} from
 import {LoggedInModule} from './logged-in/logged-in.module';
 import {LoggedOutModule} from './logged-out/logged-out.module';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {LoggedInGuard} from './core/router/guard/logged-in.guard';
-import {LoggedOutGuard} from './core/router/guard/logged-out.guard';
 import {SplashScreenPage} from './splash-screen/splash-screen.page';
 import {NotificationService} from './core/service/notification.service';
 
@@ -46,8 +44,6 @@ import {NotificationService} from './core/service/notification.service';
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     TranslateService,
     TranslateStore,
-    LoggedInGuard,
-    LoggedOutGuard,
     NotificationService
   ],
   bootstrap: [EntrypointComponent],

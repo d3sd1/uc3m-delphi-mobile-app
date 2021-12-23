@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {WsService} from '../../service/ws.service';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {WsMode} from '../../ws/ws-mode.model';
-import {User} from '../../model/user';
+import {WsService} from '../../../../core/service/ws.service';
+import {BehaviorSubject} from 'rxjs';
+import {WsMode} from '../../../../core/ws/ws-mode.model';
+import {User} from '../../../../core/model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class InvitationConsumer {
   }
 
   getUsers(): BehaviorSubject<User[]> {
-    return this.users
+    return this.users;
   }
 
   sendInvitation(email: string, processId: number, type: string) {

@@ -2,20 +2,21 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id + '/question/list'"
-                       routerDirection="back"
                        [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/list'"
+                       routerDirection="back"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Modificar preguntas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="process && process.currentRound && question"><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+<ion-content *ngIf="process && process.currentRound && question">
+  <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
 
   <ion-item>
     <ion-label>Tipo de pregunta</ion-label>
-    <ion-select [(ngModel)]="question.questionType.name" [disabled]="process?.currentRound?.started"
-                (ngModelChange)="updateQuestion()">
+    <ion-select (ngModelChange)="updateQuestion()" [(ngModel)]="question.questionType.name"
+                [disabled]="process?.currentRound?.started">
       <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
       <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
       <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
@@ -27,15 +28,22 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-textarea [(ngModel)]="question.name"
-                  placeholder="Introduce tu pregunta aquí"
-    [readonly]="process?.currentRound?.started" (ngModelChange)="updateQuestion()" debounce="500" maxlength="150"></ion-textarea>
+    <ion-textarea (ngModelChange)="updateQuestion()"
+                  [(ngModel)]="question.name"
+                  [readonly]="process?.currentRound?.started" debounce="500" maxlength="150"
+                  placeholder="Introduce tu pregunta aquí"></ion-textarea>
   </ion-item>
-  <delphi-question-booltype *ngIf="question.questionType.name == 'BOOLTYPE'" [question]="question" [process]="process"></delphi-question-booltype>
-  <delphi-question-quantitative *ngIf="question.questionType.name == 'QUANTITATIVE'" [question]="question" [process]="process"></delphi-question-quantitative>
-  <delphi-question-catlikert *ngIf="question.questionType.name == 'CATLIKERT'" [question]="question" [process]="process"></delphi-question-catlikert>
-  <delphi-question-catcustom *ngIf="question.questionType.name == 'CATCUSTOM'" [question]="question" [process]="process"></delphi-question-catcustom>
-  <delphi-question-catmulti *ngIf="question.questionType.name == 'CATMULTI'" [question]="question" [process]="process"></delphi-question-catmulti>
-  <delphi-question-catpond *ngIf="question.questionType.name == 'CATPOND'" [question]="question" [process]="process"></delphi-question-catpond>
+  <delphi-question-booltype *ngIf="question.questionType.name == 'BOOLTYPE'" [process]="process"
+                            [question]="question"></delphi-question-booltype>
+  <delphi-question-quantitative *ngIf="question.questionType.name == 'QUANTITATIVE'" [process]="process"
+                                [question]="question"></delphi-question-quantitative>
+  <delphi-question-catlikert *ngIf="question.questionType.name == 'CATLIKERT'" [process]="process"
+                             [question]="question"></delphi-question-catlikert>
+  <delphi-question-catcustom *ngIf="question.questionType.name == 'CATCUSTOM'" [process]="process"
+                             [question]="question"></delphi-question-catcustom>
+  <delphi-question-catmulti *ngIf="question.questionType.name == 'CATMULTI'" [process]="process"
+                            [question]="question"></delphi-question-catmulti>
+  <delphi-question-catpond *ngIf="question.questionType.name == 'CATPOND'" [process]="process"
+                           [question]="question"></delphi-question-catpond>
 </ion-content>
 

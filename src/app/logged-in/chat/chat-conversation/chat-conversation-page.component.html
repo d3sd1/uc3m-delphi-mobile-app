@@ -2,8 +2,8 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/chat'"
-                       routerDirection="back"
                        [routerLink]="'/logged-in/menu/chat'"
+                       routerDirection="back"
                        text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>{{oppositeUser?.name}} {{oppositeUser?.surnames}}</ion-title>
@@ -25,7 +25,7 @@
         <span class="initials">{{msg.user.name.substring(0, 2)}}</span>
       </div>
       <img *ngIf="msg.user?.photo === undefined" class="user-img" src="assets/images/no-process-image.jpeg"/>
-      <ion-spinner *ngIf="loading" name="dots" ></ion-spinner>
+      <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
       <div class="msg-detail">
         <div class="msg-info">
           <p>
@@ -51,8 +51,8 @@
         <ion-input #chat_input
                    (focusin)="onFocus()"
                    [(ngModel)]="editorMsg"
-                   placeholder="Introduce tu mensaje..."
-                   name="chat_message"></ion-input>
+                   name="chat_message"
+                   placeholder="Introduce tu mensaje..."></ion-input>
       </form>
     </ion-item>
     <ion-button (click)="sendMessage()" color="primary" fill="clear" slot="end">

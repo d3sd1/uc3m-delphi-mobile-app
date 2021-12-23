@@ -1,19 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Volver"
-                       [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id"
+      <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process?.id"
+                       [routerLink]="'/logged-in/menu/processes/finished/' + process?.id"
                        routerDirection="back"
-                       [routerLink]="'/logged-in/menu/processes/finished/' + process?.id"></ion-back-button>
+                       text="Volver"></ion-back-button>
     </ion-buttons>
     <ion-title>Selector de usuarios</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="process">
-  <ion-searchbar *ngIf="isCoordinator() && !process.finished" (ionChange)="filter()" [(ngModel)]="filterCriterial"
-                 class="lowercase" placeholder="Buscar usuarios"
-                 animated debounce="500"></ion-searchbar>
+  <ion-searchbar (ionChange)="filter()" *ngIf="isCoordinator() && !process.finished" [(ngModel)]="filterCriterial"
+                 animated class="lowercase"
+                 debounce="500" placeholder="Buscar usuarios"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
     <ion-item (click)="addExistantUser(user)"
               *ngFor="let user of usersFiltered">
@@ -42,12 +42,15 @@
   <div *ngFor="let user of this.getUsers()">
     <ion-chip [color]="user.id === user?.id?'primary':'secondary'">
       <ion-avatar [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">
-        <img *ngIf="user.photo !== undefined" [src]="user.photo"
-             (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'"/>
+        <img (error)="$event.target['src'] = 'assets/images/no-process-image.jpeg'" *ngIf="user.photo !== undefined"
+             [src]="user.photo"/>
         <img *ngIf="user.photo === undefined" src="../../../../../assets/images/no-process-image.jpeg"/>
       </ion-avatar>
-      <ion-label [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">{{user.name}} {{user.surnames}} <{{ user.email }}></ion-label>
-      <ion-icon *ngIf="user.id !== currentUser?.id && isCoordinator() && !process.finished" name="close-circle" (click)="removeUser(user)"></ion-icon>
+      <ion-label [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">{{user.name}} {{user.surnames}}
+        <{{ user.email }}>
+      </ion-label>
+      <ion-icon (click)="removeUser(user)" *ngIf="user.id !== currentUser?.id && isCoordinator() && !process.finished"
+                name="close-circle"></ion-icon>
     </ion-chip>
   </div>
 
