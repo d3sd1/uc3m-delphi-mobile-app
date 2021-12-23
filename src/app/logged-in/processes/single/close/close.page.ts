@@ -1,9 +1,8 @@
 import {Component, OnDestroy} from '@angular/core';
 import {Process} from '../../../../core/model/process';
-import {NavController, ToastController} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../../../core/model/user';
 import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
@@ -31,10 +30,15 @@ export class ClosePage implements OnDestroy {
     private httpClient: HttpClient,
     private processConsumer: ProcessConsumer) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      if (user === null) {
+        return;
+      }
       this.user = user;
     });
     this.routeSubscription = this.route.params.subscribe(params => {
-
+      if (params === null) {
+        return;
+      }
       this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;

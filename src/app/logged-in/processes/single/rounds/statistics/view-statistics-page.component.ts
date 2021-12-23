@@ -73,11 +73,16 @@ export class ViewStatisticsPage implements OnDestroy {
     private route: ActivatedRoute,
     public actionSheetController: ActionSheetController) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      if (user === null) {
+        return;
+      }
       this.currentUser = user;
     });
 
     this.routeSubscription = this.route.params.subscribe(params => {
-
+      if (params === null) {
+        return;
+      }
       this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
@@ -87,7 +92,7 @@ export class ViewStatisticsPage implements OnDestroy {
           return;
         }
         this.process = process;
-        this.roundIdx = process.pastRounds.findIndex(q => q.id === +params['roundid']);
+        this.roundIdx = process.pastRounds.findIndex(q => q.id === +params.roundid);
       });
     });
   }
@@ -112,16 +117,6 @@ export class ViewStatisticsPage implements OnDestroy {
 
   }
 
-  private rand(max: number): number {
-    return Math.trunc(Math.random() * max);
-  }
-
-  private randomPoint(maxCoordinate: number): { r: number; x: number; y: number } {
-    const x = this.rand(maxCoordinate);
-    const y = this.rand(maxCoordinate);
-    const r = this.rand(30) + 5;
-    return {x, y, r};
-  }
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();

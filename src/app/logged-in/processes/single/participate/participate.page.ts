@@ -1,7 +1,7 @@
 import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
-import {AlertController, IonSlides, LoadingController, NavController} from '@ionic/angular';
+import {IonSlides, LoadingController, NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
@@ -35,13 +35,18 @@ export class ParticipatePage implements OnDestroy {
     private translate: TranslateService,
     private loadingCtrl: LoadingController,
     private userConsumer: UserConsumer,
-    private processConsumer: ProcessConsumer,
-    private alertController: AlertController) {
+    private processConsumer: ProcessConsumer) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      if (user === null) {
+        return;
+      }
       this.currentUser = user;
     });
 
     this.routeSubscription = this.route.params.subscribe(params => {
+      if(params === null) {
+        return;
+      }
       this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;

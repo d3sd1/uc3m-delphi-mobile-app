@@ -26,11 +26,15 @@ export class SingleProcessPage implements OnDestroy {
               private processConsumer: ProcessConsumer,
               private navCtrl: NavController) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user !== null) {
-        this.user = user;
+      if (user === null) {
+        return;
       }
+      this.user = user;
     });
     this.routeSubscription = this.route.params.subscribe(params => {
+      if(params === null) {
+        return;
+      }
       this.processesSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;

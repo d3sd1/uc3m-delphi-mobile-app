@@ -25,9 +25,15 @@ export class ChatListComponent implements OnDestroy {
 
   constructor(private chatConsumer: ChatConsumer, private userConsumer: UserConsumer) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      if (user === null) {
+        return;
+      }
       this.user = user;
     });
     this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
+      if (userChats === null) {
+        return;
+      }
       this.userChatsOriginal = userChats;
       this.userChats = [...this.userChatsOriginal];
       this.loading = false;

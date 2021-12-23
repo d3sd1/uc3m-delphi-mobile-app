@@ -9,7 +9,7 @@
     "android": "npx cap sync && ng build && ionic capacitor run android -l --external --public-host -l -s -c --host=0.0.0.0",
     "ios:prod": " npx cap sync && ng build --prod && ionic capacitor run ios -l --external --public-host --prod",
     "markets": "ionic build --prod && ionic cap copy && ionic cap add android || true && ionic cap add ios || true && ionic cap sync && ionic cap open android && ionic cap open ios",
-    "sonar": "sonar-scanner -Dsonar.projectKey=delphi_uc3m -Dsonar.sources=./src -Dsonar.host.url=https://sonarqube.motloud.dev -Dsonar.login=067d3a3478d20091e09a3aca3b6f65efa7ad68b3 -Dsonar.exclusions=./ios,./android && open https://sonarqube.motloud.dev/dashboard?id=delphi_uc3m"
+    "sonar": "sonar-scanner -Dsonar.projectKey=delphi_uc3m -Dsonar.sources=./src -Dsonar.host.url=https://sonarqube.motloud.dev -Dsonar.login=067d3a3478d20091e09a3aca3b6f65efa7ad68b3 -Dsonar.exclusions=./ios,./android"
   },
   "private": true,
   "dependencies": {

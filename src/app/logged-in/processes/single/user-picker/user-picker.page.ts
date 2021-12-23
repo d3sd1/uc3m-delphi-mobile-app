@@ -33,13 +33,21 @@ export class UserPickerPage implements OnDestroy {
     private invitationConsumer: InvitationConsumer,
     public navCtrl: NavController) {
     this.route.params.subscribe(params => {
+      if (params === null) {
+        return;
+      }
       this.type = params.type;
     });
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      if (user) {
+        return;
+      }
       this.currentUser = user;
     });
     this.routeSubscription = this.route.params.subscribe(params => {
-
+      if (params === null) {
+        return;
+      }
       this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
@@ -48,13 +56,19 @@ export class UserPickerPage implements OnDestroy {
       });
     });
     this.invitationConsumer.getUsers().subscribe((users) => {
+      if(users === null) {
+        return;
+      }
       this.searchableUsers = users;
     });
   }
 
   isEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
   }
 
   isNewUser(email) {

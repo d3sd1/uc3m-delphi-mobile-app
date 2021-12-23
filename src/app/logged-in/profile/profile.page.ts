@@ -17,6 +17,9 @@ export class ProfilePage {
               private userConsumer: UserConsumer,
               private navCtrl: NavController) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      if(user === null) {
+        return;
+      }
       this.user = user;
     });
   }

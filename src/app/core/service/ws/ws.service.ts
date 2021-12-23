@@ -77,7 +77,6 @@ export class WsService {
   private handleConnection() {
     this.jwtSubscription = this.jwtService.getJwt().subscribe((jwt) => {
       if (jwt === null) {
-        console.error('JWT is not set, not connecting to websocket.');
         return;
       }
       const ws = new SockJS(environment.apiUrl + '/ws', {transports: ['websocket']});
@@ -97,6 +96,9 @@ export class WsService {
         return;
       }
       this.commandsSubscription = this.commands.subscribe((commands) => {
+        if (commands === null) {
+          return;
+        }
         commands.forEach((cmd) => {
           if (cmd.connected) {
             return;

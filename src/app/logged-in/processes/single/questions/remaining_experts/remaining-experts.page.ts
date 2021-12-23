@@ -30,10 +30,15 @@ export class RemainingExpertsPage implements OnDestroy {
     private processConsumer: ProcessConsumer,
     private userConsumer: UserConsumer) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      if (user === null) {
+        return;
+      }
       this.user = user;
     });
     this.routeSubscription = this.route.params.subscribe(params => {
-
+      if (params === null) {
+        return;
+      }
       this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;

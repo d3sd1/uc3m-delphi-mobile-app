@@ -34,9 +34,10 @@ export class LoginPage implements ViewDidEnter, ViewDidLeave {
 
   redirectHomeIfConnected() {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user !== null && user !== undefined) {
-        this.navCtrl.navigateForward('/logged-in').then(() => null);
+      if (user === null) {
+        return;
       }
+      this.navCtrl.navigateForward('/logged-in').then(() => null);
     });
   }
 

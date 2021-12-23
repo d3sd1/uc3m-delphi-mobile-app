@@ -44,6 +44,9 @@ export class ProcessesPage implements OnInit, OnDestroy {
     });
 
     this.userSubscription = this.userConsumer.getUser().subscribe(user => {
+      if(user === null) {
+        return;
+      }
       this.user = user;
     });
   }

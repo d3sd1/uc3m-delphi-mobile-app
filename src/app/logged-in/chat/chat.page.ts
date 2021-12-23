@@ -19,9 +19,15 @@ export class ChatPage implements OnDestroy {
 
   constructor(private userConsumer: UserConsumer, private chatConsumer: ChatConsumer) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      if (user === null) {
+        return;
+      }
       this.user = user;
     });
     this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
+      if (userChats === null) {
+        return;
+      }
       this.userChats = userChats;
       this.loading = false;
     });

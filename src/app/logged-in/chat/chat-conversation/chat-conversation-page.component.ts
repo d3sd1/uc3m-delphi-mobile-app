@@ -41,15 +41,27 @@ export class ChatConversationPage implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.routeParamsSubscription = this.route.params.subscribe(params => {
+      if (params === null) {
+        return;
+      }
       this.invitationSubscription = this.invitationConsumer.getUsers().subscribe((users) => {
+        if (users === null) {
+          return;
+        }
         this.oppositeUser = users.find(p => p.id === +params.oppositeUserId);
       });
     });
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+      if (user === null) {
+        return;
+      }
       this.user = user;
       this.scrollToBottom();
     });
     this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
+      if(userChats === null) {
+        return;
+      }
       this.chat = userChats.find((userChat) => {
         if (this.oppositeUser && (userChat.user1.id === this.user.id && userChat.user2.id === this.oppositeUser.id)
           || this.oppositeUser && (userChat.user2.id === this.user.id && userChat.user1.id === this.oppositeUser.id)) {
