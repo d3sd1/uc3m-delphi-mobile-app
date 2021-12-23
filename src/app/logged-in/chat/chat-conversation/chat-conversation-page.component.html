@@ -1,4 +1,4 @@
-<ion-header *ngIf="oppositeUser">
+<ion-header *ngIf="chat && oppositeUser">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/logged-in/menu/chat'"
@@ -15,7 +15,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content *ngIf="chat">
+<ion-content *ngIf="chat && oppositeUser">
   <div class="message-wrap">
     <div *ngFor="let msg of chat.messages"
          [class.left]=" msg.user.id !== user.id "
@@ -39,7 +39,7 @@
   </div>
 </ion-content>
 
-<ion-footer [style.height]="showEmojiPicker ? '255px' : '55px'" class="ion-no-border">
+<ion-footer *ngIf="chat && oppositeUser" [style.height]="showEmojiPicker ? '255px' : '55px'" class="ion-no-border">
   <div class="input-wrap">
     <ion-button (click)="switchEmojiPicker()" color="primary" fill="clear" slot="end">
       <ion-icon name="happy-outline" slot="end"></ion-icon>
