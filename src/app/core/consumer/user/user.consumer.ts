@@ -22,7 +22,6 @@ export class UserConsumer {
               private storage: Storage,
               private wsService: WsService,
               private translate: TranslateService,
-              private router: Router,
               private jwtService: JwtService) {
     this.handleUser();
   }

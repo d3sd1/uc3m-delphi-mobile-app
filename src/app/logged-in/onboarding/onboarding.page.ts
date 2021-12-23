@@ -23,17 +23,19 @@ export class OnboardingPage implements ViewDidEnter {
 
   @ViewChild('mySlider') slides: IonSlides;
 
-  constructor(private router: Router, private storage: Storage,
+  constructor(private storage: Storage,
               private httpClient: HttpClient,
               private toastController: ToastController,
               private translate: TranslateService,
               private userConsumer: UserConsumer,
-              private navCtrl: NavController,
-              private route: ActivatedRoute) {
+              private navCtrl: NavController) {
     this.userConsumer.getUser().subscribe((user) => {
+      if (user === null) {
+        return;
+      }
       this.user = user;
-      if(!this.user.needsOnboard) {
-        this.router.navigateByUrl('/logged-in/menu/processes/list').then(r => null);
+      if (!this.user.needsOnboard) {
+        this.navCtrl.navigateForward('/logged-in/menu/processes/list').then(r => null);
       }
     });
   }
@@ -61,11 +63,11 @@ export class OnboardingPage implements ViewDidEnter {
 
   endSwiper() {
     this.userConsumer.updateUserOnboarding(this.user.name, this.user.surnames);
-    this.router.navigateByUrl('/logged-in/menu').then(r => null);
+    this.navCtrl.navigateForward('/logged-in/menu').then(r => null);
   }
 
   onBoardingFinished() {
-    console.log('onboard finished')
+    console.log('onboard finished');
     // @ts-ignore
     if (this.user.needsOnboard === 'false' || this.user.needsOnboard === false) {
       this.navCtrl.navigateForward('/logged-in/menu').then(r => null);

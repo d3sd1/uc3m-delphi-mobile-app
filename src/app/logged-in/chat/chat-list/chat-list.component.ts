@@ -27,7 +27,6 @@ export class ChatListComponent {
     this.chatConsumer.getChats().subscribe((userChats) => {
       this.userChatsOriginal = userChats;
       this.userChats = [...this.userChatsOriginal];
-      console.log('user chats:', this.userChats);
       this.loading = false;
     });
   }

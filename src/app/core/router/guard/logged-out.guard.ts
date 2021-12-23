@@ -8,7 +8,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class LoggedOutGuard implements CanActivateChild {
 
-  constructor(public userConsumer: UserConsumer, private router: Router) {
+  constructor(public userConsumer: UserConsumer) {
   }
 
   canActivateChild(): boolean {// BehaviorSubject<boolean | UrlTree> {

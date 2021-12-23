@@ -13,10 +13,8 @@
         <h2>{{chat.user1.id === user.id ? chat.user2.name + ' ' + chat.user2.surnames : chat.user1.name + ' ' + chat.user1.surnames}}</h2>
         <h3>{{chat.messages[chat.messages.length - 1].content}}</h3>
       </ion-label>
-      <ion-icon [class]="'chat-online'" name="radio-button-on-outline"
+      <ion-icon *ngIf="chat.messages[chat.messages.length - 1].user.id !== user.id" color="danger" name="radio-button-on-outline"
                 slot="end"></ion-icon>
-       <ion-badge *ngIf="chat.messages[chat.messages.length - 1].user.id !== user.id"
-                  color="primary">1+</ion-badge>
     </ion-item>
 
     <ion-item-options (ionSwipe)="markChatAsRead(chat.id, slidingItem)"

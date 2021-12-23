@@ -29,7 +29,12 @@ export class QuestionListPage {
       this.user = user;
     });
     this.route.params.subscribe(params => {
-      this.processConsumer.getProcess(+params.id).subscribe((process) => {
+
+      this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes == null) {
+          return;
+        }
+        const process = processes.find(p2 => p2.id === +params.id);
         this.process = process;
         this.orderQuestions();
       });

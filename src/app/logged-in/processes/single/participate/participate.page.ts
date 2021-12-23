@@ -29,7 +29,6 @@ export class ParticipatePage {
     private toastController: ToastController,
     private translate: TranslateService,
     private loadingCtrl: LoadingController,
-    private router: Router,
     private userConsumer: UserConsumer,
     private processConsumer: ProcessConsumer,
     private alertController: AlertController) {
@@ -38,10 +37,11 @@ export class ParticipatePage {
     });
 
     this.route.params.subscribe(params => {
-      this.processConsumer.getProcess(+params.id).subscribe((process) => {
-        if (process == null) {
+      this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes == null) {
           return;
         }
+        const process = processes.find(p2 => p2.id === +params.id);
         if (process.currentRound?.id === undefined || !process.currentRound?.started) {
           this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + process.id).then(r => null);
         }

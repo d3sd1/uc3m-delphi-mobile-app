@@ -21,7 +21,6 @@ export class ClosePage {
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    private router: Router,
     private userConsumer: UserConsumer,
     private httpClient: HttpClient,
     private processConsumer: ProcessConsumer,
@@ -31,7 +30,12 @@ export class ClosePage {
       this.user = user;
     });
     this.route.params.subscribe(params => {
-      this.processConsumer.getProcess(+params.id).subscribe((process) => {
+
+      this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes == null) {
+          return;
+        }
+        const process = processes.find(p2 => p2.id === +params.id);
         // If process is finished, do not allow to stay on this page
         if (process.finished) {
           this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);

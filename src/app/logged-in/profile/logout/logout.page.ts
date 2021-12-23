@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController, ToastController} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {UserConsumer} from '../../../core/consumer/user/user.consumer';
+import {NotificationService} from '../../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-logout',
@@ -9,27 +10,15 @@ import {UserConsumer} from '../../../core/consumer/user/user.consumer';
 })
 export class LogoutPage implements OnInit {
 
-  constructor(private userConsumer: UserConsumer, private navCtrl: NavController, private toastController: ToastController) {
-  }
-
-
-  async sendToast(msg) {
-    const toast = await this.toastController.create({
-      position: 'top',
-      message: msg,
-      duration: 2000
-    });
-    setTimeout(() => {
-      toast.dismiss();
-    }, 3000);
-    await toast.present();
+  constructor(private userConsumer: UserConsumer, private navCtrl: NavController, private ns: NotificationService) {
   }
 
   ngOnInit() {
     setTimeout(() => {
-      this.userConsumer.doLogout();
-      this.navCtrl.navigateBack('/logged-out/login').then(() => {
-        this.sendToast('Desconexión satisfactoria').then();
+      this.userConsumer.doLogout().then(r => {
+        this.navCtrl.navigateBack('/logged-out/login').then(() => {
+          this.ns.showToast('Desconexión satisfactoria');
+        });
       });
     }, 2000);
   }

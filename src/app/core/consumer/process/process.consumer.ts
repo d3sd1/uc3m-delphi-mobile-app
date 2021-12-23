@@ -22,58 +22,12 @@ export class ProcessConsumer {
     return this.userProcesses;
   }
 
-  getProcess(processId: number): BehaviorSubject<Process> {
-    if (!(processId in this.userProcessesIndividual)) {
-      this.subscribeIndividual(processId);
-    }
-    return this.userProcessesIndividual[processId];
-  }
-
   createProcess(name: string, description: string) {
     this.wsService.publish('process', {name, description}, WsMode.CREATE);
   }
 
   private listenProcessesUpdates() {
     this.wsService.subscribe('process/all', true, this.userProcesses);
-    this.listenIndividualChannels();
-  }
-
-  private subscribeIndividual(processId: number) {
-    this.userProcessesIndividual[processId] = new BehaviorSubject<Process>(null);
-    this.wsService.subscribe(`process/single/${processId}`, true, this.userProcessesIndividual[processId]);
-    return this.userProcessesIndividual[processId];
-  }
-
-  private listenIndividualChannels() {
-    this.userProcesses.subscribe((defaultProcesses) => {
-      if (defaultProcesses === undefined) {
-        return;
-      }
-
-      defaultProcesses.forEach((defaultProcess) => {
-        if (Number.isInteger(defaultProcess.id)) {
-          if (!(defaultProcess.id in this.userProcessesIndividual)) {
-            this.subscribeIndividual(defaultProcess.id);
-          }
-          this.userProcessesIndividual[defaultProcess.id].subscribe((process) => {
-            if (process === null) {
-              return;
-            }
-            const idx = this.userProcesses.value.findIndex((p => p.id === process.id));
-            let durArr = [...this.userProcesses.value];
-            if (idx === -1) {
-              durArr.push(process);
-            } else {
-              durArr[idx] = process;
-            }
-            durArr = durArr.filter((p) => p !== undefined && p !== null);
-            if (durArr.length > 0 && (idx in this.userProcessesIndividual)) { // TODO <. aqui puede haber error
-              this.userProcesses.next(durArr);
-            }
-          });
-        }
-      });
-    });
   }
 
   updateProcessBasicData(processId: number, name: string, description: string, objectives: string) {
@@ -103,8 +57,7 @@ export class ProcessConsumer {
   }
 
   endCurrentRound(processId: number) {
-    console.log('endround', processId)
-    this.wsService.publish(`process/rounds/current/end`, {processId}, WsMode.UPDATE);
+   this.wsService.publish(`process/rounds/current/end`, {processId}, WsMode.UPDATE);
   }
 
   closeProcess(processId: number) {

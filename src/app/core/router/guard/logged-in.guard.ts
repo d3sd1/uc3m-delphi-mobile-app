@@ -7,7 +7,7 @@ import {UserConsumer} from '../../consumer/user/user.consumer';
 })
 export class LoggedInGuard implements CanActivateChild {
 
-  constructor(public userConsumer: UserConsumer, private router: Router) {
+  constructor(public userConsumer: UserConsumer) {
   }
 
   async canActivateChild(): Promise<boolean | UrlTree> {

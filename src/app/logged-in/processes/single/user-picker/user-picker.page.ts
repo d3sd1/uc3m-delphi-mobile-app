@@ -23,7 +23,6 @@ export class UserPickerPage {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private userConsumer: UserConsumer,
     private httpClient: HttpClient,
     private processConsumer: ProcessConsumer,
@@ -36,7 +35,12 @@ export class UserPickerPage {
       this.currentUser = user;
     });
     this.route.params.subscribe(params => {
-      this.processConsumer.getProcess(+params.id).subscribe((process) => {
+
+      this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes == null) {
+          return;
+        }
+        const process = processes.find(p2 => p2.id === +params.id);
         this.process = process;
       });
     });

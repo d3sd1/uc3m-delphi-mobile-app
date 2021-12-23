@@ -1,82 +1,120 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ChatService} from './chat/chat.service';
-import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {User} from '../core/model/user';
 import {WsService} from '../core/service/ws.service';
-import {NavController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
+import {NavController, ViewDidEnter} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../core/consumer/user/user.consumer';
 import {LangService} from '../core/lang/lang.service';
 import {ChatConsumer} from '../core/consumer/chat/chat.consumer';
 import {Subscription} from 'rxjs';
+import {ProcessConsumer} from '../core/consumer/process/process.consumer';
+import {Process} from '../core/model/process';
+import {UserChat} from '../core/model/user-chat';
 
 @Component({
   selector: 'delphi-tabs',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss']
 })
-export class HomePage implements ViewDidEnter, ViewDidLeave {
+export class HomePage implements OnDestroy {
 
   userSubscription: Subscription;
+  processesSubscription: Subscription;
+  userChatsSubscription: Subscription;
 
   notifications = {
     proccess: 0,
     messages: 0,
     profile: 0
   };
+
   user: User;
-  userObserver: Subscription;
+  processes: Process[];
+  userChats: UserChat[];
 
 
   constructor(private chatService: ChatService,
               private userConsumer: UserConsumer,
-              private router: Router,
+              private processConsumer: ProcessConsumer,
               private storage: Storage,
               private wsService: WsService,
               private translate: TranslateService,
               private langService: LangService,
               private chatConsumer: ChatConsumer,
-              private navCtrl: NavController,
-              private route: ActivatedRoute) {
-
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      this.user = user;
-      this.langService.changeLanguage(this.user?.language);
-      this.needsOnboard();
-      this.listenChatNotifications();
-      this.listenProcessesNotifications();
-      this.listenProfileNotifications();
+              private navCtrl: NavController) {
+    this.userSubscription = this.userConsumer.getUser().subscribe((u: User) => {
+      if (u === null) {
+        return;
+      }
+      this.user = u;
+      this.langService.changeLanguage(u.language);
+      this.needsOnboard(u);
+      this.setNotificationCount();
     });
+
+    this.userChatsSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
+      if (userChats === null) {
+        return;
+      }
+      this.userChats = userChats;
+      this.setNotificationCount();
+    });
+    this.processesSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+      if (processes === null) {
+        return;
+      }
+      this.processes = processes;
+      this.setNotificationCount();
+    });
+
   }
 
-  ionViewDidEnter(): void {
-    // TODO
+  private setNotificationCount() {
+    this.setChatNotifications();
+    this.setProcessesNotifications();
   }
 
-  ionViewDidLeave(): void {
+
+  ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
+    this.processesSubscription.unsubscribe();
+    this.userChatsSubscription.unsubscribe();
+    this.notifications.proccess = 0;
+    this.notifications.messages = 0;
+    this.notifications.profile = 0;
   }
 
 
-  needsOnboard() {
-    // @ts-ignore
-    if (this.user?.needsOnboard === 'true' || this.user?.needsOnboard === true) {
+  needsOnboard(u: User) {
+    if (u.needsOnboard === true) {
       this.navCtrl.navigateForward('/logged-in/onboarding').then(r => null);
     }
   }
 
-  listenChatNotifications() {
-    // TODO
+  setChatNotifications() {
+    if (this.user === null || this.userChats === null || this.user === undefined || this.userChats === undefined) {
+      return;
+    }
+    this.notifications.messages = this.userChats.filter((uc) => uc.messages[uc.messages.length - 1].user.id !== this.user.id).length;
   }
 
-  listenProcessesNotifications() {
-    // TODO
-  }
-  listenProfileNotifications() {
-    this.notifications.profile = 0;
-    if (this.user?.photo === '' || this.user?.photo === null || this.user?.photo === undefined) {
-      this.notifications.profile++;
+  /**
+   * Add notification if round is open and current user has not participated yet.
+   * And also, add those where the user is coordinator and is not closed yet.
+   * @param processes
+   */
+  setProcessesNotifications() {
+    if (this.user === null || this.processes === null || this.user === undefined || this.processes === undefined) {
+      return;
     }
+    this.notifications.proccess = 0;
+    this.notifications.proccess += this.processes.filter(process => {
+      return !process.finished && process.currentRound.started && process.currentRound.expertsRemaining.find(u2 => this.user.id === u2.id);
+    }).length;
+    this.notifications.proccess += this.processes.filter(process => {
+      return !process.finished && process.coordinators.find(u2 => this.user.id === u2.id);
+    }).length;
   }
 }

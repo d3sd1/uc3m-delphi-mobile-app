@@ -31,7 +31,12 @@ export class ModifyQuestionsContentPage {
     });
 
     this.route.params.subscribe(params => {
-      this.processConsumer.getProcess(+params.id).subscribe((process) => {
+
+      this.processConsumer.getProcesses().subscribe((processes) => {
+        if (processes == null) {
+          return;
+        }
+        const process = processes.find(p2 => p2.id === +params.id);
         this.process = process;
         this.question = this.process.currentRound.questions.find(q => q.id === +params['questionid']);
         console.log('question TYPEEE is', this.question.questionType);
