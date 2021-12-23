@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ActionSheetController, NavController} from '@ionic/angular';
 import {User} from '../../core/model/user';
 import {UserConsumer} from '../user.consumer';
@@ -9,7 +9,7 @@ import {Subscription} from 'rxjs';
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss']
 })
-export class ProfilePage {
+export class ProfilePage implements OnDestroy {
   public user: User;
   private userSubscription: Subscription;
 
@@ -17,15 +17,17 @@ export class ProfilePage {
               private userConsumer: UserConsumer,
               private navCtrl: NavController) {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if(user === null) {
+      if (user === null) {
         return;
       }
       this.user = user;
     });
   }
 
-  ionViewWillLeave() {
-    this.userSubscription.unsubscribe();
+  ngOnDestroy() {
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
     this.user = null;
   }
 

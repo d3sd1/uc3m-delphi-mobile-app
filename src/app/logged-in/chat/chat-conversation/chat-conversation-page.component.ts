@@ -16,6 +16,7 @@ import {ChatMessage} from '../../../core/model/chat-message';
 })
 export class ChatConversationPage implements OnInit, OnDestroy {
   chat: UserChat;
+  chats: UserChat[];
   user: User;
   oppositeUser: User;
   loading = false;
@@ -49,6 +50,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
           return;
         }
         this.oppositeUser = users.find(p => p.id === +params.oppositeUserId);
+        this.printMessages();
       });
     });
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
@@ -56,22 +58,30 @@ export class ChatConversationPage implements OnInit, OnDestroy {
         return;
       }
       this.user = user;
-      this.scrollToBottom();
+      this.printMessages();
     });
     this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
-      if(userChats === null) {
+      if (userChats === null) {
         return;
       }
-      this.chat = userChats.find((userChat) => {
-        if (this.oppositeUser && (userChat.user1.id === this.user.id && userChat.user2.id === this.oppositeUser.id)
-          || this.oppositeUser && (userChat.user2.id === this.user.id && userChat.user1.id === this.oppositeUser.id)) {
-          this.loading = false;
-          return true;
-        }
-      });
-      this.sortMessages();
-      this.scrollToBottom();
+      this.chats = userChats;
+      this.printMessages();
     });
+  }
+
+  private printMessages() {
+    if (!this.oppositeUser || !this.user || !this.chats) {
+      return;
+    }
+    this.chat = this.chats.find((userChat) => {
+      if (this.oppositeUser && (userChat.user1.id === this.user.id && userChat.user2.id === this.oppositeUser.id)
+        || this.oppositeUser && (userChat.user2.id === this.user.id && userChat.user1.id === this.oppositeUser.id)) {
+        this.loading = false;
+        return true;
+      }
+    });
+    this.sortMessages();
+    this.scrollToBottom();
   }
 
   sortMessages() {
@@ -90,6 +100,7 @@ export class ChatConversationPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.chat = undefined;
+    this.chats = undefined;
     this.user = undefined;
     this.oppositeUser = undefined;
     this.loading = false;
