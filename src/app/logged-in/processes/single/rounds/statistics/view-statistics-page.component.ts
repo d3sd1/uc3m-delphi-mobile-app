@@ -84,7 +84,7 @@ export class ViewStatisticsPage implements OnInit, OnDestroy {
         });
 
         this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
-          if (processes == null) {
+          if (processes == null || processes.length === 0) {
             return;
           }
           const process = processes.find(p2 => p2.id === +params.id);

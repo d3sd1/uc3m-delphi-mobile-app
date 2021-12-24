@@ -67,8 +67,8 @@
 
 </ion-content>
 
-<ion-footer *ngIf="!process.finished && isCoordinator()">
-  <ion-toolbar>
+<ion-footer *ngIf="process">
+  <ion-toolbar *ngIf="!process.finished && isCoordinator()">
     <ion-button (click)="startRound()" *ngIf="!process.currentRound.started" color="primary" expand="block">Comenzar
       ronda
     </ion-button>

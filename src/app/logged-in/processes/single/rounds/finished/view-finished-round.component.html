@@ -15,8 +15,8 @@
 
   <ion-item>
     <ion-label>Fecha de cierre</ion-label>
-    <ion-datetime [(ngModel)]="this.process.pastRounds[roundIdx].limitTime"
-                  [readonly]="process.pastRounds[roundIdx].started || process.finished"
+    <ion-datetime [value]="this.process.pastRounds[roundIdx].limitTime"
+                  readonly
                   display-format="MMM DD, YYYY HH:mm"
                   picker-format="MMM DD, YYYY HH:mm"
                   placeholder="Introduce fecha límite"></ion-datetime>
@@ -24,8 +24,8 @@
 
   <ion-item>
     <ion-label>Nombre</ion-label>
-    <ion-input [(ngModel)]="this.process.pastRounds[roundIdx].name"
-               [readonly]="process.pastRounds[roundIdx].started || process.finished"
+    <ion-input [value]="this.process.pastRounds[roundIdx].name"
+               readonly
                debounce="200"
                placeholder="Nombre de la ronda"></ion-input>
   </ion-item>

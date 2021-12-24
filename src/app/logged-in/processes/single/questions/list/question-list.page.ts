@@ -32,14 +32,16 @@ export class QuestionListPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
+        console.log('on subscribe!!');
         this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+          console.log('user is!!!', user);
           if (user === null) {
             return;
           }
           this.user = user;
         });
         this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
-          if (processes == null) {
+          if (processes == null || processes.length === 0) {
             return;
           }
           this.process = processes.find(p2 => p2.id === +params.id);
@@ -50,8 +52,8 @@ export class QuestionListPage implements OnInit, OnDestroy {
 
 
   isCoordinator(): boolean {
-    if (!this.user) {
-      return;
+    if (!this.user || !this.process) {
+      return false;
     }
     return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }

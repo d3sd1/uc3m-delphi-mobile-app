@@ -20,11 +20,10 @@
 </ion-content>
 
 
-<ion-footer>
+<ion-footer *ngIf="process">
   <ion-toolbar>
     <ion-button (click)="closeProcess()"
                 expand="block">Finalizar proceso
     </ion-button>
   </ion-toolbar>
 </ion-footer>
-
