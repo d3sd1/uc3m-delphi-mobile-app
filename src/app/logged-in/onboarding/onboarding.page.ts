@@ -1,18 +1,19 @@
-import {Component, OnDestroy, ViewChild} from '@angular/core';
-import {IonSlides, NavController, ToastController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {IonSlides, NavController, ToastController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {User} from '../../core/model/user';
 import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../user.consumer';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../core/service/notification.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-onboarding',
   templateUrl: './onboarding.page.html',
   styleUrls: ['./onboarding.page.scss'],
 })
-export class OnboardingPage implements ViewDidEnter, OnDestroy, ViewDidLeave {
+export class OnboardingPage implements OnInit, OnDestroy {
   user: User;
 
   reset = {
@@ -31,20 +32,26 @@ export class OnboardingPage implements ViewDidEnter, OnDestroy, ViewDidLeave {
               private toastController: ToastController,
               private translate: TranslateService,
               private userConsumer: UserConsumer,
-              private navCtrl: NavController) {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.user = user;
-      if (!this.user.needsOnboard) {
-        this.navCtrl.navigateForward('/logged-in/menu/processes/list').then(r => null);
-      }
-    });
+              private navCtrl: NavController,
+              private route: ActivatedRoute) {
+
   }
 
-  ionViewDidEnter() {
-
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      params => {
+        this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+          if (user === null) {
+            return;
+          }
+          this.user = user;
+          if (!this.user.needsOnboard) {
+            this.navCtrl.navigateForward('/logged-in/menu/processes/list').then(r => null);
+          }
+          this.user.name = '';
+          this.user.surnames = '';
+        });
+      });
   }
 
   setupAccount() {
@@ -74,10 +81,6 @@ export class OnboardingPage implements ViewDidEnter, OnDestroy, ViewDidLeave {
     if (this.user.needsOnboard === 'false' || this.user.needsOnboard === false) {
       this.navCtrl.navigateForward('/logged-in/menu').then(r => null);
     }
-  }
-
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
   }
 
   ngOnDestroy(): void {

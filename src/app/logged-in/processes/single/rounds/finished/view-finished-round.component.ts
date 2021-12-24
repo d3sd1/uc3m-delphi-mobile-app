@@ -1,5 +1,5 @@
-import {Component, OnDestroy} from '@angular/core';
-import {ActionSheetController, NavController, ViewDidLeave} from '@ionic/angular';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActionSheetController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
@@ -14,13 +14,12 @@ import {Subscription} from 'rxjs';
   templateUrl: './view-finished-round.component.html',
   styleUrls: ['./view-finished-round.component.scss'],
 })
-export class ViewFinishedRoundPage implements OnDestroy, ViewDidLeave {
+export class ViewFinishedRoundPage implements OnInit, OnDestroy {
 
   process: Process;
   currentUser: User;
   roundIdx: number;
   userSubscription: Subscription;
-  routeSubscription: Subscription;
   processSubscription: Subscription;
 
   constructor(
@@ -29,30 +28,30 @@ export class ViewFinishedRoundPage implements OnDestroy, ViewDidLeave {
     private processConsumer: ProcessConsumer,
     private route: ActivatedRoute,
     public actionSheetController: ActionSheetController) {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.currentUser = user;
-    });
 
-    this.routeSubscription = this.route.params.subscribe(params => {
-      if (params === null) {
-        return;
-      }
-      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes == null) {
-          return;
-        }
-        const process = processes.find(p2 => p2.id === +params.id);
-        if (process === null) {
-          return;
-        }
-        this.process = process;
-        this.roundIdx = process.pastRounds.findIndex(q => q.id === +params.roundid);
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      params => {
+        this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+          if (user === null) {
+            return;
+          }
+          this.currentUser = user;
+        });
+        this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+          if (processes == null) {
+            return;
+          }
+          const process = processes.find(p2 => p2.id === +params.id);
+          if (process === null) {
+            return;
+          }
+          this.process = process;
+          this.roundIdx = process.pastRounds.findIndex(q => q.id === +params.roundid);
+        });
       });
-    });
-
   }
 
   getExpertAnswer(expert: User, round: Round, qId: number): Answer {
@@ -62,10 +61,6 @@ export class ViewFinishedRoundPage implements OnDestroy, ViewDidLeave {
     return round.answers.find(rr => rr.user.id === expert.id && rr.question.id === qId);
   }
 
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
-  }
-
 
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {
@@ -73,9 +68,6 @@ export class ViewFinishedRoundPage implements OnDestroy, ViewDidLeave {
     }
     if (!this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
-    }
-    if (!this.routeSubscription.closed) {
-      this.routeSubscription.unsubscribe();
     }
     this.process = undefined;
     this.currentUser = undefined;

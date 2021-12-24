@@ -1,4 +1,4 @@
-<ion-list *ngIf="!loading && userChatsOriginal.length > 0">
+<ion-list *ngIf="userChatsOriginal && userChatsOriginal.length > 0">
   <ion-searchbar (ionInput)="filterList($event)" autocomplete="on" autocorrect="on"
                  cancel-button-text="Cancelar" placeholder="Buscar chat" showCancelButton="focus"></ion-searchbar>
   <ion-item-sliding #slidingItem *ngFor="let chat of userChats">
@@ -33,4 +33,4 @@
     </ion-item-options>
   </ion-item-sliding>
 </ion-list>
-<delphi-chat-empty *ngIf="!loading && userChats && userChats.length == 0"></delphi-chat-empty>
+<delphi-chat-empty *ngIf="!userChatsOriginal || userChatsOriginal.length == 0"></delphi-chat-empty>

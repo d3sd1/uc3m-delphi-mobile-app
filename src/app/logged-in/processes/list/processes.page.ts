@@ -13,7 +13,7 @@ import {NotificationService} from '../../../core/service/notification.service';
   templateUrl: 'processes.page.html',
   styleUrls: ['processes.page.scss']
 })
-export class ProcessesPage implements OnInit, OnDestroy, ViewDidLeave {
+export class ProcessesPage implements OnInit, OnDestroy {
 
   processes: Process[];
   filteredProcesses: Process[];
@@ -32,23 +32,26 @@ export class ProcessesPage implements OnInit, OnDestroy, ViewDidLeave {
   }
 
   ngOnInit() {
-    this.loadingProcesses = true;
-    this.processSubscription = this.processConsumer.getProcesses().subscribe(processes => {
-      if (processes === null) {
-        return;
-      }
-      this.loadingProcesses = true;
-      this.processes = processes;
-      this.filterProcesses();
-      this.loadingProcesses = false;
-    });
+    this.route.params.subscribe(
+      params => {
+        this.loadingProcesses = true;
+        this.processSubscription = this.processConsumer.getProcesses().subscribe(processes => {
+          if (processes === null) {
+            return;
+          }
+          this.loadingProcesses = true;
+          this.processes = processes;
+          this.filterProcesses();
+          this.loadingProcesses = false;
+        });
 
-    this.userSubscription = this.userConsumer.getUser().subscribe(user => {
-      if (user === null) {
-        return;
-      }
-      this.user = user;
-    });
+        this.userSubscription = this.userConsumer.getUser().subscribe(user => {
+          if (user === null) {
+            return;
+          }
+          this.user = user;
+        });
+      });
   }
 
   editProcess(process) {
@@ -129,17 +132,11 @@ export class ProcessesPage implements OnInit, OnDestroy, ViewDidLeave {
     ]);
   }
 
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
-  }
-
-
-
   ngOnDestroy(): void {
-    if(!this.processSubscription.closed) {
+    if (!this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
-    if(!this.userSubscription.closed) {
+    if (!this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
     this.processes = undefined;

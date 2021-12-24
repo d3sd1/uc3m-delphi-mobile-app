@@ -14,7 +14,7 @@ import {ChatMessage} from '../../../core/model/chat-message';
   templateUrl: './chat-conversation-page.component.html',
   styleUrls: ['./chat-conversation-page.component.scss'],
 })
-export class ChatConversationPage implements OnInit, OnDestroy, ViewDidLeave {
+export class ChatConversationPage implements OnInit, OnDestroy {
   chat: UserChat;
   chats: UserChat[];
   user: User;
@@ -27,7 +27,6 @@ export class ChatConversationPage implements OnInit, OnDestroy, ViewDidLeave {
   private chatSubscription: Subscription;
   private userSubscription: Subscription;
   private invitationSubscription: Subscription;
-  private routeParamsSubscription: Subscription;
 
   constructor(
     private chatConsumer: ChatConsumer,
@@ -41,32 +40,30 @@ export class ChatConversationPage implements OnInit, OnDestroy, ViewDidLeave {
    * Promise is used to execute this block on background
    */
   ngOnInit() {
-    this.routeParamsSubscription = this.route.params.subscribe(params => {
-      if (params === null) {
-        return;
-      }
-      this.invitationSubscription = this.invitationConsumer.getUsers().subscribe((users) => {
-        if (users === null) {
-          return;
-        }
-        this.oppositeUser = users.find(p => p.id === +params.oppositeUserId);
-        this.printMessages();
+    this.route.params.subscribe(
+      params => {
+        this.invitationSubscription = this.invitationConsumer.getUsers().subscribe((users) => {
+          if (users === null) {
+            return;
+          }
+          this.oppositeUser = users.find(p => p.id === +params.oppositeUserId);
+          this.printMessages();
+        });
+        this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+          if (user === null) {
+            return;
+          }
+          this.user = user;
+          this.printMessages();
+        });
+        this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
+          if (userChats === null) {
+            return;
+          }
+          this.chats = userChats;
+          this.printMessages();
+        });
       });
-    });
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.user = user;
-      this.printMessages();
-    });
-    this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
-      if (userChats === null) {
-        return;
-      }
-      this.chats = userChats;
-      this.printMessages();
-    });
   }
 
   private printMessages() {
@@ -97,9 +94,6 @@ export class ChatConversationPage implements OnInit, OnDestroy, ViewDidLeave {
     this.scrollToBottom();
   }
 
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
-  }
 
   ngOnDestroy(): void {
     this.chat = undefined;
@@ -117,9 +111,6 @@ export class ChatConversationPage implements OnInit, OnDestroy, ViewDidLeave {
     }
     if (!this.invitationSubscription.closed) {
       this.invitationSubscription.unsubscribe();
-    }
-    if (!this.routeParamsSubscription.closed) {
-      this.routeParamsSubscription.unsubscribe();
     }
   }
 

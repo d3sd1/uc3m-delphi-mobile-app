@@ -1,17 +1,17 @@
-import {Component, Input, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../../../core/model/user';
 import {UserChat} from '../../../core/model/user-chat';
 import {ChatConsumer} from '../chat.consumer';
 import {UserConsumer} from '../../user.consumer';
 import {Subscription} from 'rxjs';
-import {ViewDidLeave} from '@ionic/angular';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-chat-list',
   templateUrl: './chat-list-page.component.html',
   styleUrls: ['./chat-list-page.component.scss'],
 })
-export class ChatListPage implements OnDestroy, ViewDidLeave {
+export class ChatListPage implements OnInit, OnDestroy {
   user: User;
 
   @Input()
@@ -24,29 +24,35 @@ export class ChatListPage implements OnDestroy, ViewDidLeave {
   chatSubscription: Subscription;
 
 
-  constructor(private chatConsumer: ChatConsumer, private userConsumer: UserConsumer) {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.user = user;
-    });
-    this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
-      if (userChats === null) {
-        return;
-      }
-      this.userChatsOriginal = userChats;
-      this.userChats = [...this.userChatsOriginal];
-      this.loading = false;
-    });
+  constructor(private chatConsumer: ChatConsumer, private userConsumer: UserConsumer,
+              private route: ActivatedRoute) {
+
   }
 
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
+
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      params => {
+        this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+          if (user === null) {
+            return;
+          }
+          this.user = user;
+        });
+        this.chatSubscription = this.chatConsumer.getChats().subscribe((userChats) => {
+          if (userChats === null) {
+            return;
+          }
+          this.userChatsOriginal = [...userChats];
+          this.userChats = [...this.userChatsOriginal];
+          this.loading = false;
+        });
+      });
   }
 
 
   ngOnDestroy(): void {
+
     if (!this.chatSubscription.closed) {
       this.chatSubscription.unsubscribe();
     }

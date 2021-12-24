@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {UserConsumer} from '../../user.consumer';
 import {NotificationService} from '../../../core/service/notification.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-logout',
@@ -10,16 +11,18 @@ import {NotificationService} from '../../../core/service/notification.service';
 })
 export class LogoutPage implements OnInit {
 
-  constructor(private userConsumer: UserConsumer, private navCtrl: NavController, private ns: NotificationService) {
+  constructor(private userConsumer: UserConsumer, private navCtrl: NavController, private ns: NotificationService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.userConsumer.doLogout();
-    setTimeout(() => {
-      this.navCtrl.navigateBack('/logged-out/login').then(() => {
-        this.ns.showToast('Desconexión satisfactoria');
-      });
-    }, 2000);
+    this.route.params.subscribe(params => {
+      this.userConsumer.doLogout();
+      setTimeout(() => {
+        this.navCtrl.navigateBack('/logged-out/login').then(() => {
+          this.ns.showToast('Desconexión satisfactoria');
+        });
+      }, 2000);
+    });
   }
 
 }

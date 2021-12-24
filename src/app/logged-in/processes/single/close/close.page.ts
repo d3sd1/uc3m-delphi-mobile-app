@@ -1,6 +1,6 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Process} from '../../../../core/model/process';
-import {NavController, ViewDidLeave} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../../../core/model/user';
@@ -14,12 +14,11 @@ import {NotificationService} from '../../../../core/service/notification.service
   templateUrl: './close.page.html',
   styleUrls: ['./close.page.scss'],
 })
-export class ClosePage implements OnDestroy, ViewDidLeave {
+export class ClosePage implements OnInit, OnDestroy {
 
   process: Process;
   user: User;
   processSubscription: Subscription;
-  routeSubscription: Subscription;
   userSubscription: Subscription;
 
   constructor(
@@ -29,29 +28,33 @@ export class ClosePage implements OnDestroy, ViewDidLeave {
     private userConsumer: UserConsumer,
     private httpClient: HttpClient,
     private processConsumer: ProcessConsumer) {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.user = user;
-    });
-    this.routeSubscription = this.route.params.subscribe(params => {
-      if (params === null) {
-        return;
-      }
-      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes == null) {
-          return;
-        }
-        const process = processes.find(p2 => p2.id === +params.id);
-        // If process is finished, do not allow to stay on this page
-        if (process.finished) {
-          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
-        }
-        this.process = process;
-      });
-    });
+
   }
+
+  ngOnInit(): void {
+
+    this.route.params.subscribe(
+      params => {
+        this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+          if (user === null) {
+            return;
+          }
+          this.user = user;
+        });
+          this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+            if (processes == null) {
+              return;
+            }
+            const process = processes.find(p2 => p2.id === +params.id);
+            // If process is finished, do not allow to stay on this page
+            if (process.finished) {
+              this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+            }
+            this.process = process;
+          });
+      });
+  }
+
 
   closeProcess() {
     if (this.process.conclusion === '' || this.process.conclusion === undefined || this.process.conclusion === null) {
@@ -62,14 +65,8 @@ export class ClosePage implements OnDestroy, ViewDidLeave {
     this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
   }
 
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
-  }
 
   ngOnDestroy(): void {
-    if (!this.routeSubscription.closed) {
-      this.routeSubscription.unsubscribe();
-    }
     if (!this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }

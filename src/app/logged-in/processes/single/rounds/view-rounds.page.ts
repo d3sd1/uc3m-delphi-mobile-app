@@ -1,5 +1,5 @@
-import {Component, OnDestroy} from '@angular/core';
-import {NavController, ViewDidLeave} from '@ionic/angular';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
@@ -12,12 +12,11 @@ import {Subscription} from 'rxjs';
   templateUrl: './view-rounds.page.html',
   styleUrls: ['./view-rounds.page.scss'],
 })
-export class ViewRoundsPage implements OnDestroy, ViewDidLeave {
+export class ViewRoundsPage implements OnInit, OnDestroy {
 
   process: Process;
   user: User;
   processSubscription: Subscription;
-  routeSubscription: Subscription;
   userSubscription: Subscription;
 
   constructor(
@@ -25,24 +24,26 @@ export class ViewRoundsPage implements OnDestroy, ViewDidLeave {
     private route: ActivatedRoute,
     private processConsumer: ProcessConsumer,
     private userConsumer: UserConsumer) {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.user = user;
-    });
-    this.routeSubscription = this.route.params.subscribe(params => {
-      if (params === null) {
-        return;
-      }
-      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes == null) {
-          return;
-        }
-        this.process = processes.find(p2 => p2.id === +params.id);
-      });
-    });
   }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      params => {
+        this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+          if (user === null) {
+            return;
+          }
+          this.user = user;
+        });
+        this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+          if (processes == null) {
+            return;
+          }
+          this.process = processes.find(p2 => p2.id === +params.id);
+        });
+      });
+  }
+
 
   sortRounds() {
     this.process.currentRound.questions.sort((a, b) => {
@@ -57,9 +58,6 @@ export class ViewRoundsPage implements OnDestroy, ViewDidLeave {
   }
 
   ngOnDestroy(): void {
-    if (!this.routeSubscription.closed) {
-      this.routeSubscription.unsubscribe();
-    }
     if (!this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
@@ -69,10 +67,5 @@ export class ViewRoundsPage implements OnDestroy, ViewDidLeave {
     this.process = undefined;
     this.user = undefined;
   }
-
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
-  }
-
 
 }

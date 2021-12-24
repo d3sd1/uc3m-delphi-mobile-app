@@ -3,6 +3,7 @@ import {Question} from '../../../../../../core/model/question';
 import {Category} from '../../../../../../core/model/category';
 import {Process} from '../../../../../../core/model/process';
 import {NotificationService} from '../../../../../../core/service/notification.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-question-catpond',
@@ -17,11 +18,14 @@ export class QuestionCatpondPage implements OnInit {
   currentCategory = '';
 
 
-  constructor(private ns: NotificationService) {
+  constructor(private ns: NotificationService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.reorderCategories();
+    this.route.params.subscribe(
+      params => {
+        this.reorderCategories();
+      });
   }
 
 

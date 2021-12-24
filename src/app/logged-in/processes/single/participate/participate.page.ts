@@ -1,7 +1,7 @@
-import {Component, OnDestroy, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
-import {IonSlides, LoadingController, NavController, ViewDidLeave} from '@ionic/angular';
+import {IonSlides, LoadingController, NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Answer} from '../../../../core/model/answer';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,7 +16,7 @@ import {NotificationService} from '../../../../core/service/notification.service
   templateUrl: './participate.page.html',
   styleUrls: ['./participate.page.scss'],
 })
-export class ParticipatePage implements OnDestroy, ViewDidLeave {
+export class ParticipatePage implements OnInit, OnDestroy {
   answers: Answer[];
 
   currentQuestion;
@@ -36,44 +36,40 @@ export class ParticipatePage implements OnDestroy, ViewDidLeave {
     private loadingCtrl: LoadingController,
     private userConsumer: UserConsumer,
     private processConsumer: ProcessConsumer) {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.currentUser = user;
-    });
+  }
 
-    this.routeSubscription = this.route.params.subscribe(params => {
-      if(params === null) {
-        return;
-      }
-      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes == null) {
-          return;
-        }
-        const process = processes.find(p2 => p2.id === +params.id);
-        if (process.currentRound && process.currentRound.id === undefined || !process.currentRound.started) {
-          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + process.id).then(r => null);
-        }
-        this.process = process;
-        this.orderQuestions();
-        this.sortCategories(0);
-
-        this.process.currentRound.questions.forEach((q, idx) => {
-          this.answers[idx] = new Answer();
-          this.answers[idx].question = q;
-          this.answers[idx].user = this.currentUser;
-          this.answers[idx].content = this.getPreviousParticipation(q.id);
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      params => {
+        this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+          if (user === null) {
+            return;
+          }
+          this.currentUser = user;
         });
-        this.updateCurrentQuestionValue();
+
+        this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+          if (processes == null) {
+            return;
+          }
+          const process = processes.find(p2 => p2.id === +params.id);
+          if (process.currentRound && process.currentRound.id === undefined || !process.currentRound.started) {
+            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + process.id).then(r => null);
+          }
+          this.process = process;
+          this.orderQuestions();
+          this.sortCategories(0);
+
+          this.process.currentRound.questions.forEach((q, idx) => {
+            this.answers[idx] = new Answer();
+            this.answers[idx].question = q;
+            this.answers[idx].user = this.currentUser;
+            this.answers[idx].content = this.getPreviousParticipation(q.id);
+          });
+          this.updateCurrentQuestionValue();
+        });
       });
-    });
   }
-
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
-  }
-
 
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {

@@ -1,31 +1,34 @@
-import {Component, OnDestroy} from '@angular/core';
-import {ActionSheetController, NavController, ViewDidLeave} from '@ionic/angular';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActionSheetController, NavController} from '@ionic/angular';
 import {User} from '../../core/model/user';
 import {UserConsumer} from '../user.consumer';
 import {Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-profile',
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss']
 })
-export class ProfilePage implements OnDestroy, ViewDidLeave {
+export class ProfilePage implements OnInit, OnDestroy {
   public user: User;
   private userSubscription: Subscription;
 
   constructor(private actionSheetController: ActionSheetController,
               private userConsumer: UserConsumer,
-              private navCtrl: NavController) {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.user = user;
-    });
+              private navCtrl: NavController,
+              private route: ActivatedRoute) {
   }
 
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+        if (user === null) {
+          return;
+        }
+        this.user = user;
+      });
+    });
   }
 
   ngOnDestroy() {

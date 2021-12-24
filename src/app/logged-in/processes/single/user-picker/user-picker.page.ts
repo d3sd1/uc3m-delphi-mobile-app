@@ -1,8 +1,8 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {NavController, ViewDidLeave} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
 import {InvitationConsumer} from './invitation.consumer';
@@ -13,7 +13,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './user-picker.page.html',
   styleUrls: ['./user-picker.page.scss'],
 })
-export class UserPickerPage implements OnDestroy, ViewDidLeave {
+export class UserPickerPage implements OnInit, OnDestroy {
   process;
   filterCriterial = '';
   currentUser;
@@ -22,7 +22,6 @@ export class UserPickerPage implements OnDestroy, ViewDidLeave {
   usersFiltered: User[] = [];
 
   userSubscription: Subscription;
-  routeSubscription: Subscription;
   processSubscription: Subscription;
 
   constructor(
@@ -32,36 +31,32 @@ export class UserPickerPage implements OnDestroy, ViewDidLeave {
     private processConsumer: ProcessConsumer,
     private invitationConsumer: InvitationConsumer,
     public navCtrl: NavController) {
+  }
+
+  ngOnInit(): void {
     this.route.params.subscribe(params => {
-      if (params === null) {
-        return;
-      }
       this.type = params.type;
-    });
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.currentUser = user;
-    });
-    this.routeSubscription = this.route.params.subscribe(params => {
-      if (params === null) {
-        return;
-      }
+      this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+        if (user === null) {
+          return;
+        }
+        this.currentUser = user;
+      });
       this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
         }
         this.process = processes.find(p2 => p2.id === +params.id);
       });
-    });
-    this.invitationConsumer.getUsers().subscribe((users) => {
-      if(users === null) {
-        return;
-      }
-      this.searchableUsers = users;
+      this.invitationConsumer.getUsers().subscribe((users) => {
+        if (users === null) {
+          return;
+        }
+        this.searchableUsers = users;
+      });
     });
   }
+
 
   isEmail(email) {
     return String(email)
@@ -123,18 +118,9 @@ export class UserPickerPage implements OnDestroy, ViewDidLeave {
     if (!this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
-    if (!this.routeSubscription.closed) {
-      this.routeSubscription.unsubscribe();
-    }
     if (!this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
   }
-
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
-  }
-
-
 
 }

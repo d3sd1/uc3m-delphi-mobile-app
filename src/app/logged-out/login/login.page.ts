@@ -1,16 +1,17 @@
-import {Component, OnDestroy} from '@angular/core';
-import {LoadingController, NavController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {LoadingController, NavController} from '@ionic/angular';
 import {UserConsumer} from '../../logged-in/user.consumer';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../core/service/notification.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'delphi-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements ViewDidEnter, ViewDidLeave, OnDestroy {
+export class LoginPage implements OnInit, OnDestroy {
   // Form
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -25,11 +26,14 @@ export class LoginPage implements ViewDidEnter, ViewDidLeave, OnDestroy {
               private navCtrl: NavController,
               private loadingController: LoadingController,
               private ns: NotificationService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private route: ActivatedRoute) {
   }
 
-  ionViewDidEnter(): void {
-    this.redirectHomeIfConnected();
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.redirectHomeIfConnected();
+    });
   }
 
   redirectHomeIfConnected() {
@@ -48,10 +52,6 @@ export class LoginPage implements ViewDidEnter, ViewDidLeave, OnDestroy {
     }).catch((errMessage: string) => {
       this.ns.showToast(errMessage);
     });
-  }
-
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
   }
 
   ngOnDestroy(): void {

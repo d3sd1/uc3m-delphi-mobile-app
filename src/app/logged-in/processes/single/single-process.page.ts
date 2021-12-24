@@ -1,5 +1,5 @@
-import {Component, OnDestroy} from '@angular/core';
-import {NavController, ViewDidLeave} from '@ionic/angular';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {NavController} from '@ionic/angular';
 import {Process} from '../../../core/model/process';
 import {User} from '../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
@@ -13,11 +13,10 @@ import {Subscription} from 'rxjs';
   templateUrl: './single-process.page.html',
   styleUrls: ['./single-process.page.scss'],
 })
-export class SingleProcessPage implements OnDestroy, ViewDidLeave {
+export class SingleProcessPage implements OnInit, OnDestroy {
   process: Process;
   user: User;
   processesSubscription: Subscription;
-  routeSubscription: Subscription;
   userSubscription: Subscription;
 
   constructor(private ns: NotificationService,
@@ -25,16 +24,16 @@ export class SingleProcessPage implements OnDestroy, ViewDidLeave {
               private route: ActivatedRoute,
               private processConsumer: ProcessConsumer,
               private navCtrl: NavController) {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.user = user;
-    });
-    this.routeSubscription = this.route.params.subscribe(params => {
-      if(params === null) {
-        return;
-      }
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+        if (user === null) {
+          return;
+        }
+        this.user = user;
+      });
       this.processesSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
         if (processes == null) {
           return;
@@ -43,6 +42,7 @@ export class SingleProcessPage implements OnDestroy, ViewDidLeave {
       });
     });
   }
+
 
   isCoordinator(): boolean {
     return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
@@ -76,11 +76,6 @@ export class SingleProcessPage implements OnDestroy, ViewDidLeave {
     this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/participate').then(r => null);
   }
 
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
-  }
-
-
   ngOnDestroy(): void {
 
     if (!this.userSubscription.closed) {
@@ -88,9 +83,6 @@ export class SingleProcessPage implements OnDestroy, ViewDidLeave {
     }
     if (!this.processesSubscription.closed) {
       this.processesSubscription.unsubscribe();
-    }
-    if (!this.routeSubscription.closed) {
-      this.routeSubscription.unsubscribe();
     }
     this.process = undefined;
     this.user = undefined;

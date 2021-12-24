@@ -1,5 +1,5 @@
-import {Component, OnDestroy} from '@angular/core';
-import {AlertController, NavController, ViewDidLeave} from '@ionic/angular';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AlertController, NavController} from '@ionic/angular';
 import {Process} from '../../../../../core/model/process';
 import {User} from '../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
@@ -13,13 +13,12 @@ import {Subscription} from 'rxjs';
   templateUrl: './remaining-experts.page.html',
   styleUrls: ['./remaining-experts.page.scss'],
 })
-export class RemainingExpertsPage implements OnDestroy, ViewDidLeave {
+export class RemainingExpertsPage implements OnInit, OnDestroy {
 
   process: Process;
   user: User;
   currentTime = (new Date()).toISOString();
   userSubscription: Subscription;
-  routeSubscription: Subscription;
   processSubscription: Subscription;
 
   constructor(
@@ -29,24 +28,25 @@ export class RemainingExpertsPage implements OnDestroy, ViewDidLeave {
     private httpClient: HttpClient,
     private processConsumer: ProcessConsumer,
     private userConsumer: UserConsumer) {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.user = user;
-    });
-    this.routeSubscription = this.route.params.subscribe(params => {
-      if (params === null) {
-        return;
-      }
-      this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
-        if (processes == null) {
-          return;
-        }
-        this.process = processes.find(p2 => p2.id === +params.id);
-        this.orderQuestions();
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      params => {
+        this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+          if (user === null) {
+            return;
+          }
+          this.user = user;
+        });
+        this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+          if (processes == null) {
+            return;
+          }
+          this.process = processes.find(p2 => p2.id === +params.id);
+          this.orderQuestions();
+        });
       });
-    });
   }
 
 
@@ -62,20 +62,12 @@ export class RemainingExpertsPage implements OnDestroy, ViewDidLeave {
     });
   }
 
-  ionViewDidLeave(): void {
-    this.ngOnDestroy();
-  }
-
-
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
     if (!this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
-    }
-    if (!this.routeSubscription.closed) {
-      this.routeSubscription.unsubscribe();
     }
     this.process = undefined;
     this.user = undefined;
