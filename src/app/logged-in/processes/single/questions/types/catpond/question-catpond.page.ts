@@ -62,7 +62,7 @@ export class QuestionCatpondPage implements OnInit {
   }
 
   private reorderCategories() {
-    if(!this.question || !this.question.categories) {
+    if (!this.question || !this.question.categories) {
       return;
     }
     this.question.categories.sort((n1, n2) => {

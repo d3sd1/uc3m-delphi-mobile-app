@@ -3,7 +3,7 @@ import {Process} from '../../../core/model/process';
 import {ProcessConsumer} from '../process.consumer';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {NavController, ViewDidLeave} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 import {User} from '../../../core/model/user';
 import {UserConsumer} from '../../user.consumer';
 import {NotificationService} from '../../../core/service/notification.service';

@@ -22,7 +22,8 @@
         <p>{{question.name}}</p>
         <!-- Textarea in an item with a placeholder -->
         <ion-item *ngIf="question.questionType.name === 'QUALITATIVE'">
-          <ion-textarea (ionChange)="updateAnswer(currentQuestion, $event)" [value]="currentQuestionValue" inputmode="text"
+          <ion-textarea (ionChange)="updateAnswer(currentQuestion, $event)" [value]="currentQuestionValue"
+                        inputmode="text"
                         placeholder="Introduce aquí tu respuesta"></ion-textarea>
         </ion-item>
         <div *ngIf="question.questionType.name === 'QUANTITATIVE'">

@@ -41,17 +41,17 @@ export class ClosePage implements OnInit, OnDestroy {
           }
           this.user = user;
         });
-          this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
-            if (processes == null) {
-              return;
-            }
-            const process = processes.find(p2 => p2.id === +params.id);
-            // If process is finished, do not allow to stay on this page
-            if (process.finished) {
-              this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
-            }
-            this.process = process;
-          });
+        this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
+          if (processes == null) {
+            return;
+          }
+          const process = processes.find(p2 => p2.id === +params.id);
+          // If process is finished, do not allow to stay on this page
+          if (process.finished) {
+            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+          }
+          this.process = process;
+        });
       });
   }
 

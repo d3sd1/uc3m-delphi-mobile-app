@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {IonContent, ViewDidLeave} from '@ionic/angular';
+import {IonContent} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {UserChat} from '../../../core/model/user-chat';
 import {User} from '../../../core/model/user';
@@ -66,21 +66,6 @@ export class ChatConversationPage implements OnInit, OnDestroy {
       });
   }
 
-  private printMessages() {
-    if (!this.oppositeUser || !this.user || !this.chats) {
-      return;
-    }
-    this.chat = this.chats.find((userChat) => {
-      if (this.oppositeUser && (userChat.user1.id === this.user.id && userChat.user2.id === this.oppositeUser.id)
-        || this.oppositeUser && (userChat.user2.id === this.user.id && userChat.user1.id === this.oppositeUser.id)) {
-        this.loading = false;
-        return true;
-      }
-    });
-    this.sortMessages();
-    this.scrollToBottom();
-  }
-
   sortMessages() {
     this.chat.messages.sort((chatMessage1: ChatMessage, chatMessage2: ChatMessage) => {
       let pos = 0;
@@ -93,7 +78,6 @@ export class ChatConversationPage implements OnInit, OnDestroy {
     });
     this.scrollToBottom();
   }
-
 
   ngOnDestroy(): void {
     this.chat = undefined;
@@ -118,13 +102,11 @@ export class ChatConversationPage implements OnInit, OnDestroy {
     this.chatDisplay.scrollToBottom(300).then(r => null);
   }
 
-
   checkEnterKey(keyCode) {
     if (keyCode === 13) {
       this.sendMessage();
     }
   }
-
 
   sendMessage() {
     if (this.editorMsg === '') {
@@ -142,6 +124,21 @@ export class ChatConversationPage implements OnInit, OnDestroy {
 
   switchEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
+    this.scrollToBottom();
+  }
+
+  private printMessages() {
+    if (!this.oppositeUser || !this.user || !this.chats) {
+      return;
+    }
+    this.chat = this.chats.find((userChat) => {
+      if (this.oppositeUser && (userChat.user1.id === this.user.id && userChat.user2.id === this.oppositeUser.id)
+        || this.oppositeUser && (userChat.user2.id === this.user.id && userChat.user1.id === this.oppositeUser.id)) {
+        this.loading = false;
+        return true;
+      }
+    });
+    this.sortMessages();
     this.scrollToBottom();
   }
 

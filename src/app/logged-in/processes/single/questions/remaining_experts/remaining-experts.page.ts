@@ -49,6 +49,17 @@ export class RemainingExpertsPage implements OnInit, OnDestroy {
       });
   }
 
+  ngOnDestroy(): void {
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
+    }
+    this.process = undefined;
+    this.user = undefined;
+    this.currentTime = undefined;
+  }
 
   private orderQuestions() {
     this.process.currentRound.questions.sort((n1, n2) => {
@@ -60,18 +71,6 @@ export class RemainingExpertsPage implements OnInit, OnDestroy {
       }
       return 0;
     });
-  }
-
-  ngOnDestroy(): void {
-    if (!this.userSubscription.closed) {
-      this.userSubscription.unsubscribe();
-    }
-    if (!this.processSubscription.closed) {
-      this.processSubscription.unsubscribe();
-    }
-    this.process = undefined;
-    this.user = undefined;
-    this.currentTime = undefined;
   }
 
 

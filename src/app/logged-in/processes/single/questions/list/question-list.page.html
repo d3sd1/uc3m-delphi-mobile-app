@@ -30,7 +30,8 @@
                placeholder="Nombre de la ronda"></ion-input>
   </ion-item>
 
-  <ion-item [disabled]="!process.currentRound.started" [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/remaining_experts'"
+  <ion-item [disabled]="!process.currentRound.started"
+            [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/remaining_experts'"
             routerDirection="forward">
     <ion-label>Estado de la votación</ion-label>
     <ion-badge slot="end">{{process.currentRound.expertsRemaining.length}} expertos por votar

@@ -24,7 +24,7 @@
     <delphi-empty *ngIf="filteredProcesses && filteredProcesses.length == 0"></delphi-empty>
     <ion-item (click)="editProcess(process)" *ngFor="let process of filteredProcesses"
               [color]="processPendingParticipationWarning(process) ? 'danger':''">
-      <ion-thumbnail slot="start" *ngIf="process">
+      <ion-thumbnail *ngIf="process" slot="start">
         <div class="img-wrapper circle">
           <span class="initials">{{process.name.substring(0, 2)}}</span>
         </div>

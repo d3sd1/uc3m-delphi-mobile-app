@@ -28,7 +28,7 @@
       <div class="msg-detail">
         <div class="msg-info">
           <p>
-           {{msg.timestamp | relativeTime}}</p>
+            {{msg.timestamp | relativeTime}}</p>
         </div>
         <div class="msg-content">
           <span class="triangle"></span>
@@ -48,10 +48,10 @@
     <ion-item>
       <form (ngSubmit)="sendMessage()">
         <ion-input
-                   (focusin)="onFocus()"
-                   [(ngModel)]="editorMsg"
-                   name="chat_message"
-                   placeholder="Introduce tu mensaje..."></ion-input>
+          (focusin)="onFocus()"
+          [(ngModel)]="editorMsg"
+          name="chat_message"
+          placeholder="Introduce tu mensaje..."></ion-input>
       </form>
     </ion-item>
     <ion-button (click)="sendMessage()" color="primary" fill="clear" slot="end">

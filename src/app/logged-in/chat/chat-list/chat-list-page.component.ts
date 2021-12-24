@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../../../core/model/user';
 import {UserChat} from '../../../core/model/user-chat';
 import {ChatConsumer} from '../chat.consumer';

@@ -5,7 +5,7 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" *ngIf="user && user.name">
+<ion-content *ngIf="user && user.name" [fullscreen]="true">
   <ion-card color="light">
     <div class="img-wrapper circle">
       <span class="initials">{{user.name.substring(0, 2)}}</span>

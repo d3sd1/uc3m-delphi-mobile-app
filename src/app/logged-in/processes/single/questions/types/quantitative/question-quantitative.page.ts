@@ -1,7 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Process} from '../../../../../../core/model/process';
-import {HttpClient} from '@angular/common/http';
-import {ToastController} from '@ionic/angular';
 import {Question} from '../../../../../../core/model/question';
 import {NotificationService} from '../../../../../../core/service/notification.service';
 

@@ -192,18 +192,6 @@ export class QuestionListPage implements OnInit, OnDestroy {
       ]);
   }
 
-  private orderQuestions() {
-    this.process.currentRound.questions.sort((n1, n2) => {
-      if (n1.orderPosition < n2.orderPosition) {
-        return -1;
-      }
-      if (n1.orderPosition > n2.orderPosition) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
   ngOnDestroy(): void {
     if (!this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
@@ -214,5 +202,17 @@ export class QuestionListPage implements OnInit, OnDestroy {
     this.process = undefined;
     this.user = undefined;
     this.currentTime = undefined;
+  }
+
+  private orderQuestions() {
+    this.process.currentRound.questions.sort((n1, n2) => {
+      if (n1.orderPosition < n2.orderPosition) {
+        return -1;
+      }
+      if (n1.orderPosition > n2.orderPosition) {
+        return 1;
+      }
+      return 0;
+    });
   }
 }

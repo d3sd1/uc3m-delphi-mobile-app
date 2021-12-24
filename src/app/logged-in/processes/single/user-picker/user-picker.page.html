@@ -49,7 +49,8 @@
       <ion-label [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">{{user.name}} {{user.surnames}}
         <{{ user.email }}>
       </ion-label>
-      <ion-icon (click)="removeUser(user)" *ngIf="currentUser && user && user.id !== currentUser.id && isCoordinator() && !process.finished"
+      <ion-icon (click)="removeUser(user)"
+                *ngIf="currentUser && user && user.id !== currentUser.id && isCoordinator() && !process.finished"
                 name="close-circle"></ion-icon>
     </ion-chip>
   </div>
