@@ -5,6 +5,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../core/service/notification.service';
 import {ActivatedRoute} from '@angular/router';
+import {WsService} from '../../core/service/ws/ws.service';
 
 @Component({
   selector: 'delphi-login',
@@ -27,6 +28,7 @@ export class LoginPage implements OnInit, OnDestroy {
               private loadingController: LoadingController,
               private ns: NotificationService,
               private fb: FormBuilder,
+              private wsService: WsService,
               private route: ActivatedRoute) {
   }
 
@@ -39,6 +41,7 @@ export class LoginPage implements OnInit, OnDestroy {
   redirectHomeIfConnected() {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       if (user === null) {
+        this.userConsumer.doLogout();
         return;
       }
       this.navCtrl.navigateForward('/logged-in').then(() => null);

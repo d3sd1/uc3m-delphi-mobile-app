@@ -29,8 +29,8 @@ export class ProcessConsumer {
     this.wsService.publish(`process`, {processId, name, description, objectives}, WsMode.UPDATE);
   }
 
-  updateRoundBasicData(processId: number, name: string, limitTime: string) {
-    this.wsService.publish(`process/rounds/current/basic`, {processId, name, limitTime}, WsMode.UPDATE);
+  updateRoundBasicData(processId: number, roundName: string, limitTime: string) {
+    this.wsService.publish(`process/rounds/current/basic`, {processId, roundName, limitTime}, WsMode.UPDATE);
   }
 
   saveParticipation(processId: number, answers: Answer[]) {

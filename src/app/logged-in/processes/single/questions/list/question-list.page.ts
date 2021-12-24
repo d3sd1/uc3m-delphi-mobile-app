@@ -32,9 +32,7 @@ export class QuestionListPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
-        console.log('on subscribe!!');
         this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-          console.log('user is!!!', user);
           if (user === null) {
             return;
           }
@@ -72,10 +70,14 @@ export class QuestionListPage implements OnInit, OnDestroy {
   }
 
   updateBasicData() {
+    console.log('update basuic data')
     this.processConsumer.updateRoundBasicData(this.process.id, this.process.currentRound.name, this.process.currentRound.limitTime);
   }
 
   startRound() {
+    if(!this.process.currentRound.name || this.process.currentRound.name === '' || this.process.currentRound.name.length > 40) {
+
+    }
     let questionsMissing = false;
     this.process.currentRound.questions.forEach((question) => {
       if (question.name === null ||

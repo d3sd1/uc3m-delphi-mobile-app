@@ -23,9 +23,9 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Nombre</ion-label>
     <ion-input (ngModelChange)="updateBasicData()" [(ngModel)]="this.process.currentRound.name"
                [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
+               maxlength="40"
                debounce="200"
                placeholder="Nombre de la ronda"></ion-input>
   </ion-item>
