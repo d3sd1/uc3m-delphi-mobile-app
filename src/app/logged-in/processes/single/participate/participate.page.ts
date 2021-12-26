@@ -25,7 +25,6 @@ export class ParticipatePage implements OnInit, OnDestroy {
   currentUser: User;
   @ViewChild('participate') participateSlides: IonSlides;
   userSubscription: Subscription;
-  routeSubscription: Subscription;
   processSubscription: Subscription;
 
   constructor(
@@ -52,41 +51,43 @@ export class ParticipatePage implements OnInit, OnDestroy {
           if (processes == null) {
             return;
           }
-          const process = processes.find(p2 => p2.id === +params.id);
-          if (process.currentRound && process.currentRound.id === undefined || !process.currentRound.started) {
-            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + process.id).then(r => null);
+          this.process = processes.find(p2 => p2.id === +params.id);
+          if (this.process === undefined) {
+            return;
           }
-          this.process = process;
+
+          this.process.currentRound.questions.forEach((q) => {
+            q.categories = [];
+          });
+
+          if (this.process.currentRound && this.process.currentRound.id === undefined || !this.process.currentRound.started) {
+            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
+          }
           this.orderQuestions();
           this.sortCategories(0);
+          console.log('current round questions are', this.process.currentRound.questions);
 
-          this.process.currentRound.questions.forEach((q, idx) => {
-            this.answers[idx] = new Answer();
-            this.answers[idx].question = q;
-            this.answers[idx].user = this.currentUser;
-            this.answers[idx].content = this.getPreviousParticipation(q.id);
-          });
+          this.fillQuestionAnswers();
           this.updateCurrentQuestionValue();
+          console.log('current question:', this.currentQuestion);
         });
       });
   }
 
-  ngOnDestroy(): void {
-    if (!this.userSubscription.closed) {
-      this.userSubscription.unsubscribe();
+  fillQuestionAnswers() {
+    if (this.process
+      && this.process.currentRound
+      && this.process.currentRound.questions
+      && this.process.currentRound.questions.length <= 0) {
+      return;
     }
-    if (!this.processSubscription.closed) {
-      this.processSubscription.unsubscribe();
-    }
-    if (!this.routeSubscription.closed) {
-      this.routeSubscription.unsubscribe();
-    }
-    this.process = undefined;
-    this.currentUser = undefined;
-    this.answers = undefined;
-    this.currentQuestion = undefined;
-    this.currentQuestionValue = undefined;
-    this.participateSlides.slideTo(0).then(r => null);
+    this.answers = [];
+    this.process.currentRound.questions.forEach((q, idx) => {
+      this.answers[idx] = new Answer();
+      this.answers[idx].question = q;
+      this.answers[idx].user = this.currentUser;
+      this.answers[idx].content = this.getPreviousParticipation(q.id);
+    });
   }
 
   updateCurrentQuestionValue() {
@@ -139,6 +140,11 @@ export class ParticipatePage implements OnInit, OnDestroy {
   }
 
   sortCategories(idx) {
+    if (idx === undefined || this.process.currentRound.questions[idx] === undefined
+      || this.process.currentRound.questions[idx].categories === undefined
+      || this.process.currentRound.questions[idx].categories.length <= 0) {
+      return;
+    }
     this.process.currentRound.questions[idx].categories.sort((a, b) => {
       if (a.id < b.id) {
         return -1;
@@ -210,6 +216,22 @@ export class ParticipatePage implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+
+  ngOnDestroy(): void {
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
+    }
+    this.process = undefined;
+    this.currentUser = undefined;
+    this.answers = undefined;
+    this.currentQuestion = undefined;
+    this.currentQuestionValue = undefined;
+    this.participateSlides.slideTo(0).then(r => null);
   }
 
 }

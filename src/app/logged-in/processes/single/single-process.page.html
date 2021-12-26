@@ -18,41 +18,36 @@
   </ion-card>
   <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
-      <ion-label>
+      <ion-title>
         Datos básicos
-      </ion-label>
+      </ion-title>
     </ion-list-header>
 
-
-    <ion-item>
-      <ion-input (ngModelChange)="updateBasicFields()"
-                 [(ngModel)]="process.name"
-                 [readonly]="!isCoordinator() || process.finished"
-                 debounce="1000"
-                 placeholder="Nombre"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-textarea (ngModelChange)="updateBasicFields()"
-                    [(ngModel)]="process.description"
-                    [readonly]="!isCoordinator() || process.finished"
-                    debounce="1000"
-                    placeholder="Descripción"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-textarea (ngModelChange)="updateBasicFields()"
-                    [(ngModel)]="process.objectives"
-                    [readonly]="!isCoordinator() || process.finished"
-                    debounce="1000"
-                    placeholder="Objetivos del proceso">Objetivos del proceso
-      </ion-textarea>
-    </ion-item>
+    <form [formGroup]="singleProcessForm">
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input formControlName="name"
+                   [readonly]="!isCoordinator() || process.finished"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-textarea formControlName="description"
+                      [readonly]="!isCoordinator() || process.finished"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Objetivos del proceso</ion-label>
+        <ion-textarea formControlName="objectives"
+                      [readonly]="!isCoordinator() || process.finished">
+        </ion-textarea>
+      </ion-item>
+    </form>
   </ion-list>
 
   <ion-list class="ion-no-margin" lines="inset">
     <ion-list-header>
-      <ion-label>
+      <ion-title>
         Rondas
-      </ion-label>
+      </ion-title>
     </ion-list-header>
     <ion-item *ngIf="!process.finished && isCoordinator()"
               [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/list'"
@@ -70,9 +65,9 @@
   </ion-list>
   <ion-list class="ion-no-margin" lines="full">
     <ion-list-header lines="full">
-      <ion-label>
+      <ion-title>
         Usuarios
-      </ion-label>
+      </ion-title>
     </ion-list-header>
 
     <!-- Toggles in a List -->

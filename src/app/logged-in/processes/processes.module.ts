@@ -18,12 +18,6 @@ import {ParticipatePage} from './single/participate/participate.page';
 import {ClosePage} from './single/close/close.page';
 import {LoadingPage} from './list/loading/loading.page';
 import {EmptyProcessesPage} from './list/empty/empty-processes.page';
-import {QuestionBooltypePage} from './single/rounds/current-round/single-question/types/booltype/question-booltype.page';
-import {QuestionQuantitativePage} from './single/rounds/current-round/single-question/types/quantitative/question-quantitative.page';
-import {QuestionCatlikertPage} from './single/rounds/current-round/single-question/types/catlikert/question-catlikert.page';
-import {QuestionCatcustomPage} from './single/rounds/current-round/single-question/types/catcustom/question-catcustom.page';
-import {QuestionCatmultiPage} from './single/rounds/current-round/single-question/types/catmulti/question-catmulti.page';
-import {QuestionCatpondPage} from './single/rounds/current-round/single-question/types/catpond/question-catpond.page';
 import {ViewFinishedRoundPage} from './single/rounds/finished/view-finished-round.component';
 import {RemainingExpertsPage} from './single/rounds/current-round/poll-status/remaining-experts.page';
 import {ViewStatisticsPage} from './single/rounds/finished/statistics/view-statistics-page.component';
@@ -52,12 +46,6 @@ import {NgChartsModule} from 'ng2-charts';
     ClosePage,
     LoadingPage,
     EmptyProcessesPage,
-    QuestionBooltypePage,
-    QuestionQuantitativePage,
-    QuestionCatlikertPage,
-    QuestionCatcustomPage,
-    QuestionCatmultiPage,
-    QuestionCatpondPage,
     ViewFinishedRoundPage,
     RemainingExpertsPage,
     ViewStatisticsPage

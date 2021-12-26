@@ -12,38 +12,183 @@
 
 <ion-content *ngIf="process && process.currentRound && question">
   <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+  <form [formGroup]="questionsForm">
+    <ion-item>
+      <ion-label position="floating">Tipo de pregunta</ion-label>
+      <ion-select formControlName="questionKind"
+                  [disabled]="process.currentRound.started">
+        <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
+        <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
+        <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
+        <ion-select-option value="CATCUSTOM">Categorías</ion-select-option>
+        <ion-select-option value="CATLIKERT">Escala de Likert</ion-select-option>
+        <ion-select-option value="CATMULTI">Categorías con selección múltiple</ion-select-option>
+        <ion-select-option value="CATPOND">Categorías ponderadas</ion-select-option>
+        <!-- este permite reordenar respuesta de categorías-->
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Pregunta</ion-label>
+      <ion-textarea
+        formControlName="name"
+        [readonly]="process.currentRound.started" debounce="500" maxlength="150"></ion-textarea>
+    </ion-item>
 
-  <ion-item>
-    <ion-label>Tipo de pregunta</ion-label>
-    <ion-select (ngModelChange)="updateQuestion()" [(ngModel)]="question.questionType.name"
-                [disabled]="process.currentRound.started">
-      <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
-      <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
-      <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
-      <ion-select-option value="CATCUSTOM">Categorías</ion-select-option>
-      <ion-select-option value="CATLIKERT">Escala de Likert</ion-select-option>
-      <ion-select-option value="CATMULTI">Categorías con selección múltiple</ion-select-option>
-      <ion-select-option value="CATPOND">Categorías ponderadas</ion-select-option>
-      <!-- este permite reordenar respuesta de categorías-->
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-textarea (ngModelChange)="updateQuestion()"
-                  [(ngModel)]="question.name"
-                  [readonly]="process.currentRound.started" debounce="500" maxlength="150"
-                  placeholder="Introduce tu pregunta aquí"></ion-textarea>
-  </ion-item>
-  <delphi-question-booltype *ngIf="question.questionType.name == 'BOOLTYPE'" [process]="process"
-                            [question]="question"></delphi-question-booltype>
-  <delphi-question-quantitative *ngIf="question.questionType.name == 'QUANTITATIVE'" [process]="process"
-                                [question]="question"></delphi-question-quantitative>
-  <delphi-question-catlikert *ngIf="question.questionType.name == 'CATLIKERT'" [process]="process"
-                             [question]="question"></delphi-question-catlikert>
-  <delphi-question-catcustom *ngIf="question.questionType.name == 'CATCUSTOM'" [process]="process"
-                             [question]="question"></delphi-question-catcustom>
-  <delphi-question-catmulti *ngIf="question.questionType.name == 'CATMULTI'" [process]="process"
-                            [question]="question"></delphi-question-catmulti>
-  <delphi-question-catpond *ngIf="question.questionType.name == 'CATPOND'" [process]="process"
-                           [question]="question"></delphi-question-catpond>
+    <!-- BOOL TYPE -->
+    <ion-item *ngIf="question.questionType.name == 'BOOLTYPE'">
+      <ion-label>Opciones</ion-label>
+      <ion-chip outline color="success">
+        <ion-label>Sí</ion-label>
+      </ion-chip>
+      <ion-chip outline color="danger">
+        <ion-label>No</ion-label>
+      </ion-chip>
+    </ion-item>
+
+    <!-- QANTITATIVE TYPE -->
+    <div *ngIf="question.questionType.name == 'QUANTITATIVE'">
+      <ion-item>
+        <ion-label position="floating">Cota mínima</ion-label>
+        <ion-input
+          formControlName="minVal"
+          [readonly]="process.currentRound.started"
+          type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Cota máxima</ion-label>
+        <ion-input
+          formControlName="maxVal"
+          [readonly]="process.currentRound.started"
+          type="number"></ion-input>
+      </ion-item>
+      <!-- TODO: onchange -> verificar que minVal < maxVal -->
+      <!-- TODO: reactive forms para esto -->
+      <ion-range [max]="questionsForm.get('maxVal').value"
+                 [min]="questionsForm.get('minVal').value"
+                 [value]="questionsForm.get('maxVal').value / 2"
+                 color="primary" disabled="true" snaps="true" ticks="true" step="1">
+        <ion-icon color="danger" name="remove-circle-outline" slot="start"></ion-icon>
+        <ion-icon color="success" name="add-circle-outline" slot="end"></ion-icon>
+      </ion-range>
+    </div>
+
+
+    <!-- LIKERT TYPE -->
+    <div *ngIf="question.questionType.name == 'CATLIKERT'">
+
+      <ion-list>
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label>Opciones</ion-label>
+          </ion-item-divider>
+
+          <ion-chip outline color="danger">
+            <ion-label>Totalmente en desacuerdo</ion-label>
+          </ion-chip>
+          <ion-chip outline color="warning">
+            <ion-label>En desacuerdo</ion-label>
+          </ion-chip>
+          <ion-chip outline color="primary">
+            <ion-label>Ni de acuerdo ni en desacuerdo</ion-label>
+          </ion-chip>
+          <ion-chip outline color="secondary">
+            <ion-label>De acuerdo</ion-label>
+          </ion-chip>
+          <ion-chip outline color="success">
+            <ion-label>Totalmente de acuerdo</ion-label>
+          </ion-chip>
+        </ion-item-group>
+      </ion-list>
+      <ion-list-header></ion-list-header>
+    </div>
+
+    <!-- CUSTOM CATEGORIES TYPE -->
+    <div *ngIf="question.questionType.name == 'CATCUSTOM'">
+      <ion-item>
+        <ion-label position="floating">Nombre de la categoría</ion-label>
+        <ion-input
+          [readonly]="process.currentRound.started"></ion-input>
+        <ion-button [disabled]="process.currentRound.started" size="small">Añadir categoría
+        </ion-button> <!-- (click)="addCategory()" -->
+      </ion-item>
+
+      <ion-list>
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label>Categorías</ion-label>
+            <ion-badge *ngIf="question.categories"
+                       slot="end">{{question.categories.length}}</ion-badge>
+          </ion-item-divider>
+
+          <ion-item
+            *ngFor="let category of question.categories; let i = index">
+            <ion-label position="floating">{{category.catName}}</ion-label>
+            <ion-icon *ngIf="!process.currentRound.started" name="trash"
+                      slot="end"></ion-icon> <!-- (click)="delCategory(category)" -->
+          </ion-item>
+        </ion-item-group>
+      </ion-list>
+    </div>
+
+
+    <!-- MULTIPLE CATEGORIES SELECTION TYPE -->
+    <div *ngIf="question.questionType.name == 'CATMULTI'">
+      <ion-item>
+        <ion-label position="floating">Máximas selecciones</ion-label>
+        <ion-input
+          [readonly]="process.currentRound.started"
+          debounce="1000"
+          type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Nombre categoría...</ion-label>
+        <ion-input [readonly]="process.currentRound.started"></ion-input>
+        <ion-button [disabled]="process.currentRound.started" size="small">Añadir categoría
+        </ion-button>
+      </ion-item>
+
+      <ion-list>
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label position="floating">Categorías</ion-label>
+            <ion-badge *ngIf="question.categories"
+                       slot="end">{{question.categories.length}}</ion-badge>
+          </ion-item-divider>
+
+          <ion-item
+            *ngFor="let category of question.categories; let i = index">
+            <ion-label>{{category.catName}}</ion-label>
+            <ion-icon *ngIf="!process.currentRound.started" name="trash"
+                      slot="end"></ion-icon>
+          </ion-item>
+        </ion-item-group>
+      </ion-list>
+    </div>
+
+    <div *ngIf="question.questionType.name == 'CATPOND'">
+      <ion-item>
+        <ion-input [readonly]="process.currentRound.started"
+                   placeholder="Nombre categoría..."></ion-input>
+        <ion-button [disabled]="process.currentRound.started" size="small">Añadir categoría
+        </ion-button>
+      </ion-item>
+
+      <ion-list *ngIf="question">
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label>Categorías</ion-label>
+            <ion-badge *ngIf="question.categories"
+                       slot="end">{{question.categories.length}}</ion-badge>
+          </ion-item-divider>
+          <ion-item
+            *ngFor="let category of question.categories; let i = index">
+            <ion-label position="floating">{{category.catName}}</ion-label>
+            <ion-icon *ngIf="!process.currentRound.started" name="trash"
+                      slot="end"></ion-icon>
+          </ion-item>
+        </ion-item-group>
+      </ion-list>
+    </div>
+  </form>
 </ion-content>
 

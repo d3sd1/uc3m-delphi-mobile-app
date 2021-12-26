@@ -7,6 +7,8 @@ import {UserConsumer} from '../../user.consumer';
 import {ProcessConsumer} from '../process.consumer';
 import {NotificationService} from '../../../core/service/notification.service';
 import {Subscription} from 'rxjs';
+import {FormControl, FormGroup} from '@angular/forms';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   selector: 'delphi-create',
@@ -18,6 +20,12 @@ export class SingleProcessPage implements OnInit, OnDestroy {
   user: User;
   processesSubscription: Subscription;
   userSubscription: Subscription;
+
+  singleProcessForm = new FormGroup({
+    name: new FormControl(''),
+    description: new FormControl(''),
+    objectives: new FormControl(''),
+  });
 
   constructor(private ns: NotificationService,
               public userConsumer: UserConsumer,
@@ -39,6 +47,22 @@ export class SingleProcessPage implements OnInit, OnDestroy {
           return;
         }
         this.process = processes.find(p2 => p2.id === +params.id);
+        if (this.process === undefined) {
+          return;
+        }
+        if (this.process.name !== this.singleProcessForm.get('name').value) {
+          this.singleProcessForm.get('name').setValue(this.process.name);
+        }
+        if (this.process.description !== this.singleProcessForm.get('description').value) {
+          this.singleProcessForm.get('description').setValue(this.process.description);
+        }
+        if (this.process.objectives !== this.singleProcessForm.get('objectives').value) {
+          this.singleProcessForm.get('objectives').setValue(this.process.objectives);
+        }
+        this.singleProcessForm.valueChanges.pipe(
+          debounceTime(3000)).subscribe((formVals: any) => {
+          this.updateBasicFields(formVals.name, formVals.description, formVals.objectives);
+        });
       });
     });
   }
@@ -55,8 +79,11 @@ export class SingleProcessPage implements OnInit, OnDestroy {
     return this.process.currentRound.expertsRemaining.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
-  updateBasicFields() {
-    this.processConsumer.updateProcessBasicData(this.process.id, this.process.name, this.process.description, this.process.objectives);
+  updateBasicFields(name: string, description: string, objectives: string) {
+    if (!this.isCoordinator()) {
+      return;
+    }
+    this.processConsumer.updateProcessBasicData(this.process.id, name, description, objectives);
   }
 
   finishProcess() {

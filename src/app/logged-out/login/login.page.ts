@@ -34,15 +34,14 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.ngOnDestroy();
       this.redirectHomeIfConnected();
+      this.ns.removeAlert();
     });
   }
 
   redirectHomeIfConnected() {
     this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
       if (user === null) {
-        this.userConsumer.doLogout();
         return;
       }
       this.navCtrl.navigateForward('/logged-in').then(() => this.ngOnDestroy());

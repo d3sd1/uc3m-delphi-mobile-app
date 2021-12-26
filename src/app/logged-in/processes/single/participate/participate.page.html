@@ -108,7 +108,7 @@
 
 
         </div>
-        <div *ngIf="question.questionType.name === 'CATPOND'">
+        <div *ngIf="question.categories && question.questionType.name === 'CATPOND'">
           <p>Introduzca su ponderación entre 0 (puntuación más baja) y 10 (puntuación más alta).</p>
           <ion-list>
             <ion-item *ngFor="let category of question.categories">

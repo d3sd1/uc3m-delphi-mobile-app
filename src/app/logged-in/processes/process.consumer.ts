@@ -60,8 +60,7 @@ export class ProcessConsumer {
   }
 
   updateQuestion(processId: number, questionId: number, name: string, questionTypeName: string,
-                 minVal: number, maxVal: number, maxSelectable: number, orderPosition: number) {
-    // todo , q.categories
+                 minVal: number, maxVal: number,  orderPosition: number) {
     this.wsService.publish(`process/rounds/current/question`, {
       processId,
       questionId,
@@ -69,7 +68,6 @@ export class ProcessConsumer {
       name,
       minVal,
       maxVal,
-      maxSelectable,
       orderPosition
     }, WsMode.UPDATE);
   }
