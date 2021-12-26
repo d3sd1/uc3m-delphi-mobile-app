@@ -7,9 +7,9 @@
  to you under the Apache License, Version 2.0 (the
  "License"); you may not use this file except in compliance
  with the License.  You may obtain a copy of the License at
- 
+
      http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing,
  software distributed under the License is distributed on an
  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -278,7 +278,7 @@
                         else
                             Note, this case is intentionally not caught.
                             this can happen if isSuccess is true, but callbackStatus is NO_RESULT
-                            which is used to remove a callback from the list without calling the callbacks
+                            which is used to remove a callback from the current-round without calling the callbacks
                             typically keepCallback is false in this case
                         */
                         // Clear callback if not expecting any more results

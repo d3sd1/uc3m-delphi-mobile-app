@@ -11,27 +11,28 @@
 </ion-header>
 
 <ion-content *ngIf="process"><!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+  <form [formGroup]="currentRound">
+    <ion-item>
+      <ion-label>Fecha de cierre</ion-label>
+      <ion-datetime
+                    formControlName="limitTime"
+                    [min]="currentTime"
+                    [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
+                    display-format="MMM DD, YYYY HH:mm"
+                    picker-format="MMM DD, YYYY HH:mm"
+                    placeholder="Introduce fecha límite"></ion-datetime>
+    </ion-item>
 
-  <ion-item>
-    <ion-label>Fecha de cierre</ion-label>
-    <ion-datetime (ngModelChange)="updateBasicData()" [(ngModel)]="process.currentRound.limitTime"
-                  [min]="currentTime"
-                  [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
-                  display-format="MMM DD, YYYY HH:mm"
-                  picker-format="MMM DD, YYYY HH:mm"
-                  placeholder="Introduce fecha límite"></ion-datetime>
-  </ion-item>
-
-  <ion-item>
-    <ion-input (ngModelChange)="updateBasicData()" [(ngModel)]="this.process.currentRound.name"
-               [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
-               maxlength="40"
-               debounce="200"
-               placeholder="Nombre de la ronda"></ion-input>
-  </ion-item>
-
+    <ion-item>
+      <ion-input formControlName="name"
+                 [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
+                 maxlength="40"
+                 debounce="200"
+                 placeholder="Nombre de la ronda"></ion-input>
+    </ion-item>
+  </form>
   <ion-item [disabled]="!process.currentRound.started"
-            [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/remaining_experts'"
+            [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/poll-status'"
             routerDirection="forward">
     <ion-label>Estado de la votación</ion-label>
     <ion-badge slot="end">{{process.currentRound.expertsRemaining.length}} expertos por votar

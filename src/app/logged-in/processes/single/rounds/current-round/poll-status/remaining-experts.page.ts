@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AlertController, NavController} from '@ionic/angular';
-import {Process} from '../../../../../core/model/process';
-import {User} from '../../../../../core/model/user';
+import {Process} from '../../../../../../core/model/process';
+import {User} from '../../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {UserConsumer} from '../../../../user.consumer';
-import {ProcessConsumer} from '../../../process.consumer';
+import {UserConsumer} from '../../../../../user.consumer';
+import {ProcessConsumer} from '../../../../process.consumer';
 import {Subscription} from 'rxjs';
 
 @Component({

@@ -3,14 +3,14 @@ import {RouterModule, Routes} from '@angular/router';
 import {ProcessesPage} from './list/processes.page';
 import {SingleProcessPage} from './single/single-process.page';
 import {UserPickerPage} from './single/user-picker/user-picker.page';
-import {QuestionListPage} from './single/questions/list/question-list.page';
-import {ModifyQuestionsContentPage} from './single/questions/single/modify-questions-content.page';
+import {CurrentRoundPage} from './single/rounds/current-round/current-round.page';
+import {ModifyQuestionsContentPage} from './single/rounds/current-round/single-question/modify-questions-content.page';
 import {ClosePage} from './single/close/close.page';
 import {ViewRoundsPage} from './single/rounds/view-rounds.page';
 import {ViewFinishedRoundPage} from './single/rounds/finished/view-finished-round.component';
 import {ParticipatePage} from './single/participate/participate.page';
-import {RemainingExpertsPage} from './single/questions/remaining_experts/remaining-experts.page';
-import {ViewStatisticsPage} from './single/rounds/statistics/view-statistics-page.component';
+import {RemainingExpertsPage} from './single/rounds/current-round/poll-status/remaining-experts.page';
+import {ViewStatisticsPage} from './single/rounds/finished/statistics/view-statistics-page.component';
 
 const routes: Routes = [
   {
@@ -98,10 +98,10 @@ const routes: Routes = [
           },
           {
             path: 'list',
-            component: QuestionListPage
+            component: CurrentRoundPage
           },
           {
-            path: 'remaining_experts',
+            path: 'poll-status',
             component: RemainingExpertsPage
           },
           {

@@ -34,6 +34,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.ngOnDestroy();
       this.redirectHomeIfConnected();
     });
   }
@@ -44,14 +45,17 @@ export class LoginPage implements OnInit, OnDestroy {
         this.userConsumer.doLogout();
         return;
       }
-      this.navCtrl.navigateForward('/logged-in').then(() => null);
+      this.navCtrl.navigateForward('/logged-in').then(() => this.ngOnDestroy());
     });
   }
 
   login() {
     this.ns.showToast('Conectando...');
     this.userConsumer.doLogin(this.loginForm.value).then((sucMessage: string) => {
-      this.navCtrl.navigateForward('/logged-in').then(() => this.ns.showToast(sucMessage));
+      this.navCtrl.navigateForward('/logged-in').then(() => {
+        this.ns.showToast(sucMessage);
+        this.ngOnDestroy();
+      });
     }).catch((errMessage: string) => {
       this.ns.showToast(errMessage);
     });

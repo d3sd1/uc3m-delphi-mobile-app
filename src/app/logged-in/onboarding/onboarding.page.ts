@@ -7,6 +7,7 @@ import {UserConsumer} from '../user.consumer';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../core/service/notification.service';
 import {ActivatedRoute} from '@angular/router';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'delphi-onboarding',
@@ -14,13 +15,12 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./onboarding.page.scss'],
 })
 export class OnboardingPage implements OnInit, OnDestroy {
-  user: User;
 
-  reset = {
-    currentPass: '',
-    newPass: '',
-    newPassRep: ''
-  };
+  onboardingForm = this.fb.group({
+    firstName: ['', Validators.required, Validators.maxLength(15)],
+    lastName: ['', Validators.required, Validators.maxLength(15)],
+  });
+
   userSubscription: Subscription;
   routeSubscription: Subscription;
   processSubscription: Subscription;
@@ -30,7 +30,7 @@ export class OnboardingPage implements OnInit, OnDestroy {
   constructor(private storage: Storage,
               private ns: NotificationService,
               private toastController: ToastController,
-              private translate: TranslateService,
+              private fb: FormBuilder,
               private userConsumer: UserConsumer,
               private navCtrl: NavController,
               private route: ActivatedRoute) {
@@ -44,52 +44,35 @@ export class OnboardingPage implements OnInit, OnDestroy {
           if (user === null) {
             return;
           }
-          this.user = user;
-          if (!this.user.needsOnboard) {
-            this.navCtrl.navigateForward('/logged-in/menu/processes/list').then(r => null);
+          if (!user.needsOnboard) {
+            this.navCtrl.navigateForward('/logged-in/menu/processes/current-round').then(r => this.ngOnDestroy());
           }
-          this.user.name = '';
-          this.user.surnames = '';
+          this.onboardingForm.get('firstName').setValue('');
+          this.onboardingForm.get('lastName').setValue('');
         });
       });
   }
 
   setupAccount() {
-    if (this.user.name === '' ||
-      this.user.surnames === '' ||
-      this.user.name === null ||
-      this.user.surnames === null ||
-      this.user.name === undefined ||
-      this.user.surnames === undefined) {
-      this.ns.showToast('Nombre incorrecto.');
+    if (this.onboardingForm.get('firstName').value === ''
+    || this.onboardingForm.get('lastName').value === '') {
+      this.ns.showToast('Introduce tu nombre y apellidos.');
       return;
     }
-    this.slides.slideNext();
+    this.slides.slideNext().then(null);
   }
 
   swipeNext() {
-    this.slides.slideNext();
+    this.slides.slideNext().then(null);
   }
 
   endSwiper() {
-    this.userConsumer.updateUserOnboarding(this.user.name, this.user.surnames);
-    this.navCtrl.navigateForward('/logged-in/menu').then(r => null);
-  }
-
-  onBoardingFinished() {
-    // @ts-ignore
-    if (this.user.needsOnboard === 'false' || this.user.needsOnboard === false) {
-      this.navCtrl.navigateForward('/logged-in/menu').then(r => null);
-    }
+    this.userConsumer.updateUserOnboarding(this.onboardingForm.get('firstName').value, this.onboardingForm.get('lastName').value);
   }
 
   ngOnDestroy(): void {
     this.slides.slideTo(0).then(r => null);
 
-    this.user = undefined;
-    this.reset.currentPass = '';
-    this.reset.newPass = '';
-    this.reset.newPassRep = '';
     if (!this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }

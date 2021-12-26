@@ -7,19 +7,26 @@ import {UserConsumer} from '../../../../user.consumer';
 import {ProcessConsumer} from '../../../process.consumer';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../../../../core/service/notification.service';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'delphi-rounds',
-  templateUrl: './question-list.page.html',
-  styleUrls: ['./question-list.page.scss'],
+  templateUrl: './current-round.page.html',
+  styleUrls: ['./current-round.page.scss'],
 })
-export class QuestionListPage implements OnInit, OnDestroy {
+export class CurrentRoundPage implements OnInit, OnDestroy {
 
   process: Process;
   user: User;
-  currentTime = (new Date()).toISOString();
+  currentTime;
   userSubscription: Subscription;
   processSubscription: Subscription;
+  curentRoundFormSubscription: Subscription;
+
+  currentRound = new FormGroup({
+    limitTime: new FormControl(''),
+    name: new FormControl(''),
+  });
 
   constructor(
     private navCtrl: NavController,
@@ -43,8 +50,19 @@ export class QuestionListPage implements OnInit, OnDestroy {
             return;
           }
           this.process = processes.find(p2 => p2.id === +params.id);
+          if (this.process.currentRound.limitTime !== this.currentRound.get('limitTime').value) {
+            this.currentRound.get('limitTime').setValue(this.process.currentRound.limitTime);
+          }
+          if (this.process.currentRound.name !== this.currentRound.get('name').value) {
+            this.currentRound.get('name').setValue(this.process.currentRound.name);
+          }
+          this.curentRoundFormSubscription = this.currentRound.valueChanges.subscribe((formVals: any) => {
+            console.log('value changed:', formVals.limitTime);
+            this.updateBasicData(formVals.limitTime, formVals.name);
+          });
           this.orderQuestions();
         });
+        this.currentTime = (new Date()).toISOString();
       });
   }
 
@@ -69,13 +87,12 @@ export class QuestionListPage implements OnInit, OnDestroy {
     this.process.currentRound.questions.splice(questionIndex, 1);
   }
 
-  updateBasicData() {
-    console.log('update basuic data')
-    this.processConsumer.updateRoundBasicData(this.process.id, this.process.currentRound.name, this.process.currentRound.limitTime);
+  updateBasicData(limitTime: string, name: string) {
+    this.processConsumer.updateRoundBasicData(this.process.id, name, limitTime);
   }
 
   startRound() {
-    if(!this.process.currentRound.name || this.process.currentRound.name === '' || this.process.currentRound.name.length > 40) {
+    if (!this.process.currentRound.name || this.process.currentRound.name === '' || this.process.currentRound.name.length > 40) {
 
     }
     let questionsMissing = false;
@@ -202,6 +219,9 @@ export class QuestionListPage implements OnInit, OnDestroy {
     }
     if (!this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
+    }
+    if (!this.curentRoundFormSubscription.closed) {
+      this.curentRoundFormSubscription.unsubscribe();
     }
     this.process = undefined;
     this.user = undefined;

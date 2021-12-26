@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Question} from '../../../../../../core/model/question';
-import {Process} from '../../../../../../core/model/process';
+import {Question} from '../../../../../../../../core/model/question';
+import {Process} from '../../../../../../../../core/model/process';
 
 @Component({
   selector: 'delphi-question-booltype',

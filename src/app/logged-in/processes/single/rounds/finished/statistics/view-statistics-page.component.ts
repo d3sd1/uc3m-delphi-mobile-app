@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActionSheetController, NavController} from '@ionic/angular';
-import {Process} from '../../../../../core/model/process';
-import {User} from '../../../../../core/model/user';
+import {Process} from '../../../../../../core/model/process';
+import {User} from '../../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {UserConsumer} from '../../../../user.consumer';
-import {ProcessConsumer} from '../../../process.consumer';
-import {Question} from '../../../../../core/model/question';
+import {UserConsumer} from '../../../../../user.consumer';
+import {ProcessConsumer} from '../../../../process.consumer';
+import {Question} from '../../../../../../core/model/question';
 import {ChartConfiguration, ChartData, ChartType} from 'chart.js';
 import {Subscription} from 'rxjs';
 

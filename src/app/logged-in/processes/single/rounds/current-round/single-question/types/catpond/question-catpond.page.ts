@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Question} from '../../../../../../core/model/question';
-import {Category} from '../../../../../../core/model/category';
-import {Process} from '../../../../../../core/model/process';
-import {NotificationService} from '../../../../../../core/service/notification.service';
+import {Question} from '../../../../../../../../core/model/question';
+import {Category} from '../../../../../../../../core/model/category';
+import {Process} from '../../../../../../../../core/model/process';
+import {NotificationService} from '../../../../../../../../core/service/notification.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {Process} from '../../../../../core/model/process';
-import {User} from '../../../../../core/model/user';
+import {Process} from '../../../../../../core/model/process';
+import {User} from '../../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {Question} from '../../../../../core/model/question';
-import {UserConsumer} from '../../../../user.consumer';
-import {ProcessConsumer} from '../../../process.consumer';
+import {Question} from '../../../../../../core/model/question';
+import {UserConsumer} from '../../../../../user.consumer';
+import {ProcessConsumer} from '../../../../process.consumer';
 import {Subscription} from 'rxjs';
-import {NotificationService} from '../../../../../core/service/notification.service';
+import {NotificationService} from '../../../../../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-rounds',
