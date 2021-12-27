@@ -40,6 +40,12 @@
                       formControlName="objectives">
         </ion-textarea>
       </ion-item>
+      <ion-item *ngIf="process.finished">
+        <ion-label position="floating">Conclusiones del proceso</ion-label>
+        <ion-textarea readonly="true"
+                      [value]="process.conclusion">
+        </ion-textarea>
+      </ion-item>
     </form>
   </ion-list>
 
