@@ -8,6 +8,7 @@ import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../../../core/service/notification.service';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'delphi-close',
@@ -20,6 +21,12 @@ export class ClosePage implements OnInit, OnDestroy {
   user: User;
   processSubscription: Subscription;
   userSubscription: Subscription;
+  loading: HTMLIonLoadingElement;
+  redirect: string;
+
+  closeProcessForm = new FormGroup({
+    conclusion: new FormControl(''),
+  });
 
   constructor(
     private navCtrl: NavController,
@@ -45,24 +52,45 @@ export class ClosePage implements OnInit, OnDestroy {
           if (processes == null || processes.length === 0) {
             return;
           }
-          const process = processes.find(p2 => p2.id === +params.id);
+          this.process = processes.find(p2 => p2.id === +params.id);
+          if (this.process === undefined) {
+            return;
+          }
+          if (this.loading && this.redirect) {
+            this.loading.dismiss().then(() => this.navCtrl.navigateForward(this.redirect).then(this.ngOnDestroy));
+          } else if (this.loading) {
+            this.loading.dismiss().then(null);
+          }
           // If process is finished, do not allow to stay on this page
-          if (process.finished) {
+          if (this.process.finished) {
             this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
           }
-          this.process = process;
         });
       });
   }
 
+
+  closeProcessConfirmation() {
+    this.ns.showAlert('Confirmación', '¿Seguro que deseas cerrar el proceso?', {
+      text: 'Cerrar',
+      handler: () => {
+        this.ns.removeAlert();
+        this.closeProcess();
+      }
+    }, 'Cancelar', null, 'Una vez cerrado no podrá ser modificado.');
+  }
 
   closeProcess() {
     if (this.process.conclusion === '' || this.process.conclusion === undefined || this.process.conclusion === null) {
       this.ns.showToast('Debes introducir una conclusión');
       return;
     }
-    this.processConsumer.closeProcess(this.process.id);
-    this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
+    this.processConsumer.closeProcess(this.process.id, this.closeProcessForm.get('conclusion').value);
+
+    this.ns.showLoading('Cerrando proceso...', 0).then(l => {
+      this.redirect = '/logged-in/menu/processes/finished/' + this.process.id;
+      this.loading = l;
+    });
   }
 
 
@@ -73,7 +101,9 @@ export class ClosePage implements OnInit, OnDestroy {
     if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
+    this.closeProcessForm.reset();
     this.process = undefined;
+    this.redirect = undefined;
     this.user = undefined;
   }
 }

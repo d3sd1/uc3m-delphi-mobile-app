@@ -12,17 +12,18 @@
 
 
 <ion-content *ngIf="process">
-  <!-- Textarea in an item with a placeholder -->
-  <ion-item>
-    <ion-textarea [(ngModel)]="process.conclusion" placeholder="Introduce tu conclusión aquí..."></ion-textarea>
-  </ion-item>
-
+  <form [formGroup]="closeProcessForm">
+    <ion-item>
+      <ion-label position="floating">Introduce tu conclusión aquí...</ion-label>
+      <ion-textarea formControlName="conclusion"></ion-textarea>
+    </ion-item>
+  </form>
 </ion-content>
 
 
 <ion-footer *ngIf="process">
   <ion-toolbar>
-    <ion-button (click)="closeProcess()"
+    <ion-button (click)="closeProcessConfirmation()"
                 expand="block">Finalizar proceso
     </ion-button>
   </ion-toolbar>

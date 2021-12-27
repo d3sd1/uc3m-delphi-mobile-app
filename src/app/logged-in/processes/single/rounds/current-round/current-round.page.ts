@@ -24,6 +24,7 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
   processSubscription: Subscription;
   curentRoundFormSubscription: Subscription;
   loading: HTMLIonLoadingElement;
+  redirect: string;
 
   currentRound = new FormGroup({
     limitTime: new FormControl(''),
@@ -52,7 +53,9 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
             return;
           }
           this.process = processes.find(p2 => p2.id === +params.id);
-          if (this.loading) {
+          if (this.loading && this.redirect) {
+            this.loading.dismiss().then(() => this.navCtrl.navigateBack(this.redirect).then(this.ngOnDestroy));
+          } else if (this.loading) {
             this.loading.dismiss().then(null);
           }
 
@@ -104,9 +107,6 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
   }
 
   startRound() {
-    if (!this.process.currentRound.name || this.process.currentRound.name === '' || this.process.currentRound.name.length > 40) {
-
-    }
     let questionsMissing = false;
     this.process.currentRound.questions.forEach((question) => {
       if (question.name === null ||
@@ -130,15 +130,28 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
     } else if (this.process.currentRound.name === '') {
       this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
         null, 'Debes introducir un nombre para la ronda');
+    } else if (this.process.currentRound.questions.some(q =>
+      (q.questionType.name === 'CATCUSTOM' && (!q.categories || q.categories.length === 0))
+      || (q.questionType.name === 'CATPOND' && (!q.categories || q.categories.length === 0))
+      || (q.questionType.name === 'CATMULTI' && (!q.categories || q.categories.length === 0))
+    )) {
+      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
+        null, 'Debes añadir categorías a todas las preguntas de tipo categoría.');
     } else {
       this.processConsumer.startCurrentRound(this.process.id);
-      this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
+      this.ns.showLoading('Abriendo ronda...', 0).then(l => {
+        this.redirect = '/logged-in/menu/processes/finished/' + this.process.id;
+        this.loading = l;
+      });
     }
   }
 
   closeRound() {
     this.processConsumer.endCurrentRound(this.process.id);
-    this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
+    this.ns.showLoading('Cerrando ronda...', 0).then(l => {
+      this.redirect = '/logged-in/menu/processes/finished/' + this.process.id;
+      this.loading = l;
+    });
   }
 
   addQuestionStep1() {
@@ -162,7 +175,6 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
   }
 
   addQuestionStep2(name: string) {
-
     let selectedQuestionType = 'QUALITATIVE';
     this.ns.showAlert('Tipo de pregunta', null, {
         text: 'Crear',
@@ -240,6 +252,11 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
     this.process = undefined;
     this.user = undefined;
     this.currentTime = undefined;
+    this.redirect = undefined;
+    if (this.loading) {
+      this.loading.dismiss().then(null);
+    }
+    this.loading = undefined;
   }
 
   private orderQuestions() {
@@ -252,5 +269,25 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
       }
       return 0;
     });
+  }
+
+  startRoundConfirmation() {
+    this.ns.showAlert('Confirmación', '¿Seguro que deseas abrir la ronda?', {
+      text: 'Abrir',
+      handler: () => {
+        this.ns.removeAlert();
+        this.startRound();
+      }
+    }, 'Cancelar', null, 'Una vez abierta no podrás modificarla.');
+  }
+
+  closeRoundConfirmation() {
+    this.ns.showAlert('Confirmación', '¿Seguro que deseas cerrar la ronda?', {
+      text: 'Cerrar',
+      handler: () => {
+        this.ns.removeAlert();
+        this.closeRound();
+      }
+    }, 'Cancelar', null, 'Una vez cerrada los expertos no podrán votar.');
   }
 }

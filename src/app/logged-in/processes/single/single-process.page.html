@@ -95,7 +95,7 @@
 <ion-footer *ngIf="process && !process.finished">
   <ion-toolbar>
     <ion-button
-      (click)="finishProcess()"
+      (click)="addConclusion()"
       *ngIf="isCoordinator()"
       color="danger" expand="block">Finalizar proceso
     </ion-button>

@@ -59,8 +59,8 @@ export class ProcessConsumer {
     this.wsService.publish(`process/rounds/current/end`, {processId}, WsMode.UPDATE);
   }
 
-  closeProcess(processId: number) {
-    this.wsService.publish(`process/finish`, {processId}, WsMode.UPDATE);
+  closeProcess(processId: number, conclusion: string) {
+    this.wsService.publish(`process/finish`, {processId, conclusion}, WsMode.UPDATE);
   }
 
   updateQuestion(processId: number, questionId: number, name: string, questionTypeName: string,

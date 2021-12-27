@@ -214,8 +214,11 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
     this.question = undefined;
     this.questionsForm.reset();
     this.categoriesForm.reset();
-    this.loading.dismiss().then(null);
+    if (this.loading) {
+      this.loading.dismiss().then(null);
+    }
     this.ns.removeAlert();
   }
 
 }
+

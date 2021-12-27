@@ -30,7 +30,7 @@
     <ion-item>
       <ion-label position="floating">Pregunta</ion-label>
       <ion-textarea
-        [readonly]="process.currentRound.started"
+        [disabled]="process.currentRound.started"
         debounce="1000"
         formControlName="name" maxlength="150"></ion-textarea>
     </ion-item>
@@ -51,14 +51,14 @@
       <ion-item>
         <ion-label position="floating">Cota mínima</ion-label>
         <ion-input
-          [readonly]="process.currentRound.started"
+          [disabled]="process.currentRound.started"
           formControlName="minVal"
           type="number"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Cota máxima</ion-label>
         <ion-input
-          [readonly]="process.currentRound.started"
+          [disabled]="process.currentRound.started"
           formControlName="maxVal"
           type="number"></ion-input>
       </ion-item>
@@ -109,12 +109,12 @@
         <ion-item>
           <ion-label position="floating">Nombre de la categoría</ion-label>
           <ion-input
-            [formControl]="categoriesForm.get('tmpInput')"
-            [readonly]="process.currentRound.started"></ion-input>
+            [disabled]="process.currentRound.started"
+            [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
-        <ion-button [disabled]="process.currentRound.started"
-                    color="primary" expand="block"
-                    (click)="addCategory()">Añadir categoría
+        <ion-button (click)="addCategory()"
+                    [disabled]="process.currentRound.started" color="primary"
+                    expand="block">Añadir categoría
         </ion-button>
 
         <ion-list>
@@ -128,8 +128,8 @@
             <ion-item
               *ngFor="let category of categoriesForm.get('options').value; let i = index">
               <ion-label>{{category.catName}}</ion-label>
-              <ion-icon *ngIf="!process.currentRound.started" name="trash"
-                        (click)="delCategory(category)"
+              <ion-icon (click)="delCategory(category)" *ngIf="!process.currentRound.started"
+                        name="trash"
                         slot="end"></ion-icon>
             </ion-item>
           </ion-item-group>
@@ -142,53 +142,20 @@
         <ion-item>
           <ion-label position="floating">Máximas selecciones</ion-label>
           <ion-input
-            [readonly]="process.currentRound.started"
-            debounce="1000"
+            [disabled]="process.currentRound.started"
             [formControl]="categoriesForm.get('maxSelectable')"
+            debounce="1000"
             type="number"></ion-input>
         </ion-item>
-          <ion-item>
-            <ion-label position="floating">Nombre de la categoría</ion-label>
-            <ion-input
-              [formControl]="categoriesForm.get('tmpInput')"
-              [readonly]="process.currentRound.started"></ion-input>
-          </ion-item>
-          <ion-button [disabled]="process.currentRound.started"
-                      color="primary" expand="block"
-                      (click)="addCategory()">Añadir categoría
-          </ion-button>
-
-          <ion-list>
-            <ion-item-group>
-              <ion-item-divider>
-                <ion-label>Categorías</ion-label>
-                <ion-badge *ngIf="question.categories"
-                           slot="end">{{question.categories.length}}</ion-badge>
-              </ion-item-divider>
-
-              <ion-item
-                *ngFor="let category of categoriesForm.get('options').value; let i = index">
-                <ion-label>{{category.catName}}</ion-label>
-                <ion-icon *ngIf="!process.currentRound.started" name="trash"
-                          (click)="delCategory(category)"
-                          slot="end"></ion-icon>
-              </ion-item>
-            </ion-item-group>
-          </ion-list>
-      </div>
-
-      <div *ngIf="question.questionType.name == 'CATPOND'">
-        <!-- CUSTOM CATEGORIES TYPE -->
-
         <ion-item>
           <ion-label position="floating">Nombre de la categoría</ion-label>
           <ion-input
-            [formControl]="categoriesForm.get('tmpInput')"
-            [readonly]="process.currentRound.started"></ion-input>
+            [disabled]="process.currentRound.started"
+            [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
-        <ion-button [disabled]="process.currentRound.started"
-                    color="primary" expand="block"
-                    (click)="addCategory()">Añadir categoría
+        <ion-button (click)="addCategory()"
+                    [disabled]="process.currentRound.started" color="primary"
+                    expand="block">Añadir categoría
         </ion-button>
 
         <ion-list>
@@ -202,8 +169,41 @@
             <ion-item
               *ngFor="let category of categoriesForm.get('options').value; let i = index">
               <ion-label>{{category.catName}}</ion-label>
-              <ion-icon *ngIf="!process.currentRound.started" name="trash"
-                        (click)="delCategory(category)"
+              <ion-icon (click)="delCategory(category)" *ngIf="!process.currentRound.started"
+                        name="trash"
+                        slot="end"></ion-icon>
+            </ion-item>
+          </ion-item-group>
+        </ion-list>
+      </div>
+
+      <div *ngIf="question.questionType.name == 'CATPOND'">
+        <!-- CUSTOM CATEGORIES TYPE -->
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la categoría</ion-label>
+          <ion-input
+            [disabled]="process.currentRound.started"
+            [formControl]="categoriesForm.get('tmpInput')"></ion-input>
+        </ion-item>
+        <ion-button (click)="addCategory()"
+                    [disabled]="process.currentRound.started" color="primary"
+                    expand="block">Añadir categoría
+        </ion-button>
+
+        <ion-list>
+          <ion-item-group>
+            <ion-item-divider>
+              <ion-label>Categorías</ion-label>
+              <ion-badge *ngIf="question.categories"
+                         slot="end">{{question.categories.length}}</ion-badge>
+            </ion-item-divider>
+
+            <ion-item
+              *ngFor="let category of categoriesForm.get('options').value; let i = index">
+              <ion-label>{{category.catName}}</ion-label>
+              <ion-icon (click)="delCategory(category)" *ngIf="!process.currentRound.started"
+                        name="trash"
                         slot="end"></ion-icon>
             </ion-item>
           </ion-item-group>

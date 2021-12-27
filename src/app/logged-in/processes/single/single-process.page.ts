@@ -102,7 +102,7 @@ export class SingleProcessPage implements OnInit, OnDestroy {
     this.processConsumer.updateProcessBasicData(this.process.id, name, description, objectives);
   }
 
-  finishProcess() {
+  addConclusion() {
     if (this.process.currentRound.started) {
       this.ns.showToast('No se puede cerrar el proceso cuando hay una ronda en curso.');
       return;
@@ -133,4 +133,5 @@ export class SingleProcessPage implements OnInit, OnDestroy {
     this.process = undefined;
     this.user = undefined;
   }
+
 }

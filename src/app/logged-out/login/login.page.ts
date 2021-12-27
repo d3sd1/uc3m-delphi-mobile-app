@@ -34,8 +34,8 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.redirectHomeIfConnected();
       this.ns.removeAlert();
+      this.redirectHomeIfConnected();
     });
   }
 
@@ -51,7 +51,6 @@ export class LoginPage implements OnInit, OnDestroy {
   login() {
     this.ns.showToast('Conectando...');
     this.userConsumer.doLogin(this.loginForm.value).then((sucMessage: string) => {
-      console.log('login OK!!');
       this.navCtrl.navigateForward('/logged-in').then(() => {
         this.ns.showToast(sucMessage);
         this.ngOnDestroy();
