@@ -86,11 +86,12 @@ export class ProcessConsumer {
     }, WsMode.UPDATE);
   }
 
-  updateQuestionCategories(processId: number, questionId: number, categories: Category) {
+  updateQuestionCategories(processId: number, questionId: number, categories: Category, maxSelectable: number) {
     this.wsService.publish(`process/rounds/current/question/categories`, {
       processId,
       questionId,
-      categories
+      categories,
+      maxSelectable
     }, WsMode.UPDATE);
   }
 

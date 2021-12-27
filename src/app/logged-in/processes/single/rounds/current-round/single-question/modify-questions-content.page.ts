@@ -129,6 +129,8 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
             this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
             this.updateQuestion(formVals.name, formVals.questionKind, formVals.minVal, formVals.maxVal, formVals.orderPosition);
           });
+
+          let prevMaxSelectable = this.categoriesForm.get('maxSelectable').value;
           this.categoriesFormSubscription = this.categoriesForm.valueChanges.pipe(
             debounceTime(1000),
             distinctUntilChanged()
@@ -142,7 +144,13 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
               this.ns.showToast('Debes introducir al menos una categoría.');
               return;
             }
-            this.processConsumer.updateQuestionCategories(this.process.id, this.question.id, formVals.options);
+            if (formVals.maxSelectable !== prevMaxSelectable) {
+              this.ns.showLoading('Modificando cotas...', 0).then(l => {
+                prevMaxSelectable = formVals.maxSelectable;
+                this.loading = l;
+              });
+            }
+            this.processConsumer.updateQuestionCategories(this.process.id, this.question.id, formVals.options, this.categoriesForm.get('maxSelectable').value);
           });
         });
       });
@@ -153,11 +161,27 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
       this.ns.showToast('Debes introducir un nombre para la categoría.');
       return;
     }
-    this.categoriesForm.get('options').value.push(new Category(this.categoriesForm.get('tmpInput').value));
-    this.categoriesForm.get('tmpInput').setValue('');
+
+    if (this.categoriesForm.get('options').value.some(co => co.catName.toLowerCase() === this.categoriesForm.get('tmpInput').value.toLowerCase())) {
+      this.ns.showToast('No se admiten categorías duplicadas.');
+      this.categoriesForm.get('tmpInput').setValue('');
+      return;
+    }
+
+    this.ns.showLoading('Añadiendo categoría...', 0).then(l => {
+      this.loading = l;
+      this.categoriesForm.get('options').value.push(new Category(this.categoriesForm.get('tmpInput').value));
+      this.categoriesForm.get('tmpInput').setValue('');
+    });
+
   }
 
   delCategory(c: Category) {
+    this.ns.showLoading('Eliminando categoría...', 0).then(l => {
+      this.loading = l;
+      this.categoriesForm.get('options').value.push(new Category(this.categoriesForm.get('tmpInput').value));
+      this.categoriesForm.get('tmpInput').setValue('');
+    });
     this.categoriesForm.get('options').setValue(this.categoriesForm.get('options').value.filter(c2 => c.id !== c2.id));
   }
 
@@ -190,6 +214,8 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
     this.question = undefined;
     this.questionsForm.reset();
     this.categoriesForm.reset();
+    this.loading.dismiss().then(null);
+    this.ns.removeAlert();
   }
 
 }
