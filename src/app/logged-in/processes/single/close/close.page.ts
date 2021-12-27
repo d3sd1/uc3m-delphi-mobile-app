@@ -81,11 +81,12 @@ export class ClosePage implements OnInit, OnDestroy {
   }
 
   closeProcess() {
-    if (this.process.conclusion === '' || this.process.conclusion === undefined || this.process.conclusion === null) {
+    const conclusion = this.closeProcessForm.get('conclusion').value;
+    if (conclusion === '' || !conclusion) {
       this.ns.showToast('Debes introducir una conclusión');
       return;
     }
-    this.processConsumer.closeProcess(this.process.id, this.closeProcessForm.get('conclusion').value);
+    this.processConsumer.closeProcess(this.process.id, conclusion);
 
     this.ns.showLoading('Cerrando proceso...', 0).then(l => {
       this.redirect = '/logged-in/menu/processes/finished/' + this.process.id;

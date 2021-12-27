@@ -259,18 +259,6 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
     this.loading = undefined;
   }
 
-  private orderQuestions() {
-    this.process.currentRound.questions.sort((n1, n2) => {
-      if (n1.orderPosition < n2.orderPosition) {
-        return -1;
-      }
-      if (n1.orderPosition > n2.orderPosition) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
   startRoundConfirmation() {
     this.ns.showAlert('Confirmación', '¿Seguro que deseas abrir la ronda?', {
       text: 'Abrir',
@@ -289,5 +277,17 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
         this.closeRound();
       }
     }, 'Cancelar', null, 'Una vez cerrada los expertos no podrán votar.');
+  }
+
+  private orderQuestions() {
+    this.process.currentRound.questions.sort((n1, n2) => {
+      if (n1.orderPosition < n2.orderPosition) {
+        return -1;
+      }
+      if (n1.orderPosition > n2.orderPosition) {
+        return 1;
+      }
+      return 0;
+    });
   }
 }

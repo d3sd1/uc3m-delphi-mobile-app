@@ -69,10 +69,12 @@
 
 <ion-footer *ngIf="process">
   <ion-toolbar *ngIf="!process.finished && isCoordinator()">
-    <ion-button (click)="startRoundConfirmation()" *ngIf="!process.currentRound.started" color="primary" expand="block">Comenzar
+    <ion-button (click)="startRoundConfirmation()" *ngIf="!process.currentRound.started" color="primary" expand="block">
+      Comenzar
       ronda
     </ion-button>
-    <ion-button (click)="closeRoundConfirmation()" *ngIf="process.currentRound.started" color="danger" expand="block">Forzar fin de
+    <ion-button (click)="closeRoundConfirmation()" *ngIf="process.currentRound.started" color="danger" expand="block">
+      Forzar fin de
       ronda
     </ion-button>
   </ion-toolbar>
