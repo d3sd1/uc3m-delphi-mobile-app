@@ -20,7 +20,7 @@ export class WsService {
     this.initFields();
     this.jwtService.getJwt().subscribe((jwt) => {
       console.log('received jwt on ws:', jwt);
-      if (jwt === null) {
+      if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
         console.error('JWT is not set, not connecting to websocket.');
         this.disconnectWs();
         return;
@@ -58,6 +58,12 @@ export class WsService {
   }
 
   disconnectWs() {
+    if (this.jwtService.getJwt().getValue() !== null
+      && this.jwtService.getJwt().getValue() !== undefined
+      && this.jwtService.getJwt().getValue() !== 'null'
+      && this.jwtService.getJwt().getValue() !== '') {
+      this.jwtService.setJwt(null);
+    }
     if (this.wsConnection.getValue() === null) {
       return;
     }

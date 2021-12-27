@@ -26,18 +26,18 @@
     <form [formGroup]="singleProcessForm">
       <ion-item>
         <ion-label position="floating">Nombre</ion-label>
-        <ion-input formControlName="name"
-                   [readonly]="!isCoordinator() || process.finished"></ion-input>
+        <ion-input [readonly]="!isCoordinator() || process.finished"
+                   formControlName="name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Descripción</ion-label>
-        <ion-textarea formControlName="description"
-                      [readonly]="!isCoordinator() || process.finished"></ion-textarea>
+        <ion-textarea [readonly]="!isCoordinator() || process.finished"
+                      formControlName="description"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Objetivos del proceso</ion-label>
-        <ion-textarea formControlName="objectives"
-                      [readonly]="!isCoordinator() || process.finished">
+        <ion-textarea [readonly]="!isCoordinator() || process.finished"
+                      formControlName="objectives">
         </ion-textarea>
       </ion-item>
     </form>

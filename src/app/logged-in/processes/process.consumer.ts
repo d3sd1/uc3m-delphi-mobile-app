@@ -87,7 +87,7 @@ export class ProcessConsumer {
 
   private listenProcessesUpdates() {
     this.jwtService.getJwt().subscribe((jwt) => {
-      if (jwt === null || jwt === undefined) {
+      if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
         return;
       }
       this.wsService.listen('process/all', true, this.userProcesses);

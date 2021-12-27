@@ -28,7 +28,7 @@ export class ChatConsumer {
 
   private listenUpdates() {
     this.jwtService.getJwt().subscribe((jwt) => {
-      if (jwt === null || jwt === undefined) {
+      if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
         return;
       }
       this.wsService.listen('chat', true, this.userChats);

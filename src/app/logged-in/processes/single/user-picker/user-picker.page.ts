@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from '../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
 import {NavController} from '@ionic/angular';
 import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
 import {InvitationConsumer} from './invitation.consumer';
 import {Subscription} from 'rxjs';
+import {NotificationService} from '../../../../core/service/notification.service';
 
 @Component({
   selector: 'delphi-user-picker',
@@ -18,6 +18,7 @@ export class UserPickerPage implements OnInit, OnDestroy {
   filterCriterial = '';
   currentUser;
   type;
+  loading: HTMLIonLoadingElement;
   searchableUsers: User[] = [];
   usersFiltered: User[] = [];
 
@@ -27,7 +28,7 @@ export class UserPickerPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private userConsumer: UserConsumer,
-    private httpClient: HttpClient,
+    private ns: NotificationService,
     private processConsumer: ProcessConsumer,
     private invitationConsumer: InvitationConsumer,
     public navCtrl: NavController) {
@@ -47,6 +48,12 @@ export class UserPickerPage implements OnInit, OnDestroy {
           return;
         }
         this.process = processes.find(p2 => p2.id === +params.id);
+        if (this.process === undefined) {
+          return;
+        }
+        if (this.loading) {
+          this.loading.dismiss().then(null);
+        }
       });
       this.invitationConsumer.getUsers().subscribe((users) => {
         if (users === null) {
@@ -73,13 +80,19 @@ export class UserPickerPage implements OnInit, OnDestroy {
   }
 
   addExistantUser(user: User) {
-    this.invitationConsumer.addExistantUserToProcess(user.id, this.process.id, this.type);
     this.filterCriterial = '';
+    this.invitationConsumer.addExistantUserToProcess(user.id, this.process.id, this.type);
+    this.ns.showLoading('Actualizando...', 0).then(l => {
+      this.loading = l;
+    });
   }
 
   addNewUser(email: string) {
-    this.invitationConsumer.sendInvitation(email, this.process.id, this.type);
     this.filterCriterial = '';
+    this.invitationConsumer.sendInvitation(email, this.process.id, this.type);
+    this.ns.showLoading('Actualizando...', 0).then(l => {
+      this.loading = l;
+    });
   }
 
   isCoordinator(): boolean {
@@ -93,9 +106,9 @@ export class UserPickerPage implements OnInit, OnDestroy {
     }
 
     this.usersFiltered = this.searchableUsers.filter((u) => {
-      return (u.email.includes(this.filterCriterial)
-          || u.name.includes(this.filterCriterial)
-          || u.surnames.includes(this.filterCriterial))
+      return (u.email.toLowerCase().includes(this.filterCriterial.toLowerCase())
+          || u.name.toLowerCase().includes(this.filterCriterial.toLowerCase())
+          || u.surnames.toLowerCase().includes(this.filterCriterial.toLowerCase()))
         && !this.process.experts.some(u2 => u.id === u2.id)
         && !this.process.coordinators.some(u2 => u.id === u2.id)
         && u.id !== this.currentUser.id;
@@ -104,6 +117,9 @@ export class UserPickerPage implements OnInit, OnDestroy {
 
   removeUser(user: User) {
     this.invitationConsumer.removeFromProcess(user.id, this.process.id);
+    this.ns.showLoading('Actualizando...', 0).then(l => {
+      this.loading = l;
+    });
   }
 
   getUsers() {

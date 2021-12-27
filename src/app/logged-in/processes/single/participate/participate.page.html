@@ -31,8 +31,8 @@
             <ion-item>
               <ion-range [max]="question.maxVal"
                          [min]="question.minVal"
-                         formControlName="currentAnswer"
                          color="primary"
+                         formControlName="currentAnswer"
                          snaps
                          step="1">
                 <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
@@ -41,13 +41,16 @@
             </ion-item>
           </div>
           <div *ngIf="question.questionType.name === 'BOOLTYPE'">
-            <delphi-radio-checker [control]="answerForm.get('currentAnswer')" [options]="qks.getBooleanKinds()"></delphi-radio-checker>
+            <delphi-radio-checker [control]="answerForm.get('currentAnswer')"
+                                  [options]="qks.getBooleanKinds()"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATLIKERT'">
-            <delphi-radio-checker [control]="answerForm.get('currentAnswer')" [options]="qks.getLikertKinds()"></delphi-radio-checker>
+            <delphi-radio-checker [control]="answerForm.get('currentAnswer')"
+                                  [options]="qks.getLikertKinds()"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATCUSTOM'">
-            <delphi-radio-checker [control]="answerForm.get('currentAnswer')" [options]="qks.mapCatsToKinds(question.categories)"></delphi-radio-checker>
+            <delphi-radio-checker [control]="answerForm.get('currentAnswer')"
+                                  [options]="qks.mapCatsToKinds(question.categories)"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATMULTI'">
 

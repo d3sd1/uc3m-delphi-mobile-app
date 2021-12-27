@@ -6,7 +6,7 @@
         <img alt="" src="../../../assets/images/onboarding/slide-1.png"/>
         <h2>Bienvenid@ a Delphi</h2>
         <p>La plataforma ágil de procesos Delphi</p>
-        <form [formGroup]="onboardingForm" (ngSubmit)="setupAccount()">
+        <form (ngSubmit)="setupAccount()" [formGroup]="onboardingForm">
 
           <ion-item>
             <ion-label>Nombre</ion-label>
@@ -16,7 +16,7 @@
             <ion-label>Apellidos</ion-label>
             <ion-input formControlName="lastName" placeholder="Introduce tus apellidos" type="text"></ion-input>
           </ion-item>
-          <ion-button type="submit" fill="clear">Siguiente
+          <ion-button fill="clear" type="submit">Siguiente
             <ion-icon name="arrow-forward" slot="end"></ion-icon>
           </ion-button>
         </form>

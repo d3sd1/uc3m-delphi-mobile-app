@@ -15,19 +15,19 @@
     <ion-item>
       <ion-label position="floating">Fecha de cierre</ion-label>
       <ion-datetime
-                    formControlName="limitTime"
-                    [min]="currentTime"
-                    [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
-                    display-format="MMM DD, YYYY HH:mm"
-                    picker-format="MMM DD, YYYY HH:mm"></ion-datetime>
+        [min]="currentTime"
+        [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
+        display-format="MMM DD, YYYY HH:mm"
+        formControlName="limitTime"
+        picker-format="MMM DD, YYYY HH:mm"></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Nombre de la ronda</ion-label>
-      <ion-input formControlName="name"
-                 [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
-                 maxlength="40"
-                 debounce="1000"></ion-input>
+      <ion-input [readonly]="process.currentRound.started || process.finished || !isCoordinator()"
+                 debounce="1000"
+                 formControlName="name"
+                 maxlength="40"></ion-input>
     </ion-item>
   </form>
   <ion-item [disabled]="!process.currentRound.started"

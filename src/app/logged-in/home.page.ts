@@ -49,14 +49,13 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.jwtSubscription = this.jwtService.getJwt().subscribe((jwt) => {
-        if (jwt === null) {
+        if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
           this.userConsumer.doLogout();
           this.navCtrl.navigateBack('/logged-out').then(() => this.ns.showToast('Te has desconectado correctamente.'));
         }
       });
       let lastStomp;
       this.wsSubscription = this.wsService.getConnection().subscribe((stomp) => {
-
         if (stomp === null && lastStomp !== undefined) {
           this.userConsumer.doLogout();
           this.navCtrl.navigateBack('/logged-out').then(() => this.ns.showToast('Te has desconectado correctamente.'));

@@ -15,8 +15,8 @@
   <form [formGroup]="questionsForm">
     <ion-item>
       <ion-label position="floating">Tipo de pregunta</ion-label>
-      <ion-select formControlName="questionKind"
-                  [disabled]="process.currentRound.started">
+      <ion-select [disabled]="process.currentRound.started"
+                  formControlName="questionKind">
         <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
         <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
         <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
@@ -30,18 +30,18 @@
     <ion-item>
       <ion-label position="floating">Pregunta</ion-label>
       <ion-textarea
-        formControlName="name"
         [readonly]="process.currentRound.started"
-        debounce="1000" maxlength="150"></ion-textarea>
+        debounce="1000"
+        formControlName="name" maxlength="150"></ion-textarea>
     </ion-item>
 
     <!-- BOOL TYPE -->
     <ion-item *ngIf="question.questionType.name == 'BOOLTYPE'">
       <ion-label>Opciones</ion-label>
-      <ion-chip outline color="success">
+      <ion-chip color="success" outline>
         <ion-label>Sí</ion-label>
       </ion-chip>
-      <ion-chip outline color="danger">
+      <ion-chip color="danger" outline>
         <ion-label>No</ion-label>
       </ion-chip>
     </ion-item>
@@ -51,15 +51,15 @@
       <ion-item>
         <ion-label position="floating">Cota mínima</ion-label>
         <ion-input
-          formControlName="minVal"
           [readonly]="process.currentRound.started"
+          formControlName="minVal"
           type="number"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Cota máxima</ion-label>
         <ion-input
-          formControlName="maxVal"
           [readonly]="process.currentRound.started"
+          formControlName="maxVal"
           type="number"></ion-input>
       </ion-item>
       <!-- TODO: onchange -> verificar que minVal < maxVal -->
@@ -67,7 +67,7 @@
       <ion-range [max]="questionsForm.get('maxVal').value"
                  [min]="questionsForm.get('minVal').value"
                  [value]="questionsForm.get('maxVal').value / 2"
-                 color="primary" disabled="true" snaps="true" ticks="true" step="1">
+                 color="primary" disabled="true" snaps="true" step="1" ticks="true">
         <ion-icon color="danger" name="remove-circle-outline" slot="start"></ion-icon>
         <ion-icon color="success" name="add-circle-outline" slot="end"></ion-icon>
       </ion-range>
@@ -83,19 +83,19 @@
             <ion-label>Opciones</ion-label>
           </ion-item-divider>
 
-          <ion-chip outline color="danger">
+          <ion-chip color="danger" outline>
             <ion-label>Totalmente en desacuerdo</ion-label>
           </ion-chip>
-          <ion-chip outline color="warning">
+          <ion-chip color="warning" outline>
             <ion-label>En desacuerdo</ion-label>
           </ion-chip>
-          <ion-chip outline color="primary">
+          <ion-chip color="primary" outline>
             <ion-label>Ni de acuerdo ni en desacuerdo</ion-label>
           </ion-chip>
-          <ion-chip outline color="secondary">
+          <ion-chip color="secondary" outline>
             <ion-label>De acuerdo</ion-label>
           </ion-chip>
-          <ion-chip outline color="success">
+          <ion-chip color="success" outline>
             <ion-label>Totalmente de acuerdo</ion-label>
           </ion-chip>
         </ion-item-group>

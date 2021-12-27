@@ -8,6 +8,7 @@ import {ProcessConsumer} from '../../../process.consumer';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../../../../core/service/notification.service';
 import {FormControl, FormGroup} from '@angular/forms';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   selector: 'delphi-rounds',
@@ -22,6 +23,7 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
   userSubscription: Subscription;
   processSubscription: Subscription;
   curentRoundFormSubscription: Subscription;
+  loading: HTMLIonLoadingElement;
 
   currentRound = new FormGroup({
     limitTime: new FormControl(''),
@@ -50,6 +52,9 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
             return;
           }
           this.process = processes.find(p2 => p2.id === +params.id);
+          if (this.loading) {
+            this.loading.dismiss().then(null);
+          }
 
           if (this.curentRoundFormSubscription && !this.curentRoundFormSubscription.closed) {
             this.curentRoundFormSubscription.unsubscribe();
@@ -60,8 +65,11 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
           if (this.process.currentRound.name !== this.currentRound.get('name').value) {
             this.currentRound.get('name').setValue(this.process.currentRound.name);
           }
-          this.curentRoundFormSubscription = this.currentRound.valueChanges.subscribe((formVals: any) => {
-            console.log('value changed:', formVals.limitTime);
+          this.curentRoundFormSubscription = this.currentRound.valueChanges.pipe(
+            debounceTime(1000),
+            distinctUntilChanged()
+          ).subscribe((formVals: any) => {
+            this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
             this.updateBasicData(formVals.limitTime, formVals.name);
           });
           this.orderQuestions();

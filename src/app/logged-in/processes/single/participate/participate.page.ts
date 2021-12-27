@@ -12,6 +12,7 @@ import {Subscription} from 'rxjs';
 import {NotificationService} from '../../../../core/service/notification.service';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {QuestionKindService} from '../../../../core/question-kind-service';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   selector: 'delphi-participate',
@@ -88,7 +89,10 @@ export class ParticipatePage implements OnInit, OnDestroy {
 
           this.idx = 0;
           this.updateVal();
-          this.answerFormSubscription = this.answerForm.get('currentAnswer').valueChanges.subscribe((val) => {
+          this.answerFormSubscription = this.answerForm.get('currentAnswer').valueChanges.pipe(
+            debounceTime(1000),
+            distinctUntilChanged()
+          ).subscribe((val) => {
             console.log('new val:!!', val);
             this.answers[this.idx].content = val;
             this.updateVal();
@@ -195,6 +199,23 @@ export class ParticipatePage implements OnInit, OnDestroy {
     // TODO  this.answers[currentQuestion].content = JSON.stringify(obj);
   }
 
+  ngOnDestroy(): void {
+    if (!this.answerFormSubscription.closed) {
+      this.answerFormSubscription.unsubscribe();
+    }
+    if (!this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (!this.processSubscription.closed) {
+      this.processSubscription.unsubscribe();
+    }
+    this.process = undefined;
+    this.currentUser = undefined;
+    this.answers = undefined;
+    this.idx = undefined;
+    this.participateSlides.slideTo(0).then(r => null);
+  }
+
   private getPreviousParticipation(qId: number) {
     if (this.currentUser === undefined || this.currentUser === null || this.process === null || this.process === undefined) {
       return;
@@ -226,24 +247,6 @@ export class ParticipatePage implements OnInit, OnDestroy {
         });
       });
     });
-  }
-
-
-  ngOnDestroy(): void {
-    if (!this.answerFormSubscription.closed) {
-      this.answerFormSubscription.unsubscribe();
-    }
-    if (!this.userSubscription.closed) {
-      this.userSubscription.unsubscribe();
-    }
-    if (!this.processSubscription.closed) {
-      this.processSubscription.unsubscribe();
-    }
-    this.process = undefined;
-    this.currentUser = undefined;
-    this.answers = undefined;
-    this.idx = undefined;
-    this.participateSlides.slideTo(0).then(r => null);
   }
 
 }

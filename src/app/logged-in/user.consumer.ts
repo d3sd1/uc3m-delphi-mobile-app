@@ -74,10 +74,10 @@ export class UserConsumer {
 
   private handleUser() {
     this.jwtService.getJwt().subscribe((jwt) => {
-      if (jwt === null || jwt === undefined) {
+      if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
         return;
       }
-      console.log('handle new user!! ;)')
+      console.log('handle new user!! ;)');
       this.wsService.listen('profile', true, this.connectedUser);
     });
   }

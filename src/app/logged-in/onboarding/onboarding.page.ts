@@ -1,13 +1,11 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {IonSlides, NavController, ToastController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
-import {User} from '../../core/model/user';
-import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../user.consumer';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../core/service/notification.service';
 import {ActivatedRoute} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'delphi-onboarding',
@@ -55,7 +53,7 @@ export class OnboardingPage implements OnInit, OnDestroy {
 
   setupAccount() {
     if (this.onboardingForm.get('firstName').value === ''
-    || this.onboardingForm.get('lastName').value === '') {
+      || this.onboardingForm.get('lastName').value === '') {
       this.ns.showToast('Introduce tu nombre y apellidos.');
       return;
     }
