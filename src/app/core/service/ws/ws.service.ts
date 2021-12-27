@@ -68,7 +68,7 @@ export class WsService {
       return;
     }
     this.commandSubscriptions.forEach((sub: Subscription) => {
-      if (!sub.closed) {
+      if (sub && !sub.closed) {
         sub.unsubscribe();
       }
     });

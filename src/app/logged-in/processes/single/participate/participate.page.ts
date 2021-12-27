@@ -200,13 +200,13 @@ export class ParticipatePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (!this.answerFormSubscription.closed) {
+    if (this.answerFormSubscription && !this.answerFormSubscription.closed) {
       this.answerFormSubscription.unsubscribe();
     }
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
-    if (!this.processSubscription.closed) {
+    if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
     this.process = undefined;

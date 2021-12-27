@@ -10,6 +10,7 @@ import {Subscription} from 'rxjs';
 import {NotificationService} from '../../../../../../core/service/notification.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {Category} from '../../../../../../core/model/category';
 
 @Component({
   selector: 'delphi-rounds',
@@ -35,7 +36,9 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
     categories: [[], []],
   });
   categoriesForm = this.fb.group({
-    maxSelectable: [1, [Validators.required]],
+    maxSelectable: [1, []],
+    options: [[], []],
+    tmpInput: ['', []],
   });
 
   private loading: HTMLIonLoadingElement;
@@ -75,6 +78,8 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
           if (this.loading) {
             this.loading.dismiss().then(null);
           }
+          this.categoriesForm.get('options').setValue(this.question.categories);
+          this.categoriesForm.get('maxSelectable').setValue(this.question.maxSelectable);
 
           if (this.questionFormSubscription && !this.questionFormSubscription.closed) {
             this.questionFormSubscription.unsubscribe();
@@ -128,10 +133,32 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
             debounceTime(1000),
             distinctUntilChanged()
           ).subscribe((formVals) => {
-            this.updateQuestionCategories(formVals.maxSelectable);
+            if (formVals.options && formVals.options.length > 0 && (formVals.maxSelectable <= 0 || formVals.maxSelectable > formVals.options.length)) {
+              this.categoriesForm.get('maxSelectable').setValue(1);
+              this.ns.showToast('El valor máximo de selecciones debe estar comprendido entre 1 y el número total de preguntas');
+              return;
+            }
+            if (formVals.options.length === 0) {
+              this.ns.showToast('Debes introducir al menos una categoría.');
+              return;
+            }
+            this.processConsumer.updateQuestionCategories(this.process.id, this.question.id, formVals.options);
           });
         });
       });
+  }
+
+  addCategory() {
+    if (this.categoriesForm.get('tmpInput').value === '') {
+      this.ns.showToast('Debes introducir un nombre para la categoría.');
+      return;
+    }
+    this.categoriesForm.get('options').value.push(new Category(this.categoriesForm.get('tmpInput').value));
+    this.categoriesForm.get('tmpInput').setValue('');
+  }
+
+  delCategory(c: Category) {
+    this.categoriesForm.get('options').setValue(this.categoriesForm.get('options').value.filter(c2 => c.id !== c2.id));
   }
 
 
@@ -144,25 +171,18 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
       name, questionKind, minVal, maxVal, orderPosition);
   }
 
-  updateQuestionCategories(maxSelectable: number) {
-    // todo , q.categories
-    // TODO
-    /* this.processConsumer.updateQuestion(this.process.id, this.question.id,
-       name, questionKind, minVal, maxVal, orderPosition);*/
-  }
-
   ngOnDestroy(): void {
     this.ns.removeAlert();
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
-    if (!this.processSubscription.closed) {
+    if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
-    if (!this.questionFormSubscription.closed) {
+    if (this.questionFormSubscription && !this.questionFormSubscription.closed) {
       this.questionFormSubscription.unsubscribe();
     }
-    if (!this.categoriesFormSubscription.closed) {
+    if (this.categoriesFormSubscription && !this.categoriesFormSubscription.closed) {
       this.categoriesFormSubscription.unsubscribe();
     }
     this.process = undefined;

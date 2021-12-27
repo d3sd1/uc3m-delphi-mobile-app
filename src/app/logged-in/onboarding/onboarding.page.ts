@@ -71,13 +71,13 @@ export class OnboardingPage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.slides.slideTo(0).then(r => null);
 
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
-    if (!this.routeSubscription.closed) {
+    if (this.routeSubscription && !this.routeSubscription.closed) {
       this.routeSubscription.unsubscribe();
     }
-    if (!this.processSubscription.closed) {
+    if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
   }

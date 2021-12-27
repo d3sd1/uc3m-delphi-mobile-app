@@ -50,10 +50,10 @@ export class RemainingExpertsPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
-    if (!this.processSubscription.closed) {
+    if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
     this.process = undefined;

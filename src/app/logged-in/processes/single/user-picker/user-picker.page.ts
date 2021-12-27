@@ -131,10 +131,10 @@ export class UserPickerPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (!this.processSubscription.closed) {
+    if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
   }

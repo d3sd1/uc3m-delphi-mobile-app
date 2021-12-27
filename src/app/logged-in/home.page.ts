@@ -96,19 +96,19 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
-    if (!this.wsSubscription.closed) {
+    if (this.wsSubscription && !this.wsSubscription.closed) {
       this.wsSubscription.unsubscribe();
     }
-    if (!this.jwtSubscription.closed) {
+    if (this.jwtSubscription && !this.jwtSubscription.closed) {
       this.jwtSubscription.unsubscribe();
     }
-    if (!this.userChatsSubscription.closed) {
+    if (this.userChatsSubscription && !this.userChatsSubscription.closed) {
       this.userChatsSubscription.unsubscribe();
     }
-    if (!this.processesSubscription.closed) {
+    if (this.processesSubscription && !this.processesSubscription.closed) {
       this.processesSubscription.unsubscribe();
     }
     this.notifications.proccess = 0;

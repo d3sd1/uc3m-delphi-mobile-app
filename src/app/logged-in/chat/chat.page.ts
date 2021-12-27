@@ -44,11 +44,11 @@ export class ChatPage implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    if (!this.chatSubscription.closed) {
+    if (this.chatSubscription && !this.chatSubscription.closed) {
       this.chatSubscription.unsubscribe();
     }
 
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
     this.user = undefined;

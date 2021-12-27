@@ -121,13 +121,13 @@ export class SingleProcessPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
 
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
-    if (!this.processesSubscription.closed) {
+    if (this.processesSubscription && !this.processesSubscription.closed) {
       this.processesSubscription.unsubscribe();
     }
-    if (!this.singleProcessFormSubscription.closed) {
+    if (this.singleProcessFormSubscription && !this.singleProcessFormSubscription.closed) {
       this.singleProcessFormSubscription.unsubscribe();
     }
     this.process = undefined;

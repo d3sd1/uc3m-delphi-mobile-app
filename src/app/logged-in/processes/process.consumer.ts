@@ -5,6 +5,7 @@ import {BehaviorSubject} from 'rxjs';
 import {WsMode} from '../../core/service/ws/ws-mode.model';
 import {Answer} from '../../core/model/answer';
 import {JwtService} from '../../core/service/jwt.service';
+import {Category} from '../../core/model/category';
 
 @Injectable({
   providedIn: 'root'
@@ -82,6 +83,14 @@ export class ProcessConsumer {
       fromPosition,
       toId,
       toPosition
+    }, WsMode.UPDATE);
+  }
+
+  updateQuestionCategories(processId: number, questionId: number, categories: Category) {
+    this.wsService.publish(`process/rounds/current/question/categories`, {
+      processId,
+      questionId,
+      categories
     }, WsMode.UPDATE);
   }
 

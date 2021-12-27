@@ -168,6 +168,8 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
         text: 'Crear',
         handler: (alertData) => {
           this.ns.removeAlert();
+          this.ns.showLoading('Añadiendo pregunta...', 0).then(l => this.loading = l);
+
           this.processConsumer.addQuestion(this.process.id, name, selectedQuestionType);
         }
       }, 'Cancelar',
@@ -226,13 +228,13 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
-    if (!this.processSubscription.closed) {
+    if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
-    if (!this.curentRoundFormSubscription.closed) {
+    if (this.curentRoundFormSubscription && !this.curentRoundFormSubscription.closed) {
       this.curentRoundFormSubscription.unsubscribe();
     }
     this.process = undefined;

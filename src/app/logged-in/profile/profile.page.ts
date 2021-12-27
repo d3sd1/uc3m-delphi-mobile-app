@@ -32,7 +32,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
     this.user = null;

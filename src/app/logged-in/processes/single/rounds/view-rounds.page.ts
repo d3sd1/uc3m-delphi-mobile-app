@@ -58,10 +58,10 @@ export class ViewRoundsPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (!this.processSubscription.closed) {
+    if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
-    if (!this.userSubscription.closed) {
+    if (this.userSubscription.closed && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
     this.process = undefined;
