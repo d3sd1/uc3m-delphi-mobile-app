@@ -27,6 +27,7 @@ export class ParticipatePage implements OnInit, OnDestroy {
   @ViewChild('participate') participateSlides: IonSlides;
   userSubscription: Subscription;
   processSubscription: Subscription;
+  answerFormSubscription: Subscription;
   answerForm: FormGroup;
 
   constructor(
@@ -63,6 +64,9 @@ export class ParticipatePage implements OnInit, OnDestroy {
           if (this.process === undefined) {
             return;
           }
+          if (this.answerFormSubscription && !this.answerFormSubscription.closed) {
+            this.answerFormSubscription.unsubscribe();
+          }
           if (this.process.currentRound && this.process.currentRound.id === undefined || !this.process.currentRound.started) {
             this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
           }
@@ -84,7 +88,7 @@ export class ParticipatePage implements OnInit, OnDestroy {
 
           this.idx = 0;
           this.updateVal();
-          this.answerForm.get('currentAnswer').valueChanges.subscribe((val) => {
+          this.answerFormSubscription = this.answerForm.get('currentAnswer').valueChanges.subscribe((val) => {
             console.log('new val:!!', val);
             this.answers[this.idx].content = val;
             this.updateVal();
@@ -226,6 +230,9 @@ export class ParticipatePage implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
+    if (!this.answerFormSubscription.closed) {
+      this.answerFormSubscription.unsubscribe();
+    }
     if (!this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }

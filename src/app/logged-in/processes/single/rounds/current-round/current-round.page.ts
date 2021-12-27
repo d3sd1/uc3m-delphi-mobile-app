@@ -50,6 +50,10 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
             return;
           }
           this.process = processes.find(p2 => p2.id === +params.id);
+
+          if (this.curentRoundFormSubscription && !this.curentRoundFormSubscription.closed) {
+            this.curentRoundFormSubscription.unsubscribe();
+          }
           if (this.process.currentRound.limitTime !== this.currentRound.get('limitTime').value) {
             this.currentRound.get('limitTime').setValue(this.process.currentRound.limitTime);
           }
