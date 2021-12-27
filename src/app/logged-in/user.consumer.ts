@@ -43,8 +43,8 @@ export class UserConsumer {
 
   doLogin(loginForm): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this.http.post<{ jwt }>(environment.apiUrl + '/login', loginForm).toPromise().then(async (loginResponse: { jwt }) => {
-        await this.wsService.disconnectWs();
+      this.http.post<{ jwt }>(environment.apiUrl + '/login', loginForm).toPromise().then((loginResponse: { jwt }) => {
+        this.wsService.disconnectWs();
         this.jwtService.setJwt(loginResponse.jwt);
         resolve('Conexión satisfactoria.');
       }, (err: HttpErrorResponse) => {
@@ -73,8 +73,15 @@ export class UserConsumer {
   }
 
   private handleUser() {
-    this.wsService.listen('profile', true, this.connectedUser);
+    this.jwtService.getJwt().subscribe((jwt) => {
+      if (jwt === null || jwt === undefined) {
+        return;
+      }
+      console.log('handle new user!! ;)')
+      this.wsService.listen('profile', true, this.connectedUser);
+    });
   }
 
 
 }
+

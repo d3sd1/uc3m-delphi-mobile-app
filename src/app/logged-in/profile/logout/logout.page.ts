@@ -16,12 +16,9 @@ export class LogoutPage implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.userConsumer.doLogout();
       setTimeout(() => {
-        this.navCtrl.navigateBack('/logged-out/login').then(() => {
-          this.ns.showToast('Desconexión satisfactoria');
-        });
-      }, 2000);
+        this.userConsumer.doLogout();
+      }, 3000);
     });
   }
 

@@ -16,6 +16,7 @@ export class JwtService {
   }
 
   setJwt(jwt: string): void {
+    console.log('save jwt!!!')
     localStorage.setItem('jwt', jwt);
     this.jwt.next(jwt);
   }
@@ -23,6 +24,4 @@ export class JwtService {
   private initialJwt() {
     this.jwt.next(localStorage.getItem('jwt'));
   }
-
-
 }

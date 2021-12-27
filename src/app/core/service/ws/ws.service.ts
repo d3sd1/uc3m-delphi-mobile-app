@@ -12,13 +12,23 @@ import {WsCommand} from './ws-command.model';
   providedIn: 'root'
 })
 export class WsService {
-  private wsConnection: BehaviorSubject<Stomp> = new BehaviorSubject<Stomp>(null);
-  private commands: BehaviorSubject<WsCommand[]> = new BehaviorSubject<Stomp>([]);
-  private commandSubscriptions: Subscription[] = [];
+  private wsConnection: BehaviorSubject<Stomp>;
+  private commands: BehaviorSubject<WsCommand[]>;
+  private commandSubscriptions: Subscription[];
 
   constructor(private jwtService: JwtService) {
-    this.handleConnection();
-    this.handleActions();
+    this.initFields();
+    this.jwtService.getJwt().subscribe((jwt) => {
+      console.log('received jwt on ws:', jwt);
+      if (jwt === null) {
+        console.error('JWT is not set, not connecting to websocket.');
+        this.disconnectWs();
+        return;
+      }
+
+      this.handleConnection(jwt);
+      this.handleActions();
+    });
   }
 
   getConnection(): BehaviorSubject<Stomp> {
@@ -62,29 +72,30 @@ export class WsService {
     if (this.getConnection().getValue() !== null) {
       this.getConnection().getValue().disconnect();
     }
+    this.initFields();
     this.wsConnection.next(null);
   }
 
-  private handleConnection() {
-    this.jwtService.getJwt().subscribe((jwt) => {
-      if (jwt === null) {
-        console.error('JWT is not set, not connecting to websocket.');
-        this.disconnectWs();
-        return;
-      }
-      const ws = new SockJS(environment.apiUrl + '/ws', {transports: ['websocket']});
-      const stompClient = Stomp.over(ws);
-      stompClient.connect({jwt}, () => {
-        this.wsConnection.next(stompClient);
-      }, (e) => {
-        console.error(e);
-        this.disconnectWs();
-      });
+  private initFields() {
+    this.wsConnection = new BehaviorSubject<Stomp>(null);
+    this.commands = new BehaviorSubject<Stomp>([]);
+    this.commandSubscriptions = [];
+  }
+
+  private handleConnection(jwt: string) {
+    const ws = new SockJS(environment.apiUrl + '/ws', {transports: ['websocket']});
+    const stompClient = Stomp.over(ws);
+    stompClient.connect({jwt}, () => {
+      this.wsConnection.next(stompClient);
+    }, (e) => {
+      console.error(e);
+      this.disconnectWs();
     });
   }
 
   private handleActions(): void {
     this.getConnection().subscribe((con) => {
+      console.log('received ws con:', con);
       if (con === null) {
         return;
       }

@@ -4,6 +4,7 @@ import {BehaviorSubject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {UserChat} from '../../core/model/user-chat';
 import {WsMode} from '../../core/service/ws/ws-mode.model';
+import {JwtService} from '../../core/service/jwt.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class ChatConsumer {
 
   private userChats: BehaviorSubject<UserChat[]> = new BehaviorSubject<UserChat[]>([]);
 
-  constructor(private httpClient: HttpClient, private wsService: WsService) {
+  constructor(private httpClient: HttpClient, private wsService: WsService,
+              private jwtService: JwtService) {
     this.listenUpdates();
   }
 
@@ -25,6 +27,11 @@ export class ChatConsumer {
   }
 
   private listenUpdates() {
-    this.wsService.listen('chat', true, this.userChats);
+    this.jwtService.getJwt().subscribe((jwt) => {
+      if (jwt === null || jwt === undefined) {
+        return;
+      }
+      this.wsService.listen('chat', true, this.userChats);
+    });
   }
 }

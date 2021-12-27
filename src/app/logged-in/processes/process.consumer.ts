@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {WsService} from '../../core/service/ws/ws.service';
 import {Process} from '../../core/model/process';
 import {BehaviorSubject} from 'rxjs';
 import {WsMode} from '../../core/service/ws/ws-mode.model';
 import {Answer} from '../../core/model/answer';
+import {JwtService} from '../../core/service/jwt.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,10 @@ export class ProcessConsumer {
 
   private userProcesses: BehaviorSubject<Process[]> = new BehaviorSubject<Process[]>([]);
 
-  constructor(private httpClient: HttpClient, private wsService: WsService) {
+  constructor(private wsService: WsService, private jwtService: JwtService) {
+    jwtService.getJwt().subscribe((jwt) => {
+      console.log('received jwt val:', jwt);
+    });
     this.listenProcessesUpdates();
   }
 
@@ -60,7 +63,7 @@ export class ProcessConsumer {
   }
 
   updateQuestion(processId: number, questionId: number, name: string, questionTypeName: string,
-                 minVal: number, maxVal: number,  orderPosition: number) {
+                 minVal: number, maxVal: number, orderPosition: number) {
     this.wsService.publish(`process/rounds/current/question`, {
       processId,
       questionId,
@@ -83,6 +86,11 @@ export class ProcessConsumer {
   }
 
   private listenProcessesUpdates() {
-    this.wsService.listen('process/all', true, this.userProcesses);
+    this.jwtService.getJwt().subscribe((jwt) => {
+      if (jwt === null || jwt === undefined) {
+        return;
+      }
+      this.wsService.listen('process/all', true, this.userProcesses);
+    });
   }
 }

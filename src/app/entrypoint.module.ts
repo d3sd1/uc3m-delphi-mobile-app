@@ -16,6 +16,8 @@ import {LoggedOutModule} from './logged-out/logged-out.module';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {SplashScreenPage} from './splash-screen/splash-screen.page';
 import {NotificationService} from './core/service/notification.service';
+import {JwtService} from './core/service/jwt.service';
+import {WsService} from './core/service/ws/ws.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import {NotificationService} from './core/service/notification.service';
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     TranslateService,
     TranslateStore,
-    NotificationService
+    NotificationService,
+    JwtService,
+    WsService
   ],
   bootstrap: [EntrypointPage],
   exports: [

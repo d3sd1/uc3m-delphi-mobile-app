@@ -20,6 +20,7 @@ export class SingleProcessPage implements OnInit, OnDestroy {
   user: User;
   processesSubscription: Subscription;
   userSubscription: Subscription;
+  singleProcessFormSubscription: Subscription;
 
   singleProcessForm = new FormGroup({
     name: new FormControl(''),
@@ -50,6 +51,9 @@ export class SingleProcessPage implements OnInit, OnDestroy {
         if (this.process === undefined) {
           return;
         }
+        if (this.singleProcessFormSubscription && !this.singleProcessFormSubscription.closed) {
+          this.singleProcessFormSubscription.unsubscribe();
+        }
         if (this.process.name !== this.singleProcessForm.get('name').value) {
           this.singleProcessForm.get('name').setValue(this.process.name);
         }
@@ -59,8 +63,16 @@ export class SingleProcessPage implements OnInit, OnDestroy {
         if (this.process.objectives !== this.singleProcessForm.get('objectives').value) {
           this.singleProcessForm.get('objectives').setValue(this.process.objectives);
         }
-        this.singleProcessForm.valueChanges.pipe(
-          debounceTime(3000)).subscribe((formVals: any) => {
+        this.singleProcessFormSubscription = this.singleProcessForm.valueChanges.pipe(
+          debounceTime(1000),
+          distinctUntilChanged()
+        ).subscribe((formVals: any) => {
+          if (this.singleProcessForm.get('name') === formVals.name
+            && this.singleProcessForm.get('description') === formVals.description
+            && this.singleProcessForm.get('objectives') === formVals.objectives) {
+            return;
+          }
+          console.log('update basic fields');
           this.updateBasicFields(formVals.name, formVals.description, formVals.objectives);
         });
       });
@@ -69,6 +81,9 @@ export class SingleProcessPage implements OnInit, OnDestroy {
 
 
   isCoordinator(): boolean {
+    if (!this.user || !this.process) {
+      return false;
+    }
     return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
   }
 
@@ -80,6 +95,7 @@ export class SingleProcessPage implements OnInit, OnDestroy {
   }
 
   updateBasicFields(name: string, description: string, objectives: string) {
+    console.log('basic fields upd!!! :))');
     if (!this.isCoordinator()) {
       return;
     }
@@ -110,6 +126,9 @@ export class SingleProcessPage implements OnInit, OnDestroy {
     }
     if (!this.processesSubscription.closed) {
       this.processesSubscription.unsubscribe();
+    }
+    if (!this.singleProcessFormSubscription.closed) {
+      this.singleProcessFormSubscription.unsubscribe();
     }
     this.process = undefined;
     this.user = undefined;

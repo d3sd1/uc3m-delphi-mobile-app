@@ -22,8 +22,7 @@
 
   <ion-item>
     <ion-input [value]="this.process.pastRounds[roundIdx].name"
-               readonly
-               debounce="200"></ion-input>
+               readonly></ion-input>
   </ion-item>
   <div *ngIf="process.pastRounds[roundIdx].questions.length == 0" class="container">
     <strong>Sin preguntas</strong>

@@ -3,6 +3,7 @@ import {WsService} from '../../../../core/service/ws/ws.service';
 import {BehaviorSubject} from 'rxjs';
 import {WsMode} from '../../../../core/service/ws/ws-mode.model';
 import {User} from '../../../../core/model/user';
+import {JwtService} from '../../../../core/service/jwt.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class InvitationConsumer {
 
   private users: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
 
-  constructor(private wsService: WsService) {
+  constructor(private wsService: WsService, private jwtService: JwtService) {
     this.listenUpdates();
   }
 
@@ -36,7 +37,12 @@ export class InvitationConsumer {
    * @private
    */
   private listenUpdates() {
-    this.wsService.listen('invitation', false, this.users);
-    this.wsService.listen('invitation', true, this.users);
+    this.jwtService.getJwt().subscribe((jwt) => {
+      if (jwt === null || jwt === undefined) {
+        return;
+      }
+      this.wsService.listen('invitation', false, this.users);
+      this.wsService.listen('invitation', true, this.users);
+    });
   }
 }

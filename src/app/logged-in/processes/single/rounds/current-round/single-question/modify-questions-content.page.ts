@@ -9,6 +9,7 @@ import {ProcessConsumer} from '../../../../process.consumer';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../../../../../core/service/notification.service';
 import {FormBuilder, Validators} from '@angular/forms';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   selector: 'delphi-rounds',
@@ -36,6 +37,8 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
   categoriesForm = this.fb.group({
     maxSelectable: [1, [Validators.required]],
   });
+
+  private loading: HTMLIonLoadingElement;
 
 
   constructor(
@@ -69,6 +72,18 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
           if (this.question === undefined) {
             return;
           }
+          if (this.loading) {
+            this.loading.dismiss().then(null);
+          }
+
+          if (this.questionFormSubscription && !this.questionFormSubscription.closed) {
+            this.questionFormSubscription.unsubscribe();
+          }
+
+          if (this.categoriesFormSubscription && !this.categoriesFormSubscription.closed) {
+            this.categoriesFormSubscription.unsubscribe();
+          }
+
           if (this.question.name !== this.questionsForm.get('name').value) {
             this.questionsForm.get('name').setValue(this.question.name);
           }
@@ -96,17 +111,23 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
             this.questionsForm.get('orderPosition').setValue(this.question.orderPosition);
           }
 
-          this.questionFormSubscription = this.questionsForm.valueChanges.subscribe((formVals) => {
-            console.log('vals:', formVals);
+          this.questionFormSubscription = this.questionsForm.valueChanges.pipe(
+            debounceTime(1000),
+            distinctUntilChanged()
+          ).subscribe((formVals) => {
             if (formVals.minVal >= formVals.maxVal) {
               this.ns.showToast('La cota mínima debe ser menor que la cota máxima.');
               this.questionsForm.get('minVal').setValue(0);
               this.questionsForm.get('maxVal').setValue(10);
               return;
             }
+            this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
             this.updateQuestion(formVals.name, formVals.questionKind, formVals.minVal, formVals.maxVal, formVals.orderPosition);
           });
-          this.categoriesFormSubscription = this.categoriesForm.valueChanges.subscribe((formVals) => {
+          this.categoriesFormSubscription = this.categoriesForm.valueChanges.pipe(
+            debounceTime(1000),
+            distinctUntilChanged()
+          ).subscribe((formVals) => {
             this.updateQuestionCategories(formVals.maxSelectable);
           });
         });

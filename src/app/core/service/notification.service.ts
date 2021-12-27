@@ -54,7 +54,11 @@ export class NotificationService {
   }
 
   public removeAlert() {
-    this.ac.getTop().then((alert) => alert.dismiss());
+    this.ac.getTop().then((alert) => {
+      if (alert !== undefined) {
+        alert.dismiss();
+      }
+    });
   }
 
   public showLoading(message: string, duration = 2000): Promise<HTMLIonLoadingElement> {
