@@ -44,7 +44,7 @@ export class LoginPage implements OnInit, OnDestroy {
       if (user === null) {
         return;
       }
-      this.navCtrl.navigateForward('/logged-in').then(() => this.ngOnDestroy());
+      this.navCtrl.navigateForward('/logged-in').then(this.ngOnDestroy);
     });
   }
 

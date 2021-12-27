@@ -108,7 +108,7 @@ export class SingleProcessPage implements OnInit, OnDestroy {
       return;
     }
 
-    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/close').then(r => null);
+    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/close').then(this.ngOnDestroy);
   }
 
   participate() {
@@ -116,7 +116,7 @@ export class SingleProcessPage implements OnInit, OnDestroy {
       this.ns.showToast('El proceso no tiene la ronda actual abierta.');
       return;
     }
-    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/participate').then(r => null);
+    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/participate').then(this.ngOnDestroy);
   }
 
   ngOnDestroy(): void {

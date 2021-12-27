@@ -48,7 +48,7 @@ export class ClosePage implements OnInit, OnDestroy {
           const process = processes.find(p2 => p2.id === +params.id);
           // If process is finished, do not allow to stay on this page
           if (process.finished) {
-            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
           }
           this.process = process;
         });
@@ -62,7 +62,7 @@ export class ClosePage implements OnInit, OnDestroy {
       return;
     }
     this.processConsumer.closeProcess(this.process.id);
-    this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+    this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
   }
 
 

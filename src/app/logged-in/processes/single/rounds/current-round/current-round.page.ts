@@ -132,13 +132,13 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
         null, 'Debes introducir un nombre para la ronda');
     } else {
       this.processConsumer.startCurrentRound(this.process.id);
-      this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+      this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
     }
   }
 
   closeRound() {
     this.processConsumer.endCurrentRound(this.process.id);
-    this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+    this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
   }
 
   addQuestionStep1() {

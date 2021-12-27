@@ -55,7 +55,7 @@ export class ProcessesPage implements OnInit, OnDestroy {
   }
 
   editProcess(process) {
-    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + process.id).then(r => null);
+    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + process.id).then(this.ngOnDestroy);
   }
 
   /**

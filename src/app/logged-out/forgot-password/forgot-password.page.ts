@@ -59,11 +59,14 @@ export class ForgotPasswordPage implements OnDestroy {
 
   displaySuccess() {
     this.recoverForm.reset();
-    this.navCtrl.navigateBack('/logged-out/login').then(() => this.ns.showAlert('Contraseña reseteada',
-      'Se ha enviado tu nueva contraseña por correo electrónico.',
-      'Entendido',
-      null
-    ));
+    this.navCtrl.navigateBack('/logged-out/login').then(() => {
+      this.ns.showAlert('Contraseña reseteada',
+        'Se ha enviado tu nueva contraseña por correo electrónico.',
+        'Entendido',
+        null
+      );
+      this.ngOnDestroy();
+    });
   }
 
   displayError() {

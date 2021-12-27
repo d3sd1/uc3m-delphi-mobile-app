@@ -40,7 +40,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   recoverPassword() {
     this.userConsumer.doLogout();
-    this.navCtrl.navigateBack('/logged-out/forgot-password').then(null);
+    this.navCtrl.navigateBack('/logged-out/forgot-password').then(this.ngOnDestroy);
   }
 
   changeLanguage() {

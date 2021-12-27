@@ -243,7 +243,7 @@ export class ParticipatePage implements OnInit, OnDestroy {
       loading.present().then(() => {
         this.processConsumer.saveParticipation(this.process.id, this.answers);
         loading.dismiss().then(() => {
-          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(r => null);
+          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
         });
       });
     });
