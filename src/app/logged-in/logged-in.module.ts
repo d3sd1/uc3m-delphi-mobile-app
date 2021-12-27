@@ -16,19 +16,20 @@ import {HomePage} from './home.page';
 @NgModule({
   declarations: [
     OnboardingPage,
-    HomePage,
+    HomePage
   ],
-    imports: [
-        CommonModule,
-        LoggedInRoutingModule,
-        IonicModule,
-        FormsModule,
-        ProfilePageModule,
-        ProcessesPageModule,
-        ChatPageModule,
-        TranslateModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    CommonModule,
+    LoggedInRoutingModule,
+    IonicModule,
+    FormsModule,
+    ProfilePageModule,
+    ProcessesPageModule,
+    ChatPageModule,
+    TranslateModule,
+    ReactiveFormsModule
+  ],
+  exports: [],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

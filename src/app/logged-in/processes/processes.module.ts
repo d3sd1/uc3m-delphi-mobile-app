@@ -22,6 +22,8 @@ import {ViewFinishedRoundPage} from './single/rounds/finished/view-finished-roun
 import {RemainingExpertsPage} from './single/rounds/current-round/poll-status/remaining-experts.page';
 import {ViewStatisticsPage} from './single/rounds/finished/statistics/view-statistics-page.component';
 import {NgChartsModule} from 'ng2-charts';
+import {RadioCheckerPage} from '../../core/components/radio-checker/radio-checker.page';
+import {QuestionKindService} from '../../core/question-kind-service';
 
 @NgModule({
   imports: [
@@ -48,10 +50,12 @@ import {NgChartsModule} from 'ng2-charts';
     EmptyProcessesPage,
     ViewFinishedRoundPage,
     RemainingExpertsPage,
-    ViewStatisticsPage
+    ViewStatisticsPage,
+    RadioCheckerPage
   ],
   providers: [
-    Geolocation
+    Geolocation,
+    QuestionKindService
   ],
 
 })

@@ -1,0 +1,14 @@
+<ion-searchbar showCancelButton="focus" cancelButtonText="Cancelar" (ionChange)="search()"
+               [(ngModel)]="searchText"></ion-searchbar>
+<ion-list>
+  <ion-radio-group>
+    <ion-item *ngFor="let option of optionsFiltered" (click)="control.setValue(option.value)"
+              [class.item-radio-checked]="control.value === option.value">
+      <ion-label [class.item-radio-checked]="control.value === option.value"
+                 class="ion-text-wrap">{{option.text}}</ion-label>
+      <ion-radio [class.radio-checked]="control.value === option.value" slot="start"></ion-radio>
+    </ion-item>
+
+  </ion-radio-group>
+</ion-list>
+

@@ -42,7 +42,8 @@ export class NotificationService {
       header,
       subHeader,
       buttons,
-      inputs: []
+      inputs: [],
+      message
     };
     if (inputs !== null) {
       conf.inputs = inputs;

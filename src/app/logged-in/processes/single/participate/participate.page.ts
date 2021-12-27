@@ -10,6 +10,8 @@ import {ProcessConsumer} from '../../process.consumer';
 import {Round} from '../../../../core/model/round';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../../../core/service/notification.service';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {QuestionKindService} from '../../../../core/question-kind-service';
 
 @Component({
   selector: 'delphi-participate',
@@ -18,23 +20,29 @@ import {NotificationService} from '../../../../core/service/notification.service
 })
 export class ParticipatePage implements OnInit, OnDestroy {
   answers: Answer[];
+  idx;
 
-  currentQuestion;
-  currentQuestionValue: any;
   process: Process;
   currentUser: User;
   @ViewChild('participate') participateSlides: IonSlides;
   userSubscription: Subscription;
   processSubscription: Subscription;
+  answerForm: FormGroup;
 
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
+    public qks: QuestionKindService,
     private ns: NotificationService,
+    private fb: FormBuilder,
     private translate: TranslateService,
     private loadingCtrl: LoadingController,
     private userConsumer: UserConsumer,
     private processConsumer: ProcessConsumer) {
+  }
+
+  swipeNext() {
+    this.participateSlides.slideNext().then(null);
   }
 
   ngOnInit(): void {
@@ -55,81 +63,83 @@ export class ParticipatePage implements OnInit, OnDestroy {
           if (this.process === undefined) {
             return;
           }
-
-          this.process.currentRound.questions.forEach((q) => {
-            q.categories = [];
-          });
-
           if (this.process.currentRound && this.process.currentRound.id === undefined || !this.process.currentRound.started) {
             this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
           }
+          this.answerForm = new FormGroup({
+            currentAnswer: new FormControl('')
+          });
+
           this.orderQuestions();
           this.sortCategories(0);
-          console.log('current round questions are', this.process.currentRound.questions);
+          this.answers = [];
 
-          this.fillQuestionAnswers();
-          this.updateCurrentQuestionValue();
-          console.log('current question:', this.currentQuestion);
+          this.process.currentRound.questions.forEach((q, idx) => {
+            const a = new Answer();
+            a.question = q;
+            a.user = this.currentUser;
+            a.content = this.getPreviousParticipation(q.id);
+            this.answers[idx] = a;
+          });
+
+          this.idx = 0;
+          this.updateVal();
+          this.answerForm.get('currentAnswer').valueChanges.subscribe((val) => {
+            console.log('new val:!!', val);
+            this.answers[this.idx].content = val;
+            this.updateVal();
+          });
         });
       });
   }
 
-  fillQuestionAnswers() {
-    if (this.process
-      && this.process.currentRound
-      && this.process.currentRound.questions
-      && this.process.currentRound.questions.length <= 0) {
+  updateVal() {
+    const val = this.answers[this.idx].content;
+    if (val === this.answerForm.get('currentAnswer').value) {
       return;
     }
-    this.answers = [];
-    this.process.currentRound.questions.forEach((q, idx) => {
-      this.answers[idx] = new Answer();
-      this.answers[idx].question = q;
-      this.answers[idx].user = this.currentUser;
-      this.answers[idx].content = this.getPreviousParticipation(q.id);
-    });
+    this.answerForm.get('currentAnswer').setValue(val);
   }
 
-  updateCurrentQuestionValue() {
-    this.currentQuestionValue = this.answers[this.currentQuestion].content;
-  }
 
   advance() {
-    this.sortCategories(this.currentQuestion + 1);
-    const val = this.answers[this.currentQuestion].content;
+    this.sortCategories(this.idx + 1);
+    const val = this.answerForm.get('currentAnswer').value;
     if (val === null || val === undefined || val === -1 || val === '') {
       this.ns.showToast('Por favor responde la pregunta.');
       return;
     }
-    this.currentQuestion++;
-    this.updateCurrentQuestionValue();
-    this.participateSlides.slideNext();
+    this.participateSlides.slideNext().then(() => {
+      ++this.idx;
+      this.updateVal();
+    });
   }
 
   back() {
-    this.sortCategories(this.currentQuestion - 1);
-    this.currentQuestion--;
-    this.updateCurrentQuestionValue();
-    this.participateSlides.slidePrev();
+    this.sortCategories(this.idx - 1);
+    this.participateSlides.slidePrev().then(() => {
+      --this.idx;
+      this.updateVal();
+    });
   }
 
   finish() {
-    this.currentQuestion++;
+    this.idx++;
     this.ns.showAlert('Confirmar participación', '¿Estás seguro de que deseas enviar la participación?', {
-      text: 'Cancelar',
-      cssClass: 'secondary',
-      handler: () => {
-        this.currentQuestion = this.process.currentRound.questions.length - 1;
-        this.updateCurrentQuestionValue();
-        this.ns.removeAlert();
-      }
-    }, {
-      text: 'Enviar',
-      handler: () => {
-        this.ns.removeAlert();
-        this.saveParticipation();
-      }
-    });
+        text: 'Enviar',
+        handler: () => {
+          this.ns.removeAlert();
+          this.saveParticipation();
+        }
+      },
+      {
+        text: 'Cancelar',
+        cssClass: 'secondary',
+        handler: () => {
+          this.idx = this.process.currentRound.questions.length - 1;
+          this.ns.removeAlert();
+        }
+      });
   }
 
   getExpertAnswer(expert: User, round: Round, qId: number): Answer {
@@ -156,16 +166,12 @@ export class ParticipatePage implements OnInit, OnDestroy {
     });
   }
 
-  updateAnswer(currentQuestion, $event) {
-    this.answers[currentQuestion].content = $event.target.value;
-  }
-
-  addCatAnswer(currentQuestion, $event) {
+  addCatAnswer($event) {
     if (Array.isArray($event.target.value)) {
-      if ($event.target.value.length > this.answers[currentQuestion].question.maxSelectable) {
+      if ($event.target.value.length > this.answers[this.idx].question.maxSelectable) {
         $event.target.value = '';
         this.ns.showToast('Debes seleccionar menos del máximo de seleccionables para esta ronda: ' +
-          this.answers[currentQuestion].question.maxSelectable);
+          this.answers[this.idx].question.maxSelectable);
         return;
       }
       // TODO  this.answers[currentQuestion].content = JSON.stringify($event.target.value);
@@ -174,10 +180,10 @@ export class ParticipatePage implements OnInit, OnDestroy {
     }
   }
 
-  addCatPondAnswer(currentQuestion, $event, categoryId) {
+  addCatPondAnswer($event, categoryId) {
     let obj = {};
     try {
-      obj = JSON.parse(this.answers[currentQuestion].content);
+      obj = JSON.parse(this.answers[this.idx].content);
     } catch (e) {
       obj = {};
     }
@@ -229,8 +235,7 @@ export class ParticipatePage implements OnInit, OnDestroy {
     this.process = undefined;
     this.currentUser = undefined;
     this.answers = undefined;
-    this.currentQuestion = undefined;
-    this.currentQuestionValue = undefined;
+    this.idx = undefined;
     this.participateSlides.slideTo(0).then(r => null);
   }
 

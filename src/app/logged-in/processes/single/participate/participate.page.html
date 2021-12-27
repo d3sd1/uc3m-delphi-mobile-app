@@ -4,14 +4,14 @@
       <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id"
                        [routerLink]="'/logged-in/menu/processes/finished/' + process.id"
                        routerDirection="back"
-                       text="Volver"></ion-back-button>
+                       text="Cancelar"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="this.currentQuestion + 1 <= this.process.currentRound.questions.length">
-      Pregunta {{this.currentQuestion + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
-    <ion-title *ngIf="this.currentQuestion + 1 > this.process.currentRound.questions.length">Finalizar participación
+    <ion-title *ngIf="this.idx + 1 <= this.process.currentRound.questions.length">
+      Pregunta {{this.idx + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
+    <ion-title *ngIf="this.idx + 1 > this.process.currentRound.questions.length">Finalizar participación
     </ion-title>
-    <ion-progress-bar [buffer]="this.currentQuestion / this.process.currentRound.questions.length"
-                      value="{{this.currentQuestion / this.process.currentRound.questions.length}}"></ion-progress-bar>
+    <ion-progress-bar [buffer]="this.idx / this.process.currentRound.questions.length"
+                      value="{{this.idx / this.process.currentRound.questions.length}}"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
@@ -20,116 +20,72 @@
     <ion-slide *ngFor="let question of process.currentRound.questions">
       <div class="slide">
         <p>{{question.name}}</p>
-        <!-- Textarea in an item with a placeholder -->
-        <ion-item *ngIf="question.questionType.name === 'QUALITATIVE'">
-          <ion-textarea (ionChange)="updateAnswer(currentQuestion, $event)" [value]="currentQuestionValue"
-                        inputmode="text"
-                        placeholder="Introduce aquí tu respuesta"></ion-textarea>
-        </ion-item>
-        <div *ngIf="question.questionType.name === 'QUANTITATIVE'">
-          <ion-item>
-            <ion-range (ionChange)="updateAnswer(currentQuestion, $event)"
-                       [max]="question.maxVal"
-                       [min]="question.minVal" [value]="currentQuestionValue" color="primary"
-                       snaps
-                       step="1">
-              <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
-              <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
-            </ion-range>
+        <form [formGroup]="answerForm">
+
+          <ion-item *ngIf="question.questionType.name === 'QUALITATIVE'">
+            <ion-textarea formControlName="currentAnswer"
+                          inputmode="text"
+                          placeholder="Introduce aquí tu respuesta"></ion-textarea>
           </ion-item>
-        </div>
-        <div *ngIf="question.questionType.name === 'BOOLTYPE'">
-          <ion-list>
-            <ion-radio-group
-              (ionChange)="updateAnswer(currentQuestion, $event)"
-              [value]="currentQuestionValue">
-              <ion-item>
-                <ion-label class="ion-text-wrap">Sí</ion-label>
-                <ion-radio slot="start" value="1"></ion-radio>
-              </ion-item>
+          <div *ngIf="question.questionType.name === 'QUANTITATIVE'">
+            <ion-item>
+              <ion-range [max]="question.maxVal"
+                         [min]="question.minVal"
+                         formControlName="currentAnswer"
+                         color="primary"
+                         snaps
+                         step="1">
+                <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
+                <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
+              </ion-range>
+            </ion-item>
+          </div>
+          <div *ngIf="question.questionType.name === 'BOOLTYPE'">
+            <delphi-radio-checker [control]="answerForm.get('currentAnswer')" [options]="qks.getBooleanKinds()"></delphi-radio-checker>
+          </div>
+          <div *ngIf="question.questionType.name === 'CATLIKERT'">
+            <delphi-radio-checker [control]="answerForm.get('currentAnswer')" [options]="qks.getLikertKinds()"></delphi-radio-checker>
+          </div>
+          <div *ngIf="question.questionType.name === 'CATCUSTOM'">
+            <delphi-radio-checker [control]="answerForm.get('currentAnswer')" [options]="qks.mapCatsToKinds(question.categories)"></delphi-radio-checker>
+          </div>
+          <div *ngIf="question.questionType.name === 'CATMULTI'">
 
-              <ion-item>
-                <ion-label class="ion-text-wrap">No</ion-label>
-                <ion-radio slot="start" value="0"></ion-radio>
-              </ion-item>
-            </ion-radio-group>
-          </ion-list>
-        </div>
-        <div *ngIf="question.questionType.name === 'CATLIKERT'">
-          <ion-list>
-            <ion-radio-group (ionChange)="updateAnswer(currentQuestion, $event)"
-                             [value]="currentQuestionValue">
-              <ion-item>
-                <ion-label class="ion-text-wrap">Totalmente en desacuerdo</ion-label>
-                <ion-radio slot="start" value="1"></ion-radio>
-              </ion-item>
+            <p>Máximas selecciones habilitadas: {{question.maxSelectable}}</p>
 
-              <ion-item>
-                <ion-label class="ion-text-wrap">En desacuerdo</ion-label>
-                <ion-radio slot="start" value="2"></ion-radio>
-              </ion-item>
-              <ion-item>
-                <ion-label class="ion-text-wrap">Indiferente</ion-label>
-                <ion-radio slot="start" value="3"></ion-radio>
-              </ion-item>
-              <ion-item>
-                <ion-label class="ion-text-wrap">De acuerdo</ion-label>
-                <ion-radio slot="start" value="4"></ion-radio>
-              </ion-item>
-              <ion-item>
-                <ion-label class="ion-text-wrap">Totalmente de acuerdo</ion-label>
-                <ion-radio slot="start" value="5"></ion-radio>
-              </ion-item>
-            </ion-radio-group>
-          </ion-list>
-        </div>
-        <div *ngIf="question.questionType.name === 'CATCUSTOM'">
-          <ion-list>
-            <ion-radio-group (ionChange)="addCatAnswer(currentQuestion, $event)"
-                             [value]="currentQuestionValue">
+            <ion-item>
+              <ion-label class="ion-text-wrap">Categorías</ion-label>
+              <ion-select (ionChange)="addCatAnswer($event)"
+                          formControlName="currentAnswer"
+                          multiple="true">
+                <ion-select-option *ngFor="let category of question.categories" [value]="category.id"
+                                   class="show-text">{{category.catName}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+          <div *ngIf="question.categories && question.questionType.name === 'CATPOND'">
+            <p>Introduzca su ponderación entre 0 (puntuación más baja) y 10 (puntuación más alta).</p>
+            <ion-list>
               <ion-item *ngFor="let category of question.categories">
                 <ion-label class="ion-text-wrap">{{category.catName}}</ion-label>
-                <ion-radio [value]="category.id" slot="start"></ion-radio>
+                <ion-input (ionChange)="addCatPondAnswer($event, category.id)"
+                           max="10" min="0" placeholder="Ponderación entre 0 y 10" type="number"
+                           value="null"></ion-input>
               </ion-item>
-            </ion-radio-group>
-          </ion-list>
-        </div>
-        <div *ngIf="question.questionType.name === 'CATMULTI'">
-
-          <p>Máximas selecciones habilitadas: {{this.answers[currentQuestion].question.maxSelectable}}</p>
-          <ion-item>
-            <ion-label class="ion-text-wrap">Categorías</ion-label>
-            <ion-select (ionChange)="addCatAnswer(currentQuestion, $event)" [value]="currentQuestionValue"
-                        multiple="true">
-              <ion-select-option *ngFor="let category of question.categories" [value]="category.id"
-                                 class="show-text">{{category.catName}}</ion-select-option>
-            </ion-select>
-          </ion-item>
-
-
-        </div>
-        <div *ngIf="question.categories && question.questionType.name === 'CATPOND'">
-          <p>Introduzca su ponderación entre 0 (puntuación más baja) y 10 (puntuación más alta).</p>
-          <ion-list>
-            <ion-item *ngFor="let category of question.categories">
-              <ion-label class="ion-text-wrap">{{category.catName}}</ion-label>
-              <ion-input (ionChange)="addCatPondAnswer(currentQuestion, $event, category.id)"
-                         max="10" min="0" placeholder="Ponderación entre 0 y 10" type="number" value="null"></ion-input>
-            </ion-item>
-          </ion-list>
-        </div>
-
+            </ion-list>
+          </div>
+        </form>
       </div>
     </ion-slide>
   </ion-slides>
 </ion-content>
 <ion-footer *ngIf="process && process.currentRound && process.currentRound.questions">
   <ion-toolbar>
-    <ion-button (click)="back()" [disabled]="currentQuestion == 0" expand="full">Anterior</ion-button>
-    <ion-button (click)="advance()" *ngIf="currentQuestion < process.currentRound.questions.length - 1" expand="full">
+    <ion-button (click)="back()" [disabled]="idx == 0" expand="full">Anterior</ion-button>
+    <ion-button (click)="advance()" *ngIf="idx < process.currentRound.questions.length - 1" expand="full">
       Siguiente
     </ion-button>
-    <ion-button (click)="finish()" *ngIf="currentQuestion >= process.currentRound.questions.length - 1" expand="full">
+    <ion-button (click)="finish()" *ngIf="idx >= process.currentRound.questions.length - 1" expand="full">
       Finalizar
     </ion-button>
   </ion-toolbar>
