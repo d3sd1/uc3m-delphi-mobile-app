@@ -75,6 +75,7 @@ export class UserConsumer {
   private handleUser() {
     this.jwtService.getJwt().subscribe((jwt) => {
       if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
+        this.connectedUser.next(null);
         return;
       }
       this.wsService.listen('profile', true, this.connectedUser);

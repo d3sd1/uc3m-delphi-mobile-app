@@ -141,7 +141,7 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
               return;
             }
             if (formVals.options.length === 0) {
-              this.ns.showToast('Debes introducir al menos una categoría.');
+              this.ns.showAlert('Error', 'Debes introducir al menos una categoría.', 'OK');
               return;
             }
             if (formVals.maxSelectable !== prevMaxSelectable) {
@@ -163,7 +163,7 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
     }
 
     if (this.categoriesForm.get('options').value.some(co => co.catName.toLowerCase() === this.categoriesForm.get('tmpInput').value.toLowerCase())) {
-      this.ns.showToast('No se admiten categorías duplicadas.');
+      this.ns.showAlert('Error','No se admiten categorías duplicadas.', 'OK');
       this.categoriesForm.get('tmpInput').setValue('');
       return;
     }

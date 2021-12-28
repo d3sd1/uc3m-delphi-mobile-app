@@ -19,7 +19,6 @@ export class WsService {
   constructor(private jwtService: JwtService) {
     this.initFields();
     this.jwtService.getJwt().subscribe((jwt) => {
-      console.log('received jwt on ws:', jwt);
       if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
         console.error('JWT is not set, not connecting to websocket.');
         this.disconnectWs();
@@ -123,6 +122,7 @@ export class WsService {
           } else if (WsAction[cmd.wsAction] === 'SUBSCRIBE') {
             this.commandSubscriptions.push(con.subscribe((cmd.privateChannel ? '/private' : '') + '/ws/subscribe/' + cmd.channel, (message) => {
               const data = JSON.parse(message.body);
+              console.log('receiveD::!!!:!:', message);
               cmd.connected = true;
               if (cmd.sortFn) {
                 cmd.sortFn(data);

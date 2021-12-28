@@ -69,7 +69,7 @@ export class ParticipatePage implements OnInit, OnDestroy {
             this.answerFormSubscription.unsubscribe();
           }
           if (this.process.currentRound && this.process.currentRound.id === undefined || !this.process.currentRound.started) {
-            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
+            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(null);
           }
           this.answerForm = new FormGroup({
             currentAnswer: new FormControl('')
@@ -243,7 +243,7 @@ export class ParticipatePage implements OnInit, OnDestroy {
       loading.present().then(() => {
         this.processConsumer.saveParticipation(this.process.id, this.answers);
         loading.dismiss().then(() => {
-          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
+          this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(null);
         });
       });
     });

@@ -63,7 +63,7 @@ export class ClosePage implements OnInit, OnDestroy {
           }
           // If process is finished, do not allow to stay on this page
           if (this.process.finished) {
-            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(this.ngOnDestroy);
+            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(null);
           }
         });
       });
@@ -83,7 +83,7 @@ export class ClosePage implements OnInit, OnDestroy {
   closeProcess() {
     const conclusion = this.closeProcessForm.get('conclusion').value;
     if (conclusion === '' || !conclusion) {
-      this.ns.showToast('Debes introducir una conclusión');
+      this.ns.showAlert('Error', 'Debes introducir una conclusión', 'OK');
       return;
     }
     this.processConsumer.closeProcess(this.process.id, conclusion);

@@ -43,7 +43,7 @@ export class OnboardingPage implements OnInit, OnDestroy {
             return;
           }
           if (!user.needsOnboard) {
-            this.navCtrl.navigateForward('/logged-in/menu/processes/list').then(this.ngOnDestroy);
+            this.navCtrl.navigateForward('/logged-in/menu/processes/list').then(null);
           }
           this.onboardingForm.get('firstName').setValue('');
           this.onboardingForm.get('lastName').setValue('');

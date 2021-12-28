@@ -15,7 +15,7 @@ export class SplashScreenPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.navCtrl.navigateForward('/logged-out').then(this.ngOnDestroy);
+      this.navCtrl.navigateForward('/logged-out').then(null);
     }, this.loadTime);
   }
 

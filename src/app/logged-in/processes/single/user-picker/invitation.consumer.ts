@@ -39,6 +39,7 @@ export class InvitationConsumer {
   private listenUpdates() {
     this.jwtService.getJwt().subscribe((jwt) => {
       if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
+        this.users.next([]);
         return;
       }
       this.wsService.listen('invitation', false, this.users, this.sortUsers);

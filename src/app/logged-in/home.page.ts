@@ -118,7 +118,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   needsOnboard(u: User) {
     if (u.needsOnboard === true) {
-      this.navCtrl.navigateForward('/logged-in/onboarding').then(this.ngOnDestroy);
+      this.navCtrl.navigateForward('/logged-in/onboarding').then(null);
     }
   }
 

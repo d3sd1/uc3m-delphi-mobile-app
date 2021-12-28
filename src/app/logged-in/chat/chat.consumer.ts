@@ -30,6 +30,7 @@ export class ChatConsumer {
   private listenUpdates() {
     this.jwtService.getJwt().subscribe((jwt) => {
       if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
+        this.userChats.next([]);
         return;
       }
       this.wsService.listen('chat', true, this.userChats, (userChats) => {

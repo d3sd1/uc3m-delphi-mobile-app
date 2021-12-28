@@ -67,12 +67,12 @@ export class SingleProcessPage implements OnInit, OnDestroy {
           debounceTime(1000),
           distinctUntilChanged()
         ).subscribe((formVals: any) => {
-          if (this.singleProcessForm.get('name') === formVals.name
-            && this.singleProcessForm.get('description') === formVals.description
-            && this.singleProcessForm.get('objectives') === formVals.objectives) {
+          if (formVals.name === ''
+            || formVals.description === ''
+            || formVals.objectives === '') {
+            this.ns.showToast('Debes rellenar nombre, descripción y objetivos del proceso.');
             return;
           }
-          console.log('update basic fields');
           this.updateBasicFields(formVals.name, formVals.description, formVals.objectives);
         });
       });
@@ -104,19 +104,19 @@ export class SingleProcessPage implements OnInit, OnDestroy {
 
   addConclusion() {
     if (this.process.currentRound.started) {
-      this.ns.showToast('No se puede cerrar el proceso cuando hay una ronda en curso.');
+      this.ns.showAlert('Error', 'No se puede cerrar el proceso cuando hay una ronda en curso.', 'OK');
       return;
     }
 
-    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/close').then(this.ngOnDestroy);
+    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/close').then(null);
   }
 
   participate() {
     if (!this.process.currentRound.started) {
-      this.ns.showToast('El proceso no tiene la ronda actual abierta.');
+      this.ns.showAlert('Error', 'El proceso no tiene la ronda actual abierta.', 'OK');
       return;
     }
-    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/participate').then(this.ngOnDestroy);
+    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + this.process.id + '/participate').then(null);
   }
 
   ngOnDestroy(): void {

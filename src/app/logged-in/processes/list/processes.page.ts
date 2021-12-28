@@ -41,6 +41,7 @@ export class ProcessesPage implements OnInit, OnDestroy {
           }
           this.loadingProcesses = true;
           this.processes = processes;
+          console.log('proesses:', this.processes);
           this.filterProcesses();
           this.loadingProcesses = false;
         });
@@ -55,7 +56,7 @@ export class ProcessesPage implements OnInit, OnDestroy {
   }
 
   editProcess(process) {
-    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + process.id).then(this.ngOnDestroy);
+    this.navCtrl.navigateForward('/logged-in/menu/processes/finished/' + process.id).then(null);
   }
 
   /**
