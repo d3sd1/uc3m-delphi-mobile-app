@@ -126,6 +126,10 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
               this.questionsForm.get('maxVal').setValue(10);
               return;
             }
+            if (!formVals.name || formVals.name === '' || formVals.name.trim().length === 0) {
+              this.ns.showToast('Debes introducir el texto para la pregunta.');
+              return;
+            }
             this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
             this.updateQuestion(formVals.name, formVals.questionKind, formVals.minVal, formVals.maxVal, formVals.orderPosition);
           });
@@ -157,7 +161,8 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
   }
 
   addCategory() {
-    if (this.categoriesForm.get('tmpInput').value === '') {
+    if (this.categoriesForm.get('tmpInput').value === ''
+    || this.categoriesForm.get('tmpInput').value.trim().length === 0) {
       this.ns.showToast('Debes introducir un nombre para la categoría.');
       return;
     }
@@ -187,10 +192,6 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
 
 
   updateQuestion(name: string, questionKind: string, minVal: number, maxVal: number, orderPosition: number) {
-    if (this.question.name === '') {
-      this.ns.showToast('Debes introducir una pregunta.');
-      return;
-    }
     this.processConsumer.updateQuestion(this.process.id, this.question.id,
       name, questionKind, minVal, maxVal, orderPosition);
   }

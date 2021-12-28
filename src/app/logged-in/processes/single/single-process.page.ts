@@ -68,8 +68,11 @@ export class SingleProcessPage implements OnInit, OnDestroy {
           distinctUntilChanged()
         ).subscribe((formVals: any) => {
           if (formVals.name === ''
+          || formVals.name.trim().length === 0
             || formVals.description === ''
-            || formVals.objectives === '') {
+            || formVals.description.trim().length === 0
+            || formVals.objectives === ''
+          || formVals.objectives.trim().length === 0) {
             this.ns.showToast('Debes rellenar nombre, descripción y objetivos del proceso.');
             return;
           }

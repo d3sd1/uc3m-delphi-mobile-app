@@ -53,7 +53,9 @@ export class OnboardingPage implements OnInit, OnDestroy {
 
   setupAccount() {
     if (this.onboardingForm.get('firstName').value === ''
-      || this.onboardingForm.get('lastName').value === '') {
+      || this.onboardingForm.get('lastName').value === ''
+      || this.onboardingForm.get('firstName').value.trim().length === 0
+      || this.onboardingForm.get('lastName').value.trim().length === 0) {
       this.ns.showToast('Introduce tu nombre y apellidos.');
       return;
     }

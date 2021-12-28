@@ -98,7 +98,7 @@ export class ChatConversationPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   sendMessage() {
-    if (this.editorMsg === '') {
+    if (!this.editorMsg ||  this.editorMsg === '' || this.editorMsg.trim().length === 0) {
       return;
     }
     this.chatConsumer.writeToChat(this.oppositeUser.id, this.editorMsg);

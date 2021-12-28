@@ -70,7 +70,7 @@ export class ChatListPage implements OnInit, OnDestroy {
   filterList(evt) {
     const searchTerm = evt.srcElement.value;
 
-    if (!searchTerm || searchTerm === '') {
+    if (!searchTerm || searchTerm === '' || searchTerm.trim().length === 0) {
       this.userChats = this.userChatsOriginal;
       return;
     }
@@ -96,7 +96,7 @@ export class ChatListPage implements OnInit, OnDestroy {
   }
 
   removeNotificationsFromChat(chatId) {
-    // todo remove chat notification count from current chat and bottom
+
   }
 
 }

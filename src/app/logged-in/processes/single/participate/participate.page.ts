@@ -113,7 +113,8 @@ export class ParticipatePage implements OnInit, OnDestroy {
   advance() {
     this.sortCategories(this.idx + 1);
     const val = this.answerForm.get('currentAnswer').value;
-    if (val === null || val === undefined || val === -1 || val === '') {
+    if (val === null || val === undefined || val === -1 || val === ''
+    || val.trim().length === 0) {
       this.ns.showToast('Por favor responde la pregunta.');
       return;
     }

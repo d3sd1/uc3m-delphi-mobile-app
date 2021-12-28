@@ -100,7 +100,8 @@ export class ProcessesPage implements OnInit, OnDestroy {
     this.ns.showAlert('Crear proceso', null, {
       text: 'Ok',
       handler: (alertData) => {
-        if (!alertData || !alertData.name || !alertData.description || !alertData.objectives || alertData.name === '' || alertData.description === '' || alertData.objectives === '') {
+        if (!alertData || !alertData.name || !alertData.description || !alertData.objectives || alertData.name === '' || alertData.description === '' || alertData.objectives === ''
+        || alertData.name.trim().length === 0 || alertData.description.trim().length === 0 || alertData.objectives.trim().length === 0) {
           this.ns.removeAlert();
           this.ns.showAlert('Error', 'Debes indicar el nombre, la descripción y los objetivos del proceso.', 'OK');
         } else {

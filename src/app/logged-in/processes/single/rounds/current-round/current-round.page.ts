@@ -54,7 +54,7 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
           }
           this.process = processes.find(p2 => p2.id === +params.id);
           if (this.loading && this.redirect) {
-            this.loading.dismiss().then(() => this.navCtrl.navigateBack(this.redirect).then(this.ngOnDestroy));
+            this.loading.dismiss().then(() => this.navCtrl.navigateBack(this.redirect).then(null));
           } else if (this.loading) {
             this.loading.dismiss().then(null);
           }
@@ -72,11 +72,21 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
             debounceTime(1000),
             distinctUntilChanged()
           ).subscribe((formVals: any) => {
+            if (!formVals.name || formVals.name === ''
+              || formVals.name.trim().length === 0) {
+              this.ns.showToast('Debes introducir un nombre para la ronda actual.');
+              return;
+            }
+            if (new Date(this.currentRound.get('limitTime').value).getTime() - 3600000 <= Date.now()) {
+              this.ns.showToast('La fecha de finalización de la ronda debe permitir la participación durante al menos 1 hora después de la actual.');
+              this.currentTime = (new Date((Date.now() + 10800000))).toISOString();
+              this.currentRound.get('limitTime').reset(this.currentTime);
+              return;
+            }
             this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
             this.updateBasicData(formVals.limitTime, formVals.name);
           });
         });
-        this.currentTime = (new Date()).toISOString();
       });
   }
 
@@ -125,6 +135,11 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
     this.ns.showAlert('Crear pregunta', null, {
         text: 'Siguiente',
         handler: (alertData) => {
+          if (!alertData || !alertData.question || alertData.question === ''
+            || alertData.question.trim().length === 0) {
+            this.ns.showAlert('Error', 'El nombre de la pregunta no puede estar vacío.', 'OK');
+            return;
+          }
           this.addQuestionStep2(alertData.question);
           this.ns.removeAlert();
         }
@@ -231,6 +246,7 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
     this.process.currentRound.questions.forEach((question) => {
       if (question.name === null ||
         question.name === '' ||
+        question.name.trim().length === 0 ||
         question.name === undefined) {
         questionsMissing = true;
       }
@@ -239,17 +255,21 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
       this.process.currentRound.limitTime === undefined) {
       this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
         null, 'Debes asignarles una fecha de finalización a la ronda actual.');
+      return;
     } else if (this.process && (this.process.currentRound.questions === null ||
       this.process.currentRound.questions === undefined ||
       this.process.currentRound.questions.length === 0)) {
       this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
         null, 'Debes asignar preguntas a la ronda actual.');
+      return;
     } else if (questionsMissing) {
       this.ns.showAlert('Error', 'No se pudo enviar la pregunta', 'Resolver', null,
         null, 'Debe introducir una pregunta en todas ellas.');
-    } else if (this.process.currentRound.name === '') {
+      return;
+    } else if (this.process.currentRound.name === '' || this.process.currentRound.name.trim().length === 0) {
       this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
         null, 'Debes introducir un nombre para la ronda');
+      return;
     } else if (this.process.currentRound.questions.some(q =>
       (q.questionType.name === 'CATCUSTOM' && (!q.categories || q.categories.length === 0))
       || (q.questionType.name === 'CATPOND' && (!q.categories || q.categories.length === 0))
@@ -257,6 +277,10 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
     )) {
       this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
         null, 'Debes añadir categorías a todas las preguntas de tipo categoría.');
+      return;
+    } else if (new Date(this.currentRound.get('limitTime').value).getTime() - 3600000 <= Date.now()) {
+      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
+        null, 'La fecha de finalización de la ronda debe permitir la participación durante al menos 1 hora después de la actual.');
       return;
     }
 

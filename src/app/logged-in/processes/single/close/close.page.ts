@@ -82,7 +82,7 @@ export class ClosePage implements OnInit, OnDestroy {
 
   closeProcess() {
     const conclusion = this.closeProcessForm.get('conclusion').value;
-    if (conclusion === '' || !conclusion) {
+    if (!conclusion  || conclusion === '' || conclusion.trim().length === 0) {
       this.ns.showAlert('Error', 'Debes introducir una conclusión', 'OK');
       return;
     }
