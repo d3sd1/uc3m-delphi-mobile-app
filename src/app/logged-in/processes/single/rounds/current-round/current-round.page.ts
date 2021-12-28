@@ -58,6 +58,13 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
           } else if (this.loading) {
             this.loading.dismiss().then(null);
           }
+          if (this.process.currentRound.started || this.process.finished || !this.isCoordinator()) {
+            this.currentRound.get('limitTime').disable();
+            this.currentRound.get('name').disable();
+          } else {
+            this.currentRound.get('limitTime').enable();
+            this.currentRound.get('name').enable();
+          }
 
           if (this.curentRoundFormSubscription && !this.curentRoundFormSubscription.closed) {
             this.curentRoundFormSubscription.unsubscribe();
@@ -103,8 +110,12 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
     if (this.process.currentRound.questions[detail.to] === undefined) {
       return;
     }
-    this.processConsumer.reorderQuestion(this.process.id, this.process.currentRound.questions[detail.from].id,
-      detail.from, this.process.currentRound.questions[detail.to].id, detail.to);
+    this.ns.showLoading('Reordenando...', 0).then(l => {
+      this.loading = l;
+      this.processConsumer.reorderQuestion(this.process.id, this.process.currentRound.questions[detail.from].id,
+        detail.from, this.process.currentRound.questions[detail.to].id, detail.to);
+    });
+
   }
 
   deleteQuestion(questionIndex: number) {
@@ -132,6 +143,10 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
   }
 
   addQuestionStep1() {
+    if (this.process && this.process.currentRound && this.process.currentRound.questions && this.process.currentRound.questions.length >= 50) {
+      this.ns.showAlert('Error', 'Límite de preguntas alcanzado', null, 'Entendido', null, 'El máximo de preguntas por ronda está limitado a 50.');
+      return;
+    }
     this.ns.showAlert('Crear pregunta', null, {
         text: 'Siguiente',
         handler: (alertData) => {

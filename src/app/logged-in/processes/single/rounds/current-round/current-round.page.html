@@ -15,7 +15,6 @@
     <ion-item>
       <ion-label position="floating">Fecha de cierre</ion-label>
       <ion-datetime
-        [disabled]="process.currentRound.started || process.finished || !isCoordinator()"
         [min]="currentTime"
         display-format="MMM DD, YYYY HH:mm"
         formControlName="limitTime"
@@ -24,19 +23,21 @@
 
     <ion-item>
       <ion-label position="floating">Nombre de la ronda</ion-label>
-      <ion-input [disabled]="process.currentRound.started || process.finished || !isCoordinator()"
-                 debounce="1000"
+      <ion-input debounce="1000"
                  formControlName="name"
                  maxlength="50"></ion-input>
     </ion-item>
   </form>
-  <ion-item [disabled]="!process.currentRound.started"
+  <ion-item *ngIf="process.currentRound.started"
             [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/question/poll-status'"
             routerDirection="forward">
     <ion-label>Estado de la votación</ion-label>
     <ion-badge slot="end">{{process.currentRound.expertsRemaining.length}} expertos por votar
     </ion-badge>
   </ion-item>
+  <ion-button *ngIf="!process.currentRound.started" [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/participate'" routerDirection="forward" color="tertiary" expand="block" fill="outline">
+    Previsualizar
+  </ion-button>
   <ion-item-divider>Preguntas</ion-item-divider>
   <div *ngIf="process.currentRound.questions.length == 0" class="container">
     <strong>Sin preguntas</strong>

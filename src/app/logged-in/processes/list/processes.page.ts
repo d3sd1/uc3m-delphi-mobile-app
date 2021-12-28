@@ -39,7 +39,6 @@ export class ProcessesPage implements OnInit, OnDestroy {
           if (processes === null) {
             return;
           }
-          this.loadingProcesses = true;
           this.processes = processes;
           this.filterProcesses();
           this.loadingProcesses = false;
@@ -97,6 +96,10 @@ export class ProcessesPage implements OnInit, OnDestroy {
   }
 
   addProcess() {
+    if(this.processes.filter(p => this.isCoordinator(p) && !p.finished).length >= 5) {
+      this.ns.showAlert('Error', 'Límite de procesos alcanzado', null, 'Entendido', null, 'El límite de procesos activos como coordinador está limitado a 5 por usuario.');
+      return;
+    }
     this.ns.showAlert('Crear proceso', null, {
       text: 'Ok',
       handler: (alertData) => {

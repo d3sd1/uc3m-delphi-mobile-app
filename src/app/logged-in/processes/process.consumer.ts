@@ -76,6 +76,13 @@ export class ProcessConsumer {
     }, WsMode.UPDATE);
   }
 
+  deleteQuestion(processId: number, questionId: number) {
+    this.wsService.publish(`process/rounds/current/question`, {
+      processId,
+      questionId
+    }, WsMode.DELETE);
+  }
+
   reorderQuestion(processId: number, fromId: number, fromPosition: number, toId: number, toPosition: number) {
     this.wsService.publish(`process/rounds/current/question/reorder`, {
       processId,
@@ -165,11 +172,11 @@ export class ProcessConsumer {
 
 
   private sortQuestions(q1: Question, q2: Question) {
-    if (q1.id < q2.id) {
-      return 1;
-    }
-    if (q1.id > q2.id) {
+    if (q1.orderPosition < q2.orderPosition) {
       return -1;
+    }
+    if (q1.orderPosition > q2.orderPosition) {
+      return 1;
     }
     return 0;
   }

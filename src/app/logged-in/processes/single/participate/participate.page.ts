@@ -30,6 +30,7 @@ export class ParticipatePage implements OnInit, OnDestroy {
   processSubscription: Subscription;
   answerFormSubscription: Subscription;
   answerForm: FormGroup;
+  viewOnly: boolean;
 
   constructor(
     private navCtrl: NavController,
@@ -44,12 +45,15 @@ export class ParticipatePage implements OnInit, OnDestroy {
   }
 
   swipeNext() {
-    this.participateSlides.slideNext().then(null);
+    if (this.participateSlides) {
+      this.participateSlides.slideNext().then(null);
+    }
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
+        this.viewOnly = true;
         this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
           if (user === null) {
             return;
@@ -69,7 +73,7 @@ export class ParticipatePage implements OnInit, OnDestroy {
             this.answerFormSubscription.unsubscribe();
           }
           if (this.process.currentRound && this.process.currentRound.id === undefined || !this.process.currentRound.started) {
-            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(null);
+            this.viewOnly = true;
           }
           this.answerForm = new FormGroup({
             currentAnswer: new FormControl('')
@@ -93,7 +97,9 @@ export class ParticipatePage implements OnInit, OnDestroy {
             debounceTime(1000),
             distinctUntilChanged()
           ).subscribe((val) => {
-            console.log('new val:!!', val);
+            if (this.answers[this.idx].content === val) {
+              return;
+            }
             this.answers[this.idx].content = val;
             this.updateVal();
           });
@@ -113,8 +119,8 @@ export class ParticipatePage implements OnInit, OnDestroy {
   advance() {
     this.sortCategories(this.idx + 1);
     const val = this.answerForm.get('currentAnswer').value;
-    if (val === null || val === undefined || val === -1 || val === ''
-    || val.trim().length === 0) {
+    if ((val === null || val === undefined || val === -1 || val === ''
+      || (typeof val === 'string' && val.trim().length === 0)) && !this.viewOnly) {
       this.ns.showToast('Por favor responde la pregunta.');
       return;
     }
@@ -214,11 +220,13 @@ export class ParticipatePage implements OnInit, OnDestroy {
     this.currentUser = undefined;
     this.answers = undefined;
     this.idx = undefined;
-    this.participateSlides.slideTo(0).then(r => null);
+    if (this.participateSlides) {
+      this.participateSlides.slideTo(0).then(r => null);
+    }
   }
 
   private getPreviousParticipation(qId: number) {
-    if (this.currentUser === undefined || this.currentUser === null || this.process === null || this.process === undefined) {
+    if (!this.currentUser || !this.process || !this.process.currentRound || !this.process.currentRound.answers) {
       return;
     }
     return this.process.currentRound.answers.find(rr => rr.user.id === this.currentUser.id && rr.question.id === qId).content;

@@ -4,7 +4,7 @@
       <ion-back-button [defaultHref]="'/logged-in/menu/processes/finished/' + process.id"
                        [routerLink]="'/logged-in/menu/processes/finished/' + process.id"
                        routerDirection="back"
-                       text="Cancelar"></ion-back-button>
+                       [text]="this.viewOnly ? 'Volver al editor':'Cancelar'"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="this.idx + 1 <= this.process.currentRound.questions.length">
       Pregunta {{this.idx + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
@@ -89,7 +89,8 @@
     <ion-button (click)="advance()" *ngIf="idx < process.currentRound.questions.length - 1" expand="full">
       Siguiente
     </ion-button>
-    <ion-button (click)="finish()" *ngIf="idx >= process.currentRound.questions.length - 1" expand="full">
+    <ion-button [disabled]="this.viewOnly" (click)="finish()" *ngIf="idx >= process.currentRound.questions.length - 1"
+                expand="full">
       Finalizar
     </ion-button>
   </ion-toolbar>

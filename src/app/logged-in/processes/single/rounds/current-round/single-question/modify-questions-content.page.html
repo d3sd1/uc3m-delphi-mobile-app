@@ -15,8 +15,7 @@
   <form [formGroup]="questionsForm">
     <ion-item>
       <ion-label position="floating">Tipo de pregunta</ion-label>
-      <ion-select [disabled]="process.currentRound.started"
-                  formControlName="questionKind">
+      <ion-select formControlName="questionKind">
         <ion-select-option value="QUALITATIVE">Cualitativa</ion-select-option>
         <ion-select-option value="QUANTITATIVE">Cuantitativa</ion-select-option>
         <ion-select-option value="BOOLTYPE">Booleana</ion-select-option>
@@ -30,7 +29,6 @@
     <ion-item>
       <ion-label position="floating">Pregunta</ion-label>
       <ion-textarea
-        [disabled]="process.currentRound.started"
         debounce="1000"
         formControlName="name" maxlength="150"></ion-textarea>
     </ion-item>
@@ -51,7 +49,6 @@
       <ion-item>
         <ion-label position="floating">Cota mínima</ion-label>
         <ion-input
-          [disabled]="process.currentRound.started"
           formControlName="minVal"
           min="0"
           maxlength="10"
@@ -60,7 +57,6 @@
       <ion-item>
         <ion-label position="floating">Cota máxima</ion-label>
         <ion-input
-          [disabled]="process.currentRound.started"
           formControlName="maxVal"
           min="0"
           maxlength="10"
@@ -71,7 +67,8 @@
       <ion-range [max]="questionsForm.get('maxVal').value"
                  [min]="questionsForm.get('minVal').value"
                  [value]="questionsForm.get('maxVal').value / 2"
-                 color="primary" disabled="true" snaps="true" step="1" ticks="true">
+                 disabled="true"
+                 color="primary" snaps="true" step="1" ticks="true">
         <ion-icon color="danger" name="remove-circle-outline" slot="start"></ion-icon>
         <ion-icon color="success" name="add-circle-outline" slot="end"></ion-icon>
       </ion-range>
@@ -114,7 +111,6 @@
           <ion-label position="floating">Nombre de la categoría</ion-label>
           <ion-input
             maxlength="50"
-            [disabled]="process.currentRound.started"
             [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
         <ion-button (click)="addCategory()"
@@ -147,7 +143,6 @@
         <ion-item>
           <ion-label position="floating">Máximas selecciones</ion-label>
           <ion-input
-            [disabled]="process.currentRound.started"
             [formControl]="categoriesForm.get('maxSelectable')"
             debounce="1000"
             maxlength="10"
@@ -157,7 +152,6 @@
           <ion-label position="floating">Nombre de la categoría</ion-label>
           <ion-input
             maxlength="50"
-            [disabled]="process.currentRound.started"
             [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
         <ion-button (click)="addCategory()"
@@ -191,7 +185,6 @@
           <ion-label position="floating">Nombre de la categoría</ion-label>
           <ion-input
             maxlength="50"
-            [disabled]="process.currentRound.started"
             [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
         <ion-button (click)="addCategory()"
@@ -219,5 +212,12 @@
       </div>
     </form>
   </form>
+
+  <!-- fab placed to the (vertical) center and end -->
+  <ion-fab (click)="deleteConfirmation()" horizontal="end" slot="fixed" vertical="bottom">
+    <ion-fab-button>
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 

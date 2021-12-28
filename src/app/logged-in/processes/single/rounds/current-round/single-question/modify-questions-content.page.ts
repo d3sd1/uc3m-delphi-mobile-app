@@ -72,11 +72,17 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
             return;
           }
           this.question = this.process.currentRound.questions.find(q => q.id === +params.questionid);
-          if (this.question === undefined) {
+          if (!this.question) {
+            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id + '/question/list').then(null);
             return;
           }
           if (this.loading) {
             this.loading.dismiss().then(null);
+          }
+          if (this.process.currentRound.started) {
+            this.setupFormsEnabled(false);
+          } else {
+            this.setupFormsEnabled(true);
           }
           this.categoriesForm.get('options').setValue(this.question.categories);
           this.categoriesForm.get('maxSelectable').setValue(this.question.maxSelectable);
@@ -160,15 +166,39 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
       });
   }
 
+  setupFormsEnabled(active: boolean) {
+    if (active) {
+      this.questionsForm.get('name').enable();
+      this.questionsForm.get('questionKind').enable();
+      this.questionsForm.get('minVal').enable();
+      this.questionsForm.get('maxVal').enable();
+      this.questionsForm.get('orderPosition').enable();
+      this.questionsForm.get('categories').enable();
+      this.categoriesForm.get('maxSelectable').enable();
+      this.categoriesForm.get('maxSelectable').enable();
+      this.categoriesForm.get('tmpInput').enable();
+    } else {
+      this.questionsForm.get('name').disable();
+      this.questionsForm.get('questionKind').disable();
+      this.questionsForm.get('minVal').disable();
+      this.questionsForm.get('maxVal').disable();
+      this.questionsForm.get('orderPosition').disable();
+      this.questionsForm.get('categories').disable();
+      this.categoriesForm.get('maxSelectable').disable();
+      this.categoriesForm.get('maxSelectable').disable();
+      this.categoriesForm.get('tmpInput').disable();
+    }
+  }
+
   addCategory() {
     if (this.categoriesForm.get('tmpInput').value === ''
-    || this.categoriesForm.get('tmpInput').value.trim().length === 0) {
+      || this.categoriesForm.get('tmpInput').value.trim().length === 0) {
       this.ns.showToast('Debes introducir un nombre para la categoría.');
       return;
     }
 
     if (this.categoriesForm.get('options').value.some(co => co.catName.toLowerCase() === this.categoriesForm.get('tmpInput').value.toLowerCase())) {
-      this.ns.showAlert('Error','No se admiten categorías duplicadas.', 'OK');
+      this.ns.showAlert('Error', 'No se admiten categorías duplicadas.', 'OK');
       this.categoriesForm.get('tmpInput').setValue('');
       return;
     }
@@ -220,6 +250,28 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
     }
     this.ns.removeAlert();
   }
+
+  deleteConfirmation() {
+    this.ns.showAlert('Confirmación', '¿Seguro que deseas eliminar la pregunta?', 'Cancelar', {
+      text: 'Eliminar',
+      handler: () => {
+        this.ns.removeAlert();
+        this.removeQuestion();
+      }
+    }, null, 'Esta acción NO es revertible y se perderá dicha información.');
+  }
+
+  removeQuestion() {
+    if (!this.process || this.process.finished || !this.process.currentRound || this.process.currentRound.finished) {
+      this.ns.showAlert('Error', 'Proceso o ronda finalizado', 'OK', null, null, 'No puedes eliminar preguntas de un proceso o ronda finalizado.');
+    }
+
+    this.ns.showLoading('Eliminando pregunta...', 0).then(l => {
+      this.loading = l;
+      this.processConsumer.deleteQuestion(this.process.id, this.question.id);
+    });
+  }
+
 
 }
 
