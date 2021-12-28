@@ -24,7 +24,6 @@ export class RemainingExpertsPage implements OnInit, OnDestroy {
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    public alertController: AlertController,
     private httpClient: HttpClient,
     private processConsumer: ProcessConsumer,
     private userConsumer: UserConsumer) {
@@ -44,7 +43,6 @@ export class RemainingExpertsPage implements OnInit, OnDestroy {
             return;
           }
           this.process = processes.find(p2 => p2.id === +params.id);
-          this.orderQuestions();
         });
       });
   }
@@ -59,18 +57,6 @@ export class RemainingExpertsPage implements OnInit, OnDestroy {
     this.process = undefined;
     this.user = undefined;
     this.currentTime = undefined;
-  }
-
-  private orderQuestions() {
-    this.process.currentRound.questions.sort((n1, n2) => {
-      if (n1.orderPosition < n2.orderPosition) {
-        return -1;
-      }
-      if (n1.orderPosition > n2.orderPosition) {
-        return 1;
-      }
-      return 0;
-    });
   }
 
 

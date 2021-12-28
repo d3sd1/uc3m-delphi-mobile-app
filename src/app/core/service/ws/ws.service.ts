@@ -46,12 +46,13 @@ export class WsService {
     this.commands.next(a);
   }
 
-  listen(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>) {
+  listen(channel: string, privateChannel: boolean, subject: BehaviorSubject<any>, sortFn = null) {
     const wsCommand = new WsCommand();
     wsCommand.wsAction = WsAction.SUBSCRIBE;
     wsCommand.channel = channel;
     wsCommand.privateChannel = privateChannel;
     wsCommand.subject = subject;
+    wsCommand.sortFn = sortFn;
     const a = this.commands.getValue();
     a.push(wsCommand);
     this.commands.next(a);
@@ -123,6 +124,9 @@ export class WsService {
             this.commandSubscriptions.push(con.subscribe((cmd.privateChannel ? '/private' : '') + '/ws/subscribe/' + cmd.channel, (message) => {
               const data = JSON.parse(message.body);
               cmd.connected = true;
+              if (cmd.sortFn) {
+                cmd.sortFn(data);
+              }
               cmd.subject.next(data);
             }));
           }

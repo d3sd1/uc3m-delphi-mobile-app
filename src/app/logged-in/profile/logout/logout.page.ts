@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {IonSlides, NavController} from '@ionic/angular';
 import {UserConsumer} from '../../user.consumer';
 import {NotificationService} from '../../../core/service/notification.service';
 import {ActivatedRoute} from '@angular/router';
@@ -9,7 +9,8 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './logout.page.html',
   styleUrls: ['./logout.page.scss'],
 })
-export class LogoutPage implements OnInit {
+export class LogoutPage implements OnInit, OnDestroy {
+  @ViewChild('logoutSlider') logoutSlider: IonSlides;
 
   constructor(private userConsumer: UserConsumer, private navCtrl: NavController, private ns: NotificationService, private route: ActivatedRoute) {
   }
@@ -21,5 +22,11 @@ export class LogoutPage implements OnInit {
       }, 3000);
     });
   }
+
+  ngOnDestroy(): void {
+
+
+  }
+
 
 }

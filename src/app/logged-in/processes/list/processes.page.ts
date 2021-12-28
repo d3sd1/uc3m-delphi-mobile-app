@@ -87,15 +87,6 @@ export class ProcessesPage implements OnInit, OnDestroy {
         this.filteredProcesses.push(process);
       }
     });
-    this.filteredProcesses.sort((a, b) => {
-      if (a.modifiedDate < b.modifiedDate) {
-        return 1;
-      }
-      if (a.modifiedDate > b.modifiedDate) {
-        return -1;
-      }
-      return 0;
-    });
   }
 
   isCoordinator(process: Process): boolean {

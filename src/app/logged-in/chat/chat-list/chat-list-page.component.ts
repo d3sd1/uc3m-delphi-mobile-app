@@ -70,17 +70,18 @@ export class ChatListPage implements OnInit, OnDestroy {
   filterList(evt) {
     const searchTerm = evt.srcElement.value;
 
-    if (!searchTerm) {
+    if (!searchTerm || searchTerm === '') {
+      this.userChats = this.userChatsOriginal;
       return;
     }
 
-    return this.userChats = this.userChatsOriginal.filter((userChat) => {
-      return userChat.user1.name.includes(searchTerm)
-        || userChat.user1.surnames.includes(searchTerm)
-        || userChat.user1.email.includes(searchTerm)
-        || userChat.user2.name.includes(searchTerm)
-        || userChat.user2.surnames.includes(searchTerm)
-        || userChat.user2.email.includes(searchTerm);
+    this.userChats = this.userChatsOriginal.filter((userChat) => {
+      return userChat.user1.name.toLowerCase().includes(searchTerm.toLowerCase())
+        || userChat.user1.surnames.toLowerCase().includes(searchTerm.toLowerCase())
+        || userChat.user1.email.toLowerCase().includes(searchTerm.toLowerCase())
+        || userChat.user2.name.toLowerCase().includes(searchTerm.toLowerCase())
+        || userChat.user2.surnames.toLowerCase().includes(searchTerm.toLowerCase())
+        || userChat.user2.email.toLowerCase().includes(searchTerm.toLowerCase());
     });
   }
 

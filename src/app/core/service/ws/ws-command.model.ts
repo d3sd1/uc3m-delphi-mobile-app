@@ -10,4 +10,5 @@ export class WsCommand {
   mode: WsMode;
   subject: BehaviorSubject<any>;
   connected = false;
+  sortFn = undefined;
 }

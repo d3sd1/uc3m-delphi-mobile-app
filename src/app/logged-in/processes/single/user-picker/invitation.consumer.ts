@@ -41,8 +41,20 @@ export class InvitationConsumer {
       if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
         return;
       }
-      this.wsService.listen('invitation', false, this.users);
-      this.wsService.listen('invitation', true, this.users);
+      this.wsService.listen('invitation', false, this.users, this.sortUsers);
+      this.wsService.listen('invitation', true, this.users, this.sortUsers);
+    });
+  }
+
+  private sortUsers(users) {
+    // sort messages for each chat
+    users.sort((u1: User, u2: User) => {
+      if (!u1) {
+        return -1;
+      } else if (u2) {
+        return 1;
+      }
+      return u1.name.localeCompare(u2.name);
     });
   }
 }

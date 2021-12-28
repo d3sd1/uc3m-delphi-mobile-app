@@ -15,8 +15,8 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content *ngIf="chat && oppositeUser">
-  <div class="message-wrap">
+<ion-content>
+  <div class="message-wrap" *ngIf="chat && oppositeUser">
     <div *ngFor="let msg of chat.messages"
          [class.left]=" msg.user.id !== user.id "
          [class.right]=" msg.user.id === user.id "
@@ -54,7 +54,8 @@
           placeholder="Introduce tu mensaje..."></ion-input>
       </form>
     </ion-item>
-    <ion-button (click)="sendMessage()" color="primary" fill="clear" slot="end">
+    <ion-button (click)="sendMessage()" color="primary" fill="clear" slot="end"
+                [disabled]="!editorMsg || editorMsg.length === 0">
       <ion-icon name="send-outline" slot="end"></ion-icon>
     </ion-button>
   </div>

@@ -12,6 +12,9 @@ import {NotificationService} from '../../core/service/notification.service';
 export class ForgotPasswordPage implements OnDestroy {
   recoverForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
+    code: ['', []],
+    newPass: ['', []],
+    newPassRep: ['', []],
   });
 
   constructor(private userConsumer: UserConsumer,
@@ -38,18 +41,64 @@ export class ForgotPasswordPage implements OnDestroy {
             onInput: (ev) => {
               const code = (ev.target as HTMLInputElement).value;
               if (code.length === 6) {
-                this.ns.showLoading('Cargando...').then((loading) => {
-                  this.userConsumer.resetPassword(this.recoverForm.get('email').value, +code).then(() => {
-                    loading.dismiss().then(null);
-                    this.ns.removeAlert();
-                    this.displaySuccess();
-                  }, () => {
-                    loading.dismiss().then(null);
-                    this.ns.removeAlert();
-                    this.displayError();
-                  });
-                });
+                this.recoverForm.get('code').setValue(code);
+                this.ns.removeAlert();
+                this.setNewPassword();
               }
+            },
+          },
+        },
+      ]
+    );
+  }
+
+  setNewPassword() {
+    this.ns.showAlert(
+      'Nueva contraseña',
+      'Introduce tu nueva contraseña',
+      {
+        text: 'Confirmar',
+        handler: () => {
+          if (this.recoverForm.get('newPass').value !== this.recoverForm.get('newPassRep').value) {
+            this.ns.showToast('Las nuevas contraseñas no coinciden.');
+            this.recoverForm.get('newPass').setValue('');
+            this.recoverForm.get('newPassRep').setValue('');
+            return;
+          }
+          this.ns.showLoading('Cargando...').then((loading) => {
+            this.userConsumer.resetPassword(this.recoverForm.get('email').value, +this.recoverForm.get('code').value, this.recoverForm.get('newPass').value, this.recoverForm.get('newPassRep').value).then(() => {
+              loading.dismiss().then(null);
+              this.ns.removeAlert();
+              this.displaySuccess();
+            }, () => {
+              loading.dismiss().then(null);
+              this.ns.removeAlert();
+              this.displayError();
+            });
+          });
+        }
+      },
+      'Cancelar',
+      [
+        {
+          type: 'password',
+          placeholder: 'Nueva contraseña',
+          attributes: {
+            maxlength: 50,
+            autoFocus: true,
+            onInput: (ev) => {
+              this.recoverForm.get('newPass').setValue((ev.target as HTMLInputElement).value);
+            },
+          },
+        },
+        {
+          type: 'password',
+          placeholder: 'Repite la nueva contraseña',
+          attributes: {
+            maxlength: 50,
+            autoFocus: true,
+            onInput: (ev) => {
+              this.recoverForm.get('newPassRep').setValue((ev.target as HTMLInputElement).value);
             },
           },
         },
@@ -61,7 +110,7 @@ export class ForgotPasswordPage implements OnDestroy {
     this.recoverForm.reset();
     this.navCtrl.navigateBack('/logged-out/login').then(() => {
       this.ns.showAlert('Contraseña reseteada',
-        'Se ha enviado tu nueva contraseña por correo electrónico.',
+        'Ya puedes usar tu nueva contraseña para conectarte.',
         'Entendido',
         null
       );
@@ -87,7 +136,9 @@ export class ForgotPasswordPage implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.recoverForm.reset();
+    if(this.recoverForm) {
+      this.recoverForm.reset();
+    }
   }
 
 

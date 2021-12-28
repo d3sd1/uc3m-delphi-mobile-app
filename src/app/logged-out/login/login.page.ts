@@ -34,17 +34,13 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
+        if (user === null) {
+          return;
+        }
+        this.navCtrl.navigateForward('/logged-in').then(this.ngOnDestroy);
+      });
       this.ns.removeAlert();
-      this.redirectHomeIfConnected();
-    });
-  }
-
-  redirectHomeIfConnected() {
-    this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
-      if (user === null) {
-        return;
-      }
-      this.navCtrl.navigateForward('/logged-in').then(this.ngOnDestroy);
     });
   }
 
@@ -57,12 +53,17 @@ export class LoginPage implements OnInit, OnDestroy {
       });
     }).catch((errMessage: string) => {
       this.ns.showToast(errMessage);
+      this.loginForm.get('password').setValue('');
     });
   }
 
   ngOnDestroy(): void {
-    this.loginForm.reset();
-    this.userSubscription.unsubscribe();
+    if (this.userSubscription && !this.userSubscription.closed) {
+      this.userSubscription.unsubscribe();
+    }
+    if (this.loginForm) {
+      this.loginForm.reset();
+    }
   }
 
 }

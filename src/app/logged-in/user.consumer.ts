@@ -28,8 +28,8 @@ export class UserConsumer {
     return this.http.put<void>(environment.apiUrl + '/password/recover', {email}).toPromise();
   }
 
-  resetPassword(email, code) {
-    return this.http.put(environment.apiUrl + '/password/reset', {email, code}).toPromise();
+  resetPassword(email: string, code: number, newPass: string, newPassRep: string) {
+    return this.http.put(environment.apiUrl + '/password/reset', {email, code, newPass, newPassRep}).toPromise();
   }
 
   updateUserOnboarding(name: string, surnames: string) {
@@ -77,7 +77,6 @@ export class UserConsumer {
       if (jwt === null || jwt === undefined || jwt === '' || jwt === 'null') {
         return;
       }
-      console.log('handle new user!! ;)');
       this.wsService.listen('profile', true, this.connectedUser);
     });
   }

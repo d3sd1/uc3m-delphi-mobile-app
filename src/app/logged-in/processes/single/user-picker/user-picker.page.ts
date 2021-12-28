@@ -58,7 +58,7 @@ export class UserPickerPage implements OnInit, OnDestroy {
       this.invitationConsumer.getUsers().subscribe((users) => {
         if (users === null) {
           return;
-        }
+        } 
         this.searchableUsers = users;
       });
     });
@@ -136,6 +136,9 @@ export class UserPickerPage implements OnInit, OnDestroy {
     }
     if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
+    }
+    if (this.loading) {
+      this.loading.dismiss().then(() => this.loading = undefined);
     }
   }
 

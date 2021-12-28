@@ -15,15 +15,15 @@ import {FormBuilder, Validators} from '@angular/forms';
 export class OnboardingPage implements OnInit, OnDestroy {
 
   onboardingForm = this.fb.group({
-    firstName: ['', Validators.required, Validators.maxLength(15)],
-    lastName: ['', Validators.required, Validators.maxLength(15)],
+    firstName: ['', [Validators.required, Validators.maxLength(15)]],
+    lastName: ['', [Validators.required, Validators.maxLength(15)]],
   });
 
   userSubscription: Subscription;
   routeSubscription: Subscription;
   processSubscription: Subscription;
 
-  @ViewChild('mySlider') slides: IonSlides;
+  @ViewChild('onboardingSlides') onboardingSlides: IonSlides;
 
   constructor(private storage: Storage,
               private ns: NotificationService,
@@ -43,7 +43,7 @@ export class OnboardingPage implements OnInit, OnDestroy {
             return;
           }
           if (!user.needsOnboard) {
-            this.navCtrl.navigateForward('/logged-in/menu/processes/current-round').then(this.ngOnDestroy);
+            this.navCtrl.navigateForward('/logged-in/menu/processes/list').then(this.ngOnDestroy);
           }
           this.onboardingForm.get('firstName').setValue('');
           this.onboardingForm.get('lastName').setValue('');
@@ -57,11 +57,15 @@ export class OnboardingPage implements OnInit, OnDestroy {
       this.ns.showToast('Introduce tu nombre y apellidos.');
       return;
     }
-    this.slides.slideNext().then(null);
+    if (this.onboardingSlides) {
+      this.onboardingSlides.slideNext().then(null);
+    }
   }
 
   swipeNext() {
-    this.slides.slideNext().then(null);
+    if (this.onboardingSlides) {
+      this.onboardingSlides.slideNext().then(null);
+    }
   }
 
   endSwiper() {
@@ -69,8 +73,6 @@ export class OnboardingPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.slides.slideTo(0).then(r => null);
-
     if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
@@ -79,6 +81,9 @@ export class OnboardingPage implements OnInit, OnDestroy {
     }
     if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
+    }
+    if (this.onboardingForm) {
+      this.onboardingForm.reset();
     }
   }
 

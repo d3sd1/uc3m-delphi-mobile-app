@@ -44,24 +44,11 @@ export class ViewRoundsPage implements OnInit, OnDestroy {
       });
   }
 
-
-  sortRounds() {
-    this.process.currentRound.questions.sort((a, b) => {
-      if (a.orderPosition < b.orderPosition) {
-        return -1;
-      }
-      if (a.orderPosition > b.orderPosition) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
   ngOnDestroy(): void {
     if (this.processSubscription && !this.processSubscription.closed) {
       this.processSubscription.unsubscribe();
     }
-    if (this.userSubscription.closed && !this.userSubscription.closed) {
+    if (this.userSubscription && !this.userSubscription.closed) {
       this.userSubscription.unsubscribe();
     }
     this.process = undefined;

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {IonContent} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {UserChat} from '../../../core/model/user-chat';
@@ -14,7 +14,7 @@ import {ChatMessage} from '../../../core/model/chat-message';
   templateUrl: './chat-conversation-page.component.html',
   styleUrls: ['./chat-conversation-page.component.scss'],
 })
-export class ChatConversationPage implements OnInit, OnDestroy {
+export class ChatConversationPage implements OnInit, AfterViewInit, OnDestroy {
   chat: UserChat;
   chats: UserChat[];
   user: User;
@@ -66,19 +66,6 @@ export class ChatConversationPage implements OnInit, OnDestroy {
       });
   }
 
-  sortMessages() {
-    this.chat.messages.sort((chatMessage1: ChatMessage, chatMessage2: ChatMessage) => {
-      let pos = 0;
-      if (chatMessage1.timestamp < chatMessage2.timestamp) {
-        pos = -1;
-      } else if (chatMessage1.timestamp > chatMessage2.timestamp) {
-        pos = 1;
-      }
-      return pos;
-    });
-    this.scrollToBottom();
-  }
-
   ngOnDestroy(): void {
     this.chat = undefined;
     this.chats = undefined;
@@ -99,7 +86,9 @@ export class ChatConversationPage implements OnInit, OnDestroy {
   }
 
   scrollToBottom() {
-    this.chatDisplay.scrollToBottom(300).then(r => null);
+    if (this.chatDisplay) {
+      this.chatDisplay.scrollToBottom(300).then(r => null);
+    }
   }
 
   checkEnterKey(keyCode) {
@@ -138,8 +127,16 @@ export class ChatConversationPage implements OnInit, OnDestroy {
         return true;
       }
     });
-    this.sortMessages();
     this.scrollToBottom();
   }
+
+  ngAfterViewInit(): void {
+    this.scrollToBottom();
+    this.route.params.subscribe(
+      params => {
+        this.scrollToBottom();
+      });
+  }
+
 
 }

@@ -75,7 +75,6 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
             this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
             this.updateBasicData(formVals.limitTime, formVals.name);
           });
-          this.orderQuestions();
         });
         this.currentTime = (new Date()).toISOString();
       });
@@ -107,43 +106,11 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
   }
 
   startRound() {
-    let questionsMissing = false;
-    this.process.currentRound.questions.forEach((question) => {
-      if (question.name === null ||
-        question.name === '' ||
-        question.name === undefined) {
-        questionsMissing = true;
-      }
+    this.processConsumer.startCurrentRound(this.process.id);
+    this.ns.showLoading('Abriendo ronda...', 0).then(l => {
+      this.redirect = '/logged-in/menu/processes/finished/' + this.process.id;
+      this.loading = l;
     });
-    if (this.process.currentRound.limitTime === null ||
-      this.process.currentRound.limitTime === undefined) {
-      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
-        null, 'Debes asignarles una fecha de finalización a la ronda actual.');
-    } else if (this.process && (this.process.currentRound.questions === null ||
-      this.process.currentRound.questions === undefined ||
-      this.process.currentRound.questions.length === 0)) {
-      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
-        null, 'Debes asignar preguntas a la ronda actual.');
-    } else if (questionsMissing) {
-      this.ns.showAlert('Error', 'No se pudo enviar la pregunta', 'Resolver', null,
-        null, 'Debe introducir una pregunta en todas ellas.');
-    } else if (this.process.currentRound.name === '') {
-      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
-        null, 'Debes introducir un nombre para la ronda');
-    } else if (this.process.currentRound.questions.some(q =>
-      (q.questionType.name === 'CATCUSTOM' && (!q.categories || q.categories.length === 0))
-      || (q.questionType.name === 'CATPOND' && (!q.categories || q.categories.length === 0))
-      || (q.questionType.name === 'CATMULTI' && (!q.categories || q.categories.length === 0))
-    )) {
-      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
-        null, 'Debes añadir categorías a todas las preguntas de tipo categoría.');
-    } else {
-      this.processConsumer.startCurrentRound(this.process.id);
-      this.ns.showLoading('Abriendo ronda...', 0).then(l => {
-        this.redirect = '/logged-in/menu/processes/finished/' + this.process.id;
-        this.loading = l;
-      });
-    }
   }
 
   closeRound() {
@@ -260,6 +227,39 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
   }
 
   startRoundConfirmation() {
+    let questionsMissing = false;
+    this.process.currentRound.questions.forEach((question) => {
+      if (question.name === null ||
+        question.name === '' ||
+        question.name === undefined) {
+        questionsMissing = true;
+      }
+    });
+    if (this.process.currentRound.limitTime === null ||
+      this.process.currentRound.limitTime === undefined) {
+      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
+        null, 'Debes asignarles una fecha de finalización a la ronda actual.');
+    } else if (this.process && (this.process.currentRound.questions === null ||
+      this.process.currentRound.questions === undefined ||
+      this.process.currentRound.questions.length === 0)) {
+      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
+        null, 'Debes asignar preguntas a la ronda actual.');
+    } else if (questionsMissing) {
+      this.ns.showAlert('Error', 'No se pudo enviar la pregunta', 'Resolver', null,
+        null, 'Debe introducir una pregunta en todas ellas.');
+    } else if (this.process.currentRound.name === '') {
+      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
+        null, 'Debes introducir un nombre para la ronda');
+    } else if (this.process.currentRound.questions.some(q =>
+      (q.questionType.name === 'CATCUSTOM' && (!q.categories || q.categories.length === 0))
+      || (q.questionType.name === 'CATPOND' && (!q.categories || q.categories.length === 0))
+      || (q.questionType.name === 'CATMULTI' && (!q.categories || q.categories.length === 0))
+    )) {
+      this.ns.showAlert('Error', 'No se pudo enviar la ronda', 'Resolver', null,
+        null, 'Debes añadir categorías a todas las preguntas de tipo categoría.');
+      return;
+    }
+
     this.ns.showAlert('Confirmación', '¿Seguro que deseas abrir la ronda?', {
       text: 'Abrir',
       handler: () => {
@@ -277,17 +277,5 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
         this.closeRound();
       }
     }, 'Cancelar', null, 'Una vez cerrada los expertos no podrán votar.');
-  }
-
-  private orderQuestions() {
-    this.process.currentRound.questions.sort((n1, n2) => {
-      if (n1.orderPosition < n2.orderPosition) {
-        return -1;
-      }
-      if (n1.orderPosition > n2.orderPosition) {
-        return 1;
-      }
-      return 0;
-    });
   }
 }
