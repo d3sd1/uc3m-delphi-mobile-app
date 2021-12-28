@@ -48,6 +48,8 @@
     <ion-item>
       <form (ngSubmit)="sendMessage()">
         <ion-input
+          maxlength="500"
+          minlength="1"
           (focusin)="onFocus()"
           [(ngModel)]="editorMsg"
           name="chat_message"

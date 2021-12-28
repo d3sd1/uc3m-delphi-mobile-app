@@ -25,6 +25,7 @@
           <ion-item *ngIf="question.questionType.name === 'QUALITATIVE'">
             <ion-textarea formControlName="currentAnswer"
                           inputmode="text"
+                          maxlength="500"
                           placeholder="Introduce aquí tu respuesta"></ion-textarea>
           </ion-item>
           <div *ngIf="question.questionType.name === 'QUANTITATIVE'">

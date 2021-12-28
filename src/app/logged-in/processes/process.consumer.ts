@@ -25,8 +25,8 @@ export class ProcessConsumer {
     return this.userProcesses;
   }
 
-  createProcess(name: string, description: string) {
-    this.wsService.publish('process', {name, description}, WsMode.CREATE);
+  createProcess(name: string, description: string, objectives: string) {
+    this.wsService.publish('process', {name, description, objectives}, WsMode.CREATE);
   }
 
   updateProcessBasicData(processId: number, name: string, description: string, objectives: string) {

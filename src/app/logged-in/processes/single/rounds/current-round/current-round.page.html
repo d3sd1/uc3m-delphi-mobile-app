@@ -27,7 +27,7 @@
       <ion-input [disabled]="process.currentRound.started || process.finished || !isCoordinator()"
                  debounce="1000"
                  formControlName="name"
-                 maxlength="40"></ion-input>
+                 maxlength="50"></ion-input>
     </ion-item>
   </form>
   <ion-item [disabled]="!process.currentRound.started"

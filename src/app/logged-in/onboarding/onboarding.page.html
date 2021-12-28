@@ -10,11 +10,11 @@
 
           <ion-item>
             <ion-label>Nombre</ion-label>
-            <ion-input formControlName="firstName" placeholder="Introduce tu nombre" type="text"></ion-input>
+            <ion-input formControlName="firstName" maxlength="50" minlength="1" placeholder="Introduce tu nombre" type="text"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label>Apellidos</ion-label>
-            <ion-input formControlName="lastName" placeholder="Introduce tus apellidos" type="text"></ion-input>
+            <ion-input formControlName="lastName" maxlength="50" minlength="1" placeholder="Introduce tus apellidos" type="text"></ion-input>
           </ion-item>
           <ion-button fill="clear" type="submit" [disabled]="!onboardingForm.valid">Siguiente
             <ion-icon name="arrow-forward" slot="end"></ion-icon>

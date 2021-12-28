@@ -48,6 +48,7 @@ export class LoginPage implements OnInit, OnDestroy {
     this.ns.showToast('Conectando...');
     this.userConsumer.doLogin(this.loginForm.value).then((sucMessage: string) => {
       this.navCtrl.navigateForward('/logged-in').then(() => {
+        this.ns.removeAlert();
         this.ns.showToast(sucMessage);
         this.ngOnDestroy();
       });

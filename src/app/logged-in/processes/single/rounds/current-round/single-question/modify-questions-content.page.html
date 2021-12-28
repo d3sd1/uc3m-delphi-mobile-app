@@ -53,6 +53,8 @@
         <ion-input
           [disabled]="process.currentRound.started"
           formControlName="minVal"
+          min="0"
+          maxlength="10"
           type="number"></ion-input>
       </ion-item>
       <ion-item>
@@ -60,6 +62,8 @@
         <ion-input
           [disabled]="process.currentRound.started"
           formControlName="maxVal"
+          min="0"
+          maxlength="10"
           type="number"></ion-input>
       </ion-item>
       <!-- TODO: onchange -> verificar que minVal < maxVal -->
@@ -109,6 +113,7 @@
         <ion-item>
           <ion-label position="floating">Nombre de la categoría</ion-label>
           <ion-input
+            maxlength="50"
             [disabled]="process.currentRound.started"
             [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
@@ -145,11 +150,13 @@
             [disabled]="process.currentRound.started"
             [formControl]="categoriesForm.get('maxSelectable')"
             debounce="1000"
+            maxlength="10"
             type="number"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Nombre de la categoría</ion-label>
           <ion-input
+            maxlength="50"
             [disabled]="process.currentRound.started"
             [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
@@ -183,6 +190,7 @@
         <ion-item>
           <ion-label position="floating">Nombre de la categoría</ion-label>
           <ion-input
+            maxlength="50"
             [disabled]="process.currentRound.started"
             [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>

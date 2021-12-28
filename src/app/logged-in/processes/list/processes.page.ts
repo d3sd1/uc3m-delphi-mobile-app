@@ -41,7 +41,6 @@ export class ProcessesPage implements OnInit, OnDestroy {
           }
           this.loadingProcesses = true;
           this.processes = processes;
-          console.log('proesses:', this.processes);
           this.filterProcesses();
           this.loadingProcesses = false;
         });
@@ -101,7 +100,12 @@ export class ProcessesPage implements OnInit, OnDestroy {
     this.ns.showAlert('Crear proceso', null, {
       text: 'Ok',
       handler: (alertData) => {
-        this.processConsumer.createProcess(alertData.name, alertData.description);
+        if (!alertData || !alertData.name || !alertData.description || !alertData.objectives || alertData.name === '' || alertData.description === '' || alertData.objectives === '') {
+          this.ns.removeAlert();
+          this.ns.showAlert('Error', 'Debes indicar el nombre, la descripción y los objetivos del proceso.', 'OK');
+        } else {
+          this.processConsumer.createProcess(alertData.name, alertData.description, alertData.objectives);
+        }
       }
     }, 'Cancelar', [
       {
@@ -118,7 +122,15 @@ export class ProcessesPage implements OnInit, OnDestroy {
         type: 'textarea',
         placeholder: 'Descripción del proceso',
         attributes: {
-          maxlength: 5000,
+          maxlength: 500,
+        }
+      },
+      {
+        name: 'objectives',
+        type: 'textarea',
+        placeholder: 'Objetivos del proceso',
+        attributes: {
+          maxlength: 500,
         }
       },
     ]);
