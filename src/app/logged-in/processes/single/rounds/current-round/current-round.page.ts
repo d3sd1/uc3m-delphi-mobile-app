@@ -17,6 +17,7 @@ import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 })
 export class CurrentRoundPage implements OnInit, OnDestroy {
 
+  processes: Process[];
   process: Process;
   user: User;
   currentTime;
@@ -47,62 +48,71 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
             return;
           }
           this.user = user;
+          this.reloadData(params, this.processes, user);
         });
         this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
-          if (processes == null || processes.length === 0) {
-            return;
-          }
-          this.process = processes.find(p2 => p2.id === +params.id);
-          if (this.loading && this.redirect) {
-            this.loading.dismiss().then(() => this.navCtrl.navigateBack(this.redirect).then(null));
-          } else if (this.loading) {
-            this.loading.dismiss().then(null);
-          }
-          if (this.process.currentRound.started || this.process.finished || !this.isCoordinator()) {
-            this.currentRound.get('limitTime').disable();
-            this.currentRound.get('name').disable();
-          } else {
-            this.currentRound.get('limitTime').enable();
-            this.currentRound.get('name').enable();
-          }
-
-          if (this.curentRoundFormSubscription && !this.curentRoundFormSubscription.closed) {
-            this.curentRoundFormSubscription.unsubscribe();
-          }
-          if (this.process.currentRound.limitTime !== this.currentRound.get('limitTime').value) {
-            this.currentRound.get('limitTime').setValue(this.process.currentRound.limitTime);
-          }
-          if (this.process.currentRound.name !== this.currentRound.get('name').value) {
-            this.currentRound.get('name').setValue(this.process.currentRound.name);
-          }
-          this.curentRoundFormSubscription = this.currentRound.valueChanges.pipe(
-            debounceTime(1000),
-            distinctUntilChanged()
-          ).subscribe((formVals: any) => {
-            if (!formVals.name || formVals.name === ''
-              || formVals.name.trim().length === 0) {
-              this.ns.showToast('Debes introducir un nombre para la ronda actual.');
-              return;
-            }
-            if (new Date(this.currentRound.get('limitTime').value).getTime() - 3600000 <= Date.now()) {
-              this.ns.showToast('La fecha de finalización de la ronda debe permitir la participación durante al menos 1 hora después de la actual.');
-              this.currentTime = (new Date((Date.now() + 10800000))).toISOString();
-              this.currentRound.get('limitTime').reset(this.currentTime);
-              return;
-            }
-            this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
-            this.updateBasicData(formVals.limitTime, formVals.name);
-          });
+          this.processes = processes;
+          this.reloadData(params, processes, this.user);
         });
       });
   }
 
+  reloadData(params, processes, user) {
+    if (processes == null || processes.length === 0) {
+      return;
+    }
+    this.process = processes.find(p2 => p2.id === +params.id);
+    if (this.loading && this.redirect) {
+      this.loading.dismiss().then(() => this.navCtrl.navigateBack(this.redirect).then(null));
+    } else if (this.loading) {
+      this.loading.dismiss().then(null);
+    }
+    if (this.process.currentRound.started || this.process.finished || !this.isCoordinator(user)) {
+      this.currentRound.get('limitTime').disable();
+      this.currentRound.get('name').disable();
+    } else {
+      this.currentRound.get('limitTime').enable();
+      this.currentRound.get('name').enable();
+    }
 
-  isCoordinator(): boolean {
-    if (!this.user || !this.process) {
+    if (this.curentRoundFormSubscription && !this.curentRoundFormSubscription.closed) {
+      this.curentRoundFormSubscription.unsubscribe();
+    }
+    if (this.process.currentRound.limitTime !== this.currentRound.get('limitTime').value) {
+      this.currentRound.get('limitTime').setValue(this.process.currentRound.limitTime);
+    }
+    if (this.process.currentRound.name !== this.currentRound.get('name').value) {
+      this.currentRound.get('name').setValue(this.process.currentRound.name);
+    }
+    this.curentRoundFormSubscription = this.currentRound.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()
+    ).subscribe((formVals: any) => {
+      if (!formVals.name || formVals.name === ''
+        || formVals.name.trim().length === 0) {
+        this.ns.showToast('Debes introducir un nombre para la ronda actual.');
+        return;
+      }
+      if (new Date(this.currentRound.get('limitTime').value).getTime() - 3600000 <= Date.now()) {
+        this.ns.showToast('La fecha de finalización de la ronda debe permitir la participación durante al menos 1 hora después de la actual.');
+        this.currentTime = (new Date((Date.now() + 10800000))).toISOString();
+        this.currentRound.get('limitTime').reset(this.currentTime);
+        return;
+      }
+      this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
+      this.updateBasicData(formVals.limitTime, formVals.name);
+    });
+  }
+
+
+  isCoordinator(user = null): boolean {
+    if(user === null) {
+      user = this.user;
+    }
+    if (!user || !this.process) {
       return false;
     }
-    return this.process.coordinators.findIndex((user) => user.id === this.user.id) !== -1;
+    return this.process.coordinators.findIndex((u) => u.id === user.id) !== -1;
   }
 
   public onItemReorder({detail}) {

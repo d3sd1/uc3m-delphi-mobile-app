@@ -54,12 +54,14 @@ export class UserPickerPage implements OnInit, OnDestroy {
         if (this.loading) {
           this.loading.dismiss().then(null);
         }
+        this.filter();
       });
       this.invitationConsumer.getUsers().subscribe((users) => {
         if (users === null) {
           return;
         }
         this.searchableUsers = users;
+        this.filter();
       });
     });
   }
@@ -73,9 +75,9 @@ export class UserPickerPage implements OnInit, OnDestroy {
       );
   }
 
-  isNewUser(email) {
-    return this.usersFiltered.findIndex((user) => {
-      return user.email === email;
+  isNewUser() {
+    return this.searchableUsers.findIndex((user) => {
+      return user.email.toLowerCase() === this.filterCriterial.toLowerCase();
     }) === -1;
   }
 

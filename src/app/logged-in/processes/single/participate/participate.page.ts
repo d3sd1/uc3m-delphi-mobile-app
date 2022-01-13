@@ -72,6 +72,9 @@ export class ParticipatePage implements OnInit, OnDestroy {
           if (this.answerFormSubscription && !this.answerFormSubscription.closed) {
             this.answerFormSubscription.unsubscribe();
           }
+          if (!this.process.currentRound.questions || this.process.currentRound.questions.length === 0) {
+            this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(null);
+          }
           if (this.process.currentRound && this.process.currentRound.id === undefined || !this.process.currentRound.started) {
             this.viewOnly = true;
           }
@@ -220,16 +223,23 @@ export class ParticipatePage implements OnInit, OnDestroy {
     this.currentUser = undefined;
     this.answers = undefined;
     this.idx = undefined;
-    if (this.participateSlides) {
-      this.participateSlides.slideTo(0).then(r => null);
-    }
   }
 
   private getPreviousParticipation(qId: number) {
     if (!this.currentUser || !this.process || !this.process.currentRound || !this.process.currentRound.answers) {
       return;
     }
-    return this.process.currentRound.answers.find(rr => rr.user.id === this.currentUser.id && rr.question.id === qId).content;
+
+    return this.process.currentRound.answers
+      .find(rr => {
+        const qa: any = rr.user.id
+          === this.currentUser.id
+          && rr.question.id === qId;
+        if (qa) {
+          return qa.content;
+        }
+        return null;
+      });
   }
 
   private orderQuestions() {

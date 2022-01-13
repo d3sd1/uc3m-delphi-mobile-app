@@ -190,9 +190,12 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
     }
   }
 
+  isCategoryNameInvalid() {
+    return this.categoriesForm.get('tmpInput').value === ''
+    || this.categoriesForm.get('tmpInput').value.trim().length === 0;
+  }
   addCategory() {
-    if (this.categoriesForm.get('tmpInput').value === ''
-      || this.categoriesForm.get('tmpInput').value.trim().length === 0) {
+    if (this.isCategoryNameInvalid()) {
       this.ns.showToast('Debes introducir un nombre para la categoría.');
       return;
     }

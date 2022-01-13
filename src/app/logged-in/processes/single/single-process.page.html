@@ -98,7 +98,7 @@
 
 </ion-content>
 
-<ion-footer *ngIf="process && !process.finished">
+<ion-footer *ngIf="process && !process.finished && process.currentRound">
   <ion-toolbar>
     <ion-button
       (click)="addConclusion()"
@@ -108,6 +108,7 @@
     <ion-button
       (click)="participate()"
       *ngIf="!isCoordinator()" [color]="this.process.currentRound.started && !alreadyVoted() ? 'secondary':'primary'"
+      [fill]="!this.process.currentRound.started ? 'outline':'solid'"
       expand="block">Participar
     </ion-button>
   </ion-toolbar>

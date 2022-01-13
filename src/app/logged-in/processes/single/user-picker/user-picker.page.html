@@ -12,7 +12,7 @@
 
 <ion-content *ngIf="process && currentUser">
   <ion-searchbar (ionChange)="filter()" *ngIf="isCoordinator() && !process.finished" [(ngModel)]="filterCriterial"
-                 animated class="lowercase"
+                 animated class="ion-text-uppercase"
                  debounce="500" placeholder="Buscar usuarios"></ion-searchbar>
   <ion-list *ngIf="usersFiltered.length > 0 && this.filterCriterial !== ''" class="user-picker-filtered">
     <ion-item (click)="addExistantUser(user)"
@@ -27,18 +27,18 @@
   </ion-list>
   <ion-item
     *ngIf="usersFiltered && usersFiltered.length == 0 && this.filterCriterial !== '' && !this.isEmail(this.filterCriterial)">
-    <ion-title>Sin resultados en la búsqueda</ion-title>
+    <ion-title>Sin resultados</ion-title>
   </ion-item>
   <ion-item
-    *ngIf="usersFiltered && usersFiltered.length == 0 && this.filterCriterial !== '' && this.isEmail(this.filterCriterial) && this.isNewUser(this.filterCriterial)">
-    <ion-title></ion-title>
-    <ion-button (click)="addNewUser(this.filterCriterial)" expand="block">Invitar a <{{this.filterCriterial}}>
+    *ngIf="usersFiltered && usersFiltered.length == 0 && this.filterCriterial !== '' && this.isEmail(this.filterCriterial)">
+    <ion-title *ngIf="!this.isNewUser()">Usuario anexo al proceso</ion-title>
+    <ion-button *ngIf="this.isNewUser()" (click)="addNewUser(this.filterCriterial)" expand="block">Invitar a <{{this.filterCriterial}}>
     </ion-button>
   </ion-item>
   <ion-item *ngIf="this.getUsers().length == 0">
     <ion-title>Sin expertos</ion-title>
   </ion-item>
-
+ 
   <div *ngFor="let user of this.getUsers()">
     <ion-chip [color]="'primary'">
       <ion-avatar [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">

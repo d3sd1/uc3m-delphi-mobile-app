@@ -114,7 +114,7 @@
             [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
         <ion-button (click)="addCategory()"
-                    [disabled]="process.currentRound.started" color="primary"
+                    [disabled]="process.currentRound.started || isCategoryNameInvalid()" color="primary"
                     expand="block">Añadir categoría
         </ion-button>
 
@@ -155,7 +155,7 @@
             [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
         <ion-button (click)="addCategory()"
-                    [disabled]="process.currentRound.started" color="primary"
+                    [disabled]="process.currentRound.started || isCategoryNameInvalid()" color="primary"
                     expand="block">Añadir categoría
         </ion-button>
 
@@ -188,7 +188,7 @@
             [formControl]="categoriesForm.get('tmpInput')"></ion-input>
         </ion-item>
         <ion-button (click)="addCategory()"
-                    [disabled]="process.currentRound.started" color="primary"
+                    [disabled]="process.currentRound.started || isCategoryNameInvalid()" color="primary"
                     expand="block">Añadir categoría
         </ion-button>
 
