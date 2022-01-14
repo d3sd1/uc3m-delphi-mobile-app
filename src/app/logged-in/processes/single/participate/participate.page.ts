@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, ViewChild, ViewChildren} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
 import {IonSlides, LoadingController, NavController} from '@ionic/angular';
@@ -18,16 +18,16 @@ import {QuestionKindService} from '../../../../core/question-kind-service';
   templateUrl: './participate.page.html',
   styleUrls: ['./participate.page.scss'],
 })
-export class ParticipatePage implements OnInit, OnDestroy {
+export class ParticipatePage implements AfterViewInit, OnDestroy {
   answers: Answer[];
   idx;
-  answerQuestion: any = '';
+  answerQuestion: any;
 
   process: Process;
   currentUser: User;
   @ViewChild('participate') participateSlides: IonSlides;
-  @ViewChild('qualitativeBox') qualitativeBox: HTMLInputElement;
-  @ViewChild('quantitativeBox') quantitativeBox: HTMLIonRangeElement;
+  @ViewChildren('qualitativeBox') qualitativeBox: HTMLIonTextareaElement;
+  @ViewChildren('quantitativeBox') quantitativeBox: HTMLIonRangeElement;
   userSubscription: Subscription;
   processSubscription: Subscription;
   answerFormSubscription: Subscription;
@@ -51,10 +51,24 @@ export class ParticipatePage implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.route.params.subscribe(
       params => {
         this.fillAnswers();
+        if (this.answerFormSubscription && !this.answerFormSubscription.closed) {
+          this.answerFormSubscription.unsubscribe();
+        }
+        if (this.userSubscription && !this.userSubscription.closed) {
+          this.userSubscription.unsubscribe();
+        }
+        if (this.processSubscription && !this.processSubscription.closed) {
+          this.processSubscription.unsubscribe();
+        }
+        this.process = undefined;
+        this.currentUser = undefined;
+        this.answers = undefined;
+        this.idx = undefined;
+
         this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
           if (user === null) {
             return;
@@ -94,7 +108,7 @@ export class ParticipatePage implements OnInit, OnDestroy {
     if (!this.process || !this.process.currentRound || !this.process.currentRound.questions) {
       return;
     }
-    console.log('review this!!!')
+    console.log('review this!!!', this.process.currentRound.questions);
     this.setViewOnly();
     this.orderQuestions();
     this.sortCategories(0);
@@ -119,9 +133,12 @@ export class ParticipatePage implements OnInit, OnDestroy {
   }
 
   updateValView() {
+    console.log('qa', this.qualitativeBox)
+    console.log('qb', this.quantitativeBox)
     if (!this.answers || !this.qualitativeBox || !this.quantitativeBox) {
       return;
     }
+    console.log('update vals')
     this.answerQuestion = this.answers[this.idx].content;
     this.qualitativeBox.value = this.answerQuestion;
     this.quantitativeBox.value = this.answerQuestion;
