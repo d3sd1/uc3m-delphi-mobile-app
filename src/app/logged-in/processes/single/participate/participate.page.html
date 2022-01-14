@@ -1,10 +1,11 @@
 <ion-header *ngIf="process && process.currentRound && process.currentRound.questions">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="this.viewOnly ? '/logged-in/menu/processes/finished/' + process.id + '/question/list':'/logged-in/menu/processes/finished/' + process.id"
-                       [routerLink]="this.viewOnly ? '/logged-in/menu/processes/finished/' + process.id + '/question/list':'/logged-in/menu/processes/finished/' + process.id"
-                       routerDirection="back"
-                       [text]="this.viewOnly ? 'Volver al editor':'Cancelar'"></ion-back-button>
+      <ion-back-button
+        [defaultHref]="this.viewOnly ? '/logged-in/menu/processes/finished/' + process.id + '/question/list':'/logged-in/menu/processes/finished/' + process.id"
+        [routerLink]="this.viewOnly ? '/logged-in/menu/processes/finished/' + process.id + '/question/list':'/logged-in/menu/processes/finished/' + process.id"
+        routerDirection="back"
+        [text]="this.viewOnly ? 'Volver al editor':'Cancelar'"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="this.idx + 1 <= this.process.currentRound.questions.length">
       Pregunta {{this.idx + 1}}/{{this.process.currentRound.questions.length}}</ion-title>
@@ -20,21 +21,25 @@
     <ion-slide *ngFor="let question of process.currentRound.questions">
       <div class="slide">
         <p>{{question.name}}</p>
-        <form [formGroup]="answerForm">
+        <form>
 
           <ion-item *ngIf="question.questionType.name === 'QUALITATIVE'">
-            <ion-textarea formControlName="currentAnswer"
-                          inputmode="text"
-                          maxlength="500"
-                          placeholder="Introduce aquí tu respuesta"></ion-textarea>
+            <ion-textarea
+              #qualitativeBox
+              (ionChange)="changeVal($event.target.value)"
+              inputmode="text"
+              maxlength="500"
+              placeholder="Introduce aquí tu respuesta"></ion-textarea>
           </ion-item>
           <div *ngIf="question.questionType.name === 'QUANTITATIVE'">
             <ion-item>
-              <ion-range [max]="question.maxVal"
+              <ion-range
+                #quantitativeBox
+                [max]="question.maxVal"
                          [min]="question.minVal"
                          color="primary"
-                         formControlName="currentAnswer"
-                         snaps
+                         (ionChange)="changeVal($event.target.value)"
+                         snaps="1"
                          step="1">
                 <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
                 <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
@@ -42,16 +47,19 @@
             </ion-item>
           </div>
           <div *ngIf="question.questionType.name === 'BOOLTYPE'">
-            <delphi-radio-checker [control]="answerForm.get('currentAnswer')"
-                                  [options]="qks.getBooleanKinds()"></delphi-radio-checker>
+            <!--[control]="answerForm.get('currentAnswer')"-->
+            <delphi-radio-checker
+              [options]="qks.getBooleanKinds()"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATLIKERT'">
-            <delphi-radio-checker [control]="answerForm.get('currentAnswer')"
-                                  [options]="qks.getLikertKinds()"></delphi-radio-checker>
+            <!--[control]="answerForm.get('currentAnswer')"-->
+            <delphi-radio-checker
+              [options]="qks.getLikertKinds()"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATCUSTOM'">
-            <delphi-radio-checker [control]="answerForm.get('currentAnswer')"
-                                  [options]="qks.mapCatsToKinds(question.categories)"></delphi-radio-checker>
+            <!--[control]="answerForm.get('currentAnswer')"-->
+            <delphi-radio-checker
+              [options]="qks.mapCatsToKinds(question.categories)"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATMULTI'">
 

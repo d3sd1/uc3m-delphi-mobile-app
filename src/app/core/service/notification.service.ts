@@ -42,6 +42,7 @@ export class NotificationService {
       header,
       subHeader,
       buttons,
+      backdropDismiss: false,
       inputs: [],
       message
     };

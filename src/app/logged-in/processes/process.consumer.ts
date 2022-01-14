@@ -41,6 +41,7 @@ export class ProcessConsumer {
     this.wsService.publish(`process/rounds/current/participate`, {
         processId,
         answers: answers.map((answer) => {
+          console.log('answer content should be:', answer.content)
           return {questionId: answer.question.id, content: answer.content};
         })
       },

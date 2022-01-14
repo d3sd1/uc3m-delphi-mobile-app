@@ -10,9 +10,8 @@ import {ProcessConsumer} from '../../process.consumer';
 import {Round} from '../../../../core/model/round';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../../../core/service/notification.service';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {QuestionKindService} from '../../../../core/question-kind-service';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   selector: 'delphi-participate',
@@ -22,14 +21,16 @@ import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 export class ParticipatePage implements OnInit, OnDestroy {
   answers: Answer[];
   idx;
+  answerQuestion: any = '';
 
   process: Process;
   currentUser: User;
   @ViewChild('participate') participateSlides: IonSlides;
+  @ViewChild('qualitativeBox') qualitativeBox: HTMLInputElement;
+  @ViewChild('quantitativeBox') quantitativeBox: HTMLIonRangeElement;
   userSubscription: Subscription;
   processSubscription: Subscription;
   answerFormSubscription: Subscription;
-  answerForm: FormGroup;
   viewOnly: boolean;
 
   constructor(
@@ -53,12 +54,13 @@ export class ParticipatePage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
-        this.viewOnly = true;
+        this.fillAnswers();
         this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
           if (user === null) {
             return;
           }
           this.currentUser = user;
+          this.fillAnswers();
         });
 
         this.processSubscription = this.processConsumer.getProcesses().subscribe((processes) => {
@@ -75,73 +77,107 @@ export class ParticipatePage implements OnInit, OnDestroy {
           if (!this.process.currentRound.questions || this.process.currentRound.questions.length === 0) {
             this.navCtrl.navigateBack('/logged-in/menu/processes/finished/' + this.process.id).then(null);
           }
-          if (this.process.currentRound && this.process.currentRound.id === undefined || !this.process.currentRound.started) {
-            this.viewOnly = true;
-          }
-          this.answerForm = new FormGroup({
-            currentAnswer: new FormControl('')
-          });
-
-          this.orderQuestions();
-          this.sortCategories(0);
-          this.answers = [];
-
-          this.process.currentRound.questions.forEach((q, idx) => {
-            const a = new Answer();
-            a.question = q;
-            a.user = this.currentUser;
-            a.content = this.getPreviousParticipation(q.id);
-            this.answers[idx] = a;
-          });
-
-          this.idx = 0;
-          this.updateVal();
-          this.answerFormSubscription = this.answerForm.get('currentAnswer').valueChanges.pipe(
-            debounceTime(1000),
-            distinctUntilChanged()
-          ).subscribe((val) => {
-            if (this.answers[this.idx].content === val) {
-              return;
-            }
-            this.answers[this.idx].content = val;
-            this.updateVal();
-          });
+          this.fillAnswers();
         });
       });
   }
 
-  updateVal() {
-    const val = this.answers[this.idx].content;
-    if (val === this.answerForm.get('currentAnswer').value) {
+  setViewOnly() {
+    if (this.process && this.process.currentRound && (this.process.currentRound.id === undefined || !this.process.currentRound.started)) {
+      this.viewOnly = true;
+    } else {
+      this.viewOnly = false;
+    }
+  }
+
+  fillAnswers() {
+    if (!this.process || !this.process.currentRound || !this.process.currentRound.questions) {
       return;
     }
-    this.answerForm.get('currentAnswer').setValue(val);
+    console.log('review this!!!')
+    this.setViewOnly();
+    this.orderQuestions();
+    this.sortCategories(0);
+    this.answers = [];
+    this.idx = 0;
+    this.process.currentRound.questions.forEach((q, idx) => {
+      const a = new Answer();
+      a.question = q;
+      a.user = this.currentUser;
+      a.content = this.getPreviousParticipation(q.id);
+      this.answers[idx] = a;
+    });
+    this.updateValView();
+  }
+
+  updateVal() {
+    if (!this.answers) {
+      return;
+    }
+    this.answers[this.idx].content = this.answerQuestion;
+    this.answerQuestion = null;
+  }
+
+  updateValView() {
+    if (!this.answers || !this.qualitativeBox || !this.quantitativeBox) {
+      return;
+    }
+    this.answerQuestion = this.answers[this.idx].content;
+    this.qualitativeBox.value = this.answerQuestion;
+    this.quantitativeBox.value = this.answerQuestion;
   }
 
 
-  advance() {
-    this.sortCategories(this.idx + 1);
-    const val = this.answerForm.get('currentAnswer').value;
+  changeVal(val) {
+    console.log('evt', val);
+    this.answerQuestion = val;
+  }
+
+  checkCurrentQuestion() {
+    const val = this.answerQuestion;
+    console.log('val:', val);
+    console.log('viewOnly:', this.viewOnly);
     if ((val === null || val === undefined || val === -1 || val === ''
       || (typeof val === 'string' && val.trim().length === 0)) && !this.viewOnly) {
       this.ns.showToast('Por favor responde la pregunta.');
+      return false;
+    }
+    return true;
+  }
+
+  advance() {
+    if (!this.checkCurrentQuestion()) {
       return;
     }
+    this.sortCategories(this.idx - 1);
+
+    this.updateVal();
+
     this.participateSlides.slideNext().then(() => {
       ++this.idx;
-      this.updateVal();
+      this.updateValView();
     });
   }
 
   back() {
+    if (!this.checkCurrentQuestion()) {
+      return;
+    }
     this.sortCategories(this.idx - 1);
+
+    this.updateVal();
+
     this.participateSlides.slidePrev().then(() => {
       --this.idx;
-      this.updateVal();
+      this.updateValView();
     });
   }
 
   finish() {
+    if (!this.checkCurrentQuestion()) {
+      return;
+    }
+    this.updateVal();
     this.idx++;
     this.ns.showAlert('Confirmar participación', '¿Estás seguro de que deseas enviar la participación?', {
         text: 'Enviar',
@@ -168,8 +204,8 @@ export class ParticipatePage implements OnInit, OnDestroy {
   }
 
   sortCategories(idx) {
-    if (idx === undefined || this.process.currentRound.questions[idx] === undefined
-      || this.process.currentRound.questions[idx].categories === undefined
+    if (!this.process || !this.process.currentRound || !this.process.currentRound.questions || idx === undefined || !this.process.currentRound.questions[idx]
+      || !this.process.currentRound.questions[idx].categories
       || this.process.currentRound.questions[idx].categories.length <= 0) {
       return;
     }
@@ -229,20 +265,26 @@ export class ParticipatePage implements OnInit, OnDestroy {
     if (!this.currentUser || !this.process || !this.process.currentRound || !this.process.currentRound.answers) {
       return;
     }
-
-    return this.process.currentRound.answers
+    const res = this.process.currentRound.answers
       .find(rr => {
-        const qa: any = rr.user.id
+        if (rr.user.id
           === this.currentUser.id
-          && rr.question.id === qId;
-        if (qa) {
-          return qa.content;
+          && rr.question.id === qId) {
+          return rr.content;
         }
         return null;
       });
+    if (res) {
+      return res.content;
+    } else {
+      return null;
+    }
   }
 
   private orderQuestions() {
+    if (!this.process || !this.process.currentRound || !this.process.currentRound.questions) {
+      return;
+    }
     this.process.currentRound.questions.sort((n1, n2) => {
       if (n1.orderPosition < n2.orderPosition) {
         return -1;
