@@ -1,0 +1,13 @@
+<ion-item>
+  <ion-range
+    [max]="question.maxVal"
+    [min]="question.minVal"
+    color="primary"
+    (ionChange)="changeVal($event.target.value)"
+    snaps="1"
+    step="1"
+  [value]="val">
+    <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
+    <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
+  </ion-range>
+</ion-item>

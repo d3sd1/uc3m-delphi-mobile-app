@@ -1,14 +1,16 @@
 <ion-searchbar (ionChange)="search()" [(ngModel)]="searchText" cancelButtonText="Cancelar"
+               placeholder="Buscar"
                showCancelButton="focus"></ion-searchbar>
 <ion-list>
   <ion-radio-group>
-    <ion-item (click)="control.setValue(option.value)" *ngFor="let option of optionsFiltered"
-              [class.item-radio-checked]="control.value === option.value">
-      <ion-label [class.item-radio-checked]="control.value === option.value"
+    <ion-item *ngFor="let option of optionsFiltered" (click)="changeVal(option.value)"
+              [class.item-radio-checked]="selected == option.value">
+      <ion-label [class.item-radio-checked]="selected == option.value"
                  class="ion-text-wrap">{{option.text}}</ion-label>
-      <ion-radio [class.radio-checked]="control.value === option.value" slot="start"></ion-radio>
+      <ion-radio [class.radio-checked]="selected == option.value" slot="start"></ion-radio>
     </ion-item>
 
   </ion-radio-group>
 </ion-list>
+
 

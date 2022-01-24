@@ -1,13 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActionSheetController, NavController} from '@ionic/angular';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {NavController} from '@ionic/angular';
 import {Process} from '../../../../../../core/model/process';
 import {User} from '../../../../../../core/model/user';
 import {ActivatedRoute} from '@angular/router';
 import {UserConsumer} from '../../../../../user.consumer';
 import {ProcessConsumer} from '../../../../process.consumer';
 import {Question} from '../../../../../../core/model/question';
-import {ChartConfiguration, ChartData, ChartType} from 'chart.js';
+import {ChartData} from 'chart.js';
 import {Subscription} from 'rxjs';
+import {QuestionKindService} from '../../../../../../core/question-kind-service';
+import {BaseChartDirective} from 'ng2-charts';
+import {Answer} from '../../../../../../core/model/answer';
 
 @Component({
   selector: 'delphi-rounds',
@@ -16,45 +19,14 @@ import {Subscription} from 'rxjs';
 })
 export class ViewStatisticsPage implements OnInit, OnDestroy {
 
-
-  public scatterChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-  };
-  public scatterChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
-
-  public scatterChartData: ChartData<'scatter'> = {
-    labels: this.scatterChartLabels,
+  public graphData: ChartData<'radar'> = {
+    labels: [],
     datasets: [
-      {
-        data: [
-          {x: 1, y: 1},
-          {x: 2, y: 3},
-          {x: 3, y: -2},
-          {x: 4, y: 4},
-          {x: 5, y: -3},
-        ],
-        label: 'Series A',
-        pointRadius: 10,
-      },
+      {data: [], label: ''}
     ]
   };
-  public scatterChartType: ChartType = 'scatter';
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
-
-  // Radar
-  public radarChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-  };
-  public radarChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
-
-  public radarChartData: ChartData<'radar'> = {
-    labels: this.radarChartLabels,
-    datasets: [
-      {data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A'},
-      {data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B'}
-    ]
-  };
-  public radarChartType: ChartType = 'radar';
 
   process: Process;
   currentUser: User;
@@ -63,6 +35,7 @@ export class ViewStatisticsPage implements OnInit, OnDestroy {
   roundIdx: number;
   selectedStatKind: string;
   selectedQuestion: Question;
+  selectedQuestionAnswers: Answer[];
   showChart = false;
 
   constructor(
@@ -70,7 +43,7 @@ export class ViewStatisticsPage implements OnInit, OnDestroy {
     private userConsumer: UserConsumer,
     private processConsumer: ProcessConsumer,
     private route: ActivatedRoute,
-    public actionSheetController: ActionSheetController) {
+    private qks: QuestionKindService) {
   }
 
   ngOnInit(): void {
@@ -97,25 +70,41 @@ export class ViewStatisticsPage implements OnInit, OnDestroy {
       });
   }
 
-
-  updateChart() {
-    if (this.selectedStatKind !== null &&
-      this.selectedQuestion !== null &&
-      this.selectedStatKind !== undefined &&
-      this.selectedQuestion !== undefined) {
-      this.showChart = true;
-    } else {
-      this.showChart = false;
+  updateChart(evt) {
+    this.selectedQuestion = evt;
+    this.selectedQuestionAnswers = this.process.pastRounds[this.roundIdx].answers;
+    if (!this.selectedQuestion) {
+      return;
     }
-  }
-
-  // events
-  public chartClicked({event, active}: { event: MouseEvent, active: {}[] }): void {
-
-  }
-
-  public chartHovered({event, active}: { event: MouseEvent, active: {}[] }): void {
-
+    this.graphData.datasets[0].label = this.selectedQuestion.name;
+    if (this.selectedQuestion.questionType.name === 'QUALITATIVE') {
+      this.graphData.labels = [];
+      this.graphData.datasets[0].data = [];
+    } else if (this.selectedQuestion.questionType.name === 'QUANTITATIVE') {
+      this.graphData.labels = [];
+      for (let i = this.selectedQuestion.minVal; i <= this.selectedQuestion.maxVal; i++) {
+        this.graphData.labels.push(i);
+      }
+      this.graphData.datasets[0].data = this.selectedQuestionAnswers.map(v => v.content);
+    } else if (this.selectedQuestion.questionType.name === 'BOOLTYPE') {
+      this.graphData.labels = this.qks.getBooleanKinds().map(v => v.value);
+      this.graphData.datasets[0].data = this.selectedQuestionAnswers.map(v => v.content);
+    } else if (this.selectedQuestion.questionType.name === 'CATLIKERT') {
+      this.graphData.labels = this.qks.getLikertKinds().map(v => v.value);
+      this.graphData.datasets[0].data = this.selectedQuestionAnswers.map(v => v.content);
+    } else if (this.selectedQuestion.questionType.name === 'CATCUSTOM') {
+      this.graphData.labels = this.selectedQuestion.categories.map(c => c.catName);
+      this.graphData.datasets[0].data = this.selectedQuestionAnswers.map(v => v.content);
+    } else if (this.selectedQuestion.questionType.name === 'CATMULTI') {
+      this.graphData.labels = this.selectedQuestion.categories.map(c => c.catName);
+      this.graphData.datasets[0].data = this.selectedQuestionAnswers.map(v => v.content);
+    } else if (this.selectedQuestion.questionType.name === 'CATPOND') {
+      this.graphData.labels = this.selectedQuestion.categories.map(c => c.catName);
+      this.graphData.datasets[0].data = this.selectedQuestionAnswers.map(v => v.content);
+    }
+    if (this.chart) {
+      this.chart.chart.update();
+    }
   }
 
   ngOnDestroy(): void {

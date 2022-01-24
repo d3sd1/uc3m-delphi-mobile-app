@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, ViewChild} from '@angular/core';
 import {Process} from '../../../../core/model/process';
 import {User} from '../../../../core/model/user';
 import {IonSlides, LoadingController, NavController} from '@ionic/angular';
@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserConsumer} from '../../../user.consumer';
 import {ProcessConsumer} from '../../process.consumer';
 import {Round} from '../../../../core/model/round';
-import {Subscription} from 'rxjs';
+import {BehaviorSubject, Subject, Subscription} from 'rxjs';
 import {NotificationService} from '../../../../core/service/notification.service';
 import {FormBuilder} from '@angular/forms';
 import {QuestionKindService} from '../../../../core/question-kind-service';
@@ -22,12 +22,12 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
   answers: Answer[];
   idx;
   answerQuestion: any;
+  answerUpdater: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
+
 
   process: Process;
   currentUser: User;
   @ViewChild('participate') participateSlides: IonSlides;
-  @ViewChildren('qualitativeBox') qualitativeBox: HTMLIonTextareaElement;
-  @ViewChildren('quantitativeBox') quantitativeBox: HTMLIonRangeElement;
   userSubscription: Subscription;
   processSubscription: Subscription;
   answerFormSubscription: Subscription;
@@ -54,7 +54,6 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.route.params.subscribe(
       params => {
-        this.fillAnswers();
         if (this.answerFormSubscription && !this.answerFormSubscription.closed) {
           this.answerFormSubscription.unsubscribe();
         }
@@ -68,6 +67,7 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
         this.currentUser = undefined;
         this.answers = undefined;
         this.idx = undefined;
+        this.fillAnswers();
 
         this.userSubscription = this.userConsumer.getUser().subscribe((user) => {
           if (user === null) {
@@ -108,7 +108,6 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
     if (!this.process || !this.process.currentRound || !this.process.currentRound.questions) {
       return;
     }
-    console.log('review this!!!', this.process.currentRound.questions);
     this.setViewOnly();
     this.orderQuestions();
     this.sortCategories(0);
@@ -124,29 +123,20 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
     this.updateValView();
   }
 
-  updateVal() {
+
+  updateValView() {
+    console.log('update val view, ', this.process)
     if (!this.answers) {
       return;
     }
-    this.answers[this.idx].content = this.answerQuestion;
-    this.answerQuestion = null;
-  }
-
-  updateValView() {
-    console.log('qa', this.qualitativeBox)
-    console.log('qb', this.quantitativeBox)
-    if (!this.answers || !this.qualitativeBox || !this.quantitativeBox) {
-      return;
-    }
-    console.log('update vals')
-    this.answerQuestion = this.answers[this.idx].content;
-    this.qualitativeBox.value = this.answerQuestion;
-    this.quantitativeBox.value = this.answerQuestion;
+    const answer = this.answers[this.idx].content;
+    this.answerQuestion = answer;
+    this.answerUpdater.next(this.answerQuestion);
   }
 
 
   changeVal(val) {
-    console.log('evt', val);
+    console.log('NEW VAL RECEIVED!!', val);
     this.answerQuestion = val;
   }
 
@@ -168,8 +158,6 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
     }
     this.sortCategories(this.idx - 1);
 
-    this.updateVal();
-
     this.participateSlides.slideNext().then(() => {
       ++this.idx;
       this.updateValView();
@@ -182,10 +170,9 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
     }
     this.sortCategories(this.idx - 1);
 
-    this.updateVal();
-
     this.participateSlides.slidePrev().then(() => {
       --this.idx;
+
       this.updateValView();
     });
   }
@@ -194,7 +181,6 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
     if (!this.checkCurrentQuestion()) {
       return;
     }
-    this.updateVal();
     this.idx++;
     this.ns.showAlert('Confirmar participación', '¿Estás seguro de que deseas enviar la participación?', {
         text: 'Enviar',
@@ -221,7 +207,9 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
   }
 
   sortCategories(idx) {
-    if (!this.process || !this.process.currentRound || !this.process.currentRound.questions || idx === undefined || !this.process.currentRound.questions[idx]
+    if (!this.process || !this.process.currentRound
+      || !this.process.currentRound.questions || idx === undefined
+      || !this.process.currentRound.questions[idx]
       || !this.process.currentRound.questions[idx].categories
       || this.process.currentRound.questions[idx].categories.length <= 0) {
       return;

@@ -136,8 +136,10 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
               this.ns.showToast('Debes introducir el texto para la pregunta.');
               return;
             }
-            this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
-            this.updateQuestion(formVals.name, formVals.questionKind, formVals.minVal, formVals.maxVal, formVals.orderPosition);
+            this.ns.showLoading('Actualizando...', 0).then(l => {
+              this.updateQuestion(formVals.name, formVals.questionKind, formVals.minVal, formVals.maxVal, formVals.orderPosition);
+              this.loading = l;
+            });
           });
 
           let prevMaxSelectable = this.categoriesForm.get('maxSelectable').value;
@@ -156,11 +158,11 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
             }
             if (formVals.maxSelectable !== prevMaxSelectable) {
               this.ns.showLoading('Modificando cotas...', 0).then(l => {
+                this.processConsumer.updateQuestionCategories(this.process.id, this.question.id, formVals.options, this.categoriesForm.get('maxSelectable').value);
                 prevMaxSelectable = formVals.maxSelectable;
                 this.loading = l;
               });
             }
-            this.processConsumer.updateQuestionCategories(this.process.id, this.question.id, formVals.options, this.categoriesForm.get('maxSelectable').value);
           });
         });
       });
@@ -192,8 +194,9 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
 
   isCategoryNameInvalid() {
     return this.categoriesForm.get('tmpInput').value === ''
-    || this.categoriesForm.get('tmpInput').value.trim().length === 0;
+      || this.categoriesForm.get('tmpInput').value.trim().length === 0;
   }
+
   addCategory() {
     if (this.isCategoryNameInvalid()) {
       this.ns.showToast('Debes introducir un nombre para la categoría.');
@@ -210,8 +213,8 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
       this.loading = l;
       this.categoriesForm.get('options').value.push(new Category(this.categoriesForm.get('tmpInput').value));
       this.categoriesForm.get('tmpInput').setValue('');
+      this.loading.dismiss();
     });
-
   }
 
   delCategory(c: Category) {

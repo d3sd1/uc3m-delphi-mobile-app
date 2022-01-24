@@ -16,36 +16,28 @@
 
   <ion-item>
     <ion-label>Estadístico</ion-label>
-    <ion-select (ngModelChange)="updateChart()" [(ngModel)]="selectedStatKind" cancel-text="Cancelar" ok-text="OK"
+    <ion-select [(ngModel)]="selectedStatKind" cancel-text="Cancelar" ok-text="OK"
                 placeholder="Seleccione estadístico">
-      <ion-select-option value="squared_chi">Chi cuadrado</ion-select-option>
       <ion-select-option value="kendall">Conglomerados de Kendall</ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label>Pregunta</ion-label>
-    <ion-select (ngModelChange)="updateChart()" [(ngModel)]="selectedQuestion" cancel-text="Cancelar" ok-text="OK"
+    <ion-select (ngModelChange)="updateChart($event)" [(ngModel)]="selectedQuestion" cancel-text="Cancelar" ok-text="OK"
                 placeholder="Seleccione pregunta">
       <ion-select-option *ngFor="let question of process.pastRounds[roundIdx].questions; let questionIndex = index"
                          [disabled]="question.questionType.name == 'QUALITATIVE'"
-                         [value]="question.id">{{question.name}}</ion-select-option>
+                         [value]="question">{{question.name}}</ion-select-option>
     </ion-select>
   </ion-item>
 
-  <div *ngIf="!showChart" class="container">
+  <div *ngIf="!selectedStatKind || !selectedQuestion" class="container">
     <strong>Introduce tu selección</strong>
     <p>Introduce el tipo de estadística a generar, así como la pregunta sobre la que aplicarlo en el menú superior.</p>
   </div>
-  <div *ngIf="showChart" class="container">
-    <canvas *ngIf="this.selectedStatKind == 'squared_chi'" [data]="scatterChartData"
-            [options]="scatterChartOptions"
-            [type]="scatterChartType"
-            baseChart>
-    </canvas>
-    <canvas *ngIf="this.selectedStatKind == 'kendall'" [data]="radarChartData"
-            [options]="radarChartOptions"
-            [type]="radarChartType"
-
+  <div *ngIf="selectedStatKind && selectedQuestion" class="container">
+    <canvas *ngIf="this.selectedStatKind == 'kendall'" [data]="graphData"
+            type="radar" class="chart"
             baseChart>
     </canvas>
   </div>

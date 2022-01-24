@@ -86,9 +86,10 @@ export class ClosePage implements OnInit, OnDestroy {
       this.ns.showAlert('Error', 'Debes introducir una conclusión', 'OK');
       return;
     }
-    this.processConsumer.closeProcess(this.process.id, conclusion);
 
     this.ns.showLoading('Cerrando proceso...', 0).then(l => {
+      this.processConsumer.closeProcess(this.process.id, conclusion);
+
       this.redirect = '/logged-in/menu/processes/finished/' + this.process.id;
       this.loading = l;
     });

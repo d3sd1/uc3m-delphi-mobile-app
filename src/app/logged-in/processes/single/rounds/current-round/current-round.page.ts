@@ -99,8 +99,10 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
         this.currentRound.get('limitTime').reset(this.currentTime);
         return;
       }
-      this.ns.showLoading('Actualizando...', 0).then(l => this.loading = l);
-      this.updateBasicData(formVals.limitTime, formVals.name);
+      this.ns.showLoading('Actualizando...', 0).then(l => {
+        this.updateBasicData(formVals.limitTime, formVals.name);
+        this.loading = l;
+      });
     });
   }
 
@@ -137,16 +139,16 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
   }
 
   startRound() {
-    this.processConsumer.startCurrentRound(this.process.id);
     this.ns.showLoading('Abriendo ronda...', 0).then(l => {
+      this.processConsumer.startCurrentRound(this.process.id);
       this.redirect = '/logged-in/menu/processes/finished/' + this.process.id;
       this.loading = l;
     });
   }
 
   closeRound() {
-    this.processConsumer.endCurrentRound(this.process.id);
     this.ns.showLoading('Cerrando ronda...', 0).then(l => {
+      this.processConsumer.endCurrentRound(this.process.id);
       this.redirect = '/logged-in/menu/processes/finished/' + this.process.id;
       this.loading = l;
     });
@@ -187,9 +189,11 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
         text: 'Crear',
         handler: (alertData) => {
           this.ns.removeAlert();
-          this.ns.showLoading('Añadiendo pregunta...', 0).then(l => this.loading = l);
+          this.ns.showLoading('Añadiendo pregunta...', 0).then(l => {
+            this.processConsumer.addQuestion(this.process.id, name, selectedQuestionType);
+            this.loading = l;
+          });
 
-          this.processConsumer.addQuestion(this.process.id, name, selectedQuestionType);
         }
       }, 'Cancelar',
       [

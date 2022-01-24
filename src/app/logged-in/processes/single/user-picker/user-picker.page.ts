@@ -83,16 +83,16 @@ export class UserPickerPage implements OnInit, OnDestroy {
 
   addExistantUser(user: User) {
     this.filterCriterial = '';
-    this.invitationConsumer.addExistantUserToProcess(user.id, this.process.id, this.type);
     this.ns.showLoading('Actualizando...', 0).then(l => {
+      this.invitationConsumer.addExistantUserToProcess(user.id, this.process.id, this.type);
       this.loading = l;
     });
   }
 
   addNewUser(email: string) {
     this.filterCriterial = '';
-    this.invitationConsumer.sendInvitation(email, this.process.id, this.type);
     this.ns.showLoading('Actualizando...', 0).then(l => {
+      this.invitationConsumer.sendInvitation(email, this.process.id, this.type);
       this.loading = l;
     });
   }
@@ -118,8 +118,9 @@ export class UserPickerPage implements OnInit, OnDestroy {
   }
 
   removeUser(user: User) {
-    this.invitationConsumer.removeFromProcess(user.id, this.process.id);
     this.ns.showLoading('Actualizando...', 0).then(l => {
+      this.invitationConsumer.removeFromProcess(user.id, this.process.id);
+
       this.loading = l;
     });
   }

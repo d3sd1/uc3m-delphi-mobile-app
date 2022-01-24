@@ -23,42 +23,36 @@
         <p>{{question.name}}</p>
         <form>
 
-          <ion-item *ngIf="question.questionType.name === 'QUALITATIVE'">
-            <ion-textarea
-              #qualitativeBox
-              (ionChange)="changeVal($event.target.value)"
-              inputmode="text"
-              maxlength="500"
-              placeholder="Introduce aquí tu respuesta"></ion-textarea>
-          </ion-item>
+          <div *ngIf="question.questionType.name === 'QUALITATIVE'">
+            <delphi-qualitative
+              [question]="question"
+              [viewChange]="answerUpdater.asObservable()"
+              (valueChange)="changeVal($event)"
+            ></delphi-qualitative>
+          </div>
           <div *ngIf="question.questionType.name === 'QUANTITATIVE'">
-            <ion-item>
-              <ion-range
-                #quantitativeBox
-                [max]="question.maxVal"
-                         [min]="question.minVal"
-                         color="primary"
-                         (ionChange)="changeVal($event.target.value)"
-                         snaps="1"
-                         step="1">
-                <ion-icon color="danger" name="sad-outline" slot="start"></ion-icon>
-                <ion-icon color="success" name="happy-outline" slot="end"></ion-icon>
-              </ion-range>
-            </ion-item>
+            <delphi-quantitative
+              [question]="question"
+              [viewChange]="answerUpdater.asObservable()"
+              (valueChange)="changeVal($event)"
+            ></delphi-quantitative>
           </div>
           <div *ngIf="question.questionType.name === 'BOOLTYPE'">
-            <!--[control]="answerForm.get('currentAnswer')"-->
             <delphi-radio-checker
+              [viewChange]="answerUpdater.asObservable()"
+              (radioChange)="changeVal($event)"
               [options]="qks.getBooleanKinds()"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATLIKERT'">
-            <!--[control]="answerForm.get('currentAnswer')"-->
             <delphi-radio-checker
+              [viewChange]="answerUpdater.asObservable()"
+              (radioChange)="changeVal($event)"
               [options]="qks.getLikertKinds()"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATCUSTOM'">
-            <!--[control]="answerForm.get('currentAnswer')"-->
             <delphi-radio-checker
+              [viewChange]="answerUpdater.asObservable()"
+              (radioChange)="changeVal($event)"
               [options]="qks.mapCatsToKinds(question.categories)"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATMULTI'">
@@ -68,7 +62,6 @@
             <ion-item>
               <ion-label class="ion-text-wrap">Categorías</ion-label>
               <ion-select (ionChange)="addCatAnswer($event)"
-                          formControlName="currentAnswer"
                           multiple="true">
                 <ion-select-option *ngFor="let category of question.categories" [value]="category.id"
                                    class="show-text">{{category.catName}}</ion-select-option>

@@ -24,6 +24,8 @@ import {ViewStatisticsPage} from './single/rounds/finished/statistics/view-stati
 import {NgChartsModule} from 'ng2-charts';
 import {RadioCheckerPage} from '../../core/components/radio-checker/radio-checker.page';
 import {QuestionKindService} from '../../core/question-kind-service';
+import {QualitativePage} from '../../core/components/qualitative/qualitative.page';
+import {QuantitativePage} from '../../core/components/quantitative/quantitative.page';
 
 @NgModule({
   imports: [
@@ -51,7 +53,9 @@ import {QuestionKindService} from '../../core/question-kind-service';
     ViewFinishedRoundPage,
     RemainingExpertsPage,
     ViewStatisticsPage,
-    RadioCheckerPage
+    RadioCheckerPage,
+    QualitativePage,
+    QuantitativePage
   ],
   providers: [
     Geolocation,
