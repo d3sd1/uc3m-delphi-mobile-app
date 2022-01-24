@@ -1,15 +1,12 @@
 <ion-searchbar (ionChange)="search()" [(ngModel)]="searchText" cancelButtonText="Cancelar"
                placeholder="Buscar"
                showCancelButton="focus"></ion-searchbar>
-<p *ngIf="maxSelectable > 1">Máximas selecciones habilitadas: {{maxSelectable}}</p>
+<p>Máximas selecciones habilitadas: {{maxSelectable}}</p>
 <ion-list>
   <ion-radio-group>
-    <ion-item *ngFor="let option of optionsFiltered" (click)="changeVal(option.value)"
-              [class.item-radio-checked]="selected.includes(option.value)">
-      <ion-label [class.item-radio-checked]="selected.includes(option.value)"
-                 class="ion-text-wrap">{{option.text}}</ion-label>
-      <ion-radio [class.radio-checked]="selected.includes(option.value)" slot="start"></ion-radio>
+    <ion-item *ngFor="let option of optionsFiltered" (click)="changeVal(option.value)">
+      <ion-label class="ion-text-wrap">{{option.text}}</ion-label>
+      <ion-icon [class.invisible]="!isSelected(option.value)" slot="start" name="checkmark-outline" color="primary"></ion-icon>
     </ion-item>
-
   </ion-radio-group>
 </ion-list>

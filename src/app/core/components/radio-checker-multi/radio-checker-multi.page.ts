@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs';
+import {NotificationService} from '../../service/notification.service';
 
 @Component({
   selector: 'delphi-radio-checker-multi',
@@ -23,6 +24,9 @@ export class RadioCheckerMultiPage implements OnInit, OnDestroy {
   selected = [];
   valSubscription: Subscription;
 
+  constructor(private ns: NotificationService) {
+  }
+
   ngOnInit(): void {
     this.optionsFiltered = [...this.options];
     this.valSubscription = this.viewChange.subscribe((newVal) => {
@@ -30,13 +34,33 @@ export class RadioCheckerMultiPage implements OnInit, OnDestroy {
     });
   }
 
+  isSelected(val): boolean {
+    return this.selected.includes(val);
+  }
+
   addVal(newVal) {
-    this.selected = this.selected.filter(v => v === newVal);
-    this.selected.push(newVal);
+    if (this.isSelected(newVal)) {
+      this.removeVal(newVal);
+    } else {
+      if (this.selected.length >= this.maxSelectable) {
+        this.ns.showAlert('Error', 'El máximo de selecciones es de ' + this.maxSelectable, 'OK');
+        return;
+      }
+      if (!newVal) {
+        return;
+      }
+      this.removeVal(newVal);
+      this.selected.push(newVal);
+    }
+  }
+
+  removeVal(val) {
+    this.selected = this.selected.filter(v => v !== val);
   }
 
   changeVal(val) {
     this.addVal(val);
+    console.log('values:', this.selected);
     this.radioChange.emit(this.selected);
   }
 

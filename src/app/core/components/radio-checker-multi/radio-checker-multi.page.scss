@@ -32,3 +32,9 @@ p {
 p b {
   color: var(--ion-text-color, #000000);
 }
+
+.invisible {
+  visibility: hidden;
+  color: white;
+}
+
