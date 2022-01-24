@@ -158,11 +158,14 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
             }
             if (formVals.maxSelectable !== prevMaxSelectable) {
               this.ns.showLoading('Modificando cotas...', 0).then(l => {
-                this.processConsumer.updateQuestionCategories(this.process.id, this.question.id, formVals.options, this.categoriesForm.get('maxSelectable').value);
                 prevMaxSelectable = formVals.maxSelectable;
                 this.loading = l;
+                this.processConsumer.updateQuestionCategories(this.process.id, this.question.id, formVals.options, this.categoriesForm.get('maxSelectable').value);
               });
+            } else {
+              this.processConsumer.updateQuestionCategories(this.process.id, this.question.id, formVals.options, this.categoriesForm.get('maxSelectable').value);
             }
+
           });
         });
       });
@@ -222,6 +225,7 @@ export class ModifyQuestionsContentPage implements OnInit, OnDestroy {
       this.loading = l;
       this.categoriesForm.get('options').value.push(new Category(this.categoriesForm.get('tmpInput').value));
       this.categoriesForm.get('tmpInput').setValue('');
+      this.loading.dismiss();
     });
     this.categoriesForm.get('options').setValue(this.categoriesForm.get('options').value.filter(c2 => c.id !== c2.id));
   }

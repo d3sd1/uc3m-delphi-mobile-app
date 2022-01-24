@@ -56,17 +56,11 @@
               [options]="qks.mapCatsToKinds(question.categories)"></delphi-radio-checker>
           </div>
           <div *ngIf="question.questionType.name === 'CATMULTI'">
-
-            <p>Máximas selecciones habilitadas: {{question.maxSelectable}}</p>
-
-            <ion-item>
-              <ion-label class="ion-text-wrap">Categorías</ion-label>
-              <ion-select (ionChange)="addCatAnswer($event)"
-                          multiple="true">
-                <ion-select-option *ngFor="let category of question.categories" [value]="category.id"
-                                   class="show-text">{{category.catName}}</ion-select-option>
-              </ion-select>
-            </ion-item>
+            <delphi-radio-checker-multi
+              [viewChange]="answerUpdater.asObservable()"
+              (radioChange)="changeVal($event)"
+              [options]="qks.mapCatsToKinds(question.categories)"
+              [maxSelectable]="question.maxSelectable"></delphi-radio-checker-multi>
           </div>
           <div *ngIf="question.categories && question.questionType.name === 'CATPOND'">
             <p>Introduzca su ponderación entre 0 (puntuación más baja) y 10 (puntuación más alta).</p>
