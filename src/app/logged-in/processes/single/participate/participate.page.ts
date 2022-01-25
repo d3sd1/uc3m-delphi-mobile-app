@@ -138,6 +138,7 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
   changeVal(val) {
     console.log('NEW VAL RECEIVED!!', val);
     this.answerQuestion = val;
+    this.answers[this.idx].content = val;
   }
 
   checkCurrentQuestion() {
@@ -158,6 +159,7 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
     }
     this.sortCategories(this.idx - 1);
 
+
     this.participateSlides.slideNext().then(() => {
       ++this.idx;
       this.updateValView();
@@ -165,9 +167,6 @@ export class ParticipatePage implements AfterViewInit, OnDestroy {
   }
 
   back() {
-    if (!this.checkCurrentQuestion()) {
-      return;
-    }
     this.sortCategories(this.idx - 1);
 
     this.participateSlides.slidePrev().then(() => {

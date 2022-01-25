@@ -30,12 +30,17 @@ export class RadioCheckerMultiPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.optionsFiltered = [...this.options];
     this.valSubscription = this.viewChange.subscribe((newVal) => {
-      this.addVal(newVal);
+      this.dropVal(newVal);
     });
   }
 
   isSelected(val): boolean {
     return this.selected.includes(val);
+  }
+
+  dropVal(val) {
+    this.selected = [];
+    this.selected.push(val);
   }
 
   addVal(newVal) {
@@ -60,7 +65,6 @@ export class RadioCheckerMultiPage implements OnInit, OnDestroy {
 
   changeVal(val) {
     this.addVal(val);
-    console.log('values:', this.selected);
     this.radioChange.emit(this.selected);
   }
 

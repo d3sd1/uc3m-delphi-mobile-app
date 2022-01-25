@@ -63,15 +63,11 @@
               [maxSelectable]="question.maxSelectable"></delphi-radio-checker-multi>
           </div>
           <div *ngIf="question.categories && question.questionType.name === 'CATPOND'">
-            <p>Introduzca su ponderación entre 0 (puntuación más baja) y 10 (puntuación más alta).</p>
-            <ion-list>
-              <ion-item *ngFor="let category of question.categories">
-                <ion-label class="ion-text-wrap">{{category.catName}}</ion-label>
-                <ion-input (ionChange)="addCatPondAnswer($event, category.id)"
-                           max="10" min="0" placeholder="Ponderación entre 0 y 10" type="number"
-                           value="null"></ion-input>
-              </ion-item>
-            </ion-list>
+            <delphi-ponderation
+              [viewChange]="answerUpdater.asObservable()"
+              (radioChange)="changeVal($event)"
+              [options]="qks.mapCatsToKinds(question.categories)"></delphi-ponderation>
+
           </div>
         </form>
       </div>

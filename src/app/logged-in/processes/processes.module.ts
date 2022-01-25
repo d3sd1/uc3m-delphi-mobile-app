@@ -27,6 +27,7 @@ import {QuestionKindService} from '../../core/question-kind-service';
 import {QualitativePage} from '../../core/components/qualitative/qualitative.page';
 import {QuantitativePage} from '../../core/components/quantitative/quantitative.page';
 import {RadioCheckerMultiPage} from '../../core/components/radio-checker-multi/radio-checker-multi.page';
+import {PonderationPage} from '../../core/components/ponderation/ponderation.page';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import {RadioCheckerMultiPage} from '../../core/components/radio-checker-multi/r
     RadioCheckerPage,
     QualitativePage,
     QuantitativePage,
-    RadioCheckerMultiPage
+    RadioCheckerMultiPage,
+    PonderationPage
   ],
   providers: [
     Geolocation,

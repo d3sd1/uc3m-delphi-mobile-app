@@ -1,0 +1,11 @@
+<ion-searchbar (ionChange)="search()" [(ngModel)]="searchText" cancelButtonText="Cancelar"
+               placeholder="Buscar"
+               showCancelButton="focus"></ion-searchbar>
+<ion-list>
+  <ion-item *ngFor="let option of options">
+    <ion-label class="ion-text-wrap">{{option.text}}</ion-label>
+    <ion-input (ionChange)="changeVal(option.value)"
+               max="10" min="0" placeholder="Ponderación entre 0 y 10" type="number"
+               value="null"></ion-input>
+  </ion-item>
+</ion-list>
