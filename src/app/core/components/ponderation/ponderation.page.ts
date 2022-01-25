@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs';
-import {Question} from '../../model/question';
 
 @Component({
   selector: 'delphi-ponderation',
@@ -36,9 +35,10 @@ export class PonderationPage implements OnInit, OnDestroy {
 
   search() {
     this.optionsFiltered = this.options.filter((opt) => {
-      return opt.value.includes(this.searchText) || opt.text.includes(this.searchText);
+      return opt.text.includes(this.searchText);
     });
   }
+
   ngOnDestroy(): void {
     if (this.valSubscription && !this.valSubscription.closed) {
       this.valSubscription.unsubscribe();

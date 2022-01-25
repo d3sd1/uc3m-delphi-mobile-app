@@ -240,13 +240,13 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
             selectedQuestionType = 'CATMULTI';
           }
         },
-        {
+        /*{
           type: 'radio',
           label: 'Categorías ponderadas',
           handler: () => {
             selectedQuestionType = 'CATPOND';
           }
-        },
+        },*/
       ]);
   }
 
