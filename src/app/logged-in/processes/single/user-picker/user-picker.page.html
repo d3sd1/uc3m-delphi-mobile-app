@@ -38,10 +38,10 @@
   <ion-item *ngIf="this.getUsers().length == 0">
     <ion-title>Sin expertos</ion-title>
   </ion-item>
- 
+
   <div *ngFor="let user of this.getUsers()">
     <ion-chip [color]="'primary'">
-      <ion-avatar [routerLink]="'/logged-in/menu/chat/conversation/' + user.id">
+      <ion-avatar ><!--TCE02[routerLink]="'/logged-in/menu/chat/conversation/' + user.id"-->
         <div class="img-wrapper circle">
           <span class="initials">{{user.name.substring(0, 2)}}</span>
         </div>

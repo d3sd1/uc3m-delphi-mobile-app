@@ -35,9 +35,9 @@
     <ion-badge slot="end" *ngIf="process.currentRound.expertsRemaining.length > 0">{{process.currentRound.expertsRemaining.length}} expertos por votar</ion-badge>
     <ion-badge slot="end" color="success" *ngIf="process.currentRound.expertsRemaining.length == 0">Votación completada</ion-badge>
   </ion-item>
-  <ion-button *ngIf="!process.currentRound.started && process.currentRound.questions.length > 0" [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/participate'" routerDirection="forward" color="tertiary" expand="block" fill="outline">
+  <!--TCE03 <ion-button *ngIf="!process.currentRound.started && process.currentRound.questions.length > 0" [routerLink]="'/logged-in/menu/processes/finished/' + process.id + '/participate'" routerDirection="forward" color="tertiary" expand="block" fill="outline">
     Previsualizar
-  </ion-button>
+  </ion-button>-->
   <ion-item-divider>Preguntas</ion-item-divider>
   <div *ngIf="process.currentRound.questions.length == 0" class="container">
     <strong>Sin preguntas</strong>
