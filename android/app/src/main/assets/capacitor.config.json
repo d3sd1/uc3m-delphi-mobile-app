@@ -12,6 +12,6 @@
   "cordova": {},
   "backgroundColor": "#FFFFFF",
   "server": {
-    "url": "http://localhost:8100"
+    "url": "http://10.118.21.88:8100"
   }
 }
