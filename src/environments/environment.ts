@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080',
+  apiUrl: 'http://178.33.64.80:9002',
   debug: true,
   wsReconnectInterval: 1000
 };
