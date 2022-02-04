@@ -40,11 +40,11 @@ export class QuestionKindService {
   ];
 
   getBooleanKinds() {
-    return [...this.booleanKind];
+    return Array.from(this.booleanKind);
   }
 
   getLikertKinds() {
-    return [...this.likertKind];
+    return Array.from(this.likertKind);
   }
 
   mapCatsToKinds(cats: Category[]): { text, value }[] {

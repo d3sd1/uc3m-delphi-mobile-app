@@ -28,7 +28,7 @@ export class RadioCheckerMultiPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.optionsFiltered = [...this.options];
+    this.optionsFiltered =Array.from(this.options);
     this.valSubscription = this.viewChange.subscribe((newVal) => {
       if (newVal && newVal.includes(';')) {
         this.parseVals(newVal);

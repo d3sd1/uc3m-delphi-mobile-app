@@ -22,7 +22,7 @@ export class PonderationPage implements OnInit, OnDestroy {
   valSubscription: Subscription;
 
   ngOnInit(): void {
-    this.optionsFiltered = [...this.options];
+    this.optionsFiltered = Array.from(this.options);
     this.valSubscription = this.viewChange.subscribe((newVal) => {
       this.selected = newVal;
     });

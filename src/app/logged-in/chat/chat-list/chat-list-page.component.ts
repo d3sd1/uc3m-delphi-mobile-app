@@ -43,8 +43,8 @@ export class ChatListPage implements OnInit, OnDestroy {
           if (userChats === null) {
             return;
           }
-          this.userChatsOriginal = [...userChats];
-          this.userChats = [...this.userChatsOriginal];
+          this.userChatsOriginal = Array.from(userChats);
+          this.userChats = Array.from(this.userChatsOriginal);
           this.loading = false;
         });
       });
