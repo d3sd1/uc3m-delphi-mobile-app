@@ -5,8 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ProcessesPage} from './list/processes.page';
 
 import {ProcessesPageRoutingModule} from './processes-routing.module';
-import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {IonicRatingModule} from 'ionic4-rating';
 import {CountdownModule} from 'ngx-countdown';
 import {TranslateModule} from '@ngx-translate/core';
 import {SingleProcessPage} from './single/single-process.page';
@@ -35,7 +33,6 @@ import {PonderationPage} from '../../core/components/ponderation/ponderation.pag
     CommonModule,
     FormsModule,
     ProcessesPageRoutingModule,
-    IonicRatingModule,
     CountdownModule,
     TranslateModule,
     ReactiveFormsModule,
@@ -62,7 +59,6 @@ import {PonderationPage} from '../../core/components/ponderation/ponderation.pag
     PonderationPage
   ],
   providers: [
-    Geolocation,
     QuestionKindService
   ],
 
