@@ -40,7 +40,7 @@
           <a *ngIf="process.finished">Ver resultados</a>
         </p>
       </ion-label>
-      <ion-note *ngIf="!processPendingParticipationWarning(process)" color="light"
+      <ion-note *ngIf="!processPendingParticipationWarning(process)" color="primary"
                 slot="end">{{isCoordinator(process) ? 'Coordinador' : 'Experto'}}</ion-note>
 
 

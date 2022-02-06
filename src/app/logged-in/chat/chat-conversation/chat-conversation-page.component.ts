@@ -7,7 +7,6 @@ import {ChatConsumer} from '../chat.consumer';
 import {UserConsumer} from '../../user.consumer';
 import {InvitationConsumer} from '../../processes/single/user-picker/invitation.consumer';
 import {Subscription} from 'rxjs';
-import {ChatMessage} from '../../../core/model/chat-message';
 
 @Component({
   selector: 'delphi-chat-conversation',
@@ -98,7 +97,7 @@ export class ChatConversationPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   sendMessage() {
-    if (!this.editorMsg ||  this.editorMsg === '' || this.editorMsg.trim().length === 0) {
+    if (!this.editorMsg || this.editorMsg === '' || this.editorMsg.trim().length === 0) {
       return;
     }
     this.chatConsumer.writeToChat(this.oppositeUser.id, this.editorMsg);
@@ -127,6 +126,14 @@ export class ChatConversationPage implements OnInit, AfterViewInit, OnDestroy {
         return true;
       }
     });
+    if (!this.chat) { // we are opening a new chat.
+      this.chat = new UserChat();
+      this.chat.id = -1;
+      this.chat.messages = [];
+      this.chat.user1 = this.user;
+      this.chat.user2 = this.oppositeUser;
+      this.chat.name = '';
+    }
     this.scrollToBottom();
   }
 

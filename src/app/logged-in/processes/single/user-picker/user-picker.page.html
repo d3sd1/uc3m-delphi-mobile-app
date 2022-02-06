@@ -46,8 +46,8 @@
           <span class="initials">{{user.name.substring(0, 2)}}</span>
         </div>
       </ion-avatar>
-      <ion-label
-        [routerLink]="user.id !==  currentUser.id ? '/logged-in/menu/chat/conversation/' + user.id:[]">{{user.name}} {{user.surnames}}
+      <ion-label>{{user.name}} {{user.surnames}}
+        <!--TCE02  [routerLink]="user.id !==  currentUser.id ? '/logged-in/menu/chat/conversation/' + user.id:[]"-->
         <{{ user.email }}>
       </ion-label>
       <ion-icon (click)="removeUser(user)"
