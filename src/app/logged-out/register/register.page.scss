@@ -1,5 +1,3 @@
-@import 'https://fonts.googleapis.com/css?family=Raleway';
-
 .logo {
   margin-top: 20%;
   display: block;
@@ -12,7 +10,6 @@
 ::ng-deep ion-list-header {
   padding-inline-start: 0 !important;
 }
-
 
 $color-brand: #ffffff;
 $color-alt: #1c2051;
@@ -34,4 +31,3 @@ $round: 50%;
   visibility: hidden;
   animation: showUp 3s 4.2s forwards;
 }
-

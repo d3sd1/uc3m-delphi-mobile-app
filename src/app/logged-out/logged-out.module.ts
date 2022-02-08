@@ -7,12 +7,14 @@ import {LoginPage} from './login/login.page';
 import {IonicModule} from '@ionic/angular';
 import {TranslateModule} from '@ngx-translate/core';
 import {ForgotPasswordPage} from './forgot-password/forgot-password.page';
+import {RegisterPage} from './register/register.page';
 
 
 @NgModule({
   declarations: [
     LoginPage,
-    ForgotPasswordPage
+    ForgotPasswordPage,
+    RegisterPage
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,50 @@
+<ion-content>
+  <form (ngSubmit)="register()" [formGroup]="recoverForm">
+    <ion-list lines="inset">
+      <ion-img alt="logo" class="logo" src="assets/login_logo.svg"></ion-img>
+      <ion-list-header class="ion-text-center" lines="none">
+        <ion-label>Formulario de registro</ion-label>
+      </ion-list-header>
+      <ion-item lines="inset">
+        <ion-label position="fixed">Email</ion-label>
+        <ion-input formControlName="email" placeholder="Introduce tu email"
+                   maxlength="150"
+                   minlength="3"
+                   type="email"></ion-input>
+      </ion-item>
+
+      <ion-text color="danger" class="ion-text-center" *ngIf="recoverForm.get('email').value && !recoverForm.get('email').valid">
+        <h6>Introduce un email válido.</h6>
+      </ion-text>
+      <ion-item lines="inset">
+        <ion-label position="fixed">Nombre</ion-label>
+        <ion-input formControlName="name" placeholder="Introduce tu nombre"
+                   maxlength="150"
+                   minlength="3"
+                   type="text"></ion-input>
+      </ion-item>
+      <ion-item lines="inset">
+        <ion-label position="fixed">Apellidos</ion-label>
+        <ion-input formControlName="surnames" placeholder="Introduce tus apellidos"
+                   maxlength="150"
+                   minlength="3"
+                   type="text"></ion-input>
+      </ion-item>
+      <ion-item lines="inset">
+        <ion-label position="fixed">Contraseña</ion-label>
+        <ion-input formControlName="password" placeholder="Introduce tu contraseña"
+                   maxlength="150"
+                   minlength="8"
+                   type="password"></ion-input>
+      </ion-item>
+      <ion-text color="danger" class="ion-text-center" *ngIf="recoverForm.get('password').value && !recoverForm.get('password').valid">
+        <h6>La longitud mínima de la contraseña es de 8 caracteres.</h6>
+      </ion-text>
+    </ion-list>
+    <ion-button color="secondary" expand="block" fill="outline" routerDirection="back" routerLink="/logged-out/login">
+      Volver a conexión
+    </ion-button>
+    <ion-button [disabled]="!recoverForm.valid" expand="block" type="submit">Registrar</ion-button>
+  </form>
+
+</ion-content>

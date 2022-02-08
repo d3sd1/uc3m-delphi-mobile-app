@@ -15,15 +15,19 @@
         <ion-input maxlength="150" formControlName="password" placeholder="Introduce tu contraseña"
                    type="password"></ion-input>
       </ion-item>
-     <!--TCE01 <ion-item lines="none">
-        <ion-label>Recuérdame</ion-label>
-        <ion-toggle formControlName="rememberMe"></ion-toggle>
-      </ion-item>-->
+      <!--TCE01 <ion-item lines="none">
+         <ion-label>Recuérdame</ion-label>
+         <ion-toggle formControlName="rememberMe"></ion-toggle>
+       </ion-item>-->
 
     </ion-list>
-   <!--TCE01 <ion-button color="secondary" expand="block" fill="outline" routerDirection="forward"
-                routerLink="/logged-out/forgot-password">¿Contraseña olvidada?
-    </ion-button>-->
+    <ion-button color="secondary" expand="block" fill="outline" routerDirection="forward"
+                routerLink="/logged-out/register">¡Regístrate!
+    </ion-button>
     <ion-button [disabled]="!loginForm.valid" expand="block" type="submit">Conectar</ion-button>
+    <!--TCE01 <ion-text color="secondary" class="ion-float-right ion-margin-end" routerDirection="forward"
+               routerLink="/logged-out/forgot-password">
+       <h5>¿Contraseña olvidada?</h5>
+     </ion-text>-->
   </form>
 </ion-content>

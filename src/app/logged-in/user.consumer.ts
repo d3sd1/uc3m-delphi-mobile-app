@@ -28,6 +28,10 @@ export class UserConsumer {
     return this.http.put<void>(environment.apiUrl + '/password/recover', {email}).toPromise();
   }
 
+  register(email, name, surnames, password): Promise<void> {
+    return this.http.put<void>(environment.apiUrl + '/register', {email, name, surnames, password}).toPromise();
+  }
+
   resetPassword(email: string, code: number, newPass: string, newPassRep: string) {
     return this.http.put(environment.apiUrl + '/password/reset', {email, code, newPass, newPassRep}).toPromise();
   }

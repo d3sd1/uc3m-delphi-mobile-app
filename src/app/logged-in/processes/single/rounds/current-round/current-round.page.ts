@@ -219,7 +219,7 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
             selectedQuestionType = 'BOOLTYPE';
           }
         },
-        {
+       /*  TCE04  {
           type: 'radio',
           label: 'Categorías',
           handler: () => {
@@ -239,14 +239,7 @@ export class CurrentRoundPage implements OnInit, OnDestroy {
           handler: () => {
             selectedQuestionType = 'CATMULTI';
           }
-        },
-        /*{
-          type: 'radio',
-          label: 'Categorías ponderadas',
-          handler: () => {
-            selectedQuestionType = 'CATPOND';
-          }
-        },*/
+        }, */
       ]);
   }
 
